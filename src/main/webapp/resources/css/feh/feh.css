@@ -1,0 +1,53 @@
+body {
+  width: 980px;
+  margin: 0 auto;
+}
+
+.leftLinkView {
+  float: left;
+}
+
+.game-header {
+  background-image: url(../images/feh/banner.png);
+  width: 980px;
+  height: 300px;
+  margin: 0 auto;
+  position: absolute;
+  float: left;
+}
+
+.game-body {
+  margin-top: 300px;
+  float: left;
+}
+
+.topMenuNav {
+  float: right;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 4px;
+  margin-right: 10px;
+  margin-top: 250px;
+  text-align: center;
+  line-height: 10px;
+  display: inline-block
+}
+
+li {
+  list-style: none;
+  width: 80px;
+  float: left;
+}
+
+.menuText {
+  font-weight: 800;
+  color: #fff;
+  vertical-align: middle;
+}
+
+.topMenuNav li {
+  float: left;
+  border-right: 1px solid rgba(255, 255, 255, .5);
+  height: 20px;
+  margin-top: 0px;
+}
+

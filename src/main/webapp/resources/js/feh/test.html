@@ -1,0 +1,23 @@
+<html>
+<head>
+<script type="text/javascript" src="../jquery-3.4.1.min.js" ></script>
+<script type="text/javascript" src="fehCommon.js" ></script>
+<script>
+function getFehValue(){
+ var cat = $("#category").val();
+ var code = $("#code").val();
+ var value = getImageByCatAndCd(cat,code);
+ $("#result").html(value);
+ document.getElementById("img").src=value;
+ document.getElementById("img").style.display = null;
+}
+</script>
+</head>
+<body>
+<span>category</span><input type="input" id="category"><br>
+<span>code</span><input type="input" id="code"><br>
+<span>result:</span><span id="result"></span><br>
+<button onclick = "getFehValue()">TestGetPop</button>
+<img src="" style="display: none" id="img">
+</body>
+</html>

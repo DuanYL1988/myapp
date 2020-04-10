@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>共通数据登录</title>
+<link rel="stylesheet" href="../../../resources/css/table/style.css"
+    th:href="@{/resources/css/table/style.css}" />
+    <head th:replace="~{slickgrid/resources :: header}"></head>
+<script th:inline="javascript">
+  var columnList = [[${columnList}]];
+  var json = [[${json}]];
+</script>
+<script type="text/javascript" src="" th:src="@{/resources/js/table/index.js}"></script>
+</head>
+<body>
+    <!-- 选择数据库 表 start -->
+    <form action="findTable" method="post">
+        <div class="showTableArea">
+            <select name="database">
+                <option value="2">mysql</option>
+                <option value="1">oracle</option>
+            </select> <input type="text" name="tablename"/> <br>
+            <button>SHOW THIS TABLE COLUMNS</button>
+        </div>
+    </form>
+    <!-- 选择数据库 表 end -->
+
+    <form action="regist" method="post" id="registForm">
+        <div class="tableColumnArea" id="tableColumnArea">
+            <!-- html 调试用 start 
+    <div class="colCell">
+        <span>COLUMN_NAME</span><br>
+        <input type="text" name="">
+    </div>
+    -->
+        </div>
+        <button type="button" onclick="tableRegist()">REGIST</button>
+    </form>
+    
+    <div class="resultArea" id="myGrid" style="width:100%;height:500px;"></div>
+</body>
+</html>

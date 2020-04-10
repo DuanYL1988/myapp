@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Purple Admin</title>
+
+  </head>
+  
+  <body>
+    <nav th:fragment="sidebar" class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/myapp/fireEmblem/init">
+              <span class="menu-title">主页</span>
+              <i class="mdi mdi-home menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-title">Master数据登陆</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/myapp/fireEmblem/goToSkill">技能登陆</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/myapp/fireEmblem/fehActerRegist/init/0">
+              <span class="menu-title">角色登陆</span>
+              <i class="mdi mdi-contacts menu-icon"></i>
+            </a>
+          </li>
+          <!-- 角色图2019/6/3 -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-favorite" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-title">角色原画</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-favorite">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/myapp/fireEmblem/favorite/0">我喜欢的</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/myapp/fireEmblem/normalTeam">普通队伍编成</a></li>
+              </ul>
+            </div>
+          </li>
+          
+        </ul>
+      </nav>
+  </body>
+</html>

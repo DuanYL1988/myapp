@@ -1,0 +1,91 @@
+body {
+font-family: "Meiryu UI";
+}
+
+.mainBox {
+  position: relative;
+  z-index:0;
+}
+
+div .controlArea {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index:2;
+}
+
+div .pictureArea {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index:1;
+  width: 770px;
+}
+
+div .infoArea {
+  position: absolute;
+  bottom: 5px;left:10px;
+  background-color: rgba(27, 193, 248, 0.87);
+  z-index:2;
+  display:block;
+}
+
+div .infoArea .title{
+  margin-left : 50px;
+  font-size: larger;
+  font-weight:bolder;
+  font-family: fantasy;
+  display: inline-block;
+  margin-top:10px
+}
+
+div .infoArea .attr{
+  display: inline-block;
+}
+
+div .infoArea .sameActer{
+  display: inline-block;
+}
+
+#prePic {
+    position: absolute;
+    left: 10px;
+    top:400px;
+    opacity:0.7;
+    z-index : 3;
+}
+
+#prePic:hover {
+opacity:1;
+}
+
+#afterPic {
+    position: absolute;
+    right: 10px;
+    top:400px;
+    opacity:0.7;
+    z-index : 3;
+}
+
+#afterPic:hover {
+opacity:1;
+}
+
+table {
+  width: 100%;
+  font-size: large;
+}
+
+table tr .info-left {
+    width: 25%;
+    text-align: center;
+}
+
+table tr .infoValue {
+    width: 25%;
+}
+
+table tr .info-right {
+    width: 25%;
+    text-align: left;
+}

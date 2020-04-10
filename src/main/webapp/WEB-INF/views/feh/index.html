@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>角色一览</title>
+<style type="text/css">
+.redface {
+  border-radius: 100%;
+  border-style: outset;
+  border-color: red;
+}
+
+.blueface {
+  border-radius: 100%;
+  border-style: outset;
+  border-color: blue;
+}
+
+.greenface {
+  border-radius: 100%;
+  border-style: outset;
+  border-color: green;
+}
+
+.noneface {
+  border-radius: 100%;
+  border-style: outset;
+  border-color: gray;
+}
+</style>
+  <head th:replace="~{feh/resources :: header}"></head>
+  <script th:inline="javascript">
+  var acterList = [[${fehActer}]];
+  </script>
+  <script src="../../../resources/js/feh/initPage.js" th:src="@{/resources/js/feh/initPage.js}"></script>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <header th:replace="~{feh/topNav :: header}"></header>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+        <nav th:replace="~{feh/leftNav :: sidebar}"></nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper" style="background-image: url(../resources/images/feh/background.png)">
+          <div class="row" >
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body" >
+                  <div class="table-responsive">
+                    <!-- body start -->
+                    <div role="navigation" class="navbox" aria-labelledby="Heroes" style="padding:3px">
+                      <table class="nowraplinks mw-collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+                        <tbody>
+                          <tr>
+                            <th scope="col" class="navbox-title" colspan="2">
+                            <div class="plainlinks hlist template-navbar mini">
+                              </div>
+                              <div id="Heroes" style="font-size:114%">
+                                <a href="/List_of_Heroes" title="List of Heroes">Heroes</a>
+                              </div>
+                            </th>
+                          </tr>
+                          <tr style="height: 2px;">
+                            <td colspan="2"></td>
+                          </tr>
+                          <!-- 颜色分类：红色 START -->
+                          <tr style="border-width:2px;border-style:solid">
+                            <th scope="row" class="navbox-group">Red</th>
+                            <td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+                              <div style="padding:0em 0.25em"></div>
+                              <table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+                                <tbody>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_fire_sword.png" th:src="@{/resources/images/feh/i_fire_sword.png}" width="20" height="20">
+                                        <a href="/Sword" title="Sword">Sword</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-red-sword">
+                                    <!-- 
+                                        <a>
+                                          <img alt="Marth: Altean Prince" src="../../../resources/images/feh/acter/Ayra_F_Normal/face.png" th:src="@{/resources/images/feh/acter/Ayra_F_Normal/face.png}" width="150" height="150" >
+                                        </a>-->
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_fire_assassin.png" th:src="@{/resources/images/feh/i_fire_assassin.png}" width="20" height="20">
+                                        <a href="Assassin" title="Assassin">Assassin</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-red-assassin">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_fire_magic.png" th:src="@{/resources/images/feh/i_fire_magic.png}" width="20" height="20">
+                                        <a href="Magic" title="Magic">Magic</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-red-magic">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_fire_dragon.png" th:src="@{/resources/images/feh/i_fire_dragon.png}" width="20" height="20">
+                                        <a href="Breath" title="Breath">Breath</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-red-breath">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_fire_arrow.png" th:src="@{/resources/images/feh/i_fire_arrow.png}" width="20" height="20">
+                                        <a href="/Arrow" title="Arrow">Arrow</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-red-arrow">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_fire_beast.png" th:src="@{/resources/images/feh/i_fire_beast.png}" width="20" height="20">
+                                        <a href="/Beast" title="Beast">beast</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-red-beast">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div>
+                            </div>
+                            </td>
+                          </tr>
+                          <!-- 颜色分类：红色 END -->
+                          <!-- 颜色分类：蓝色 START -->
+                          <tr style="border-width:2px;border-style:solid">
+                            <th scope="row" class="navbox-group">Blue</th>
+                            <td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+                              <div style="padding:0em 0.25em"></div>
+                              <table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+                                <tbody>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_thunder_spear.png" th:src="@{/resources/images/feh/i_thunder_spear.png}" width="20" height="20">
+                                        <a href="/Spear" title="Spear">Spear</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-blue-spear">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_thunder_assassin.png" th:src="@{/resources/images/feh/i_thunder_assassin.png}" width="20" height="20">
+                                        <a href="/Assassin" title="Assassin">Assassin</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-blue-assassin">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_thunder_magic.png" th:src="@{/resources/images/feh/i_thunder_magic.png}" width="20" height="20">
+                                        <a href="/Magic" title="Magic">Magic</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-blue-magic">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_thunder_dragon.png" th:src="@{/resources/images/feh/i_thunder_dragon.png}" width="20" height="20">
+                                        <a href="/Breath" title="Breath">Breath</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-blue-breath">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_thunder_arrow.png" th:src="@{/resources/images/feh/i_thunder_arrow.png}" width="20" height="20">
+                                        <a href="/Arrow" title="Arrow">Arrow</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-blue-arrow">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_thunder_beast.png" th:src="@{/resources/images/feh/i_thunder_beast.png}" width="20" height="20">
+                                        <a href="/Beast" title="Beast">Beast</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-blue-beast">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div>
+                            </div>
+                            </td>
+                          </tr>
+                          <!-- 颜色分类：蓝色 END -->
+                          <!-- 颜色分类：绿色 START -->
+                          <tr style="border-width:2px;border-style:solid">
+                            <th scope="row" class="navbox-group">Green</th>
+                            <td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+                              <div style="padding:0em 0.25em"></div>
+                              <table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+                                <tbody>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_wind_ax.png" th:src="@{/resources/images/feh/i_wind_ax.png}" width="20" height="20">
+                                        <a href="/Ax" title="Ax">Ax</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-green-ax">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_wind_assassin.png" th:src="@{/resources/images/feh/i_wind_assassin.png}" width="20" height="20">
+                                        <a href="Assassin" title="Assassin">Assassin</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-green-assassin">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_wind_magic.png" th:src="@{/resources/images/feh/i_wind_magic.png}" width="20" height="20">
+                                        <a href="Magic" title="Magic">Magic</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-green-magic">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_wind_dragon.png" th:src="@{/resources/images/feh/i_wind_dragon.png}" width="20" height="20">
+                                        <a href="Breath" title="Breath">Breath</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-green-breath">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_wind_arrow.png" th:src="@{/resources/images/feh/i_wind_arrow.png}" width="20" height="20">
+                                        <a href="/Arrow" title="Arrow">Arrow</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-green-arrow">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_wind_beast.png" th:src="@{/resources/images/feh/i_wind_beast.png}" width="20" height="20">
+                                        <a href="/Beast" title="Beast">Beast</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-green-beast">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div>
+                            </div>
+                            </td>
+                          </tr>
+                          <!-- 颜色分类：绿色 END -->
+                          <!-- 颜色分类：无色 START -->
+                          <tr style="border-width:2px;border-style:solid">
+                            <th scope="row" class="navbox-group">None</th>
+                            <td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+                              <div style="padding:0em 0.25em"></div>
+                              <table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+                                <tbody>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_none_arrow.png" th:src="@{/resources/images/feh/i_none_arrow.png}" width="20" height="20">
+                                        <a href="/Ax" title="Arrow">Arrow</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-none-arrow">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_none_assassin.png" th:src="@{/resources/images/feh/i_none_assassin.png}" width="20" height="20">
+                                        <a href="Assassin" title="Assassin">Assassin</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-none-assassin">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="height:2px">
+                                    <td colspan="2"></td>
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_none_dragon.png" th:src="@{/resources/images/feh/i_none_dragon.png}" width="20" height="20">
+                                        <a href="Breath" title="Breath">Breath</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-none-breath">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_none_wand.png" th:src="@{/resources/images/feh/i_none_wand.png}" width="20" height="20">
+                                        <a href="/Wand" title="Wand">Wand</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-none-wand">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                  <tr style="border-bottom-width:2px;border-bottom-style:solid">
+                                    <th scope="row" class="navbox-group" style="width:8em;padding-left:0;padding-right:0;">
+                                      <div style="padding:0em 0.75em;">
+                                        <img alt="" src="../../../resources/images/feh/i_none_beast.png" th:src="@{/resources/images/feh/i_none_beast.png}" width="20" height="20">
+                                        <a href="/Beast" title="Beast">Beast</a>
+                                      </div>
+                                    </th>
+                                    <td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;padding:0px">
+                                      <div style="padding:0em 0.25em" id="weapon-type-none-beast">
+                                      </div>
+                                    </td> 
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div>
+                            </div>
+                            </td>
+                          </tr>
+                          <!-- 颜色分类：无色 END -->
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- body end -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer"> </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</body>
+</html>
+

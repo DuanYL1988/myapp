@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>角色详细</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/feh/acterImage.css"  th:href="@{/resources/css/feh/acterImage.css}"/>
+
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/feh/fehCommon.js" th:src="@{/resources/js/feh/fehCommon.js}"></script>
+
+
+</head>
+<body>
+    <div class="mainBox">
+        <img id="bkImg" src="../../resources/images/feh/FEh-slick-current-bg.jpg">
+        <div class="controlArea">
+            <button id="showInfo">显示人物属性</button>
+        </div>
+        <img id="prePic" src="../../resources/images/common/left.png" width="50px" height="50px"/> 
+        <img id="afterPic" src="../../resources/images/common/right.png" width="50px" height="50px"/>
+        <div class="pictureArea">
+            <img th:src="${acter.standImg}" id="backPic" width="83%" height="83%">
+        </div>
+        <div class="infoArea">
+            <div class="title">
+                <span th:text="${acter.titlename}"></span><br> <span th:text="${acter.basename}"></span>
+            </div>
+            <div class="attr">
+                <img id="blessImg" width="50px" src="" />
+                <img id="moveImg" width="50px" src="" />
+            </div>
+            <div class="sameActer" th:object="${sameList}">
+                <a th:each="acter :${sameList}" th:href="${acter.id}"><img
+                    th:src="${acter.faceImg}" width="60px" height="60px" /></a>
+            </div>
+            <div class="info">
+                <table>
+                    <tr>
+                        <td class="info-left">突破极限</td>
+                        <td class="infoValue" th:text="${acter.levelPlus}"></td>
+                        <td class="info-right">武器</td>
+                        <td class="infoValue"><img id="weaponType" width="30px" src="" /><span th:text="${acter.weapon}"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="info-left">HP</td>
+                        <td class="infoValue" th:text="${acter.hp}"></td>
+                        <td class="info-right">A技能</td>
+                        <td class="infoValue" th:text="${acter.skillA}"></td>
+                    </tr>
+                    <tr>
+                        <td class="info-left">攻击</td>
+                        <td class="infoValue" th:text="${acter.att}"></td>
+                        <td class="info-right">B技能</td>
+                        <td class="infoValue" th:text="${acter.skillB}"></td>
+                    </tr>
+                    <tr>
+                        <td class="info-left">速度</td>
+                        <td class="infoValue" th:text="${acter.spd}"></td>
+                        <td class="info-right">C技能</td>
+                        <td class="infoValue" th:text="${acter.skillC}"></td>
+                    </tr>
+                    <tr>
+                        <td class="info-left">防御</td>
+                        <td class="infoValue" th:text="${acter.def}"></td>
+                        <td class="info-right">辅助</td>
+                        <td class="infoValue" th:text="${acter.skillD}"></td>
+                    </tr>
+                    <tr>
+                        <td class="info-left">魔防</td>
+                        <td class="infoValue" th:text="${acter.mdf}"></td>
+                        <td class="info-right">必杀</td>
+                        <td class="infoValue" th:text="${acter.skillE}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:inline="javascript">
+    var acter = [[${acter}]];
+    var imgBox = [acter.standImg,acter.attImg,acter.extraImg,acter.defImg];
+    var index = 0;
+    $(function() {
+        // 初期表示
+        window.setTimeout(function(){
+        var img = document.getElementById("backPic");
+        var width = img.width;
+        var height = img.height;
+        $("div.mainBox").css("width",width+10);
+        $("div.mainBox").css("height",height+10);
+        $("#bkImg").css("width",width+10);
+        $("#bkImg").css("height",height+10);
+        
+        $("div.infoArea").css("width",img.width-10);
+        
+        window.resizeTo(width+40,height+100);
+        },50);
+        // 特性图片
+        $("#blessImg")[0].src=getImageByCatAndCd("0003",acter.blessing);
+        $("#moveImg")[0].src=getImageByCatAndCd("0002",acter.moveType);
+        $("#weaponType")[0].src=getImageByCatAndCd("0001",acter.weaponType);
+        // 下一张立绘
+        $("#afterPic").on('click',function (){
+            if (index == 3){
+                index = 0;
+            } else {
+                index = index + 1;
+            }
+            document.getElementById("backPic").src = imgBox[index];
+        });
+        
+        // 上一张立绘
+        $("#prePic").on('click',function (){
+            if (index == 0){
+                index = 3;
+            } else {
+                index = index - 1;
+            }
+            document.getElementById("backPic").src = imgBox[index];
+        });
+        
+        // 隐藏/表示 属性面板
+        $("#showInfo").on("click",function(){
+            var tarDiv = $("div.infoArea")[0];
+            if ("none" == tarDiv.style.display) {
+                tarDiv.style.display = null;
+            } else {
+                tarDiv.style.display = "none";
+            }
+        });
+    });
+    
+</script>
+</html>

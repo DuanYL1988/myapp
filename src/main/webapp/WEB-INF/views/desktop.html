@@ -1,0 +1,78 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>哈哈SlickGrid</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" th:href="@{/resources/css/ext-all.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/desktop.css" th:href="@{/resources/css/desktop.css}" />
+    <!-- GC -->
+     <script type="text/javascript" src="../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+     <!-- LIBS -->
+     <script type="text/javascript" src="../../resources/desktop/ext-base.js" th:src="@{/resources/desktop/ext-base.js}"></script>
+     <!-- ENDLIBS -->
+    <script type="text/javascript" src="../../resources/desktop/ext-all.js" th:src="@{/resources/desktop/ext-all.js}"></script>
+    <!-- DESKTOP -->
+    <script type="text/javascript" th:inline="javascript">
+        var jsonFromJava = [[${jsonData}]];
+        function openNewWin(){
+            var iTop = (window.screen.height-500-30)/2;
+            var iLeft = (window.screen.width-10-1080)/2;
+            window.open("fireEmblem/init", "FEH", "height=500,width=1080,top="+iTop+",left="+iLeft+",location=no,status=no,scrollvars=no");
+        }
+        
+        function openRegistTable(){
+            var iTop = (window.screen.height-500-30)/2;
+            var iLeft = (window.screen.width-10-1080)/2;
+            window.open("rigstTable/init", "TBL", "height=500,width=1080,top="+iTop+",left="+iLeft+",location=no,status=no,scrollvars=no");
+        }
+    </script>
+    <script type="text/javascript" src="../../resources/desktop/StartMenu.js" th:src="@{/resources/desktop/StartMenu.js}"></script>
+    <script type="text/javascript" src="../../resources/desktop/TaskBar.js" th:src="@{/resources/desktop/TaskBar.js}"></script>
+    <script type="text/javascript" src="../../resources/desktop/Desktop.js" th:src="@{/resources/desktop/Desktop.js}"></script>
+    <script type="text/javascript" src="../../resources/desktop/App.js" th:src="@{/resources/desktop/App.js}"></script>
+    <script type="text/javascript" src="../../resources/desktop/Module.js" th:src="@{/resources/desktop/Module.js}"></script>
+    <script type="text/javascript" src="../../resources/desktop/sample.js" th:src="@{/resources/desktop/sample.js}" th:inline="javascript"></script>
+
+</head>
+<body scroll="no">
+
+<div id="x-desktop">
+    <a href="#" target="_blank" style="margin:5px; float:right;"><img src="../../resources/images/powered.gif" th:src="@{/resources/images/powered.gif}"/></a>
+    
+    <form action="">
+        <input type="hidden" size="100" th:value="${jsonData}" id="jsonData">
+    </form>
+    
+    <dl id="x-shortcuts">
+        <dt id="grid-win-shortcut">
+            <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}" />
+            <div>Grid Window</div></a>
+        </dt>
+        <dt id="acc-win-shortcut">
+            <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}"/>
+            <div>Accordion Window</div></a>
+        </dt>
+        <dt id="feh-win-shortcut" onclick="javascript:openNewWin()">
+            <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}"/>
+            <div>FireEmblem HEROS</div></a>
+        </dt>
+        <!-- 
+        1. 复制Div
+        2. 
+        -->
+        <dt id="feh-win-shortcut" onclick="javascript:openRegistTable()">
+            <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}"/>
+            <div>全能添加数据</div></a>
+        </dt>
+
+    </dl>
+</div>
+
+<div id="ux-taskbar">
+    <div id="ux-taskbar-start"></div>
+    <div id="ux-taskbuttons-panel"></div>
+    <div class="x-clear"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+.tableColumnArea{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+}
+
+.colCell {
+  padding-top: 10px;
+  padding-left: 5px;
+  width: 400px;
+}
+
+.colCell input{
+    outline-style: none ;
+    border: 1px solid #ccc; 
+    border-radius: 3px;
+    padding: 5px 5px;
+    width: 200px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: "Microsoft soft";
+    left: 5px;
+}
+
+.colCell input:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+}

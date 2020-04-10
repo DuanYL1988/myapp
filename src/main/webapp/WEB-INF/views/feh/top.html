@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>火纹英雄</title>
+<link rel="stylesheet" type="text/css"
+  href="../../../resources/css/feh.css"
+  th:href="@{/resources/css/feh.css}" />
+</head>
+
+<body>
+  <header th:fragment="header" id="header">
+    <div class="game-header feh">
+      <div class="topMenuNav">
+        <ul class="gameTopMenu">
+          <li><span class="menuText">角色一览</span></li>
+          <li><span class="menuText">技能一览</span></li>
+          <li><span class="menuText">角色登陆</span></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+</body>
+</html>

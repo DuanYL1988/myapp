@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- 导入TH标签 -->
+<html xmlns:th="http://www.THYMELEAF.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Title</title>
+<!-- THYMELEAF 使用<header th:replace>来引用其他html文件中内容
+     ~{feh/resources 为资源位置;引用resources.html中<header th:fragment="header" 包含的部分
+-->
+
+<head th:replace="~{feh/resources :: header}"></head>
+
+<!-- 
+  THYMELEAF使用JAVASCRIPT,在比如加载时使用Jquery的$(document.ready(function()}|));时要使用th:inline="JAVASCRIPT"
+  取得后台设定的对象使用 var obj = [[${objName}]];
+   -->
+<script th:inline="JAVASCRIPT">
+    var obj = {};
+</script>
+
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- 头部导航-->
+    <header th:replace="~{knowledge/topNav :: header}"></header>
+    <div class="container-fluid page-body-wrapper">
+      <!-- 左侧头部导航-->
+      <nav th:replace="~{knowledge/leftNav :: sidebar}"></nav>
+      <div class="main-panel">
+        <!-- 主要内容写在这里面 -->
+        <form th:action="">
+            <div class="row">
+                <label>分類</label>
+                <select dyl:options=""></select>
+                <label>标题</label>
+                <input type="text" th:name="title" />
+            </div>
+            <div class="row">
+                <label>内容</label>
+                <textarea th:name="info"></textarea>
+            </div>
+            <div class="row">
+                <label>标签</label>
+                <textarea th:name="tags"></textarea>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

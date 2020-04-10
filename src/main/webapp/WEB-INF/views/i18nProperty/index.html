@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>index.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <script type="text/javascript" src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="../../../resources/js/jquery.i18n.properties.js" th:src="@{/resources/js/jquery.i18n.properties.js}"></script>
+    <script type="text/javascript" src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script type="text/javascript">
+    function getProp() {
+        var key = $("#propKey").val();
+        var value = getValByKey(key);
+        $("#propValue").html(value);
+    }
+</script>
+</head>
+  
+  <body>
+    This is my HTML page. <br>
+    <span>PROP_KEY</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="input" id="propKey"/><br>
+    <span>PROP_VALUE</span><span id="propValue"></span><br>
+    <input type="button" value="GetPropTest" onclick="getProp()">
+  </body>
+</html>

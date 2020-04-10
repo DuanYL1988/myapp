@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.THYMELEAF.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Title</title>
+<!-- THYMELEAF 使用<header th:replace>来引用其他html文件中内容
+     ~{feh/resources 为资源位置;引用resources.html中<header th:fragment="header" 包含的部分
+   -->
+<head th:replace="~{feh/resources :: header}"></head>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/feh/team.css" th:href="@{/resources/css/feh/team.css}" />
+<!-- 
+  THYMELEAF使用JAVASCRIPT,在比如加载时使用Jquery的$(document.ready(function()}|));时要使用th:inline="JAVASCRIPT"
+  取得后台设定的对象使用 var obj = [[${objName}]];
+   -->
+<script th:inline="javascript">
+  
+</script>
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/feh/team.js" th:src="@{/resources/js/feh/team.js}"></script>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- 头部导航-->
+    <header th:replace="~{feh/topNav :: header}"></header>
+    <div class="container-fluid page-body-wrapper">
+      <!-- 左侧头部导航-->
+      <nav th:replace="~{feh/leftNav :: sidebar}"></nav>
+      <div class="main-panel">
+        <div class="content-wrapper" style="background-image: url(../resources/images/feh/background.png)">
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <!-- 主要内容写在这里面 -->
+                  <!-- 检索部分 -->
+                  <div class="selectCondtionArea">
+                    <form th:object="${acter}">
+                      <table>
+                        <tr>
+                          <td><label>移动方式：</label><select class="searchSelect" id="moveType" dyl:options="0002"></select></td>
+                          <td><label>颜色：</label><select class="searchSelect" id="color" dyl:options="0005"></select></td>
+                          <td><label>种族：</label><select class="searchSelect" id="race" dyl:options="0006"></select></td>
+                          <!-- 
+                          <td><label>A技能：</label><select class="searchSelect" id="skillA" dyl:options="0007"></select></td>
+                          <td><label>B技能：</label><select class="searchSelect" id="skillB" dyl:options="0008"></select></td>
+                          <td><label>C技能：</label><select class="searchSelect" id="skillC" dyl:options="0009"></select></td>
+                           -->
+                        </tr>
+                      </table>
+                    </form>
+                  </div>
+                  <!-- ALTERNATIVE AREA START -->
+                  <div class="imageBox" id="imageBox">
+                    <input id="cancel" type="button" value="取消"></input>
+                    <img class="alterNativeImg" th:each="alter :${alertnative}" th:src="${alter.faceImg}" th:id="${alter.id}" />
+                  </div>
+                  <!-- ALTERNATIVE AREA END -->
+
+                  <!-- TEAM EDIT AREA START-->
+                  <div class="teamArea" style="float: left;">
+                    <div>
+                      <input type="button" value="PROV" onclick="javascript:changeTeam(0)" />
+                    </div>
+
+                    <div class="teams">
+                      <div th:class="${teamIndex.current.key}" th:each="teamList,teamIndex :${teamMap}">
+                        <div class="teamCell" th:each="acter,imgIndex:${teamList.value}" th:name="${acter}">
+                          <img th:if="${acter.id} ne null" th:id="teamImg+${acter.id}" class="teamImg" th:src="${acter.faceImg}">
+                        </div>
+                        <br>
+                        <p style="margin-left: 200px" th:text="${teamList.key}"></p>
+                      </div>
+                    </div>
+                    <div>
+                      <input type="button" value="NEXT" onclick="javascript:changeTeam(1)">
+                    </div>
+                  </div>
+                  <input id="saveTeam" type="button" value="SAVE TEAM" />
+                  <!-- TEAM EDIT AREA END-->
+                  <!-- 主要内容写在这里面 END-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
