@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.SkillRepository" >
+  <resultMap id="SkillResultMap" type="com.app.model.Skill" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SKILL_TYPE" property="skillType" jdbcType="VARCHAR" />
+    <result column="SKILL_NAME" property="skillName" jdbcType="VARCHAR" />
+    <result column="SKILL_COLOUR" property="skillColour" jdbcType="VARCHAR" />
+    <result column="SKILL_EXTEND" property="skillExtend" jdbcType="INTEGER" />
+    <result column="SKILL_POWER" property="skillPower" jdbcType="INTEGER" />
+    <result column="SKILL_INFO" property="skillInfo" jdbcType="VARCHAR" />
+    <result column="SKILL_SP_EFFECTS" property="skillSpEffect" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Skill_Column_List" >
+   ID,SKILL_TYPE,SKILL_NAME,SKILL_COLOUR,SKILL_EXTEND,SKILL_POWER,SKILL_INFO,SKILL_SP_EFFECTS
+  </sql>
+  <select id="getSkillListBySkillType" resultMap="SkillResultMap" parameterType="String" >
+    SELECT 
+    <include refid="Skill_Column_List" />
+    FROM 
+      FEH_SKILL_MASTER
+    WHERE 
+      SKILL_TYPE = #{skillType}
+  </select>
+  
+  <select id="getAllSkill" resultMap="SkillResultMap" parameterType="String" >
+    SELECT 
+    <include refid="Skill_Column_List" />
+    FROM 
+      FEH_SKILL_MASTER
+    WHERE
+      SKILL_EXTEND &lt;&gt; 0
+     ORDER BY
+       SKILL_TYPE,SKILL_NAME
+  </select>
+
+  <insert id="insert" parameterType="com.app.model.Skill">
+    INSERT INTO FEH_SKILL_MASTER
+    (SKILL_TYPE,SKILL_NAME,SKILL_COLOUR,SKILL_EXTEND,SKILL_POWER,SKILL_INFO,SKILL_SP_EFFECTS)
+    VALUES
+    (#{skillType},#{skillName},#{skillColour},#{skillExtend},#{skillPower},#{skillInfo},{skillSpEffect})
+  </insert>
+
+  <update id="update" parameterType="com.app.model.Skill">
+    UPDATE FEH_SKILL_MASTER SET ID = #{id}
+    <if test="skillType != null and skillType !=''">
+      ,SKILL_TYPE = #{skillType}
+    </if>
+    <if test="skillName != null and skillName !=''">
+      ,SKILL_NAME = #{skillName}
+    </if>
+    <if test="skillColour != null and skillColour !=''">
+      ,SKILL_COLOUR = #{skillColour}
+    </if>
+    <if test="skillExtend != null and skillExtend !=''">
+      ,SKILL_EXTEND = #{skillExtend}
+    </if>
+    <if test="skillPower != null and skillPower !=''">
+      ,SKILL_POWER = #{skillPower}
+    </if>
+    <if test="skillInfo != null and skillInfo !=''">
+      ,SKILL_INFO = #{skillInfo}
+    </if>
+    <if test="skillSpEffect != null and skillSpEffect !=''">
+      ,SKILL_SP_EFFECTS = #{skillSpEffect}
+    </if>
+    WHERE ID = #{id}
+  </update>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.TodoRepository" >
+  <resultMap id="TodoResultMap" type="com.app.model.Todo" >
+    <id column="todo_id" property="todoId" jdbcType="INTEGER" />
+    <result column="todo_title" property="todoTitle" jdbcType="VARCHAR" />
+    <result column="todo_date" property="createdAt" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Todo_Column_List" >
+    todo_id, todo_title, todo_date
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="TodoResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Todo_Column_List" />
+    from TODORESOURCE
+    where todo_id = #{todoId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findAll" resultMap="TodoResultMap" >
+    select 
+    <include refid="Todo_Column_List" />
+    from TODORESOURCE
+  </select>
+  
+  <select id="findCreate" resultMap="TodoResultMap" >
+    select 
+    <include refid="Todo_Column_List" />
+    from TODORESOURCE
+    order by todo_date desc
+    limit 1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from TODORESOURCE
+    where todo_id = #{todoId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.app.model.User" >
+    insert into TODORESOURCE (todo_title, todo_date)
+    values (#{todoTitle,jdbcType=VARCHAR}, CURRENT_DATE)
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.app.model.User" >
+    update TODORESOURCE
+    set todo_title = #{todoTitle,jdbcType=VARCHAR},
+      todo_date = CURRENT_DATE
+    where todo_id = #{todoId,jdbcType=INTEGER}
+  </update>
+</mapper>

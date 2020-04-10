@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.FehCharacterRepository" >
+  <resultMap id="FehCharacterResultMap" type="com.app.model.FehCharacter" >
+    <id column="CHARACTER_ID" property="id" jdbcType="INTEGER" />
+    <result column="CHARACTER_TITLENAME" property="titlename" jdbcType="VARCHAR" />
+    <result column="CHARACTER_ORIGIN" property="origin" jdbcType="VARCHAR" />
+    <result column="CHARACTER_BASENAME" property="basename" jdbcType="VARCHAR" />
+    <result column="CHARACTER_NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CHARACTER_MASTER_ID" property="masterId" jdbcType="VARCHAR" />
+    <result column="CHARACTER_POOL" property="pool" jdbcType="VARCHAR" />
+    <result column="CHARACTER_FACE_IMG" property="faceImg" jdbcType="VARCHAR" />
+    <result column="CHARACTER_Q_IMG" property="qImg" jdbcType="VARCHAR" />
+    <result column="CHARACTER_STAND_IMG" property="standImg" jdbcType="VARCHAR" />
+    <result column="CHARACTER_ATT_IMG" property="attImg" jdbcType="VARCHAR" />
+    <result column="CHARACTER_EXTRA_IMG" property="extraImg" jdbcType="VARCHAR" />
+    <result column="CHARACTER_DEF_IMG" property="defImg" jdbcType="VARCHAR" />
+    <result column="CHARACTER_HP" property="hp" jdbcType="INTEGER" />
+    <result column="CHARACTER_ATT" property="att" jdbcType="INTEGER" />
+    <result column="CHARACTER_SPD" property="spd" jdbcType="INTEGER" />
+    <result column="CHARACTER_DEF" property="def" jdbcType="INTEGER" />
+    <result column="CHARACTER_MDF" property="mdf" jdbcType="INTEGER" />
+    <result column="CHARACTER_BASE_HP" property="baseHp" jdbcType="INTEGER" />
+    <result column="CHARACTER_BASE_ATT" property="baseAtt" jdbcType="INTEGER" />
+    <result column="CHARACTER_BASE_SPD" property="baseSpd" jdbcType="INTEGER" />
+    <result column="CHARACTER_BASE_DEF" property="baseDef" jdbcType="INTEGER" />
+    <result column="CHARACTER_BASE_MDF" property="baseMdf" jdbcType="INTEGER" />
+    <result column="CHARACTER_WEAPON" property="weapon" jdbcType="VARCHAR" />
+    <result column="CHARACTER_SKILL_A" property="skillA" jdbcType="VARCHAR" />
+    <result column="CHARACTER_SKILL_B" property="skillB" jdbcType="VARCHAR" />
+    <result column="CHARACTER_SKILL_C" property="skillC" jdbcType="VARCHAR" />
+    <result column="CHARACTER_SKILL_D" property="skillD" jdbcType="VARCHAR" />
+    <result column="CHARACTER_SKILL_S" property="skillS" jdbcType="VARCHAR" />
+    <result column="CHARACTER_SKILL_E" property="skillE" jdbcType="VARCHAR" />
+    <result column="CHARACTER_MOVE_TYPE" property="moveType" jdbcType="VARCHAR" />
+    <result column="CHARACTER_WEAPON_TYPE" property="weaponType" jdbcType="VARCHAR" />
+    <result column="CHARACTER_RACE" property="race" jdbcType="VARCHAR" />
+    <result column="CHARACTER_BLESSING" property="blessing" jdbcType="VARCHAR" />
+    <result column="CHARACTER_LEVEL_PLUS" property="levelPlus" jdbcType="INTEGER" />
+    <result column="CHARACTER_COLOR" property="color" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Chareacter" >
+    FC.CHARACTER_ID
+    ,FC.CHARACTER_TITLENAME
+    ,FC.CHARACTER_BASENAME
+    ,FC.CHARACTER_NAME
+    ,FC.CHARACTER_POOL
+    ,CONCAT(#{imagePath},FC.CHARACTER_FACE_IMG) AS CHARACTER_FACE_IMG
+    ,CONCAT(#{imagePath},FC.CHARACTER_Q_IMG) AS CHARACTER_Q_IMG
+    ,CONCAT(#{imagePath},FC.CHARACTER_STAND_IMG) AS CHARACTER_STAND_IMG
+    ,CONCAT(#{imagePath},FC.CHARACTER_ATT_IMG) AS CHARACTER_ATT_IMG
+    ,CONCAT(#{imagePath},FC.CHARACTER_EXTRA_IMG) AS CHARACTER_EXTRA_IMG
+    ,CONCAT(#{imagePath},FC.CHARACTER_DEF_IMG) AS CHARACTER_DEF_IMG
+    ,FC.CHARACTER_HP
+    ,FC.CHARACTER_ATT
+    ,FC.CHARACTER_SPD
+    ,FC.CHARACTER_DEF
+    ,FC.CHARACTER_MDF
+    ,FC.CHARACTER_BASE_HP
+    ,FC.CHARACTER_BASE_ATT
+    ,FC.CHARACTER_BASE_SPD
+    ,FC.CHARACTER_BASE_DEF
+    ,FC.CHARACTER_BASE_MDF
+    ,FC.CHARACTER_WEAPON
+    ,FC.CHARACTER_SKILL_A
+    ,FC.CHARACTER_SKILL_B
+    ,FC.CHARACTER_SKILL_C
+    ,FC.CHARACTER_SKILL_D
+    ,FC.CHARACTER_SKILL_S
+    ,FC.CHARACTER_SKILL_E
+    ,FC.CHARACTER_MOVE_TYPE
+    ,FC.CHARACTER_WEAPON_TYPE
+    ,FC.CHARACTER_RACE
+    ,FC.CHARACTER_BLESSING
+    ,FC.CHARACTER_LEVEL_PLUS
+    ,FC.CHARACTER_COLOR
+  </sql>
+  
+  <sql id="insert_column_list" >
+   (CHARACTER_TITLENAME
+   ,CHARACTER_ORIGIN
+   ,CHARACTER_BASENAME
+   ,CHARACTER_NAME
+   ,CHARACTER_MASTER_ID
+   ,CHARACTER_POOL
+   ,CHARACTER_FACE_IMG
+   ,CHARACTER_Q_IMG
+   ,CHARACTER_STAND_IMG
+   ,CHARACTER_ATT_IMG
+   ,CHARACTER_EXTRA_IMG
+   ,CHARACTER_DEF_IMG
+   ,CHARACTER_HP
+   ,CHARACTER_ATT
+   ,CHARACTER_SPD
+   ,CHARACTER_DEF
+   ,CHARACTER_MDF
+   ,CHARACTER_BASE_HP
+   ,CHARACTER_BASE_ATT
+   ,CHARACTER_BASE_SPD
+   ,CHARACTER_BASE_DEF
+   ,CHARACTER_BASE_MDF
+   ,CHARACTER_WEAPON
+   ,CHARACTER_SKILL_A
+   ,CHARACTER_SKILL_B
+   ,CHARACTER_SKILL_C
+   ,CHARACTER_SKILL_D
+   ,CHARACTER_SKILL_S
+   ,CHARACTER_SKILL_E
+   ,CHARACTER_MOVE_TYPE
+   ,CHARACTER_WEAPON_TYPE
+   ,CHARACTER_RACE
+   ,CHARACTER_BLESSING
+   ,CHARACTER_LEVEL_PLUS
+   ,CHARACTER_COLOR) VALUES
+  </sql>
+  
+  <sql id="I_FCM_FIELD" >
+  (CHARACTER_NAME,CHARACTER_ORIGIN) VALUES
+  </sql>
+  
+  <insert id="insertToMaster" parameterType="com.app.model.FehCharacter">
+  INSERT INTO FEH_CHARACTER_MASTER
+  <include refid="I_FCM_FIELD"></include>
+  (#{basename},#{origin})
+  </insert>
+  
+  <select id="selectOne" resultMap="FehCharacterResultMap">
+  SELECT
+    <include refid="Chareacter"></include>
+    ,FCM.CHARACTER_ORIGIN
+  FROM 
+     FEH_CHARACTER FC
+   LEFT JOIN 
+     FEH_CHARACTER_MASTER FCM
+   ON
+     FC.CHARACTER_NAME = FCM.CHARACTER_NAME
+   WHERE
+     FC.CHARACTER_ID = #{id}
+  </select>
+  
+  <select id="selectByDto" parameterType="com.app.model.FehCharacter" resultMap="FehCharacterResultMap">
+  SELECT
+    <include refid="Chareacter"></include>
+    ,FCM.CHARACTER_ORIGIN
+   FROM 
+     FEH_CHARACTER FC
+   LEFT JOIN 
+     FEH_CHARACTER_MASTER FCM
+   ON
+     FC.CHARACTER_NAME = FCM.CHARACTER_NAME
+   <where>
+    <if test="id!=null">
+     CHARACTER_ID= #{id}
+   </if>
+   <if test="titlename!=null">
+     CHARACTER_TITLENAME= #{titlename}
+   </if>
+   <if test="basename!=null">
+     CHARACTER_BASENAME= #{basename}
+   </if>
+   <if test="name!=null">
+     CHARACTER_NAME= #{name}
+   </if>
+   <if test="pool!=null">
+     CHARACTER_POOL= #{pool}
+   </if>
+   <if test="faceImg!=null">
+     CHARACTER_FACE_IMG= #{faceImg}
+   </if>
+   <if test="qImg!=null">
+     CHARACTER_Q_IMG= #{qImg}
+   </if>
+   <if test="standImg!=null">
+     CHARACTER_STAND_IMG= #{standImg}
+   </if>
+   <if test="attImg!=null">
+     CHARACTER_ATT_IMG= #{attImg}
+   </if>
+   <if test="extraImg!=null">
+     CHARACTER_EXTRA_IMG= #{extraImg}
+   </if>
+   <if test="defImg!=null">
+     CHARACTER_DEF_IMG= #{defImg}
+   </if>
+   <if test="hp!=null">
+     CHARACTER_HP= #{hp}
+   </if>
+   <if test="att!=null">
+     CHARACTER_ATT= #{att}
+   </if>
+   <if test="spd!=null">
+     CHARACTER_SPD= #{spd}
+   </if>
+   <if test="def!=null">
+     CHARACTER_DEF= #{def}
+   </if>
+   <if test="mdf!=null">
+     CHARACTER_MDF= #{mdf}
+   </if>
+   <if test="baseHp!=null">
+     CHARACTER_BASE_HP= #{baseHp}
+   </if>
+   <if test="baseAtt!=null">
+     CHARACTER_BASE_ATT= #{baseAtt}
+   </if>
+   <if test="baseSpd!=null">
+     CHARACTER_BASE_SPD= #{baseSpd}
+   </if>
+   <if test="baseDef!=null">
+     CHARACTER_BASE_DEF= #{baseDef}
+   </if>
+   <if test="baseMdf!=null">
+     CHARACTER_BASE_MDF= #{baseMdf}
+   </if>
+   <if test="weapon!=null">
+     CHARACTER_WEAPON= #{weapon}
+   </if>
+   <if test="skillA!=null">
+     CHARACTER_SKILL_A= #{skillA}
+   </if>
+   <if test="skillB!=null">
+     CHARACTER_SKILL_B= #{skillB}
+   </if>
+   <if test="skillC!=null">
+     CHARACTER_SKILL_C= #{skillC}
+   </if>
+   <if test="skillD!=null">
+     CHARACTER_SKILL_D= #{skillD}
+   </if>
+   <if test="skillE!=null">
+     CHARACTER_SKILL_E= #{skillE}
+   </if>
+   <if test="moveType!=null">
+     CHARACTER_MOVE_TYPE= #{moveType}
+   </if>
+   <if test="weaponType!=null">
+     CHARACTER_WEAPON_TYPE= #{weaponType}
+   </if>
+   <if test="race!=null">
+     CHARACTER_RACE= #{race}
+   </if>
+   <if test="blessing!=null">
+     CHARACTER_BLESSING= #{blessing}
+   </if>
+   <if test="color!=null">
+     CHARACTER_COLOR= #{color}
+   </if>
+   </where>
+  </select>
+
+  <!-- FIND SAME ACTER -->
+  <select id="selectByOrigin" resultType="com.app.model.ContentMaster" parameterType="String">
+    SELECT 
+      CHARACTER_NAME as codeName
+    FROM
+      FEH_CHARACTER_MASTER
+    WHERE
+      CHARACTER_ORIGIN = #{origin}
+  </select>
+
+  <update id="updateFehCharacter" parameterType="com.app.model.FehCharacter">
+    UPDATE 
+      FEH_CHARACTER
+    SET
+      CHARACTER_ID= #{id}
+    <if test="titlename !=null">
+     ,CHARACTER_TITLENAME= #{titlename}
+   </if>
+   <if test="origin !=null">
+     ,CHARACTER_ORIGIN= #{origin}
+   </if>
+   <if test="basename !=null">
+     ,CHARACTER_BASENAME= #{basename}
+   </if>
+   <if test="name !=null">
+     ,CHARACTER_NAME= #{name}
+   </if>
+   <if test="masterId !=null">
+     ,CHARACTER_MASTER_ID= #{masterId}
+   </if>
+   <if test="pool !=null">
+     ,CHARACTER_POOL= #{pool}
+   </if>
+   <if test="faceImg !=null">
+     ,CHARACTER_FACE_IMG= #{faceImg}
+   </if>
+   <if test="qImg !=null">
+     ,CHARACTER_Q_IMG= #{qImg}
+   </if>
+   <if test="standImg !=null">
+     ,CHARACTER_STAND_IMG= #{standImg}
+   </if>
+   <if test="attImg !=null">
+     ,CHARACTER_ATT_IMG= #{attImg}
+   </if>
+   <if test="extraImg !=null">
+     ,CHARACTER_EXTRA_IMG= #{extraImg}
+   </if>
+   <if test="defImg !=null">
+     ,CHARACTER_DEF_IMG= #{defImg}
+   </if>
+   <if test="hp !=null">
+     ,CHARACTER_HP= #{hp}
+   </if>
+   <if test="att !=null">
+     ,CHARACTER_ATT= #{att}
+   </if>
+   <if test="spd !=null">
+     ,CHARACTER_SPD= #{spd}
+   </if>
+   <if test="def !=null">
+     ,CHARACTER_DEF= #{def}
+   </if>
+   <if test="mdf !=null">
+     ,CHARACTER_MDF= #{mdf}
+   </if>
+   <if test="baseHp !=null">
+     ,CHARACTER_BASE_HP= #{baseHp}
+   </if>
+   <if test="baseAtt !=null">
+     ,CHARACTER_BASE_ATT= #{baseAtt}
+   </if>
+   <if test="baseSpd !=null">
+     ,CHARACTER_BASE_SPD= #{baseSpd}
+   </if>
+   <if test="baseDef !=null">
+     ,CHARACTER_BASE_DEF= #{baseDef}
+   </if>
+   <if test="baseMdf !=null">
+     ,CHARACTER_BASE_MDF= #{baseMdf}
+   </if>
+   <if test="weapon !=null">
+     ,CHARACTER_WEAPON= #{weapon}
+   </if>
+   <if test="skillA !=null">
+     ,CHARACTER_SKILL_A= #{skillA}
+   </if>
+   <if test="skillB !=null">
+     ,CHARACTER_SKILL_B= #{skillB}
+   </if>
+   <if test="skillC !=null">
+     ,CHARACTER_SKILL_C= #{skillC}
+   </if>
+   <if test="skillD !=null">
+     ,CHARACTER_SKILL_D= #{skillD}
+   </if>
+   <if test="skillS !=null">
+     ,CHARACTER_SKILL_S= #{skillS}
+   </if>
+   <if test="skillE !=null">
+     ,CHARACTER_SKILL_E= #{skillE}
+   </if>
+   <if test="moveType !=null">
+     ,CHARACTER_MOVE_TYPE= #{moveType}
+   </if>
+   <if test="weaponType !=null">
+     ,CHARACTER_WEAPON_TYPE= #{weaponType}
+   </if>
+   <if test="race !=null">
+     ,CHARACTER_RACE= #{race}
+   </if>
+   <if test="blessing !=null">
+     ,CHARACTER_BLESSING= #{blessing}
+   </if>
+   <if test="levelPlus !=null">
+     ,CHARACTER_LEVEL_PLUS= #{levelPlus}
+   </if>
+   <if test="color !=null">
+     ,CHARACTER_COLOR= #{color}
+   </if>
+   WHERE
+     CHARACTER_ID= #{id}
+  </update>
+  
+  <insert id="insertToActer" parameterType="com.app.model.FehCharacter">
+  INSERT INTO FEH_CHARACTER
+    <include refid="insert_column_list"></include>
+  (#{titlename}
+  ,#{origin}
+  ,#{basename}
+  ,#{name}
+  ,#{masterId}
+  ,#{pool}
+  ,#{faceImg}
+  ,#{qImg}
+  ,#{standImg}
+  ,#{attImg}
+  ,#{extraImg}
+  ,#{defImg}
+  ,#{hp}
+  ,#{att}
+  ,#{spd}
+  ,#{def}
+  ,#{mdf}
+  ,#{baseHp}
+  ,#{baseAtt}
+  ,#{baseSpd}
+  ,#{baseDef}
+  ,#{baseMdf}
+  ,#{weapon}
+  ,#{skillA}
+  ,#{skillB}
+  ,#{skillC}
+  ,#{skillD}
+  ,#{skillS}
+  ,#{skillE}
+  ,#{moveType}
+  ,#{weaponType}
+  ,#{race}
+  ,#{blessing}
+  ,#{levelPlus}
+  ,#{color})
+  </insert>
+  
+  <select id="countByName" resultType="Integer" parameterType="String">
+    SELECT COUNT(*) FROM FEH_CHARACTER
+    WHERE CHARACTER_BASENAME =#{baseName} AND CHARACTER_TITLENAME =#{titleName}
+  </select>
+  
+    <select id="findSameActer" parameterType="com.app.model.FehCharacter" resultMap="FehCharacterResultMap">
+    SELECT
+    <include refid="Chareacter"></include>
+  FROM 
+     FEH_CHARACTER FC
+   WHERE
+     FC.CHARACTER_BASENAME =#{basename} AND FC.CHARACTER_ID &lt;&gt;#{id}
+     </select>
+     
+  <select id="selectByCustomize" resultMap="FehCharacterResultMap">
+    SELECT
+     <include refid="Chareacter"></include>
+    ,FCM.CHARACTER_ORIGIN
+    FROM 
+     FEH_CHARACTER FC
+    LEFT JOIN 
+     FEH_CHARACTER_MASTER FCM
+    ON
+     FC.CHARACTER_NAME = FCM.CHARACTER_NAME
+    <where>
+     1 =1 
+    <if test="whereQuery != null and whereQuery !='' ">
+     AND ${whereQuery}
+    </if>
+   </where>
+  </select>
+  
+  <select id = "selectByTeamNo" resultMap="FehCharacterResultMap">
+    SELECT
+      CHARACTER_ID
+      , CONCAT(#{imagePath},CHARACTER_FACE_IMG) AS CHARACTER_FACE_IMG
+    FROM FEH_CHARACTER
+    <where>
+      <if test="teamFlg != null and teamFlg !='' ">
+        CHARACTER_MASTER_ID = ${teamFlg}
+      </if>
+    </where>
+  </select>
+
+  <select id = "selectAlertnativeImgId" parameterType="com.app.form.TeamEditForm" resultType="String">
+    SELECT
+      CHARACTER_ID AS id
+    FROM FEH_CHARACTER
+    <where>
+      <if test="moveType !=null and moveType !=''">
+        CHARACTER_MOVE_TYPE = #{moveType}
+      </if>
+      <if test="color !=null and color !=''">
+        AND CHARACTER_COLOR = #{color}
+      </if>
+      <if test="race !=null and race !=''">
+        AND CHARACTER_RACE = #{race}
+      </if>
+      <if test="skillA !=null and skillA !=''">
+        AND CHARACTER_SKILL_A = #{skillA}
+      </if>
+      <if test="skillB !=null and skillB !=''">
+        AND CHARACTER_SKILL_B = #{skillB}
+      </if>
+      <if test="skillC !=null and skillC !=''">
+        AND CHARACTER_SKILL_C = #{skillC}
+      </if>
+    </where>
+  </select>
+
+  <update id="initialTeam" parameterType = "String">
+    UPDATE FEH_CHARACTER SET CHARACTER_MASTER_ID = NULL WHERE CHARACTER_MASTER_ID = ${teamNo}
+  </update>
+
+  <update id="saveTeam" parameterType = "String">
+    UPDATE
+      FEH_CHARACTER
+    SET
+      CHARACTER_MASTER_ID = ${teamNo}
+    WHERE
+      CHARACTER_ID IN (${acterId})
+  </update>
+</mapper>

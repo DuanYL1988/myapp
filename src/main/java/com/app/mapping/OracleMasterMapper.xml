@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.OracleMasterRepository" >
+
+<insert id="insertTip"  parameterType="com.app.model.OracleTip" >
+INSERT INTO ORACLE_CHAPTER_TIPS
+(CHAPTER_ID,CHAPTER_NAME,TIP_INFO,KEY_WORD,RANK,CREATE_DATE,UPDATE_DATE) VALUES (
+#{chapterId}
+,#{chapterName}
+,#{tipInfo}
+,#{keyWord}
+,#{rank}
+,current_timestamp
+,current_timestamp)
+</insert>
+
+<insert id="insertKeyword"  parameterType="com.app.model.OracleKeyword" >
+INSERT INTO ORACLE_KEYWORD
+(TIPS_ID,KEY_WORD,FUNCTION_FLG,GRAMMAR,EXAMPLE_TEXT,EXAMPLE_RESULT,INFO,CREATE_DATE,UPDATE_DATE) VALUES (
+#{tipId}
+,#{keyWord}
+,#{functionFlg}
+,#{grammar}
+,#{exampleText}
+,#{exampleResult}
+,#{info}
+,current_timestamp
+,current_timestamp)
+</insert>
+
+</mapper>

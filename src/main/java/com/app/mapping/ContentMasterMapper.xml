@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.ContentMasterRepository" >
+  <resultMap id="ContentMasterResultMap" type="com.app.model.ContentMaster" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CATEGORY_ID" property="catagoryId" jdbcType="VARCHAR" />
+    <result column="CATEGORY_NAME" property="catagoryName" jdbcType="VARCHAR" />
+    <result column="CODE_ID" property="codeId" jdbcType="VARCHAR" />
+    <result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+    <result column="CM_ORDER" property="orderBy" jdbcType="INTEGER" />
+    <result column="CODE_NAME_IMG" property="codeNameImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CATEGORY_ID AS catagoryId, CATEGORY_NAME AS catagoryName,CODE_ID AS codeId,CODE_NAME AS codeName,CODE_NAME_IMG AS codeNameImg
+  </sql>
+  
+  <insert id="insert" parameterType="com.app.model.ContentMaster" >
+    insert into FEH_CONTENT_MASTER (CATEGORY_ID, CATEGORY_NAME,CODE_ID,CODE_NAME,CODE_NAME_IMG)
+    values (#{catagoryId,jdbcType=VARCHAR}, 
+    #{catagoryName,jdbcType=VARCHAR}, 
+    #{codeId,jdbcType=VARCHAR}, 
+    #{codeName,jdbcType=VARCHAR}, 
+    #{codeNameImg,jdbcType=VARCHAR} )
+  </insert>
+  
+  <insert id="insertSql" parameterType="String">
+  	#{sqlString}
+  </insert>
+
+  <select id="getContentByCategoryId" parameterType="String"
+    resultType="com.app.model.ContentMaster">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    FEH_CONTENT_MASTER
+    WHERE
+    CATEGORY_ID = #{catagoryId}
+  </select>
+
+  <select id="selectOne" parameterType="String"
+    resultMap="ContentMasterResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    FEH_CONTENT_MASTER
+    WHERE
+    CATEGORY_ID = #{categoryId}
+    AND CODE_ID = #{codeId}
+  </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.XenoBladeHeroRespository" >
+  <resultMap id="BladeResultMap" type="com.app.model.XenoBladeHero" >
+    <id column="blade_id" property="id" jdbcType="INTEGER" />
+    <result column="blade_name" property="name" jdbcType="VARCHAR" />
+    <result column="blade_type" property="type" jdbcType="VARCHAR" />
+    <result column="blade_weapon" property="weapon" jdbcType="VARCHAR" />
+    <result column="blade_attr" property="attr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Blade_Column_List" >
+    blade_id, blade_name, blade_type, blade_weapon, blade_attr
+  </sql>
+  
+  <select id="findAll" parameterType="com.app.model.XenoBladeHero" resultMap="BladeResultMap">
+  	SELECT 
+  	<include refid="Blade_Column_List" />
+  	FROM
+  	 XENOBLADE_BLADE
+  </select>
+  
+  <insert id="insert" parameterType="com.app.model.XenoBladeHero">
+  	INSERT INTO XENOBLADE_BLADE(blade_name, blade_type, blade_weapon, blade_attr)
+  	VALUES(#{name},
+  	#{type},
+  	#{weapon},
+  	#{attr}
+  	)
+  </insert>
+</mapper>
