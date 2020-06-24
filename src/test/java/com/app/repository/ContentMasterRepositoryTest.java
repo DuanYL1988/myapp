@@ -1,8 +1,5 @@
 package com.app.repository;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +19,7 @@ import com.app.util.CommonUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/spring-mybatis.xml",
         "classpath:spring/spring-mvc.xml" })
+@SuppressWarnings("unused")
 public class ContentMasterRepositoryTest {
 
     public static final int FILED_TO_LOWERCASE = 0;
@@ -120,64 +118,6 @@ public class ContentMasterRepositoryTest {
     }
 
     @Test
-    public void testJava() throws Exception {
-        int mode = PRINT_INSERT;
-        String filePath = new File("").getAbsolutePath();
-        File file = new File(filePath + "\\change.txt");
-        FileReader fr = new FileReader(file);
-        BufferedReader br = new BufferedReader(fr);
-        String line;
-        String outResult = "";
-        while ((line = br.readLine()) != null) {
-            String[] texts = line.split(" ");
-            String[] words = texts[0].split("_");
-            String result = "";
-            int step = 0;
-            for (String word : words) {
-                if (step == 1) {
-                    result += word.toLowerCase();
-                } else if (step > 1) {
-                    String sub = word.substring(1, word.length()).toLowerCase();
-                    result += word.substring(0, 1) + sub;
-                }
-                step++;
-            }
-            String type = texts[1].replace(",", "");
-            if (type.indexOf("(") >= 0) {
-                type = texts[1].substring(0, type.indexOf("("));
-            } else if ("INT".equals(type)) {
-                type = "INTEGER";
-            }
-            if (mode == FILED_TO_LOWERCASE) {
-                System.out.println(result);
-            } else if (mode == CHANGE_TO_RESULTMAP) {
-                result = "    <result column=\"" + texts[0] + "\" property=\""
-                        + result + "\" jdbcType=\"" + type + "\" />";
-                System.out.println(result);
-            } else if (mode == PRINT_SELECT_WHERE) {
-                System.out.println("   <if test=\"" + result + " !=null and "
-                        + result + " !='' \">");
-                System.out.println("     " + texts[0] + "= #{" + result + "}");
-                System.out.println("   </if>");
-            } else if (mode == PRINT_JAVA_SETGET) {
-                String javaType = " String ";
-                if ("INT".equals(type)) {
-                    javaType = " Integer ";
-                }
-                System.out.println("private" + javaType + result + ";");
-            } else if (mode == PRINT_INSERT) {
-                System.out.print("#{" + result + "},");
-            } else if (mode == PRINT_UPDATE) {
-                System.out.println("   <if test=\"" + result + " !=null\">");
-                System.out.println("     ," + texts[0] + "= #{" + result + "}");
-                System.out.println("   </if>");
-            }
-            outResult += texts[0] + ",";
-        }
-        // System.out.println(outResult);
-    }
-
-    @Test
     public void testJava01() {
         String path = "D:\\Workspaces\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter\\Lin_F_ELECTION01\\face.png";
         path = path.split("webapp")[1];
@@ -186,7 +126,7 @@ public class ContentMasterRepositoryTest {
         path = path.replace("\\", "/");
         System.out.println(path);
     }
-    
+
     @Test
     public void testQuery(){
         List<FehCharacter> list = fehRepository.selectByCustomize("CHARACTER_ID = '2'");

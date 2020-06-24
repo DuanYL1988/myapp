@@ -20,7 +20,7 @@ public class FehFileUtils {
 
     private static final String MODE_RENAME_FOLDER = "2";
 
-    private static final String NORMAL_BEF = "Face.";
+    private static final String NORMAL_BEF = "_Face.";
 
     private static final String ATTACT_BEF = "BtlFace.";
 
@@ -42,9 +42,6 @@ public class FehFileUtils {
 
     @SuppressWarnings("resource")
     public static void main(String[] args) throws Exception {
-        String StringTest = "ch00_01_Alfons_M_Normal";
-        StringTest = StringTest.substring(8, StringTest.length());
-        System.out.println(StringTest);
         System.out.println("请输入文件夹路径,输入def使用默认路径");
         Scanner scanner = new Scanner(System.in);
         String folderPath = scanner.nextLine();

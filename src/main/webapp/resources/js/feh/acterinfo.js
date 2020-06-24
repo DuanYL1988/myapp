@@ -22,13 +22,21 @@ $(window).on('load',function(){
          ajaxPost('/myapp/ajax/getInfoByCategory',jsonData,callback);
     });
     
+    // 反应角色头像
+    $('#imagePath').on('change',function(){
+        alert(this.value);
+        var path = this.value;
+        path = path.replace(/'\'/g,'/');
+        $("#faceImg").attr("src","../../../"+path);
+    });
+    
     //把下拉框中的值赋给输入框
-    $('select[class="form-control select"]').on('change',function(){
+    $('select[class="inputSelect"]').on('change',function(){
         $inputEle = $(this).parent().find('input').val(this.value);
     });
     
     //通过入力内容缩小下拉框中内容
-    $('select[class="form-control select"]').on('click',function(){
+    $('select[class="inputSelect"]').on('click',function(){
         var inputVal = $(this).parent().find('input').val();
             var options = this.childNodes;
             $.each(options,function(){

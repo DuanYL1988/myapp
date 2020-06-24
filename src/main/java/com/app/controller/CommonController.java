@@ -63,8 +63,7 @@ public class CommonController {
     @RequestMapping(value = "saveFavImg", method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponseDto saveFavImg(@RequestBody CommonAjaxForm form) {
-        AjaxResponseDto result = fehService.saveFavImg(form.getDataList());
-        return result;
+        return null;
     }
 
 }
