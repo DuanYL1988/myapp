@@ -10,13 +10,13 @@ import com.app.model.ContentMaster;
 @Repository
 public interface ContentMasterRepository {
 
-	void insert(ContentMaster content);
-	
-	void insertSql(String sqlString);
-	
-	List<ContentMaster> getContentByCategoryId(String categoryId);
-	
-	List<ContentMaster> getContentByDto(ContentMaster content);
-	
-	ContentMaster selectOne(@Param("categoryId") String categoryId,@Param("codeId") String codeId);
+    void insert(ContentMaster content);
+
+    void insertSql(String sqlString);
+
+    List<ContentMaster> getContentByCategoryId(String categoryId);
+
+    List<ContentMaster> getContentByDto(ContentMaster content);
+
+    ContentMaster selectOne(@Param("categoryId") String categoryId,@Param("codeId") String codeId);
 }
