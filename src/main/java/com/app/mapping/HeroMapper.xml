@@ -2,38 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.app.repository.HeroRepository" >
   <resultMap id="HeroResultMap" type="com.app.model.Hero" >
-    <id column="ID" property="id" jdbcType="VARCHAR2" />
-    <result column="MASTER_ID" property="masterId" jdbcType="VARCHAR2" />
-    <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR2" />
-    <result column="NAME" property="name" jdbcType="VARCHAR2" />
-    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR2" />
-    <result column="IMG_NAME" property="imgName" jdbcType="VARCHAR2" />
-    <result column="ORIGIN" property="origin" jdbcType="VARCHAR2" />
-    <result column="HP" property="hp" jdbcType="NUMBER" />
-    <result column="ATTACT" property="attact" jdbcType="NUMBER" />
-    <result column="SPEED" property="speed" jdbcType="NUMBER" />
-    <result column="DEF" property="def" jdbcType="NUMBER" />
-    <result column="MDF" property="mdf" jdbcType="NUMBER" />
-    <result column="WEAPON" property="weapon" jdbcType="VARCHAR2" />
-    <result column="SKILL_A" property="skillA" jdbcType="VARCHAR2" />
-    <result column="SKILL_B" property="skillB" jdbcType="VARCHAR2" />
-    <result column="SKILL_C" property="skillC" jdbcType="VARCHAR2" />
-    <result column="SKILL_D" property="skillD" jdbcType="VARCHAR2" />
-    <result column="SKILL_S" property="skillS" jdbcType="VARCHAR2" />
-    <result column="SKILL_E" property="skillE" jdbcType="VARCHAR2" />
-    <result column="LIMIT_PLUS" property="limitPlus" jdbcType="NUMBER" />
-    <result column="SUPPORT_MATE" property="supportMate" jdbcType="VARCHAR2" />
-    <result column="BLESSING" property="blessing" jdbcType="VARCHAR2" />
-    <result column="MOVE_TYPE" property="moveType" jdbcType="VARCHAR2" />
-    <result column="WEAPON_TYPE" property="weaponType" jdbcType="VARCHAR2" />
-    <result column="COLOR" property="color" jdbcType="VARCHAR2" />
-    <result column="RACE" property="race" jdbcType="VARCHAR2" />
-    <result column="HERO_TYPE" property="heroType" jdbcType="VARCHAR2" />
-    <result column="TEAM" property="team" jdbcType="NUMBER" />
-    <result column="SKILL_POINT" property="skillPoint" jdbcType="NUMBER" />
-    <result column="HERO_POINT" property="heroPoint" jdbcType="NUMBER" />
-    <result column="SPEC_TAG" property="specTag" jdbcType="VARCHAR2" />
-    <result column="POOL" property="pool" jdbcType="VARCHAR2" />
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="MASTER_ID" property="masterId" jdbcType="VARCHAR" />
+    <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="IMG_NAME" property="imgName" jdbcType="VARCHAR" />
+    <result column="ORIGIN" property="origin" jdbcType="VARCHAR" />
+    <result column="HP" property="hp" jdbcType="INTEGER" />
+    <result column="ATTACT" property="attact" jdbcType="INTEGER" />
+    <result column="SPEED" property="speed" jdbcType="INTEGER" />
+    <result column="DEF" property="def" jdbcType="INTEGER" />
+    <result column="MDF" property="mdf" jdbcType="INTEGER" />
+    <result column="WEAPON" property="weapon" jdbcType="VARCHAR" />
+    <result column="SKILL_A" property="skillA" jdbcType="VARCHAR" />
+    <result column="SKILL_B" property="skillB" jdbcType="VARCHAR" />
+    <result column="SKILL_C" property="skillC" jdbcType="VARCHAR" />
+    <result column="SKILL_D" property="skillD" jdbcType="VARCHAR" />
+    <result column="SKILL_S" property="skillS" jdbcType="VARCHAR" />
+    <result column="SKILL_E" property="skillE" jdbcType="VARCHAR" />
+    <result column="LIMIT_PLUS" property="limitPlus" jdbcType="INTEGER" />
+    <result column="SUPPORT_MATE" property="supportMate" jdbcType="VARCHAR" />
+    <result column="BLESSING" property="blessing" jdbcType="VARCHAR" />
+    <result column="MOVE_TYPE" property="moveType" jdbcType="VARCHAR" />
+    <result column="WEAPON_TYPE" property="weaponType" jdbcType="VARCHAR" />
+    <result column="COLOR" property="color" jdbcType="VARCHAR" />
+    <result column="RACE" property="race" jdbcType="VARCHAR" />
+    <result column="HERO_TYPE" property="heroType" jdbcType="VARCHAR" />
+    <result column="TEAM" property="team" jdbcType="INTEGER" />
+    <result column="SKILL_POINT" property="skillPoint" jdbcType="INTEGER" />
+    <result column="HERO_POINT" property="heroPoint" jdbcType="INTEGER" />
+    <result column="SPEC_TAG" property="specTag" jdbcType="VARCHAR" />
+    <result column="POOL" property="pool" jdbcType="VARCHAR" />
+    <result column="FAVORITE" property="favorite" jdbcType="VARCHAR" />
     <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_DATETIME" property="updateDatetime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -71,6 +72,7 @@
     ,HERO.HERO_POINT
     ,HERO.SPEC_TAG
     ,HERO.POOL
+    ,HERO.FAVORITE
     ,HERO.CREATE_DATETIME
     ,HERO.UPDATE_DATETIME
   </sql>
@@ -108,13 +110,14 @@
     ,HERO_POINT
     ,SPEC_TAG
     ,POOL
+    ,FAVORITE
     ,CREATE_DATETIME
     ,UPDATE_DATETIME
   </sql>
 
   <select id="selectOne" resultMap="HeroResultMap">
     SELECT
-    <include refid="insert_column_list"></include>
+    <include refid="select_column_list"></include>
     FROM HERO
     WHERE
       ID = #{id}
@@ -122,7 +125,7 @@
 
   <select id="selectByDto" parameterType="com.app.model.Hero" resultMap="HeroResultMap">
     SELECT
-    <include refid="insert_column_list"></include>
+    <include refid="select_column_list"></include>
     FROM HERO
     <where>
       <if test="masterId!=null">
@@ -218,6 +221,9 @@
       <if test="pool!=null">
       POOL = #{pool}
       </if>
+      <if test="favorite!=null">
+      FAVORITE = #{favorite}
+      </if>
       <if test="createDatetime!=null">
       CREATE_DATETIME = #{createDatetime}
       </if>
@@ -226,6 +232,13 @@
       </if>
     </where>
     </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT COUNT(*) AS count FROM HERO
+    WHERE
+      TITLE_NAME = #{titleName}
+      AND NAME = #{name}
+  </select>
 
   <update id="update" parameterType="com.app.model.Hero" >
     UPDATE
@@ -324,6 +337,9 @@
       <if test="pool!=null">
       ,POOL = #{pool}
       </if>
+      <if test="favorite!=null">
+      ,FAVORITE = #{favorite}
+      </if>
       <if test="createDatetime!=null">
       ,CREATE_DATETIME = #{createDatetime}
       </if>
@@ -335,43 +351,47 @@
   </update>
 
   <insert id="insert" parameterType="com.app.model.Hero" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+        SELECT SEQ_HERO.NEXTVAL FROM DUAL
+        </selectKey>
     INSERT INTO HERO(
     <include refid="insert_column_list"></include>
-    )VALUES(
+    ) VALUES (
       #{id}
-      #{masterId}
-      #{titleName}
-      #{name}
-      #{nickName}
-      #{imgName}
-      #{origin}
-      #{hp}
-      #{attact}
-      #{speed}
-      #{def}
-      #{mdf}
-      #{weapon}
-      #{skillA}
-      #{skillB}
-      #{skillC}
-      #{skillD}
-      #{skillS}
-      #{skillE}
-      #{limitPlus}
-      #{supportMate}
-      #{blessing}
-      #{moveType}
-      #{weaponType}
-      #{color}
-      #{race}
-      #{heroType}
-      #{team}
-      #{skillPoint}
-      #{heroPoint}
-      #{specTag}
-      #{pool}
-      #{createDatetime}
-      #{updateDatetime}
+      ,#{masterId}
+      ,#{titleName}
+      ,#{name}
+      ,#{nickName}
+      ,#{imgName}
+      ,#{origin}
+      ,#{hp}
+      ,#{attact}
+      ,#{speed}
+      ,#{def}
+      ,#{mdf}
+      ,#{weapon}
+      ,#{skillA}
+      ,#{skillB}
+      ,#{skillC}
+      ,#{skillD}
+      ,#{skillS}
+      ,#{skillE}
+      ,#{limitPlus}
+      ,#{supportMate}
+      ,#{blessing}
+      ,#{moveType}
+      ,#{weaponType}
+      ,#{color}
+      ,#{race}
+      ,#{heroType}
+      ,#{team}
+      ,#{skillPoint}
+      ,#{heroPoint}
+      ,#{specTag}
+      ,#{pool}
+      ,#{favorite}
+      ,#{createDatetime}
+      ,#{updateDatetime}
     )
   </insert>
 </mapper>

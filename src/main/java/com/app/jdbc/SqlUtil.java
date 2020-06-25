@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.app.repository.OracleCommonRepository;
 
 @Component
 public class SqlUtil {
@@ -24,9 +27,11 @@ public class SqlUtil {
 
     public static final String DB_TYPE_INT = "INT";
 
+    @Autowired
+    OracleCommonRepository oracleCommRep;
     /**
      * 数据库字段名转为java变量名
-     * 
+     *
      * @param fieldName
      * @return
      */
@@ -48,7 +53,7 @@ public class SqlUtil {
 
     /**
      * 生成select部分
-     * 
+     *
      * @param tableName
      * @param fields
      * @return
@@ -69,7 +74,7 @@ public class SqlUtil {
 
     /**
      * 生成where部分
-     * 
+     *
      * @param map
      * @return
      */
@@ -89,7 +94,7 @@ public class SqlUtil {
 
     /**
      * 万能插入数据
-     * 
+     *
      * @param tableName
      * @param fields
      */
@@ -127,7 +132,7 @@ public class SqlUtil {
 
     /**
      * 万能更新数据 主键的值必须设上
-     * 
+     *
      * @param tableName
      * @param fields
      */

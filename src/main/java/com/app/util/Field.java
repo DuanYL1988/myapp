@@ -16,6 +16,8 @@ public class Field {
 
     private boolean primaryKey;
 
+    private boolean existColumn;
+
     public String getDbNm() {
         return dbNm;
     }
@@ -70,6 +72,14 @@ public class Field {
 
     public void setPrimaryKey(boolean primaryKey) {
         this.primaryKey = primaryKey;
+    }
+
+    public boolean isExistColumn() {
+        return existColumn;
+    }
+
+    public void setExistColumn(boolean existColumn) {
+        this.existColumn = existColumn;
     }
 
 

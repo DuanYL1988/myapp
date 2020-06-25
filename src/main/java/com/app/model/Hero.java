@@ -6,7 +6,7 @@ public class Hero{
     /**
      * PRIMARYKEY
      */
-    private String id;
+    private Integer id;
 
     /**
      * 关联主表主键
@@ -14,12 +14,12 @@ public class Hero{
     private String masterId;
 
     /**
-     * 称号
+     * 称号EXISTCOL
      */
     private String titleName;
 
     /**
-     * 角色名
+     * 角色名EXISTCOL
      */
     private String name;
 
@@ -164,6 +164,11 @@ public class Hero{
     private String pool;
 
     /**
+     * 喜欢
+     */
+    private String favorite;
+
+    /**
      * 登录日期
      */
     private Date createDatetime;
@@ -176,14 +181,14 @@ public class Hero{
     /**
      * 设定PRIMARYKEY
      */
-    public void setId(String id){
+    public void setId(Integer id){
         this.id = id;
     }
 
     /**
      * 取得PRIMARYKEY
      */
-    public String getId(){
+    public Integer getId(){
         return id;
     }
     /**
@@ -200,27 +205,27 @@ public class Hero{
         return masterId;
     }
     /**
-     * 设定称号
+     * 设定称号EXISTCOL
      */
     public void setTitlename(String titleName){
         this.titleName = titleName;
     }
 
     /**
-     * 取得称号
+     * 取得称号EXISTCOL
      */
     public String getTitlename(){
         return titleName;
     }
     /**
-     * 设定角色名
+     * 设定角色名EXISTCOL
      */
     public void setName(String name){
         this.name = name;
     }
 
     /**
-     * 取得角色名
+     * 取得角色名EXISTCOL
      */
     public String getName(){
         return name;
@@ -588,6 +593,19 @@ public class Hero{
      */
     public String getPool(){
         return pool;
+    }
+    /**
+     * 设定喜欢
+     */
+    public void setFavorite(String favorite){
+        this.favorite = favorite;
+    }
+
+    /**
+     * 取得喜欢
+     */
+    public String getFavorite(){
+        return favorite;
     }
     /**
      * 设定登录日期

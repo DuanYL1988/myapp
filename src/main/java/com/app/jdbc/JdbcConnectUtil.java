@@ -20,9 +20,9 @@ public class JdbcConnectUtil {
 
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:ORCL";
 
-    private static final String USERNAME = "system";
+    private static final String USERNAME = "fireemblem";
 
-    private static final String PASSWORD = "oracle";
+    private static final String PASSWORD = "fireemblem";
 
     private static final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
 
@@ -45,8 +45,8 @@ public class JdbcConnectUtil {
     public int mode = 2;
 
     /**
-     * Excute SQL
-     * 
+     * 执行SQL
+     *
      * @param query
      */
     public List<Map<String, String>> excuteSelectQuery(String query) {
@@ -60,11 +60,16 @@ public class JdbcConnectUtil {
                     // 字段属性
                     String key = result.getMetaData().getColumnName(i);
                     String val = "";
+                    // 取得字段值
                     val = result.getString(i);
+                    // 控制台输出结果
                     System.out.print(val + TAB);
+                    // Map<数据库字段名,单元格值>
                     values.put(key, val);
                 }
+                // 换行
                 System.out.println();
+                // [<col1,val>,<col2,val>]这样存放检索出的数据
                 rst.add(values);
             }
         } catch (SQLException e) {
@@ -151,7 +156,7 @@ public class JdbcConnectUtil {
 
     /**
      * Get Select Columns
-     * 
+     *
      * @param query
      * @return
      */
@@ -168,22 +173,44 @@ public class JdbcConnectUtil {
         } catch (SQLException e) {
             System.out.println("->ResultSet.getColumnName Error!!");
         }
-        for (String col : cols) {
-            System.out.print(col + TAB);
+        if (null!=cols) {
+            for (String col : cols) {
+                System.out.print(col + TAB);
+            }
         }
-        System.out.println(
-                "\r" + "---------------------------------------------------");
+        System.out.println("\r" + "---------------------------------------------------");
         return cols;
     }
 
     /**
      * .执行Desc SQL取得Entity所有字段信息 只能执行DESC 文,请注意
-     * 
+     *
      * @param descQuery
      * @return
      */
-    public List<FieldInfo> getFieldInfo(String descQuery) {
+    public List<FieldInfo> getFieldInfo(String tableName) {
+        // 数据库判断
+        String descQuery = "";
+        if (DB_MYSQL == this.mode) {
+            descQuery = "DESC " + tableName;
+        } else if (DB_ORACLE == this.mode) {
+            // oracle时查询表结构SQL文
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT COLUMN_NAME");
+            query.append(",DATA_TYPE AS COLUMN_TYPE");
+            query.append(",NULLABLE AS IS_NULLABLE");
+            query.append(",'' AS COLUMN_KEY");
+            query.append(",DATA_DEFAULT AS COLUMN_DEFAULT");
+            query.append(",'' AS EXTRA ");
+            query.append("FROM USER_TAB_COLS ");
+            query.append("WHERE TABLE_NAME ='"+tableName+"'");
+            descQuery = query.toString();
+            System.out.println(descQuery);
+        }
+
+        // 执行sql
         List<Map<String,String>> rows = excuteSelectQuery(descQuery);
+
         List<FieldInfo> fields = new ArrayList<FieldInfo>();
         for (Map<String,String> row : rows) {
             Set<String> keySet = row.keySet();

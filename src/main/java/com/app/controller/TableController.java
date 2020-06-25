@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.app.jdbc.FieldInfo;
 import com.app.jdbc.JdbcConnectUtil;
 import com.app.jdbc.SqlUtil;
+import com.app.repository.OracleCommonRepository;
 import com.app.util.JsonUtil;
 
 @Controller
@@ -31,7 +32,10 @@ public class TableController {
 
     @Autowired
     JsonUtil jsonUtil;
-    
+
+    @Autowired
+    OracleCommonRepository oracleUtil;
+
     @RequestMapping(value = "/init")
     public String init(Model model) {
         return RETURN_PATH;
@@ -42,9 +46,14 @@ public class TableController {
         // 选择数据库
         jdbcUtil.mode = database;
         tableName = tablename;
+        // oracle時取得sequence的nextval
+        if (1 == database) {
+            int nextId = oracleUtil.getNextval("SEQ_"+tablename);
+            model.addAttribute("nextId", nextId);
+        }
+
         // 查询表结构SQL
-        String descQuery = "DESC "+tablename;
-        List<FieldInfo> columnList = jdbcUtil.getFieldInfo(descQuery);
+        List<FieldInfo> columnList = jdbcUtil.getFieldInfo(tablename);
         // 查找数据
         String json = jsonUtil.praseObjToJson(jdbcUtil.excuteSelectQuery(sqlUtil.createSelectQuery(tablename, columnList)));
         model.addAttribute("columnList", columnList);

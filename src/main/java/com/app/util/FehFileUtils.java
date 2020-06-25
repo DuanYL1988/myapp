@@ -64,21 +64,30 @@ public class FehFileUtils {
      * @param 文件夹目录
      */
     public void fehImgRename(String folderPath, String mode) throws Exception {
+        // 取得文件夾文件對象
         File folder = new File(folderPath);
+        // 取得文件夹目录下文件
         File[] fileList = folder.listFiles();
-        for (File file : fileList) {
-            // 子文件是文件夹的情况
-            if (file.isDirectory()) {
-                if (MODE_RENAME_FOLDER.equals(mode)) {
-                    // reNameFolder(file);
+
+        if (null !=fileList) {
+            for (File file : fileList) {
+                // 子文件是文件夹的情况
+                if (file.isDirectory()) {
+                    if (MODE_RENAME_FOLDER.equals(mode)) {
+                        // reNameFolder(file);
+                    } else {
+                        // 重命名
+                        fehImgRename(file.getPath(), mode);
+                    }
+
                 } else {
-                    fehImgRename(file.getPath(), mode);
-                }
-            } else {
-                if (MODE_RENAME.equals(mode)) {
-                    getRenameByName(file);
-                } else if (MODE_DELETE.equals(mode)) {
-                    deletePngFile(file);
+
+                    if (MODE_RENAME.equals(mode)) {
+                        // 重命名文件
+                        getRenameByName(file);
+                    } else if (MODE_DELETE.equals(mode)) {
+                        deletePngFile(file);
+                    }
                 }
             }
         }
@@ -86,7 +95,7 @@ public class FehFileUtils {
 
     /**
      * 重命名文件
-     * 
+     *
      * @param file
      */
     private void getRenameByName(File file) {
@@ -111,7 +120,7 @@ public class FehFileUtils {
 
     /**
      * 文件重命名
-     * 
+     *
      * @param file
      * @param rename
      */
@@ -124,7 +133,7 @@ public class FehFileUtils {
 
     /**
      * 删除文件
-     * 
+     *
      * @param file
      */
     private void deletePngFile(File file) {

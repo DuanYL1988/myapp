@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.SkillInfoRepository" >
+  <resultMap id="SkillInfoResultMap" type="com.app.model.SkillInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="EXTEND" property="extend" jdbcType="VARCHAR" />
+    <result column="INFO" property="info" jdbcType="VARCHAR" />
+    <result column="WEAPON_POWER" property="weaponPower" jdbcType="VARCHAR" />
+    <result column="EFFECTS" property="effects" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    SKILL_INFO.ID
+    ,SKILL_INFO.NAME
+    ,SKILL_INFO.TYPE
+    ,SKILL_INFO.EXTEND
+    ,SKILL_INFO.INFO
+    ,SKILL_INFO.WEAPON_POWER
+    ,SKILL_INFO.EFFECTS
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,NAME
+    ,TYPE
+    ,EXTEND
+    ,INFO
+    ,WEAPON_POWER
+    ,EFFECTS
+  </sql>
+
+  <select id="selectOne" resultMap="SkillInfoResultMap">
+    SELECT
+    <include refid="select_column_list"></include>
+    FROM SKILL_INFO
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.SkillInfo" resultMap="SkillInfoResultMap">
+    SELECT
+    <include refid="select_column_list"></include>
+    FROM SKILL_INFO
+    <where>
+      <if test="name!=null">
+      NAME = #{name}
+      </if>
+      <if test="type!=null">
+      TYPE = #{type}
+      </if>
+      <if test="extend!=null">
+      EXTEND = #{extend}
+      </if>
+      <if test="info!=null">
+      INFO = #{info}
+      </if>
+      <if test="weaponPower!=null">
+      WEAPON_POWER = #{weaponPower}
+      </if>
+      <if test="effects!=null">
+      EFFECTS = #{effects}
+      </if>
+    </where>
+    </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT COUNT(*) AS count FROM SKILL_INFO
+    WHERE
+      NAME = #{name}
+      AND TYPE = #{type}
+  </select>
+
+  <update id="update" parameterType="com.app.model.SkillInfo" >
+    UPDATE
+      SKILL_INFO
+    SET
+      <if test="name!=null">
+      NAME = #{name}
+      </if>
+      <if test="type!=null">
+      ,TYPE = #{type}
+      </if>
+      <if test="extend!=null">
+      ,EXTEND = #{extend}
+      </if>
+      <if test="info!=null">
+      ,INFO = #{info}
+      </if>
+      <if test="weaponPower!=null">
+      ,WEAPON_POWER = #{weaponPower}
+      </if>
+      <if test="effects!=null">
+      ,EFFECTS = #{effects}
+      </if>
+    WHERE
+      ID = #{id}
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.SkillInfo" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+        SELECT SEQ_SKILL_INFO.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO SKILL_INFO(
+    <include refid="insert_column_list"></include>
+    ) VALUES (
+      #{id}
+      ,#{name}
+      ,#{type}
+      ,#{extend}
+      ,#{info}
+      ,#{weaponPower}
+      ,#{effects}
+    )
+  </insert>
+</mapper>
+

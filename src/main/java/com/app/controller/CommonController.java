@@ -3,8 +3,7 @@ package com.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,16 +24,16 @@ import com.app.util.JsonUtil;
 @RequestMapping("ajax")
 public class CommonController {
 
-    @Inject
+    @Autowired
     JsonUtil jsonUtil;
 
-    @Inject
+    @Autowired
     ContentMasterRepository masterRepository;
 
-    @Inject
+    @Autowired
     FehCharacterRepository charActerRepository;
 
-    @Inject
+    @Autowired
     FehService fehService;
 
     @RequestMapping(value = "getInfoByCategory", method = RequestMethod.POST)

@@ -197,6 +197,9 @@ public class FileUtils {
             if("PRIMARYKEY".equals(logicNm)) {
                 field.setPrimaryKey(true);
             }
+            if(logicNm.indexOf("EXISTCOL")>0) {
+                field.setExistColumn(true);
+            }
             return field;
         }
     }
