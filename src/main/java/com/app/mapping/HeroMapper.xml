@@ -117,124 +117,131 @@
 
   <select id="selectOne" resultMap="HeroResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM HERO
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO
     WHERE
       ID = #{id}
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.Hero" resultMap="HeroResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM HERO
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO
     <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
       <if test="masterId!=null">
-      MASTER_ID = #{masterId}
+        MASTER_ID = #{masterId}
       </if>
       <if test="titleName!=null">
-      TITLE_NAME = #{titleName}
+        TITLE_NAME = #{titleName}
       </if>
       <if test="name!=null">
-      NAME = #{name}
+        NAME = #{name}
       </if>
       <if test="nickName!=null">
-      NICK_NAME = #{nickName}
+        NICK_NAME = #{nickName}
       </if>
       <if test="imgName!=null">
-      IMG_NAME = #{imgName}
+        IMG_NAME = #{imgName}
       </if>
       <if test="origin!=null">
-      ORIGIN = #{origin}
+        ORIGIN = #{origin}
       </if>
       <if test="hp!=null">
-      HP = #{hp}
+        HP = #{hp}
       </if>
       <if test="attact!=null">
-      ATTACT = #{attact}
+        ATTACT = #{attact}
       </if>
       <if test="speed!=null">
-      SPEED = #{speed}
+        SPEED = #{speed}
       </if>
       <if test="def!=null">
-      DEF = #{def}
+        DEF = #{def}
       </if>
       <if test="mdf!=null">
-      MDF = #{mdf}
+        MDF = #{mdf}
       </if>
       <if test="weapon!=null">
-      WEAPON = #{weapon}
+        WEAPON = #{weapon}
       </if>
       <if test="skillA!=null">
-      SKILL_A = #{skillA}
+        SKILL_A = #{skillA}
       </if>
       <if test="skillB!=null">
-      SKILL_B = #{skillB}
+        SKILL_B = #{skillB}
       </if>
       <if test="skillC!=null">
-      SKILL_C = #{skillC}
+        SKILL_C = #{skillC}
       </if>
       <if test="skillD!=null">
-      SKILL_D = #{skillD}
+        SKILL_D = #{skillD}
       </if>
       <if test="skillS!=null">
-      SKILL_S = #{skillS}
+        SKILL_S = #{skillS}
       </if>
       <if test="skillE!=null">
-      SKILL_E = #{skillE}
+        SKILL_E = #{skillE}
       </if>
       <if test="limitPlus!=null">
-      LIMIT_PLUS = #{limitPlus}
+        LIMIT_PLUS = #{limitPlus}
       </if>
       <if test="supportMate!=null">
-      SUPPORT_MATE = #{supportMate}
+        SUPPORT_MATE = #{supportMate}
       </if>
       <if test="blessing!=null">
-      BLESSING = #{blessing}
+        BLESSING = #{blessing}
       </if>
       <if test="moveType!=null">
-      MOVE_TYPE = #{moveType}
+        MOVE_TYPE = #{moveType}
       </if>
       <if test="weaponType!=null">
-      WEAPON_TYPE = #{weaponType}
+        WEAPON_TYPE = #{weaponType}
       </if>
       <if test="color!=null">
-      COLOR = #{color}
+        COLOR = #{color}
       </if>
       <if test="race!=null">
-      RACE = #{race}
+        RACE = #{race}
       </if>
       <if test="heroType!=null">
-      HERO_TYPE = #{heroType}
+        HERO_TYPE = #{heroType}
       </if>
       <if test="team!=null">
-      TEAM = #{team}
+        TEAM = #{team}
       </if>
       <if test="skillPoint!=null">
-      SKILL_POINT = #{skillPoint}
+        SKILL_POINT = #{skillPoint}
       </if>
       <if test="heroPoint!=null">
-      HERO_POINT = #{heroPoint}
+        HERO_POINT = #{heroPoint}
       </if>
       <if test="specTag!=null">
-      SPEC_TAG = #{specTag}
+        SPEC_TAG = #{specTag}
       </if>
       <if test="pool!=null">
-      POOL = #{pool}
+        POOL = #{pool}
       </if>
       <if test="favorite!=null">
-      FAVORITE = #{favorite}
+        FAVORITE = #{favorite}
       </if>
       <if test="createDatetime!=null">
-      CREATE_DATETIME = #{createDatetime}
+        CREATE_DATETIME = #{createDatetime}
       </if>
       <if test="updateDatetime!=null">
-      UPDATE_DATETIME = #{updateDatetime}
+        UPDATE_DATETIME = #{updateDatetime}
       </if>
     </where>
-    </select>
+  </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count FROM HERO
+    SELECT COUNT(*) AS count
+    FROM 
+      HERO
     WHERE
       TITLE_NAME = #{titleName}
       AND NAME = #{name}
@@ -243,116 +250,117 @@
   <update id="update" parameterType="com.app.model.Hero" >
     UPDATE
       HERO
-    SET
+    <set>
       <if test="masterId!=null">
-      MASTER_ID = #{masterId}
+        MASTER_ID = #{masterId},
       </if>
       <if test="titleName!=null">
-      ,TITLE_NAME = #{titleName}
+        TITLE_NAME = #{titleName},
       </if>
       <if test="name!=null">
-      ,NAME = #{name}
+        NAME = #{name},
       </if>
       <if test="nickName!=null">
-      ,NICK_NAME = #{nickName}
+        NICK_NAME = #{nickName},
       </if>
       <if test="imgName!=null">
-      ,IMG_NAME = #{imgName}
+        IMG_NAME = #{imgName},
       </if>
       <if test="origin!=null">
-      ,ORIGIN = #{origin}
+        ORIGIN = #{origin},
       </if>
       <if test="hp!=null">
-      ,HP = #{hp}
+        HP = #{hp},
       </if>
       <if test="attact!=null">
-      ,ATTACT = #{attact}
+        ATTACT = #{attact},
       </if>
       <if test="speed!=null">
-      ,SPEED = #{speed}
+        SPEED = #{speed},
       </if>
       <if test="def!=null">
-      ,DEF = #{def}
+        DEF = #{def},
       </if>
       <if test="mdf!=null">
-      ,MDF = #{mdf}
+        MDF = #{mdf},
       </if>
       <if test="weapon!=null">
-      ,WEAPON = #{weapon}
+        WEAPON = #{weapon},
       </if>
       <if test="skillA!=null">
-      ,SKILL_A = #{skillA}
+        SKILL_A = #{skillA},
       </if>
       <if test="skillB!=null">
-      ,SKILL_B = #{skillB}
+        SKILL_B = #{skillB},
       </if>
       <if test="skillC!=null">
-      ,SKILL_C = #{skillC}
+        SKILL_C = #{skillC},
       </if>
       <if test="skillD!=null">
-      ,SKILL_D = #{skillD}
+        SKILL_D = #{skillD},
       </if>
       <if test="skillS!=null">
-      ,SKILL_S = #{skillS}
+        SKILL_S = #{skillS},
       </if>
       <if test="skillE!=null">
-      ,SKILL_E = #{skillE}
+        SKILL_E = #{skillE},
       </if>
       <if test="limitPlus!=null">
-      ,LIMIT_PLUS = #{limitPlus}
+        LIMIT_PLUS = #{limitPlus},
       </if>
       <if test="supportMate!=null">
-      ,SUPPORT_MATE = #{supportMate}
+        SUPPORT_MATE = #{supportMate},
       </if>
       <if test="blessing!=null">
-      ,BLESSING = #{blessing}
+        BLESSING = #{blessing},
       </if>
       <if test="moveType!=null">
-      ,MOVE_TYPE = #{moveType}
+        MOVE_TYPE = #{moveType},
       </if>
       <if test="weaponType!=null">
-      ,WEAPON_TYPE = #{weaponType}
+        WEAPON_TYPE = #{weaponType},
       </if>
       <if test="color!=null">
-      ,COLOR = #{color}
+        COLOR = #{color},
       </if>
       <if test="race!=null">
-      ,RACE = #{race}
+        RACE = #{race},
       </if>
       <if test="heroType!=null">
-      ,HERO_TYPE = #{heroType}
+        HERO_TYPE = #{heroType},
       </if>
       <if test="team!=null">
-      ,TEAM = #{team}
+        TEAM = #{team},
       </if>
       <if test="skillPoint!=null">
-      ,SKILL_POINT = #{skillPoint}
+        SKILL_POINT = #{skillPoint},
       </if>
       <if test="heroPoint!=null">
-      ,HERO_POINT = #{heroPoint}
+        HERO_POINT = #{heroPoint},
       </if>
       <if test="specTag!=null">
-      ,SPEC_TAG = #{specTag}
+        SPEC_TAG = #{specTag},
       </if>
       <if test="pool!=null">
-      ,POOL = #{pool}
+        POOL = #{pool},
       </if>
       <if test="favorite!=null">
-      ,FAVORITE = #{favorite}
+        FAVORITE = #{favorite},
       </if>
       <if test="createDatetime!=null">
-      ,CREATE_DATETIME = #{createDatetime}
+        CREATE_DATETIME = #{createDatetime},
       </if>
       <if test="updateDatetime!=null">
-      ,UPDATE_DATETIME = #{updateDatetime}
+        UPDATE_DATETIME = #{updateDatetime},
       </if>
+    </set>
     WHERE
       ID = #{id}
   </update>
 
   <insert id="insert" parameterType="com.app.model.Hero" >
         <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
-        SELECT SEQ_HERO.NEXTVAL FROM DUAL
+          SELECT SEQ_HERO.NEXTVAL FROM DUAL
         </selectKey>
     INSERT INTO HERO(
     <include refid="insert_column_list"></include>

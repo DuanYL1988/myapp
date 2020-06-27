@@ -134,7 +134,7 @@ public class Hero{
     private String race;
 
     /**
-     * 英雄类型
+     * 英雄类型(连翼/传承)
      */
     private String heroType;
 
@@ -517,14 +517,14 @@ public class Hero{
         return race;
     }
     /**
-     * 设定英雄类型
+     * 设定英雄类型(连翼/传承)
      */
     public void setHerotype(String heroType){
         this.heroType = heroType;
     }
 
     /**
-     * 取得英雄类型
+     * 取得英雄类型(连翼/传承)
      */
     public String getHerotype(){
         return heroType;

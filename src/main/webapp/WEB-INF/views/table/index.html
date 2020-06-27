@@ -3,23 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>共通数据登录</title>
-<link rel="stylesheet" href="../../../resources/css/table/style.css"
-    th:href="@{/resources/css/table/style.css}" />
-    <head th:replace="~{slickgrid/resources :: header}"></head>
+<link rel="stylesheet" href="../../../resources/css/table/style.css" th:href="@{/resources/css/table/style.css}" />
+<head th:replace="~{slickgrid/resources :: header}"></head>
 <script th:inline="javascript">
   var columnList = [[${columnList}]];
   var json = [[${json}]];
+  var oracleNextVal = [[${nextId}]];
 </script>
-<script type="text/javascript" src="" th:src="@{/resources/js/table/index.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script type="text/javascript" src="../../../resources/js/table/index.js" th:src="@{/resources/js/table/index.js}" ></script>
 </head>
 <body>
     <!-- 选择数据库 表 start -->
     <form action="findTable" method="post">
         <div class="showTableArea">
-            <select name="database">
-                <option value="2">mysql</option>
+            <select name="database" id="db_type">
                 <option value="1">oracle</option>
-            </select> <input type="text" name="tablename"/> <br>
+                <option value="2">mysql</option>
+            </select> <input type="text" name="tablename" value="MENU"/> <br>
             <button>SHOW THIS TABLE COLUMNS</button>
         </div>
     </form>

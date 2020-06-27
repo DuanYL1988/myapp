@@ -67,7 +67,8 @@ public class MybatisCreater {
 
     public static void main(String[] args) {
         FILE_OUTPUT_FLAG = true;
-        String[] targetTblList = new String[] {"HERO","HERO_CONTENT","HERO_MASTER","SKILL_INFO"};
+        // 需要创建的匹配表名称
+        String[] targetTblList = new String[] {"HERO","MENU","HERO_MASTER","SKILL_INFO","HERO_CONTENT"};
         for(String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -81,16 +82,21 @@ public class MybatisCreater {
         //DB映射实体类
         String modelClassPath = projectPath+MODEL_LOCATION+modelClassNm+".java";
         String modelClassInfo = createModel();
-        //
+        // Mybatis映射xml
         String xmlPath = projectPath + MAPPING_XML_LOCATION +modelClassNm+"Mapper.xml";
         String xmlInfo = createMappingXml();
-        //
+        // Repository类
         String repostioryPath = projectPath + REPOSITORY_LOCATION +repositoryNm+".java";
         String repostioryInfo = createRepository();
+        // 是否生成文件
         if (FILE_OUTPUT_FLAG) {
             fileUtil.writeFile(modelClassPath, modelClassInfo);
             fileUtil.writeFile(xmlPath, xmlInfo);
             fileUtil.writeFile(repostioryPath, repostioryInfo);
+        } else {
+            System.out.println(modelClassInfo);
+            System.out.println(xmlInfo);
+            System.out.println(repostioryInfo);
         }
     }
 
@@ -120,6 +126,7 @@ public class MybatisCreater {
         mybatisXml.append(createUpdate());
         // <insert>
         mybatisXml.append(createInsert());
+        // 结束标签
         mybatisXml.append("</mapper>"+CRLF);
         return mybatisXml.toString();
     }
@@ -156,27 +163,34 @@ public class MybatisCreater {
     /**
      * 生成DB映射实体类
      *
-     * @param tableNm
-     * @param fields
      */
     public String createModel() {
         StringBuilder javaClass = new StringBuilder();
         javaClass.append("package com.app.model;"+CRLF+CRLF);
+        // 有日期字段时引入Data类
         if(dateColFlag) {
             javaClass.append("import java.util.Date;"+CRLF+CRLF);
         }
+
         javaClass.append("public class "+modelClassNm+"{"+CRLF);
+        // 参数部分
         StringBuilder param = new StringBuilder();
+        // get和set部分
         StringBuilder setAndGet = new StringBuilder();
+
         for(Field field : fields) {
             String logicNm = field.getLogicNm();
             String javaNm = field.getJavaNm();
             String type = field.getJavaType();
+            // 说明doc
             param.append(FOUR_SPACE+"/**"+CRLF);
             param.append(FOUR_SPACE+" * "+logicNm+CRLF);
             param.append(FOUR_SPACE+" */"+CRLF);
+
+            // 输出参数
             param.append(FOUR_SPACE+"private "+field.getJavaType()+" "+field.getJavaNm()+";"+CRLF+CRLF);
 
+            // 输出set和get
             setAndGet.append(FOUR_SPACE+"/**"+CRLF);
             setAndGet.append(FOUR_SPACE+" * 设定"+logicNm+CRLF);
             setAndGet.append(FOUR_SPACE+" */"+CRLF);
@@ -190,6 +204,7 @@ public class MybatisCreater {
             setAndGet.append(FOUR_SPACE+"    return "+javaNm+";"+CRLF);
             setAndGet.append(FOUR_SPACE+"}"+CRLF);
         }
+
         javaClass.append(param.toString());
         javaClass.append(setAndGet.toString());
         javaClass.append(CRLF+"}");
@@ -265,8 +280,9 @@ public class MybatisCreater {
         StringBuilder selectOne = new StringBuilder();
         selectOne.append(TWO_SPACE+"<select id=\"selectOne\" resultMap=\""+resultMapNm+"\">"+CRLF);
         selectOne.append(FOUR_SPACE+"SELECT"+CRLF);
-        selectOne.append(FOUR_SPACE+"<include refid=\"select_column_list\"></include>"+CRLF);
-        selectOne.append(FOUR_SPACE+"FROM "+TABLE_NM+CRLF);
+        selectOne.append(FOUR_SPACE+TWO_SPACE+"<include refid=\"select_column_list\"></include>"+CRLF);
+        selectOne.append(FOUR_SPACE+"FROM "+CRLF);
+        selectOne.append(FOUR_SPACE+TWO_SPACE+TABLE_NM+CRLF);
         selectOne.append(FOUR_SPACE+"WHERE"+CRLF);
         for(Field field : fields) {
             if (field.isPrimaryKey()) {
@@ -284,12 +300,13 @@ public class MybatisCreater {
         StringBuilder selectByDto = new StringBuilder();
         selectByDto.append(TWO_SPACE+"<select id=\"selectByDto\" parameterType=\""+parameterType+"\" resultMap=\""+resultMapNm+"\">"+CRLF);
         selectByDto.append(FOUR_SPACE+"SELECT"+CRLF);
-        selectByDto.append(FOUR_SPACE+"<include refid=\"select_column_list\"></include>"+CRLF);
-        selectByDto.append(FOUR_SPACE+"FROM "+TABLE_NM+CRLF);
+        selectByDto.append(FOUR_SPACE+TWO_SPACE+"<include refid=\"select_column_list\"></include>"+CRLF);
+        selectByDto.append(FOUR_SPACE+"FROM "+CRLF);
+        selectByDto.append(FOUR_SPACE+TWO_SPACE+TABLE_NM+CRLF);
         selectByDto.append(FOUR_SPACE+"<where>"+CRLF);
         selectByDto.append(createColCheck(fields,"select"));
         selectByDto.append(FOUR_SPACE+"</where>"+CRLF);
-        selectByDto.append(FOUR_SPACE+"</select>"+CRLF+CRLF);
+        selectByDto.append(TWO_SPACE+"</select>"+CRLF+CRLF);
         return selectByDto.toString();
     }
 
@@ -301,8 +318,9 @@ public class MybatisCreater {
         update.append(TWO_SPACE+"<update id=\"update\" parameterType=\""+parameterType+"\" >"+CRLF);
         update.append(FOUR_SPACE+"UPDATE"+CRLF);
         update.append(FOUR_SPACE+TWO_SPACE+TABLE_NM+CRLF);
-        update.append(FOUR_SPACE+"SET"+CRLF);
+        update.append(FOUR_SPACE+"<set>"+CRLF);
         update.append(createColCheck(fields,"update"));
+        update.append(FOUR_SPACE+"</set>"+CRLF);
         update.append(FOUR_SPACE+"WHERE"+CRLF);
         for(Field field : fields) {
             if (field.isPrimaryKey()) {
@@ -320,7 +338,7 @@ public class MybatisCreater {
         StringBuilder insert = new StringBuilder();
         insert.append(TWO_SPACE+"<insert id=\"insert\" parameterType=\""+parameterType+"\" >"+CRLF);
         insert.append(FOUR_SPACE+FOUR_SPACE+"<selectKey resultType=\"java.lang.Integer\" order=\"BEFORE\" keyProperty=\"id\">"+CRLF);
-        insert.append(FOUR_SPACE+FOUR_SPACE+"SELECT SEQ_"+TABLE_NM+".NEXTVAL FROM DUAL"+CRLF);
+        insert.append(FOUR_SPACE+FOUR_SPACE+TWO_SPACE+"SELECT SEQ_"+TABLE_NM+".NEXTVAL FROM DUAL"+CRLF);
         insert.append(FOUR_SPACE+FOUR_SPACE+"</selectKey>"+CRLF);
         insert.append(FOUR_SPACE+"INSERT INTO "+TABLE_NM+"("+CRLF);
         insert.append(FOUR_SPACE+"<include refid=\"insert_column_list\"></include>"+CRLF);
@@ -345,7 +363,9 @@ public class MybatisCreater {
     public String createExistCheck() {
         StringBuilder uniqueCheck = new StringBuilder();
         uniqueCheck.append(TWO_SPACE+"<select id=\"uniqueCheck\"  resultType=\"Integer\">"+CRLF);
-        uniqueCheck.append(FOUR_SPACE+"SELECT COUNT(*) AS count FROM "+TABLE_NM+CRLF);
+        uniqueCheck.append(FOUR_SPACE+"SELECT COUNT(*) AS count"+CRLF);
+        uniqueCheck.append(FOUR_SPACE+"FROM "+CRLF);
+        uniqueCheck.append(FOUR_SPACE+TWO_SPACE+TABLE_NM+CRLF);
         uniqueCheck.append(FOUR_SPACE+"WHERE"+CRLF);
         boolean firstCol = true;
         for(Field field : existCol) {
@@ -362,21 +382,27 @@ public class MybatisCreater {
 
     /**
      * mybatis的字段空判断
+     * 创建select文时kbn传入"select"
+     * select文因为在<where>标签中所以不用加[,]
+     *
+     * @param 构筑函数中取得的表中所有的字段集合 fields
+     * @param select和update的区分 kbn
+     * @return
      */
     private String createColCheck(List<Field> fields,String kbn) {
         StringBuilder condition = new StringBuilder();
-        boolean firstKbn = true;
+        boolean updateFlag = "update".equals(kbn);
+        String comma = "";
+        if(updateFlag) {
+            comma = ",";
+        }
         for(Field field : fields) {
-            if (field.isPrimaryKey()) {
+            // update时不更新主键
+            if(field.isPrimaryKey() && updateFlag) {
                 continue;
             }
-            String comma = ",";
-            if (firstKbn || "select".equals(kbn)) {
-                comma = "";
-                firstKbn = false;
-            }
             condition.append(FOUR_SPACE+TWO_SPACE+"<if test=\""+field.getJavaNm()+"!=null\">"+CRLF);
-            condition.append(FOUR_SPACE+TWO_SPACE+comma+field.getDbNm()+" = "+"#{"+field.getJavaNm()+"}"+CRLF);
+            condition.append(FOUR_SPACE+FOUR_SPACE+field.getDbNm()+" = "+"#{"+field.getJavaNm()+"}"+comma+CRLF);
             condition.append(FOUR_SPACE+TWO_SPACE+"</if>"+CRLF);
         }
         return condition.toString();
@@ -386,6 +412,7 @@ public class MybatisCreater {
      * 业务唯一值字段取得
      */
     private List<Field> getExistColumn(){
+        // 业务逻辑上唯一记录的字段集合
         if (existCol.size()>0) {
             return existCol;
         } else {
@@ -393,6 +420,7 @@ public class MybatisCreater {
                 if (field.isExistColumn()) {
                     existCol.add(field);
                 }
+                // 顺带判断表中是否有日期字段
                 if ("TIMESTAMP".equals(field.getDbType())) {
                     dateColFlag = true;
                 }

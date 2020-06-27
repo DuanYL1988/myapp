@@ -39,46 +39,53 @@
 
   <select id="selectOne" resultMap="HeroContentResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM HERO_CONTENT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_CONTENT
     WHERE
       ID = #{id}
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.HeroContent" resultMap="HeroContentResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM HERO_CONTENT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_CONTENT
     <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
       <if test="categoryId!=null">
-      CATEGORY_ID = #{categoryId}
+        CATEGORY_ID = #{categoryId}
       </if>
       <if test="categoryName!=null">
-      CATEGORY_NAME = #{categoryName}
+        CATEGORY_NAME = #{categoryName}
       </if>
       <if test="codeId!=null">
-      CODE_ID = #{codeId}
+        CODE_ID = #{codeId}
       </if>
       <if test="codeName!=null">
-      CODE_NAME = #{codeName}
+        CODE_NAME = #{codeName}
       </if>
       <if test="imgSrc!=null">
-      IMG_SRC = #{imgSrc}
+        IMG_SRC = #{imgSrc}
       </if>
       <if test="nameExpand1!=null">
-      NAME_EXPAND1 = #{nameExpand1}
+        NAME_EXPAND1 = #{nameExpand1}
       </if>
       <if test="nameExpand2!=null">
-      NAME_EXPAND2 = #{nameExpand2}
+        NAME_EXPAND2 = #{nameExpand2}
       </if>
       <if test="nameExpand3!=null">
-      NAME_EXPAND3 = #{nameExpand3}
+        NAME_EXPAND3 = #{nameExpand3}
       </if>
     </where>
-    </select>
+  </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count FROM HERO_CONTENT
+    SELECT COUNT(*) AS count
+    FROM 
+      HERO_CONTENT
     WHERE
       CATEGORY_ID = #{categoryId}
       AND CODE_ID = #{codeId}
@@ -87,38 +94,39 @@
   <update id="update" parameterType="com.app.model.HeroContent" >
     UPDATE
       HERO_CONTENT
-    SET
+    <set>
       <if test="categoryId!=null">
-      CATEGORY_ID = #{categoryId}
+        CATEGORY_ID = #{categoryId},
       </if>
       <if test="categoryName!=null">
-      ,CATEGORY_NAME = #{categoryName}
+        CATEGORY_NAME = #{categoryName},
       </if>
       <if test="codeId!=null">
-      ,CODE_ID = #{codeId}
+        CODE_ID = #{codeId},
       </if>
       <if test="codeName!=null">
-      ,CODE_NAME = #{codeName}
+        CODE_NAME = #{codeName},
       </if>
       <if test="imgSrc!=null">
-      ,IMG_SRC = #{imgSrc}
+        IMG_SRC = #{imgSrc},
       </if>
       <if test="nameExpand1!=null">
-      ,NAME_EXPAND1 = #{nameExpand1}
+        NAME_EXPAND1 = #{nameExpand1},
       </if>
       <if test="nameExpand2!=null">
-      ,NAME_EXPAND2 = #{nameExpand2}
+        NAME_EXPAND2 = #{nameExpand2},
       </if>
       <if test="nameExpand3!=null">
-      ,NAME_EXPAND3 = #{nameExpand3}
+        NAME_EXPAND3 = #{nameExpand3},
       </if>
+    </set>
     WHERE
       ID = #{id}
   </update>
 
   <insert id="insert" parameterType="com.app.model.HeroContent" >
         <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
-        SELECT SEQ_HERO_CONTENT.NEXTVAL FROM DUAL
+          SELECT SEQ_HERO_CONTENT.NEXTVAL FROM DUAL
         </selectKey>
     INSERT INTO HERO_CONTENT(
     <include refid="insert_column_list"></include>

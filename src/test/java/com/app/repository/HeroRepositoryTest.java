@@ -1,34 +1,30 @@
 package com.app.repository;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.app.jdbc.JdbcConnectUtil;
-import com.app.model.HeroMaster;
+import com.app.model.Menu;
+import com.app.util.JsonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/spring-mybatis.xml" })
 public class HeroRepositoryTest {
 
     @Autowired
-    HeroRepository heroRepo;
-
-    @Autowired
-    HeroMasterRepository heroMstRepo;
+    MenuRepository menuRepo;
 
     @Autowired
     OracleCommonRepository oracleRepository;
 
-    @Test
-    public void testAutoInsert() {
-        HeroMaster master = new HeroMaster();
-        master.setOrigin("烈火之剑");
-        master.setName("琳迪斯");
-        heroMstRepo.insert(master);
-    }
+    @Autowired
+    JsonUtil jsonUtil;
 
     @Test
     public void testGetNextvalFromSeq() {
@@ -36,9 +32,19 @@ public class HeroRepositoryTest {
         System.out.println(oracleRepository.getCurrentval("SEQ_HERO_MASTER"));
     }
 
-    public static void main(String[] args) {
-        JdbcConnectUtil jdbcUtil = new JdbcConnectUtil();
-        jdbcUtil.mode = 1;
-        jdbcUtil.getFieldInfo("HERO_MASTER");
+    @Test
+    public void testMenuRepo() {
+        Menu condition = new Menu();
+        condition.setCategore("火纹");
+        List<Menu> menuList = menuRepo.selectByDto(null);
+        assertTrue(menuList.size() > 0);
+
+        condition.setId(1);
+        condition.setMenulevel("2");
+        menuRepo.update(condition);
+
+        String jsonText = jsonUtil.praseObjToJson(menuList);
+        System.out.println(jsonText);
     }
+
 }

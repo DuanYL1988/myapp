@@ -183,7 +183,7 @@ public class JdbcConnectUtil {
     }
 
     /**
-     * .执行Desc SQL取得Entity所有字段信息 只能执行DESC 文,请注意
+     * 执行Desc SQL取得Entity所有字段信息 只能执行DESC 文,请注意
      *
      * @param descQuery
      * @return

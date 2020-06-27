@@ -30,37 +30,44 @@
 
   <select id="selectOne" resultMap="HeroMasterResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM HERO_MASTER
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_MASTER
     WHERE
       ID = #{id}
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.HeroMaster" resultMap="HeroMasterResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM HERO_MASTER
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_MASTER
     <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
       <if test="name!=null">
-      NAME = #{name}
+        NAME = #{name}
       </if>
       <if test="origin!=null">
-      ORIGIN = #{origin}
+        ORIGIN = #{origin}
       </if>
       <if test="expandCol1!=null">
-      EXPAND_COL1 = #{expandCol1}
+        EXPAND_COL1 = #{expandCol1}
       </if>
       <if test="expandCol2!=null">
-      EXPAND_COL2 = #{expandCol2}
+        EXPAND_COL2 = #{expandCol2}
       </if>
       <if test="expandCol3!=null">
-      EXPAND_COL3 = #{expandCol3}
+        EXPAND_COL3 = #{expandCol3}
       </if>
     </where>
-    </select>
+  </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count FROM HERO_MASTER
+    SELECT COUNT(*) AS count
+    FROM 
+      HERO_MASTER
     WHERE
       NAME = #{name}
       AND ORIGIN = #{origin}
@@ -69,29 +76,30 @@
   <update id="update" parameterType="com.app.model.HeroMaster" >
     UPDATE
       HERO_MASTER
-    SET
+    <set>
       <if test="name!=null">
-      NAME = #{name}
+        NAME = #{name},
       </if>
       <if test="origin!=null">
-      ,ORIGIN = #{origin}
+        ORIGIN = #{origin},
       </if>
       <if test="expandCol1!=null">
-      ,EXPAND_COL1 = #{expandCol1}
+        EXPAND_COL1 = #{expandCol1},
       </if>
       <if test="expandCol2!=null">
-      ,EXPAND_COL2 = #{expandCol2}
+        EXPAND_COL2 = #{expandCol2},
       </if>
       <if test="expandCol3!=null">
-      ,EXPAND_COL3 = #{expandCol3}
+        EXPAND_COL3 = #{expandCol3},
       </if>
+    </set>
     WHERE
       ID = #{id}
   </update>
 
   <insert id="insert" parameterType="com.app.model.HeroMaster" >
         <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
-        SELECT SEQ_HERO_MASTER.NEXTVAL FROM DUAL
+          SELECT SEQ_HERO_MASTER.NEXTVAL FROM DUAL
         </selectKey>
     INSERT INTO HERO_MASTER(
     <include refid="insert_column_list"></include>

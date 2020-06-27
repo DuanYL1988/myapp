@@ -2,6 +2,7 @@
  * 
  */
 $(function() {
+    // html代码模板
     var sampleHead = "<div class='colCell'>";
     var sampleTitle = "<span>{COLUMN_NAME}</span><br>";
     var sampleType = "<input type='hidden' class='type' name='fieldInfo[{index}].type'  value='{VALUE}'>";
@@ -15,21 +16,26 @@ $(function() {
         var html = "";
         for (var i = 0; i < columnList.length; i++) {
             var colObj = columnList[i];
-            var title = sampleTitle.replace("{COLUMN_NAME}", colObj.name);
+            var titleHtml = sampleTitle.replace("{COLUMN_NAME}", colObj.name);
 
-            var type = sampleType.replace("{VALUE}", colObj.type);
-            type = type.replace("{index}", i);
+            var typeHtml = sampleType.replace("{VALUE}", colObj.type);
+            typeHtml = typeHtml.replace("{index}", i);
 
-            var name = sampleName.replace("{VALUE}", colObj.name);
-            name = name.replace("{index}", i);
+            var nameHtml = sampleName.replace("{VALUE}", colObj.name);
+            nameHtml = nameHtml.replace("{index}", i);
 
-            var extra = sampleExtra.replace("{VALUE}", colObj.extra);
-            extra = extra.replace("{index}", i);
+            var extraHtml = sampleExtra.replace("{VALUE}", colObj.extra);
+            extraHtml = extraHtml.replace("{index}", i);
 
-            var value = sampleValue.replace("{VALUE}", colObj.defaultValue);
-            value = value.replace("{index}", i);
+            var mode = $("#db_type").val();
+            var value = colObj.defaultValue;
+            if(1==mode && "ID"==colObj.name){
+                value = oracleNextVal;
+            }
+            var valueHtml = sampleValue.replace("{VALUE}", value);
+            valueHtml = valueHtml.replace("{index}", i);
 
-            html += sampleHead + title + type + name + extra + value
+            html += sampleHead + titleHtml + typeHtml + nameHtml + extraHtml + valueHtml
                     + sampleEnd;
         }
         $(cell).html(html);
@@ -59,9 +65,6 @@ function tableRegist() {
         obj.push(fieldInfo);
     }
     var formObj = $("#registForm").serializeObject();
-    //    alert(JSON.stringify(fieldList));
-    //    alert(JSON.stringify(obj));
-    //    alert(JSON.stringify(formObj));
     ajaxPost("/myapp/rigstTable/regist", fieldList, function(data) {
         alert(data);
     });

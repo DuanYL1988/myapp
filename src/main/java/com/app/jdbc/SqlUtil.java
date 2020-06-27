@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,11 @@ public class SqlUtil {
 
     public static final String DB_TYPE_INT = "INT";
 
+    public static final String[] DB_NUMBER_TYPE = new String[] {"NUMBER","INT","DECIMAL","TIMESTAMP"};
+
     @Autowired
-    OracleCommonRepository oracleCommRep;
+    OracleCommonRepository oracleUtil;
+
     /**
      * 数据库字段名转为java变量名
      *
@@ -108,10 +112,17 @@ public class SqlUtil {
                     .equals("auto_increment")) {
                 continue;
             }
+            // 值
+            String value = fields.get(i).getValue();
+            String type = fields.get(i).getType();
+            if ("ID".equals(fields.get(i).getName())) {
+                value = String.valueOf(oracleUtil.getNextval("SEQ_"+tableName));
+            }
+
             if (!StringUtils.isEmpty(fields.get(i).getValue())) {
                 sqlBuilder.append(fields.get(i).getName() + COMMA);
-                if (fields.get(i).getValue().indexOf("CURRENT_") >= 0) {
-                    valueBuilder.append(fields.get(i).getValue() + COMMA);
+                if (value.indexOf("CURRENT_") >= 0 || ArrayUtils.contains(DB_NUMBER_TYPE, type)) {
+                    valueBuilder.append(value + COMMA);
                 } else {
                     valueBuilder.append(APOSTROPHE + fields.get(i).getValue() + "',");
                 }

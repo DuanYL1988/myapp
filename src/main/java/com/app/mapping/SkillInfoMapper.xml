@@ -33,40 +33,47 @@
 
   <select id="selectOne" resultMap="SkillInfoResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM SKILL_INFO
+      <include refid="select_column_list"></include>
+    FROM 
+      SKILL_INFO
     WHERE
       ID = #{id}
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.SkillInfo" resultMap="SkillInfoResultMap">
     SELECT
-    <include refid="select_column_list"></include>
-    FROM SKILL_INFO
+      <include refid="select_column_list"></include>
+    FROM 
+      SKILL_INFO
     <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
       <if test="name!=null">
-      NAME = #{name}
+        NAME = #{name}
       </if>
       <if test="type!=null">
-      TYPE = #{type}
+        TYPE = #{type}
       </if>
       <if test="extend!=null">
-      EXTEND = #{extend}
+        EXTEND = #{extend}
       </if>
       <if test="info!=null">
-      INFO = #{info}
+        INFO = #{info}
       </if>
       <if test="weaponPower!=null">
-      WEAPON_POWER = #{weaponPower}
+        WEAPON_POWER = #{weaponPower}
       </if>
       <if test="effects!=null">
-      EFFECTS = #{effects}
+        EFFECTS = #{effects}
       </if>
     </where>
-    </select>
+  </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count FROM SKILL_INFO
+    SELECT COUNT(*) AS count
+    FROM 
+      SKILL_INFO
     WHERE
       NAME = #{name}
       AND TYPE = #{type}
@@ -75,32 +82,33 @@
   <update id="update" parameterType="com.app.model.SkillInfo" >
     UPDATE
       SKILL_INFO
-    SET
+    <set>
       <if test="name!=null">
-      NAME = #{name}
+        NAME = #{name},
       </if>
       <if test="type!=null">
-      ,TYPE = #{type}
+        TYPE = #{type},
       </if>
       <if test="extend!=null">
-      ,EXTEND = #{extend}
+        EXTEND = #{extend},
       </if>
       <if test="info!=null">
-      ,INFO = #{info}
+        INFO = #{info},
       </if>
       <if test="weaponPower!=null">
-      ,WEAPON_POWER = #{weaponPower}
+        WEAPON_POWER = #{weaponPower},
       </if>
       <if test="effects!=null">
-      ,EFFECTS = #{effects}
+        EFFECTS = #{effects},
       </if>
+    </set>
     WHERE
       ID = #{id}
   </update>
 
   <insert id="insert" parameterType="com.app.model.SkillInfo" >
         <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
-        SELECT SEQ_SKILL_INFO.NEXTVAL FROM DUAL
+          SELECT SEQ_SKILL_INFO.NEXTVAL FROM DUAL
         </selectKey>
     INSERT INTO SKILL_INFO(
     <include refid="insert_column_list"></include>
