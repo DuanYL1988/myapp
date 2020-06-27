@@ -1,0 +1,189 @@
+[
+    {
+        "id": 1,
+        "categore": "火纹",
+        "name": "英雄登录",
+        "menulevel": "2",
+        "htmlimagesrc": "m_hero_regist.png",
+        "imagesrc": "m_hero_regist.png",
+        "actionurl": "/myapp/hero/regist",
+        "htmlurl": "regist.html",
+        "parentid": null
+    },
+    {
+        "id": 2,
+        "categore": "火纹",
+        "name": "英雄一览",
+        "menulevel": "2",
+        "htmlimagesrc": "m_hero_list.png",
+        "imagesrc": "m_hero_list.png",
+        "actionurl": "/myapp/hero/search",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 3,
+        "categore": "火纹",
+        "name": "队伍编成",
+        "menulevel": "2",
+        "htmlimagesrc": "m_team.png",
+        "imagesrc": "m_team.png",
+        "actionurl": "/myapp/hero/team",
+        "htmlurl": "team.html",
+        "parentid": null
+    },
+    {
+        "id": 4,
+        "categore": "火纹",
+        "name": "队员支援",
+        "menulevel": "2",
+        "htmlimagesrc": "m_support.png",
+        "imagesrc": "m_support.png",
+        "actionurl": "/myapp/hero/support",
+        "htmlurl": "support.html",
+        "parentid": null
+    },
+    {
+        "id": 5,
+        "categore": "火纹",
+        "name": "重甲",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_armor_list.png",
+        "imagesrc": "m_type_armor_list.png",
+        "actionurl": "/myapp/hero/search?type=armor",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 6,
+        "categore": "火纹",
+        "name": "飞行",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_fly_list.png",
+        "imagesrc": "m_type_fly_list.png",
+        "actionurl": "/myapp/hero/search?type=fly",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 7,
+        "categore": "火纹",
+        "name": "骑兵",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_knight_list.png",
+        "imagesrc": "m_type_knight_list.png",
+        "actionurl": "/myapp/hero/search?type=knight",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 8,
+        "categore": "火纹",
+        "name": "步行",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_foot_list.png",
+        "imagesrc": "m_type_foot_list.png",
+        "actionurl": "/myapp/hero/search?type=foot",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 9,
+        "categore": "火纹",
+        "name": "龙人",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_dragon_list.png",
+        "imagesrc": "m_type_dragon_list.png",
+        "actionurl": "/myapp/hero/search?type=dragon",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 10,
+        "categore": "火纹",
+        "name": "治疗",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_heath_list.png",
+        "imagesrc": "m_type_heath_list.png",
+        "actionurl": "/myapp/hero/search?type=heath",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 12,
+        "categore": "火纹",
+        "name": "特效克制",
+        "menulevel": "2",
+        "htmlimagesrc": "m_effect.png",
+        "imagesrc": "m_effect.png",
+        "actionurl": "/myapp/hero/effect",
+        "htmlurl": "effect.html",
+        "parentid": null
+    },
+    {
+        "id": 13,
+        "categore": "火纹",
+        "name": "连翼英雄",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_coupl_list.png",
+        "imagesrc": "m_type_coupl_list.png",
+        "actionurl": "/myapp/hero/search?type=couple",
+        "htmlurl": "effect.html",
+        "parentid": null
+    },
+    {
+        "id": 14,
+        "categore": "火纹",
+        "name": "传承英雄",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_extend_list.png",
+        "imagesrc": "m_type_extend_list.png",
+        "actionurl": "/myapp/hero/search?type=extend",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    },
+    {
+        "id": 15,
+        "categore": "火纹",
+        "name": "游戏立绘",
+        "menulevel": "2",
+        "htmlimagesrc": "m_picture_list.png",
+        "imagesrc": "m_picture_list.png",
+        "actionurl": "/myapp/hero/picture",
+        "htmlurl": "picture.html",
+        "parentid": null
+    },
+    {
+        "id": 16,
+        "categore": "火纹",
+        "name": "火纹ZERO",
+        "menulevel": "2",
+        "htmlimagesrc": "m_fe_zero.png",
+        "imagesrc": "m_fe_zero.png",
+        "actionurl": "/myapp/hero/fezero",
+        "htmlurl": "picture.html",
+        "parentid": null
+    },
+    {
+        "id": 17,
+        "categore": "火纹",
+        "name": "色气妹子",
+        "menulevel": "2",
+        "htmlimagesrc": "m_summer.png",
+        "imagesrc": "m_summer.png",
+        "actionurl": "/myapp/hero/favorite",
+        "htmlurl": "picture.html",
+        "parentid": null
+    },
+    {
+        "id": 11,
+        "categore": "火纹",
+        "name": "舞蹈",
+        "menulevel": "2",
+        "htmlimagesrc": "m_type_reaction_list.png",
+        "imagesrc": "m_type_reaction_list.png",
+        "actionurl": "/myapp/hero/search?type=reaction",
+        "htmlurl": "hero_list.html",
+        "parentid": null
+    }
+]

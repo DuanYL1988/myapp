@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>英雄初始页面</title>
+
+<style>
+main{padding-top:2em}
+.cell{width:400px;display:inline-block;float:left;padding-left:15px}
+.image_box{width:100%;overline:hidden}
+img{max-width:100%;height:auto}
+</style>
+
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script th:inline="javascript">
+    var jsonData = [[${menuList}]];
+</script>
+<script src="../../../resources/js/hero/index.js" th:src="@{/resources/js/hero/index.js}"></script>
+</head>
+<body style="background:#decfcf">
+    <div class="top" style="background:#fff;width:100%;position:fixed;top:0;left:0;line-height:1.5em">
+        <span>导航栏-固定位置</span>
+    </div>
+    
+
+        <main>
+            <div class="parent_box" >
+                <div class="cell" id="col1">
+                </div>
+                <div class="cell" id="col2">
+                </div>
+                <div class="cell" id="col3">
+                </div>
+            </div>
+        </main>
+
+        <aside style="background:#fff;width:300px;padding-left:25px;float:right">
+            <div class="link_box">
+                <a href="#">回到桌面</a>
+                <input type="button" onclick="javascript:resetPictures()" value="瀑布" />
+            </div>
+        </aside>
+
+</body>
+</html>

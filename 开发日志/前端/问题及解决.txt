@@ -1,0 +1,12 @@
+2020/6/28
+Q:js中只有src如何取得图片高度
+var imgElement = document.createElement("img");
+imgElement.src=src;
+document.getElementById("xx").append(imgElement);
+可能取得的高度为0，是因为执行太快还未完全加载，可以让处理暂时休眠一段时间
+function sleep(ms){
+    for(var t=Date.now();Date.now()-t<=ms;);
+}
+
+var htmlFlag = typeof(jsonData)=="undefined";
+使用ajax取得本地文件内容
