@@ -1,0 +1,34 @@
+Q:使用表空间构建数据库
+step.1 用SYSDBA权限用户登录
+sqlplus / as sysdba;
+
+step.2 创建表领域
+CREATE SMALLFILE TABLESPACE FIREEMBLEM 
+  DATAFILE 'D:\oracle\oradata\oracle\fireemblem.dbf'
+  SIZE 100M AUTOEXTEND ON NEXT 100M MAXSIZE 1000M
+  EXTENT MANAGEMENT LOCAL
+/
+
+step.3 创建预设文件
+CREATE PROFILE prof_user
+LIMIT
+  FAILED_LOGIN_ATTEMPTS UNLIMITED
+  PASSWORD_LIFE_TIME UNLIMITED
+/
+
+step.4 创建用户
+CREATE USER fireemblem
+  IDENTIFIED BY "fireemblem" 
+  DEFAULT TABLESPACE FIREEMBLEM
+  TEMPORARY TABLESPACE TEMP
+  PROFILE prof_user
+/
+
+step.5 创建用户组
+CREATE ROLE adminuser;
+
+step.6 赋予权限
+GRANT DBA TO adminuser;
+GRANT adminuser TO fireemblem;
+
+之后在赋予新的权限给用户组时用户权限不会变更
