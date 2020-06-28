@@ -20,7 +20,7 @@ public class FehFileUtils {
 
     private static final String MODE_RENAME_FOLDER = "2";
 
-    private static final String NORMAL_BEF = "Face.";
+    private static final String NORMAL_BEF = "_Face.";
 
     private static final String ATTACT_BEF = "BtlFace.";
 
@@ -42,9 +42,6 @@ public class FehFileUtils {
 
     @SuppressWarnings("resource")
     public static void main(String[] args) throws Exception {
-        String StringTest = "ch00_01_Alfons_M_Normal";
-        StringTest = StringTest.substring(8, StringTest.length());
-        System.out.println(StringTest);
         System.out.println("请输入文件夹路径,输入def使用默认路径");
         Scanner scanner = new Scanner(System.in);
         String folderPath = scanner.nextLine();
@@ -67,21 +64,30 @@ public class FehFileUtils {
      * @param 文件夹目录
      */
     public void fehImgRename(String folderPath, String mode) throws Exception {
+        // 取得文件夾文件對象
         File folder = new File(folderPath);
+        // 取得文件夹目录下文件
         File[] fileList = folder.listFiles();
-        for (File file : fileList) {
-            // 子文件是文件夹的情况
-            if (file.isDirectory()) {
-                if (MODE_RENAME_FOLDER.equals(mode)) {
-                    // reNameFolder(file);
+
+        if (null !=fileList) {
+            for (File file : fileList) {
+                // 子文件是文件夹的情况
+                if (file.isDirectory()) {
+                    if (MODE_RENAME_FOLDER.equals(mode)) {
+                        // reNameFolder(file);
+                    } else {
+                        // 重命名
+                        fehImgRename(file.getPath(), mode);
+                    }
+
                 } else {
-                    fehImgRename(file.getPath(), mode);
-                }
-            } else {
-                if (MODE_RENAME.equals(mode)) {
-                    getRenameByName(file);
-                } else if (MODE_DELETE.equals(mode)) {
-                    deletePngFile(file);
+
+                    if (MODE_RENAME.equals(mode)) {
+                        // 重命名文件
+                        getRenameByName(file);
+                    } else if (MODE_DELETE.equals(mode)) {
+                        deletePngFile(file);
+                    }
                 }
             }
         }
@@ -89,7 +95,7 @@ public class FehFileUtils {
 
     /**
      * 重命名文件
-     * 
+     *
      * @param file
      */
     private void getRenameByName(File file) {
@@ -114,7 +120,7 @@ public class FehFileUtils {
 
     /**
      * 文件重命名
-     * 
+     *
      * @param file
      * @param rename
      */
@@ -127,7 +133,7 @@ public class FehFileUtils {
 
     /**
      * 删除文件
-     * 
+     *
      * @param file
      */
     private void deletePngFile(File file) {

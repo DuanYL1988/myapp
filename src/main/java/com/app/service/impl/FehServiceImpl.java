@@ -15,21 +15,16 @@ import com.app.dto.FehBaseDto;
 import com.app.dto.TeamResultDto;
 import com.app.form.FehCharActerForm;
 import com.app.form.TeamEditForm;
-import com.app.model.FavoriteImage;
 import com.app.model.FehCharacter;
-import com.app.repository.FavoriteImageRepository;
 import com.app.repository.FehCharacterRepository;
 import com.app.service.FehService;
 import com.app.util.CommonUtils;
 
 @Service
 public class FehServiceImpl implements FehService {
-    
+
     @Autowired
     FehCharacterRepository fehRepository;
-    
-    @Autowired
-    FavoriteImageRepository favoriteImageRepository;
 
     @Autowired
     CommonUtils commonUtil;
@@ -40,6 +35,7 @@ public class FehServiceImpl implements FehService {
     /**
      * 取得角色信息和不同皮肤头像
      */
+    @Override
     public ActerInfoDto getSameActerList(String acterId) {
         ActerInfoDto result = new ActerInfoDto();
         String imagePath = location+CommonContent.FEH_IMG_PATH;
@@ -52,7 +48,8 @@ public class FehServiceImpl implements FehService {
         result.setSameActerList(sameActerList);
         return result;
     }
-    
+
+    @Override
     public FehBaseDto getIndexData() {
         FehBaseDto result = new FehBaseDto();
         FehCharacter acter = new FehCharacter();
@@ -99,34 +96,10 @@ public class FehServiceImpl implements FehService {
                 result.setCode(CommonContent.RESULT_WARRING);
                 result.setMessage("登陆失败，已有这条数据");
             }
-        } 
+        }
         return result;
     }
 
-    /**
-     * 保存喜欢的图片
-     * @param imageList
-     * @return
-     */
-    public AjaxResponseDto saveFavImg(List<String> imageList){
-        AjaxResponseDto result = new AjaxResponseDto();
-        int count = 0;
-        for(String path : imageList){
-            path = path.split(CommonContent.IMG_TAG_MYAPP)[1];
-            FavoriteImage favImg = favoriteImageRepository.findByPath(path);
-            if(null == favImg){
-                favImg = new FavoriteImage();
-                favImg.setImagePath(path);
-                favImg.setRank(0);
-                favoriteImageRepository.insert(favImg);
-            }else{
-                count++;
-            }
-        }
-        result.setCode(CommonContent.RESULT_SUCCESS);
-        result.setMessage("保存"+imageList.size()+"条,已存在"+count+"条。");
-        return result;
-    }
 
     /**
      * @param form
@@ -135,13 +108,14 @@ public class FehServiceImpl implements FehService {
     public List<FehCharacter> teamEdit(TeamEditForm form){
         FehCharacter dto = new FehCharacter();
         List<FehCharacter> acterList = fehRepository.selectByDto(dto);
-        
+
         return acterList;
     }
 
     /**
      * 队伍情报初始表示
      */
+    @Override
     public TeamResultDto getTeamInfo() {
         TeamResultDto result = new TeamResultDto();
         // 备选
@@ -152,7 +126,7 @@ public class FehServiceImpl implements FehService {
         for(int i=1;i<=15;i++) {
             // 查找队员
             List<FehCharacter> teamSelect = fehRepository.selectByTeamNo(Integer.toString(i),location+CommonContent.FEH_IMG_PATH);
-            // 
+            //
             if(teamSelect.size() < 4) {
                 for(int j = teamSelect.size();j<4;j++) {
                     FehCharacter acter = new FehCharacter();
@@ -170,6 +144,7 @@ public class FehServiceImpl implements FehService {
      * @param teamNo
      * @param acterId
      */
+    @Override
     public void updateTeam(String teamNo,String acterId) {
         // 队伍队员重置
         fehRepository.initialTeam(teamNo);

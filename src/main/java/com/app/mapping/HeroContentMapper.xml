@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.HeroContentRepository" >
+  <resultMap id="HeroContentResultMap" type="com.app.model.HeroContent" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="VARCHAR" />
+    <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR" />
+    <result column="CODE_ID" property="codeId" jdbcType="VARCHAR" />
+    <result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+    <result column="IMG_SRC" property="imgSrc" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND1" property="nameExpand1" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND2" property="nameExpand2" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND3" property="nameExpand3" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    HERO_CONTENT.ID
+    ,HERO_CONTENT.CATEGORY_ID
+    ,HERO_CONTENT.CATEGORY_NAME
+    ,HERO_CONTENT.CODE_ID
+    ,HERO_CONTENT.CODE_NAME
+    ,HERO_CONTENT.IMG_SRC
+    ,HERO_CONTENT.NAME_EXPAND1
+    ,HERO_CONTENT.NAME_EXPAND2
+    ,HERO_CONTENT.NAME_EXPAND3
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,CATEGORY_ID
+    ,CATEGORY_NAME
+    ,CODE_ID
+    ,CODE_NAME
+    ,IMG_SRC
+    ,NAME_EXPAND1
+    ,NAME_EXPAND2
+    ,NAME_EXPAND3
+  </sql>
+
+  <select id="selectOne" resultMap="HeroContentResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_CONTENT
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.HeroContent" resultMap="HeroContentResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_CONTENT
+    <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
+      <if test="categoryId!=null">
+        CATEGORY_ID = #{categoryId}
+      </if>
+      <if test="categoryName!=null">
+        CATEGORY_NAME = #{categoryName}
+      </if>
+      <if test="codeId!=null">
+        CODE_ID = #{codeId}
+      </if>
+      <if test="codeName!=null">
+        CODE_NAME = #{codeName}
+      </if>
+      <if test="imgSrc!=null">
+        IMG_SRC = #{imgSrc}
+      </if>
+      <if test="nameExpand1!=null">
+        NAME_EXPAND1 = #{nameExpand1}
+      </if>
+      <if test="nameExpand2!=null">
+        NAME_EXPAND2 = #{nameExpand2}
+      </if>
+      <if test="nameExpand3!=null">
+        NAME_EXPAND3 = #{nameExpand3}
+      </if>
+    </where>
+  </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT COUNT(*) AS count
+    FROM 
+      HERO_CONTENT
+    WHERE
+      CATEGORY_ID = #{categoryId}
+      AND CODE_ID = #{codeId}
+  </select>
+
+  <update id="update" parameterType="com.app.model.HeroContent" >
+    UPDATE
+      HERO_CONTENT
+    <set>
+      <if test="categoryId!=null">
+        CATEGORY_ID = #{categoryId},
+      </if>
+      <if test="categoryName!=null">
+        CATEGORY_NAME = #{categoryName},
+      </if>
+      <if test="codeId!=null">
+        CODE_ID = #{codeId},
+      </if>
+      <if test="codeName!=null">
+        CODE_NAME = #{codeName},
+      </if>
+      <if test="imgSrc!=null">
+        IMG_SRC = #{imgSrc},
+      </if>
+      <if test="nameExpand1!=null">
+        NAME_EXPAND1 = #{nameExpand1},
+      </if>
+      <if test="nameExpand2!=null">
+        NAME_EXPAND2 = #{nameExpand2},
+      </if>
+      <if test="nameExpand3!=null">
+        NAME_EXPAND3 = #{nameExpand3},
+      </if>
+    </set>
+    WHERE
+      ID = #{id}
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.HeroContent" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+          SELECT SEQ_HERO_CONTENT.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO HERO_CONTENT(
+    <include refid="insert_column_list"></include>
+    ) VALUES (
+      #{id}
+      ,#{categoryId}
+      ,#{categoryName}
+      ,#{codeId}
+      ,#{codeName}
+      ,#{imgSrc}
+      ,#{nameExpand1}
+      ,#{nameExpand2}
+      ,#{nameExpand3}
+    )
+  </insert>
+</mapper>
+

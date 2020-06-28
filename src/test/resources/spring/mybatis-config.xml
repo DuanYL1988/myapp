@@ -5,5 +5,7 @@
 <configuration>
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!-- Oracle空值对应 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
     </settings>
 </configuration>

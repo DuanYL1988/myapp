@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.HeroRepository" >
+  <resultMap id="HeroResultMap" type="com.app.model.Hero" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="MASTER_ID" property="masterId" jdbcType="VARCHAR" />
+    <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="IMG_NAME" property="imgName" jdbcType="VARCHAR" />
+    <result column="ORIGIN" property="origin" jdbcType="VARCHAR" />
+    <result column="HP" property="hp" jdbcType="INTEGER" />
+    <result column="ATTACT" property="attact" jdbcType="INTEGER" />
+    <result column="SPEED" property="speed" jdbcType="INTEGER" />
+    <result column="DEF" property="def" jdbcType="INTEGER" />
+    <result column="MDF" property="mdf" jdbcType="INTEGER" />
+    <result column="WEAPON" property="weapon" jdbcType="VARCHAR" />
+    <result column="SKILL_A" property="skillA" jdbcType="VARCHAR" />
+    <result column="SKILL_B" property="skillB" jdbcType="VARCHAR" />
+    <result column="SKILL_C" property="skillC" jdbcType="VARCHAR" />
+    <result column="SKILL_D" property="skillD" jdbcType="VARCHAR" />
+    <result column="SKILL_S" property="skillS" jdbcType="VARCHAR" />
+    <result column="SKILL_E" property="skillE" jdbcType="VARCHAR" />
+    <result column="LIMIT_PLUS" property="limitPlus" jdbcType="INTEGER" />
+    <result column="SUPPORT_MATE" property="supportMate" jdbcType="VARCHAR" />
+    <result column="BLESSING" property="blessing" jdbcType="VARCHAR" />
+    <result column="MOVE_TYPE" property="moveType" jdbcType="VARCHAR" />
+    <result column="WEAPON_TYPE" property="weaponType" jdbcType="VARCHAR" />
+    <result column="COLOR" property="color" jdbcType="VARCHAR" />
+    <result column="RACE" property="race" jdbcType="VARCHAR" />
+    <result column="HERO_TYPE" property="heroType" jdbcType="VARCHAR" />
+    <result column="TEAM" property="team" jdbcType="INTEGER" />
+    <result column="SKILL_POINT" property="skillPoint" jdbcType="INTEGER" />
+    <result column="HERO_POINT" property="heroPoint" jdbcType="INTEGER" />
+    <result column="SPEC_TAG" property="specTag" jdbcType="VARCHAR" />
+    <result column="POOL" property="pool" jdbcType="VARCHAR" />
+    <result column="FAVORITE" property="favorite" jdbcType="VARCHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATETIME" property="updateDatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    HERO.ID
+    ,HERO.MASTER_ID
+    ,HERO.TITLE_NAME
+    ,HERO.NAME
+    ,HERO.NICK_NAME
+    ,HERO.IMG_NAME
+    ,HERO.ORIGIN
+    ,HERO.HP
+    ,HERO.ATTACT
+    ,HERO.SPEED
+    ,HERO.DEF
+    ,HERO.MDF
+    ,HERO.WEAPON
+    ,HERO.SKILL_A
+    ,HERO.SKILL_B
+    ,HERO.SKILL_C
+    ,HERO.SKILL_D
+    ,HERO.SKILL_S
+    ,HERO.SKILL_E
+    ,HERO.LIMIT_PLUS
+    ,HERO.SUPPORT_MATE
+    ,HERO.BLESSING
+    ,HERO.MOVE_TYPE
+    ,HERO.WEAPON_TYPE
+    ,HERO.COLOR
+    ,HERO.RACE
+    ,HERO.HERO_TYPE
+    ,HERO.TEAM
+    ,HERO.SKILL_POINT
+    ,HERO.HERO_POINT
+    ,HERO.SPEC_TAG
+    ,HERO.POOL
+    ,HERO.FAVORITE
+    ,HERO.CREATE_DATETIME
+    ,HERO.UPDATE_DATETIME
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,MASTER_ID
+    ,TITLE_NAME
+    ,NAME
+    ,NICK_NAME
+    ,IMG_NAME
+    ,ORIGIN
+    ,HP
+    ,ATTACT
+    ,SPEED
+    ,DEF
+    ,MDF
+    ,WEAPON
+    ,SKILL_A
+    ,SKILL_B
+    ,SKILL_C
+    ,SKILL_D
+    ,SKILL_S
+    ,SKILL_E
+    ,LIMIT_PLUS
+    ,SUPPORT_MATE
+    ,BLESSING
+    ,MOVE_TYPE
+    ,WEAPON_TYPE
+    ,COLOR
+    ,RACE
+    ,HERO_TYPE
+    ,TEAM
+    ,SKILL_POINT
+    ,HERO_POINT
+    ,SPEC_TAG
+    ,POOL
+    ,FAVORITE
+    ,CREATE_DATETIME
+    ,UPDATE_DATETIME
+  </sql>
+
+  <select id="selectOne" resultMap="HeroResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.Hero" resultMap="HeroResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO
+    <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
+      <if test="masterId!=null">
+        MASTER_ID = #{masterId}
+      </if>
+      <if test="titleName!=null">
+        TITLE_NAME = #{titleName}
+      </if>
+      <if test="name!=null">
+        NAME = #{name}
+      </if>
+      <if test="nickName!=null">
+        NICK_NAME = #{nickName}
+      </if>
+      <if test="imgName!=null">
+        IMG_NAME = #{imgName}
+      </if>
+      <if test="origin!=null">
+        ORIGIN = #{origin}
+      </if>
+      <if test="hp!=null">
+        HP = #{hp}
+      </if>
+      <if test="attact!=null">
+        ATTACT = #{attact}
+      </if>
+      <if test="speed!=null">
+        SPEED = #{speed}
+      </if>
+      <if test="def!=null">
+        DEF = #{def}
+      </if>
+      <if test="mdf!=null">
+        MDF = #{mdf}
+      </if>
+      <if test="weapon!=null">
+        WEAPON = #{weapon}
+      </if>
+      <if test="skillA!=null">
+        SKILL_A = #{skillA}
+      </if>
+      <if test="skillB!=null">
+        SKILL_B = #{skillB}
+      </if>
+      <if test="skillC!=null">
+        SKILL_C = #{skillC}
+      </if>
+      <if test="skillD!=null">
+        SKILL_D = #{skillD}
+      </if>
+      <if test="skillS!=null">
+        SKILL_S = #{skillS}
+      </if>
+      <if test="skillE!=null">
+        SKILL_E = #{skillE}
+      </if>
+      <if test="limitPlus!=null">
+        LIMIT_PLUS = #{limitPlus}
+      </if>
+      <if test="supportMate!=null">
+        SUPPORT_MATE = #{supportMate}
+      </if>
+      <if test="blessing!=null">
+        BLESSING = #{blessing}
+      </if>
+      <if test="moveType!=null">
+        MOVE_TYPE = #{moveType}
+      </if>
+      <if test="weaponType!=null">
+        WEAPON_TYPE = #{weaponType}
+      </if>
+      <if test="color!=null">
+        COLOR = #{color}
+      </if>
+      <if test="race!=null">
+        RACE = #{race}
+      </if>
+      <if test="heroType!=null">
+        HERO_TYPE = #{heroType}
+      </if>
+      <if test="team!=null">
+        TEAM = #{team}
+      </if>
+      <if test="skillPoint!=null">
+        SKILL_POINT = #{skillPoint}
+      </if>
+      <if test="heroPoint!=null">
+        HERO_POINT = #{heroPoint}
+      </if>
+      <if test="specTag!=null">
+        SPEC_TAG = #{specTag}
+      </if>
+      <if test="pool!=null">
+        POOL = #{pool}
+      </if>
+      <if test="favorite!=null">
+        FAVORITE = #{favorite}
+      </if>
+      <if test="createDatetime!=null">
+        CREATE_DATETIME = #{createDatetime}
+      </if>
+      <if test="updateDatetime!=null">
+        UPDATE_DATETIME = #{updateDatetime}
+      </if>
+    </where>
+  </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT COUNT(*) AS count
+    FROM 
+      HERO
+    WHERE
+      TITLE_NAME = #{titleName}
+      AND NAME = #{name}
+  </select>
+
+  <update id="update" parameterType="com.app.model.Hero" >
+    UPDATE
+      HERO
+    <set>
+      <if test="masterId!=null">
+        MASTER_ID = #{masterId},
+      </if>
+      <if test="titleName!=null">
+        TITLE_NAME = #{titleName},
+      </if>
+      <if test="name!=null">
+        NAME = #{name},
+      </if>
+      <if test="nickName!=null">
+        NICK_NAME = #{nickName},
+      </if>
+      <if test="imgName!=null">
+        IMG_NAME = #{imgName},
+      </if>
+      <if test="origin!=null">
+        ORIGIN = #{origin},
+      </if>
+      <if test="hp!=null">
+        HP = #{hp},
+      </if>
+      <if test="attact!=null">
+        ATTACT = #{attact},
+      </if>
+      <if test="speed!=null">
+        SPEED = #{speed},
+      </if>
+      <if test="def!=null">
+        DEF = #{def},
+      </if>
+      <if test="mdf!=null">
+        MDF = #{mdf},
+      </if>
+      <if test="weapon!=null">
+        WEAPON = #{weapon},
+      </if>
+      <if test="skillA!=null">
+        SKILL_A = #{skillA},
+      </if>
+      <if test="skillB!=null">
+        SKILL_B = #{skillB},
+      </if>
+      <if test="skillC!=null">
+        SKILL_C = #{skillC},
+      </if>
+      <if test="skillD!=null">
+        SKILL_D = #{skillD},
+      </if>
+      <if test="skillS!=null">
+        SKILL_S = #{skillS},
+      </if>
+      <if test="skillE!=null">
+        SKILL_E = #{skillE},
+      </if>
+      <if test="limitPlus!=null">
+        LIMIT_PLUS = #{limitPlus},
+      </if>
+      <if test="supportMate!=null">
+        SUPPORT_MATE = #{supportMate},
+      </if>
+      <if test="blessing!=null">
+        BLESSING = #{blessing},
+      </if>
+      <if test="moveType!=null">
+        MOVE_TYPE = #{moveType},
+      </if>
+      <if test="weaponType!=null">
+        WEAPON_TYPE = #{weaponType},
+      </if>
+      <if test="color!=null">
+        COLOR = #{color},
+      </if>
+      <if test="race!=null">
+        RACE = #{race},
+      </if>
+      <if test="heroType!=null">
+        HERO_TYPE = #{heroType},
+      </if>
+      <if test="team!=null">
+        TEAM = #{team},
+      </if>
+      <if test="skillPoint!=null">
+        SKILL_POINT = #{skillPoint},
+      </if>
+      <if test="heroPoint!=null">
+        HERO_POINT = #{heroPoint},
+      </if>
+      <if test="specTag!=null">
+        SPEC_TAG = #{specTag},
+      </if>
+      <if test="pool!=null">
+        POOL = #{pool},
+      </if>
+      <if test="favorite!=null">
+        FAVORITE = #{favorite},
+      </if>
+      <if test="createDatetime!=null">
+        CREATE_DATETIME = #{createDatetime},
+      </if>
+      <if test="updateDatetime!=null">
+        UPDATE_DATETIME = #{updateDatetime},
+      </if>
+    </set>
+    WHERE
+      ID = #{id}
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.Hero" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+          SELECT SEQ_HERO.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO HERO(
+    <include refid="insert_column_list"></include>
+    ) VALUES (
+      #{id}
+      ,#{masterId}
+      ,#{titleName}
+      ,#{name}
+      ,#{nickName}
+      ,#{imgName}
+      ,#{origin}
+      ,#{hp}
+      ,#{attact}
+      ,#{speed}
+      ,#{def}
+      ,#{mdf}
+      ,#{weapon}
+      ,#{skillA}
+      ,#{skillB}
+      ,#{skillC}
+      ,#{skillD}
+      ,#{skillS}
+      ,#{skillE}
+      ,#{limitPlus}
+      ,#{supportMate}
+      ,#{blessing}
+      ,#{moveType}
+      ,#{weaponType}
+      ,#{color}
+      ,#{race}
+      ,#{heroType}
+      ,#{team}
+      ,#{skillPoint}
+      ,#{heroPoint}
+      ,#{specTag}
+      ,#{pool}
+      ,#{favorite}
+      ,#{createDatetime}
+      ,#{updateDatetime}
+    )
+  </insert>
+</mapper>
+

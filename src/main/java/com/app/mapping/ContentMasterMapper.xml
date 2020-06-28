@@ -24,7 +24,7 @@
   </insert>
   
   <insert id="insertSql" parameterType="String">
-  	#{sqlString}
+    #{sqlString}
   </insert>
 
   <select id="getContentByCategoryId" parameterType="String"

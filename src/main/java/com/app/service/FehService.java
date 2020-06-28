@@ -1,7 +1,5 @@
 package com.app.service;
 
-import java.util.List;
-
 import com.app.dto.ActerInfoDto;
 import com.app.dto.AjaxResponseDto;
 import com.app.dto.FehBaseDto;
@@ -18,7 +16,7 @@ public interface FehService {
      * @return
      */
     ActerInfoDto getSameActerList(String acterId);
-    
+
     /**
      * 保存
      * @param form
@@ -27,22 +25,15 @@ public interface FehService {
     AjaxResponseDto doSave(FehCharActerForm form);
 
     /**
-     * 保存图片信息
-     * @param imageList
-     * @return
-     */
-    AjaxResponseDto saveFavImg(List<String> imageList);
-
-    /**
      * 队伍情报初始表示
-     * 
+     *
      * @return
      */
     TeamResultDto getTeamInfo();
 
     /**
      * 更新组队情报
-     * 
+     *
      * @param teamNo
      * @param acterId
      */

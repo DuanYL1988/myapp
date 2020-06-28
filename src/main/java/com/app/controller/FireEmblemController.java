@@ -22,11 +22,9 @@ import com.app.dto.TeamResultDto;
 import com.app.form.FehCharActerForm;
 import com.app.form.TeamEditForm;
 import com.app.model.ContentMaster;
-import com.app.model.FavoriteImage;
 import com.app.model.FehCharacter;
 import com.app.model.Skill;
 import com.app.repository.ContentMasterRepository;
-import com.app.repository.FavoriteImageRepository;
 import com.app.repository.FehCharacterRepository;
 import com.app.repository.SkillRepository;
 import com.app.service.FehService;
@@ -42,9 +40,6 @@ public class FireEmblemController {
 
     @Autowired
     ContentMasterRepository contentMasterRepository;
-
-    @Autowired
-    FavoriteImageRepository favoriteImgRepository;
 
     @Autowired
     CommonUtils commonUtil;
@@ -70,7 +65,7 @@ public class FireEmblemController {
     @RequestMapping(value = "master/{category}")
     public String goToMaster(@PathVariable("category") String category,
             Model model) {
-        
+
         return "feh/master";
     }
 
@@ -107,7 +102,7 @@ public class FireEmblemController {
 
     /**
      * 打开角色图片画面
-     * 
+     *
      * @param acterId
      * @param model
      * @return
@@ -153,12 +148,11 @@ public class FireEmblemController {
      */
     @RequestMapping(value = "favorite/{type}", method = RequestMethod.GET)
     public String favImage(@PathVariable("type") String type, Model model) {
-        List<FavoriteImage> imageList = favoriteImgRepository.findAllImage();
-        model.addAttribute("imageList", imageList);
+        model.addAttribute("imageList", null);
         return "feh/gallery";
     }
 
-    
+
     /**
      * 队伍编组
      * @param model
@@ -170,12 +164,12 @@ public class FireEmblemController {
         //
         model.addAttribute("alertnative", result.getAlertnative());
         model.addAttribute("teamMap", result.getTeamMap());
-        return "feh/team"; 
+        return "feh/team";
     }
 
     /**
      * 保存队伍
-     * 
+     *
      * @param acterIdList
      * @param teamId
      * @return

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.repository.HeroMasterRepository" >
+  <resultMap id="HeroMasterResultMap" type="com.app.model.HeroMaster" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ORIGIN" property="origin" jdbcType="VARCHAR" />
+    <result column="EXPAND_COL1" property="expandCol1" jdbcType="VARCHAR" />
+    <result column="EXPAND_COL2" property="expandCol2" jdbcType="VARCHAR" />
+    <result column="EXPAND_COL3" property="expandCol3" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    HERO_MASTER.ID
+    ,HERO_MASTER.NAME
+    ,HERO_MASTER.ORIGIN
+    ,HERO_MASTER.EXPAND_COL1
+    ,HERO_MASTER.EXPAND_COL2
+    ,HERO_MASTER.EXPAND_COL3
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,NAME
+    ,ORIGIN
+    ,EXPAND_COL1
+    ,EXPAND_COL2
+    ,EXPAND_COL3
+  </sql>
+
+  <select id="selectOne" resultMap="HeroMasterResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_MASTER
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.HeroMaster" resultMap="HeroMasterResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_MASTER
+    <where>
+      <if test="id!=null">
+        ID = #{id}
+      </if>
+      <if test="name!=null">
+        NAME = #{name}
+      </if>
+      <if test="origin!=null">
+        ORIGIN = #{origin}
+      </if>
+      <if test="expandCol1!=null">
+        EXPAND_COL1 = #{expandCol1}
+      </if>
+      <if test="expandCol2!=null">
+        EXPAND_COL2 = #{expandCol2}
+      </if>
+      <if test="expandCol3!=null">
+        EXPAND_COL3 = #{expandCol3}
+      </if>
+    </where>
+  </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT COUNT(*) AS count
+    FROM 
+      HERO_MASTER
+    WHERE
+      NAME = #{name}
+      AND ORIGIN = #{origin}
+  </select>
+
+  <update id="update" parameterType="com.app.model.HeroMaster" >
+    UPDATE
+      HERO_MASTER
+    <set>
+      <if test="name!=null">
+        NAME = #{name},
+      </if>
+      <if test="origin!=null">
+        ORIGIN = #{origin},
+      </if>
+      <if test="expandCol1!=null">
+        EXPAND_COL1 = #{expandCol1},
+      </if>
+      <if test="expandCol2!=null">
+        EXPAND_COL2 = #{expandCol2},
+      </if>
+      <if test="expandCol3!=null">
+        EXPAND_COL3 = #{expandCol3},
+      </if>
+    </set>
+    WHERE
+      ID = #{id}
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.HeroMaster" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+          SELECT SEQ_HERO_MASTER.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO HERO_MASTER(
+    <include refid="insert_column_list"></include>
+    ) VALUES (
+      #{id}
+      ,#{name}
+      ,#{origin}
+      ,#{expandCol1}
+      ,#{expandCol2}
+      ,#{expandCol3}
+    )
+  </insert>
+</mapper>
+

@@ -1,1 +1,0 @@
-INSERT INTO `menu` (`ID`, `MENU_NAME`, `MENU_LEVEL`, `PARENT_MENU`, `MENU_URL`) VALUES (10001, '读书笔记', '1', NULL, '');

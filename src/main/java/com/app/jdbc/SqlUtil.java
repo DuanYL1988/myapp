@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.app.repository.OracleCommonRepository;
 
 @Component
 public class SqlUtil {
@@ -24,9 +28,14 @@ public class SqlUtil {
 
     public static final String DB_TYPE_INT = "INT";
 
+    public static final String[] DB_NUMBER_TYPE = new String[] {"NUMBER","INT","DECIMAL","TIMESTAMP"};
+
+    @Autowired
+    OracleCommonRepository oracleUtil;
+
     /**
      * 数据库字段名转为java变量名
-     * 
+     *
      * @param fieldName
      * @return
      */
@@ -48,7 +57,7 @@ public class SqlUtil {
 
     /**
      * 生成select部分
-     * 
+     *
      * @param tableName
      * @param fields
      * @return
@@ -69,7 +78,7 @@ public class SqlUtil {
 
     /**
      * 生成where部分
-     * 
+     *
      * @param map
      * @return
      */
@@ -89,7 +98,7 @@ public class SqlUtil {
 
     /**
      * 万能插入数据
-     * 
+     *
      * @param tableName
      * @param fields
      */
@@ -103,10 +112,17 @@ public class SqlUtil {
                     .equals("auto_increment")) {
                 continue;
             }
+            // 值
+            String value = fields.get(i).getValue();
+            String type = fields.get(i).getType();
+            if ("ID".equals(fields.get(i).getName())) {
+                value = String.valueOf(oracleUtil.getNextval("SEQ_"+tableName));
+            }
+
             if (!StringUtils.isEmpty(fields.get(i).getValue())) {
                 sqlBuilder.append(fields.get(i).getName() + COMMA);
-                if (fields.get(i).getValue().indexOf("CURRENT_") >= 0) {
-                    valueBuilder.append(fields.get(i).getValue() + COMMA);
+                if (value.indexOf("CURRENT_") >= 0 || ArrayUtils.contains(DB_NUMBER_TYPE, type)) {
+                    valueBuilder.append(value + COMMA);
                 } else {
                     valueBuilder.append(APOSTROPHE + fields.get(i).getValue() + "',");
                 }
@@ -127,7 +143,7 @@ public class SqlUtil {
 
     /**
      * 万能更新数据 主键的值必须设上
-     * 
+     *
      * @param tableName
      * @param fields
      */

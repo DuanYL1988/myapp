@@ -31,7 +31,7 @@ public class TableController {
 
     @Autowired
     JsonUtil jsonUtil;
-    
+
     @RequestMapping(value = "/init")
     public String init(Model model) {
         return RETURN_PATH;
@@ -42,12 +42,18 @@ public class TableController {
         // 选择数据库
         jdbcUtil.mode = database;
         tableName = tablename;
+        // oracle時取得sequence的nextval
+        if (1 == database) {
+            model.addAttribute("nextId", 0);
+        }
+
         // 查询表结构SQL
-        String descQuery = "DESC "+tablename;
-        List<FieldInfo> columnList = jdbcUtil.getFieldInfo(descQuery);
+        List<FieldInfo> columnList = jdbcUtil.getFieldInfo(tablename);
         // 查找数据
         String json = jsonUtil.praseObjToJson(jdbcUtil.excuteSelectQuery(sqlUtil.createSelectQuery(tablename, columnList)));
+
         model.addAttribute("columnList", columnList);
+        // slickgrid表示用
         model.addAttribute("json", json);
         return RETURN_PATH;
     }

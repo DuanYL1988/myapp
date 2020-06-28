@@ -1,0 +1,30 @@
+2020/6/25
+Q:mybatis中oracle如何实现主键自增?
+A:使用SEQUENCE,在insert文中直接使用select SEQUENCE.nextval from dual会报ORA-02287: 此处不允许序号错误
+解决方法如下:
+    <insert id="insert" parameterType="com.app.model.HeroMaster" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+        SELECT SEQ_HERO_MASTER.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO HERO_MASTER(
+    <include refid="insert_column_list"></include>
+    ) VALUES (
+      #{id}
+      ,#{name}
+      ,#{origin}
+      ,#{expandCol1}
+      ,#{expandCol2}
+      ,#{expandCol3}
+    )
+  </insert>
+
+
+Q:oracle使用mybatis插入时 Error setting null for parameter #X with JdbcType OTHER .无效的列类型
+A:null值字段没有设jdbcType
+  案1:单个对应 #{id,jdbcType=VARCHAR}
+  案1:全局对应,在MyBaits的核心配置文件里面进行配置
+    <configuration>
+      <settings>
+          <setting name="jdbcTypeForNull" value="NULL"/>
+        </settings>
+    </configuration>
