@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.app.model.Hero;
 import com.app.model.Menu;
 import com.app.repository.MenuRepository;
 import com.app.util.JsonUtil;
@@ -31,4 +32,10 @@ public class HeroController {
         return "hero/index";
     }
 
+    @RequestMapping(value = "regist")
+    public String goRegist(Model model) {
+        Hero hero = new Hero();
+        model.addAttribute("inputFrom", hero);
+        return "hero/regist";
+    }
 }

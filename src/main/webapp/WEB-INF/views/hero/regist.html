@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>英雄登录页面</title>
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
+<!-- Bootstrap core CSS -->
+<link href="../../../resources/bootstrap/css/bootstrap.css" th:href="@{/resources/bootstrap/css/bootstrap.css}" rel="stylesheet">
+<style>
+.col-md-8 {
+  width: 800px
+}
+
+.row h4 {
+  padding-left: 10px
+}
+
+.custom-control-input {
+  position: inherit;
+}
+</style>
+<!-- Bootstrap core CSS -->
+<link href="../../../resources/bootstrap/css/form-validation.css" th:href="@{/resources/bootstrap/css/form-validation.css}" rel="stylesheet">
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script src="../../../resources/bootstrap/js/form-validation.js" th:src="@{/resources/js/commonService.js}"></script>
+<script th:inline="javascript">
+    
+</script>
+
+</head>
+<body class="bg-light">
+  <main>
+    <!-- Form Info -->
+
+    <div class="col-md-8 order-md-1">
+      <form class="needs-validation" th:object="${inputFrom}" >
+        <h4 class="mb-3">基本</h4>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="origin">角色作品</label> <select id="origin" class="custom-select" type="select" th:name="hero.origin" name="origin" dyl:options="0004" required>
+              <option value="">Choose...</option>
+            </select>
+            <div class="invalid-feedback">origin is required</div>
+          </div>
+          <div class="col-md-4">
+            <label for="titleName">称号</label> <input id="titleName" class="form-control" type="text" th:name="hero.titleName" name="titleName" placeholder="伟大的女爵" required>
+            <div class="invalid-feedback">titleName is required</div>
+          </div>
+          <div class="col-md-4">
+            <label for="name">角色名</label> <input id="name" class="form-control" type="text" th:name="hero.name" name="name" placeholder="琳" required>
+            <div class="invalid-feedback">name is required</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="nickName">昵称</label> <input id="nickName" class="form-control" type="text" th:name="hero.nickName" name="nickName" placeholder="总选举琳">
+          </div>
+          <div class="col-md-6">
+            <label for="imgName">立绘名</label> <input id="imgName" class="form-control" type="text" th:name="hero.imgName" name="imgName" placeholder="Nailah_F_BlessedQueen" required>
+            <div class="invalid-feedback">imgName is required</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <label for="hp">生命值</label> <input id="hp" class="form-control" type="text" th:name="hero.hp" name="hp" placeholder="50" required>
+            <div class="invalid-feedback">hp is required</div>
+          </div>
+          <div class="col-md-2">
+            <label for="attact">攻击</label> <input id="attact" class="form-control" type="text" th:name="hero.attact" name="attact" placeholder="50" required>
+            <div class="invalid-feedback">attact is required</div>
+          </div>
+          <div class="col-md-2">
+            <label for="speed">速度</label> <input id="speed" class="form-control" type="text" th:name="hero.speed" name="speed" placeholder="50" required>
+            <div class="invalid-feedback">speed is required</div>
+          </div>
+          <div class="col-md-2">
+            <label for="def">防御</label> <input id="def" class="form-control" type="text" th:name="hero.def" name="def" placeholder="50" required>
+            <div class="invalid-feedback">def is required</div>
+          </div>
+          <div class="col-md-2">
+            <label for="mdf">魔防</label> <input id="mdf" class="form-control" type="text" th:name="hero.mdf" name="mdf" placeholder="50" required>
+            <div class="invalid-feedback">mdf is required</div>
+          </div>
+          <div class="col-md-2">
+            <label for="limitPlus">突破极限</label> <select id="limitPlus" class="custom-select" type="select" th:name="hero.limitPlus" name="limitPlus">
+              <option value="">Choose...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="skillPoint">技能点</label> <input id="skillPoint" class="form-control" type="text" th:name="hero.skillPoint" name="skillPoint" placeholder="9999">
+          </div>
+          <div class="col-md-4">
+            <label for="heroPoint">英雄点</label> <input id="heroPoint" class="form-control" type="text" th:name="hero.heroPoint" name="heroPoint" placeholder="6000">
+          </div>
+          <div class="col-md-4">
+            <label for="rank">评价等级</label> <select id="rank" class="custom-select" type="select" th:name="hero.rank" name="rank" >
+              <option value="">Choose...</option>
+              <option value="S">S</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C.</option>
+            </select>
+          </div>
+        </div>
+
+        <h4 class="mb-3">技能</h4>
+        <div class="row">
+          <div class="col-md-3">
+            <label for="weapon">武器名</label> <input id="weapon" class="form-control" type="text" th:name="hero.weapon" name="weapon" placeholder="法尔西昂" required>
+            <div class="invalid-feedback">weapon is required</div>
+          </div>
+          <div class="col-md-7">
+            <label for="weaponInfo">描述</label> <input id="weaponInfo" class="form-control" type="text" th:name="hero.weaponInfo" name="weaponInfo" placeholder="法尔西昂">
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input id="extendWeapon" class="custom-control-input" type="checkbox" th:name="hero.extendWeapon" name="extendWeapon"> <label for="extendWeapon" class="custom-control-label">继承</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="skillA">主动技能</label> <input id="skillA" class="form-control" type="text" th:name="hero.skillA" name="skillA" placeholder="鬼神飞燕击">
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input id="extendA" class="custom-control-input" type="checkbox" th:name="hero.extendA" name="extendA"> <label for="extendA" class="custom-control-label">继承</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="skillB">被动技能</label> <input id="skillB" class="form-control" type="text" th:name="hero.skillB" name="skillB" placeholder="埋伏">
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input id="extendB" class="custom-control-input" type="checkbox" th:name="hero.extendB" name="extendB"> <label for="extendB" class="custom-control-label">继承</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="skillC">增益技能</label> <input id="skillC" class="form-control" type="text" th:name="hero.skillC" name="skillC" placeholder="飞行支援">
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input id="extendC" class="custom-control-input" type="checkbox" th:name="hero.extendC" name="extendC"> <label for="extendC" class="custom-control-label">继承</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="skillS">支援技能</label> <input id="skillS" class="form-control" type="text" th:name="hero.skillS" name="skillS" placeholder="拉近">
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input id="extendS" class="custom-control-input" type="checkbox" th:name="hero.extendS" name="extendS"> <label for="extendS" class="custom-control-label">继承</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="skillE">必杀技能</label> <input id="skillE" class="form-control" type="text" th:name="hero.skillE" name="skillE" placeholder="疾风迅雷">
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input id="extendE" class="custom-control-input" type="checkbox" th:name="hero.extendE" name="extendE"> <label for="extendE" class="custom-control-label">继承</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label for="blessing">祝福</label> <select id="blessing" class="custom-select" type="select" th:name="hero.blessing" name="blessing">
+              <option value="">Choose...</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="weaponType">武器类型</label> <select id="weaponType" class="custom-select" type="select" th:name="hero.weaponType" name="weaponType" required>
+              <option value="">Choose...</option>
+            </select>
+            <div class="invalid-feedback">weaponType is required</div>
+          </div>
+        </div>
+
+        <h4 class="mb-3"></h4>
+        <div class="row">
+          <h4 class="mb-3">兵种</h4>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="moveType1" class="custom-control-input" type="radio" th:name="hero.moveType" name="moveType" required> <label for="moveType1" class="custom-control-label">兵种</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="moveType2" class="custom-control-input" type="radio" th:name="hero.moveType" name="moveType" required> <label for="moveType2" class="custom-control-label">兵种</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="moveType3" class="custom-control-input" type="radio" th:name="hero.moveType" name="moveType" required> <label for="moveType3" class="custom-control-label">兵种</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="moveType4" class="custom-control-input" type="radio" th:name="hero.moveType" name="moveType" required> <label for="moveType4" class="custom-control-label">兵种</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="mb-3">宝珠</h4>
+          <div class="d-block my-1" dyl:radioImage="color">
+            <div class="custom-control custom-radio">
+              <input id="color1" class="custom-control-input" type="radio" th:name="hero.color" name="color" required> <label for="color1" class="custom-control-label">宝珠颜色</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="color2" class="custom-control-input" type="radio" th:name="hero.color" name="color" required> <label for="color2" class="custom-control-label">宝珠颜色</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="color3" class="custom-control-input" type="radio" th:name="hero.color" name="color" required> <label for="color3" class="custom-control-label">宝珠颜色</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="color4" class="custom-control-input" type="radio" th:name="hero.color" name="color" required> <label for="color4" class="custom-control-label">宝珠颜色</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="mb-3">种族</h4>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="race1" class="custom-control-input" type="radio" th:name="hero.race" name="race" required> <label for="race1" class="custom-control-label">种族</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="race2" class="custom-control-input" type="radio" th:name="hero.race" name="race" required> <label for="race2" class="custom-control-label">种族</label>
+            </div>
+          </div>
+          <div class="d-block my-1">
+            <div class="custom-control custom-radio">
+              <input id="race3" class="custom-control-input" type="radio" th:name="hero.race" name="race" required> <label for="race3" class="custom-control-label">种族</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="mb-3">连翼</h4>
+          <div class="custom-control custom-checkbox">
+            <input id="heroType1" class="custom-control-input" type="checkbox" th:name="hero.heroType" name="heroType"> <label for="heroType1" class="custom-control-label">连翼</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input id="heroType2" class="custom-control-input" type="checkbox" th:name="hero.heroType" name="heroType"> <label for="heroType2" class="custom-control-label">连翼</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input id="heroType3" class="custom-control-input" type="checkbox" th:name="hero.heroType" name="heroType"> <label for="heroType3" class="custom-control-label">连翼</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="mb-3">特效</h4>
+          <div class="custom-control custom-checkbox">
+            <input id="specTag1" class="custom-control-input" type="checkbox" th:name="hero.specTag" name="specTag"> <label for="specTag1" class="custom-control-label">特效</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input id="specTag2" class="custom-control-input" type="checkbox" th:name="hero.specTag" name="specTag"> <label for="specTag2" class="custom-control-label">特效</label>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+      </form>
+    </div>
+
+
+  </main>
+
+</body>
+</html>
