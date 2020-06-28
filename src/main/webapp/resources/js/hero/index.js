@@ -41,8 +41,8 @@ function initlize(jsonData,htmlFlag){
             imgEle.src = path+this.htmlimagesrc;
             linkEle.href = this.htmlurl;
         } else {
-            imgEle.src = path+this.imageSrc;
-            linkEle.href = this.actionUrl;
+            imgEle.src = path+this.imagesrc;
+            linkEle.href = this.actionurl;
         }
         // 加载图片信息需要一段时间
         sleep(100);
