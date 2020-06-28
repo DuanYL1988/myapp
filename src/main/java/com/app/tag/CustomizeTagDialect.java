@@ -8,17 +8,21 @@ import org.thymeleaf.processor.IProcessor;
 import org.thymeleaf.standard.StandardDialect;
 
 public class CustomizeTagDialect extends AbstractProcessorDialect{
-    // 定义方言名称
+    /* 方言名称 */
     private static final String DIALECT_NAME = "Dyl Dialect";
-    
+
+    /* 前缀 */
+    private static final String DIALECT_PREFIX = "dyl";
+
     public CustomizeTagDialect() {
-        super(DIALECT_NAME, "dyl", StandardDialect.PROCESSOR_PRECEDENCE);
+        super(DIALECT_NAME, DIALECT_PREFIX , StandardDialect.PROCESSOR_PRECEDENCE);
     }
 
     @Override
     public Set<IProcessor> getProcessors(String dialectPrefix) {
         final Set<IProcessor> processors = new HashSet<IProcessor>();
-        processors.add(new CustomizeTagProcessor(dialectPrefix));
+        processors.add(new OptionsTagProcessor(dialectPrefix));
+        processors.add(new RadioProcessor(dialectPrefix));
         return processors;
     }
 }
