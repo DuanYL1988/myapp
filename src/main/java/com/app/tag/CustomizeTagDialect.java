@@ -23,6 +23,7 @@ public class CustomizeTagDialect extends AbstractProcessorDialect{
         final Set<IProcessor> processors = new HashSet<IProcessor>();
         processors.add(new OptionsTagProcessor(dialectPrefix));
         processors.add(new RadioProcessor(dialectPrefix));
+        processors.add(new CheckboxProcessor(dialectPrefix));
         return processors;
     }
 }

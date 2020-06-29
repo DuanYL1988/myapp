@@ -10,11 +10,13 @@ import org.thymeleaf.processor.element.AbstractAttributeTagProcessor;
 import org.thymeleaf.processor.element.IElementTagStructureHandler;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import com.app.common.CommonContent;
 import com.app.jdbc.JdbcConnectUtil;
 
 public class RadioProcessor extends AbstractAttributeTagProcessor {
 
     private static final String ATTR_NAME = "radioImage";
+
     private static final String CRLF = "\r\n";
 
     private static final int PRECEDENCE = 10000;
@@ -45,20 +47,21 @@ public class RadioProcessor extends AbstractAttributeTagProcessor {
             String attributeValue, IElementTagStructureHandler structureHandler) {
 
         JdbcConnectUtil dbUtil = new JdbcConnectUtil();
-        String category = "9999";
-        if("color".equals(attributeValue)) {
-            category = "0003";
-        }
-        String query = "select CODE_ID,CODE_NAME from feh_content_master where CATEGORY_ID = '"+category+"' order by code_id";
+        dbUtil.mode = 1;
+        String name = CommonContent.getMapping(attributeValue);
+
+        String query = "select CODE_ID,IMG_SRC from HERO_CONTENT where CATEGORY_ID = '"+attributeValue+"' and IMG_SRC is not null order by code_id";
         List<Map<String, String>> resultMap = dbUtil.excuteSelectQuery(query);
         StringBuilder html = new StringBuilder();
 
         for(Map<String, String> result :resultMap) {
             String id = result.get("CODE_ID");
-            String text = result.get("CODE_NAME");
-            html.append("<div class=\"custom-radio\">"+CRLF);
-            html.append("<input id=\"color"+id+"\" class=\"custom-control-input\" type=\"radio\" th:name=\"hero.color\" name=\"color\">"+CRLF);
-            html.append("<label for=\"color"+id+"\" class=\"custom-control-label\">"+text+"</label>"+CRLF);
+            String text = CommonContent.IMG_MYAPP_FEH +result.get("IMG_SRC");
+            text = "<img src=\""+text+"\"></img>";
+
+            html.append("<div class=\"custom-control custom-radio\">"+CRLF);
+            html.append("<input id=\""+name+id+"\" class=\"custom-control-input\" type=\"radio\" value=\""+id+"\" name=\"hero."+name+"\" required>"+CRLF);
+            html.append("<label for=\""+name+id+"\" class=\"custom-control-label\">"+text+"</label>"+CRLF);
             html.append("</div>"+CRLF);
         }
 
