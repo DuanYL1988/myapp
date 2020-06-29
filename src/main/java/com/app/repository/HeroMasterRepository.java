@@ -8,7 +8,7 @@ import com.app.model.HeroMaster;
 
 @Repository
 public interface HeroMasterRepository{
-    HeroMaster selectOne(@Param("id")Integer id);
+    HeroMaster selectOneById(@Param("id")Integer id);
 
     List<HeroMaster> selectByDto(HeroMaster heroMaster);
 
@@ -16,6 +16,8 @@ public interface HeroMasterRepository{
 
     void update(HeroMaster heroMaster);
 
-    int uniqueCheck(@Param("name")String name,@Param("origin")String origin);
+    int uniqueCheck(@Param("originId")String originId,@Param("name")String name);
+
+    HeroMaster selectOneByUniqueKey(@Param("originId")String originId,@Param("name")String name);
 
 }

@@ -13,20 +13,20 @@ public class BootStrapCreater {
     public static final String TAP_SPACE = "  ";
     public static final String FOUR_SPACE = "    ";
     public static final String CRLF = "\r\n";
-
+    private static final String  FORM_OBJECT_NM = "inputForm";
     public static final int ROW_WIDTH = 12;
 
     public static final String RES_PATH = "C:\\Workspaces\\myapp\\src\\main\\resources\\template\\";
 
     private final String paramObject;
     private final FileUtils fileUtil;
-
     List<String> fileLineList = new ArrayList<String>();
     public BootStrapCreater(String name) {
         fileUtil = new FileUtils();
         paramObject = fileUtil.changeNm(name, false);
         fileLineList = fileUtil.getFileText(new File(RES_PATH+name+".txt"));
     }
+
     public static void main(String[] args) {
         BootStrapCreater thisClass = new BootStrapCreater("HERO");
 
@@ -35,10 +35,10 @@ public class BootStrapCreater {
     }
 
 
-    private String createValitionFormHtml() {
+    public String createValitionFormHtml() {
         StringBuilder html = new StringBuilder();
         html.append("<div class=\"col-md-8 order-md-1\">"+CRLF);
-        html.append("<form class=\"needs-validation\" novalidate th:action=\"\" th:object=\"${inputFrom}\">"+CRLF);
+        html.append("<form class=\"needs-validation\" th:action=\"@{hero/index}\" th:object=\"${"+FORM_OBJECT_NM+"}\" novalidate>"+CRLF);
         int cntWidth = 0;
         boolean rowLengthCheck = true;
 
@@ -97,8 +97,8 @@ public class BootStrapCreater {
                 // 单选及复选框
             } else if ("radio".equals(inputType) || "checkbox".equals(inputType)){
                 html.append(TAP_SPACE+"<div class=\"row\">"+CRLF);
-                html.append(FOUR_SPACE+"<h4 class=\"mb-3\">"+lineInfo[2]+"</h4>"+CRLF);
-                for(int i=1;i<=width;i++) {
+                html.append(FOUR_SPACE+"<h4 class=\"mb-3\" dyl:"+inputType+"Image=\"\" >"+lineInfo[2]+"</h4>"+CRLF);
+                for(int i=1;i<=2;i++) {
                     if("radio".equals(inputType)) {
                         html.append(FOUR_SPACE+"<div class=\"d-block my-1\">"+CRLF);
                         html.append(FOUR_SPACE+TAP_SPACE+"<div class=\"custom-control custom-radio\">"+CRLF);
@@ -170,7 +170,8 @@ public class BootStrapCreater {
 
         String clickClass = " class=\"custom-control-label\"";
         if("checkbox".equals(inputType) || "radio".equals(inputType)) {
-            exitInput(inputHtml, tag, id, propNm, required, inputType, placeholder, classNm);
+            // radio或checkbox时不进行页面入力验证
+            exitInput(inputHtml, tag, id, propNm, "NO", inputType, placeholder, classNm);
             exitLable(inputHtml, id, inputType, titleNm, clickClass);
         } else {
             exitLable(inputHtml, id, inputType, titleNm, "");
@@ -179,12 +180,18 @@ public class BootStrapCreater {
         return inputHtml.toString();
     }
 
+    /**
+     * 编辑LABEL标签
+     */
     private void exitLable(StringBuilder inputHtml,String id,String inputType,String titleNm,String clickClass) {
         inputHtml.append(FOUR_SPACE+TAP_SPACE+"<label for=\""+id+"\"");
         inputHtml.append(clickClass);
         inputHtml.append(">"+titleNm+"</label>"+CRLF);
     }
 
+    /**
+     * 编辑INPUT标签
+     */
     private void exitInput(StringBuilder inputHtml,String tag,String id,String propNm,String required,String inputType,String placeholder,String classNm) {
         inputHtml.append(FOUR_SPACE+TAP_SPACE+"<"+tag+" id=\""+id+"\"");
         inputHtml.append(" class=\""+classNm+"\"");
@@ -194,8 +201,12 @@ public class BootStrapCreater {
             inputHtml.append(" dyl:options=\"0004\"");
         }
         inputHtml.append(" th:name=\""+paramObject+"."+propNm+"\" name=\""+propNm+"\"");
-        if (!StringUtils.isEmpty(placeholder) && "text".equals(inputType)) {
-            inputHtml.append(" placeholder=\""+placeholder+"\"");
+        if ("text".equals(inputType)) {
+            inputHtml.append(" th:value=\"${"+FORM_OBJECT_NM+"."+paramObject+"."+propNm+"}\"");
+
+            if(!StringUtils.isEmpty(placeholder)) {
+                inputHtml.append(" placeholder=\""+placeholder+"\"");
+            }
         }
         String txt = "YES".equals(required) ? " required>" : ">";
         inputHtml.append(txt+CRLF);

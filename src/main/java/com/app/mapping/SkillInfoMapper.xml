@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
 <mapper namespace="com.app.repository.SkillInfoRepository" >
   <resultMap id="SkillInfoResultMap" type="com.app.model.SkillInfo" >
     <id column="ID" property="id" jdbcType="INTEGER" />
@@ -7,7 +7,7 @@
     <result column="TYPE" property="type" jdbcType="VARCHAR" />
     <result column="EXTEND" property="extend" jdbcType="VARCHAR" />
     <result column="INFO" property="info" jdbcType="VARCHAR" />
-    <result column="WEAPON_POWER" property="weaponPower" jdbcType="VARCHAR" />
+    <result column="WEAPON_POWER" property="weaponPower" jdbcType="INTEGER" />
     <result column="EFFECTS" property="effects" jdbcType="VARCHAR" />
   </resultMap>
 
@@ -31,13 +31,28 @@
     ,EFFECTS
   </sql>
 
-  <select id="selectOne" resultMap="SkillInfoResultMap">
+  <select id="selectOneById" resultMap="SkillInfoResultMap">
     SELECT
       <include refid="select_column_list"></include>
     FROM 
       SKILL_INFO
     WHERE
       ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="SkillInfoResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      SKILL_INFO
+    <where>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+      <if test="type!=null">
+        AND TYPE = #{type}
+      </if>
+    </where>
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.SkillInfo" resultMap="SkillInfoResultMap">
@@ -47,36 +62,41 @@
       SKILL_INFO
     <where>
       <if test="id!=null">
-        ID = #{id}
+        AND ID = #{id}
       </if>
       <if test="name!=null">
-        NAME = #{name}
+        AND NAME = #{name}
       </if>
       <if test="type!=null">
-        TYPE = #{type}
+        AND TYPE = #{type}
       </if>
       <if test="extend!=null">
-        EXTEND = #{extend}
+        AND EXTEND = #{extend}
       </if>
       <if test="info!=null">
-        INFO = #{info}
+        AND INFO = #{info}
       </if>
       <if test="weaponPower!=null">
-        WEAPON_POWER = #{weaponPower}
+        AND WEAPON_POWER = #{weaponPower}
       </if>
       <if test="effects!=null">
-        EFFECTS = #{effects}
+        AND EFFECTS = #{effects}
       </if>
     </where>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count
+    SELECT count(*) AS count
     FROM 
       SKILL_INFO
-    WHERE
-      NAME = #{name}
-      AND TYPE = #{type}
+    <where>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+      <if test="type!=null">
+        AND TYPE = #{type}
+      </if>
+    </where>
   </select>
 
   <update id="update" parameterType="com.app.model.SkillInfo" >

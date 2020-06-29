@@ -62,27 +62,27 @@ public class Menu{
     /**
      * 设定父菜单ID
      */
-    public void setParentid(Integer parentId){
+    public void setParentId(Integer parentId){
         this.parentId = parentId;
     }
 
     /**
      * 取得父菜单ID
      */
-    public Integer getParentid(){
+    public Integer getParentId(){
         return parentId;
     }
     /**
      * 设定菜单等级
      */
-    public void setMenulevel(String menuLevel){
+    public void setMenuLevel(String menuLevel){
         this.menuLevel = menuLevel;
     }
 
     /**
      * 取得菜单等级
      */
-    public String getMenulevel(){
+    public String getMenuLevel(){
         return menuLevel;
     }
     /**
@@ -114,53 +114,53 @@ public class Menu{
     /**
      * 设定活动URL
      */
-    public void setActionurl(String actionUrl){
+    public void setActionUrl(String actionUrl){
         this.actionUrl = actionUrl;
     }
 
     /**
      * 取得活动URL
      */
-    public String getActionurl(){
+    public String getActionUrl(){
         return actionUrl;
     }
     /**
      * 设定静态页面URL
      */
-    public void setHtmlurl(String htmlUrl){
+    public void setHtmlUrl(String htmlUrl){
         this.htmlUrl = htmlUrl;
     }
 
     /**
      * 取得静态页面URL
      */
-    public String getHtmlurl(){
+    public String getHtmlUrl(){
         return htmlUrl;
     }
     /**
      * 设定图片位置
      */
-    public void setImagesrc(String imageSrc){
+    public void setImageSrc(String imageSrc){
         this.imageSrc = imageSrc;
     }
 
     /**
      * 取得图片位置
      */
-    public String getImagesrc(){
+    public String getImageSrc(){
         return imageSrc;
     }
     /**
      * 设定静态页面图片位置
      */
-    public void setHtmlimagesrc(String htmlImageSrc){
+    public void setHtmlImageSrc(String htmlImageSrc){
         this.htmlImageSrc = htmlImageSrc;
     }
 
     /**
      * 取得静态页面图片位置
      */
-    public String getHtmlimagesrc(){
+    public String getHtmlImageSrc(){
         return htmlImageSrc;
     }
 

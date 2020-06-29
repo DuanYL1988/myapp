@@ -8,7 +8,7 @@ import com.app.model.SkillInfo;
 
 @Repository
 public interface SkillInfoRepository{
-    SkillInfo selectOne(@Param("id")Integer id);
+    SkillInfo selectOneById(@Param("id")Integer id);
 
     List<SkillInfo> selectByDto(SkillInfo skillInfo);
 
@@ -17,5 +17,7 @@ public interface SkillInfoRepository{
     void update(SkillInfo skillInfo);
 
     int uniqueCheck(@Param("name")String name,@Param("type")String type);
+
+    SkillInfo selectOneByUniqueKey(@Param("name")String name,@Param("type")String type);
 
 }

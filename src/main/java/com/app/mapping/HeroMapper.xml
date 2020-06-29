@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
 <mapper namespace="com.app.repository.HeroRepository" >
   <resultMap id="HeroResultMap" type="com.app.model.Hero" >
     <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="MASTER_ID" property="masterId" jdbcType="VARCHAR" />
+    <result column="MASTER_ID" property="masterId" jdbcType="INTEGER" />
     <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
@@ -22,7 +22,8 @@
     <result column="SKILL_S" property="skillS" jdbcType="VARCHAR" />
     <result column="SKILL_E" property="skillE" jdbcType="VARCHAR" />
     <result column="LIMIT_PLUS" property="limitPlus" jdbcType="INTEGER" />
-    <result column="SUPPORT_MATE" property="supportMate" jdbcType="VARCHAR" />
+    <result column="DRAGON_FLOWER" property="dragonFlower" jdbcType="INTEGER" />
+    <result column="SUPPORT_MATE" property="supportMate" jdbcType="INTEGER" />
     <result column="BLESSING" property="blessing" jdbcType="VARCHAR" />
     <result column="MOVE_TYPE" property="moveType" jdbcType="VARCHAR" />
     <result column="WEAPON_TYPE" property="weaponType" jdbcType="VARCHAR" />
@@ -35,6 +36,7 @@
     <result column="SPEC_TAG" property="specTag" jdbcType="VARCHAR" />
     <result column="POOL" property="pool" jdbcType="VARCHAR" />
     <result column="FAVORITE" property="favorite" jdbcType="VARCHAR" />
+    <result column="RANK" property="rank" jdbcType="VARCHAR" />
     <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_DATETIME" property="updateDatetime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -60,6 +62,7 @@
     ,HERO.SKILL_S
     ,HERO.SKILL_E
     ,HERO.LIMIT_PLUS
+    ,HERO.DRAGON_FLOWER
     ,HERO.SUPPORT_MATE
     ,HERO.BLESSING
     ,HERO.MOVE_TYPE
@@ -73,6 +76,7 @@
     ,HERO.SPEC_TAG
     ,HERO.POOL
     ,HERO.FAVORITE
+    ,HERO.RANK
     ,HERO.CREATE_DATETIME
     ,HERO.UPDATE_DATETIME
   </sql>
@@ -98,6 +102,7 @@
     ,SKILL_S
     ,SKILL_E
     ,LIMIT_PLUS
+    ,DRAGON_FLOWER
     ,SUPPORT_MATE
     ,BLESSING
     ,MOVE_TYPE
@@ -111,17 +116,33 @@
     ,SPEC_TAG
     ,POOL
     ,FAVORITE
+    ,RANK
     ,CREATE_DATETIME
     ,UPDATE_DATETIME
   </sql>
 
-  <select id="selectOne" resultMap="HeroResultMap">
+  <select id="selectOneById" resultMap="HeroResultMap">
     SELECT
       <include refid="select_column_list"></include>
     FROM 
       HERO
     WHERE
       ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="HeroResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO
+    <where>
+      <if test="titleName!=null">
+        AND TITLE_NAME = #{titleName}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.Hero" resultMap="HeroResultMap">
@@ -131,120 +152,131 @@
       HERO
     <where>
       <if test="id!=null">
-        ID = #{id}
+        AND ID = #{id}
       </if>
       <if test="masterId!=null">
-        MASTER_ID = #{masterId}
+        AND MASTER_ID = #{masterId}
       </if>
       <if test="titleName!=null">
-        TITLE_NAME = #{titleName}
+        AND TITLE_NAME = #{titleName}
       </if>
       <if test="name!=null">
-        NAME = #{name}
+        AND NAME = #{name}
       </if>
       <if test="nickName!=null">
-        NICK_NAME = #{nickName}
+        AND NICK_NAME = #{nickName}
       </if>
       <if test="imgName!=null">
-        IMG_NAME = #{imgName}
+        AND IMG_NAME = #{imgName}
       </if>
       <if test="origin!=null">
-        ORIGIN = #{origin}
+        AND ORIGIN = #{origin}
       </if>
       <if test="hp!=null">
-        HP = #{hp}
+        AND HP = #{hp}
       </if>
       <if test="attact!=null">
-        ATTACT = #{attact}
+        AND ATTACT = #{attact}
       </if>
       <if test="speed!=null">
-        SPEED = #{speed}
+        AND SPEED = #{speed}
       </if>
       <if test="def!=null">
-        DEF = #{def}
+        AND DEF = #{def}
       </if>
       <if test="mdf!=null">
-        MDF = #{mdf}
+        AND MDF = #{mdf}
       </if>
       <if test="weapon!=null">
-        WEAPON = #{weapon}
+        AND WEAPON = #{weapon}
       </if>
       <if test="skillA!=null">
-        SKILL_A = #{skillA}
+        AND SKILL_A = #{skillA}
       </if>
       <if test="skillB!=null">
-        SKILL_B = #{skillB}
+        AND SKILL_B = #{skillB}
       </if>
       <if test="skillC!=null">
-        SKILL_C = #{skillC}
+        AND SKILL_C = #{skillC}
       </if>
       <if test="skillD!=null">
-        SKILL_D = #{skillD}
+        AND SKILL_D = #{skillD}
       </if>
       <if test="skillS!=null">
-        SKILL_S = #{skillS}
+        AND SKILL_S = #{skillS}
       </if>
       <if test="skillE!=null">
-        SKILL_E = #{skillE}
+        AND SKILL_E = #{skillE}
       </if>
       <if test="limitPlus!=null">
-        LIMIT_PLUS = #{limitPlus}
+        AND LIMIT_PLUS = #{limitPlus}
+      </if>
+      <if test="dragonFlower!=null">
+        AND DRAGON_FLOWER = #{dragonFlower}
       </if>
       <if test="supportMate!=null">
-        SUPPORT_MATE = #{supportMate}
+        AND SUPPORT_MATE = #{supportMate}
       </if>
       <if test="blessing!=null">
-        BLESSING = #{blessing}
+        AND BLESSING = #{blessing}
       </if>
       <if test="moveType!=null">
-        MOVE_TYPE = #{moveType}
+        AND MOVE_TYPE = #{moveType}
       </if>
       <if test="weaponType!=null">
-        WEAPON_TYPE = #{weaponType}
+        AND WEAPON_TYPE = #{weaponType}
       </if>
       <if test="color!=null">
-        COLOR = #{color}
+        AND COLOR = #{color}
       </if>
       <if test="race!=null">
-        RACE = #{race}
+        AND RACE = #{race}
       </if>
       <if test="heroType!=null">
-        HERO_TYPE = #{heroType}
+        AND HERO_TYPE = #{heroType}
       </if>
       <if test="team!=null">
-        TEAM = #{team}
+        AND TEAM = #{team}
       </if>
       <if test="skillPoint!=null">
-        SKILL_POINT = #{skillPoint}
+        AND SKILL_POINT = #{skillPoint}
       </if>
       <if test="heroPoint!=null">
-        HERO_POINT = #{heroPoint}
+        AND HERO_POINT = #{heroPoint}
       </if>
       <if test="specTag!=null">
-        SPEC_TAG = #{specTag}
+        AND SPEC_TAG = #{specTag}
       </if>
       <if test="pool!=null">
-        POOL = #{pool}
+        AND POOL = #{pool}
       </if>
       <if test="favorite!=null">
-        FAVORITE = #{favorite}
+        AND FAVORITE = #{favorite}
+      </if>
+      <if test="rank!=null">
+        AND RANK = #{rank}
       </if>
       <if test="createDatetime!=null">
-        CREATE_DATETIME = #{createDatetime}
+        AND CREATE_DATETIME = #{createDatetime}
       </if>
       <if test="updateDatetime!=null">
-        UPDATE_DATETIME = #{updateDatetime}
+        AND UPDATE_DATETIME = #{updateDatetime}
       </if>
     </where>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count
+    SELECT count(*) AS count
     FROM 
       HERO
-    WHERE
-      TITLE_NAME = #{titleName}
-      AND NAME = #{name}
+    <where>
+      <if test="titleName!=null">
+        AND TITLE_NAME = #{titleName}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
   </select>
 
   <update id="update" parameterType="com.app.model.Hero" >
@@ -308,6 +340,9 @@
       <if test="limitPlus!=null">
         LIMIT_PLUS = #{limitPlus},
       </if>
+      <if test="dragonFlower!=null">
+        DRAGON_FLOWER = #{dragonFlower},
+      </if>
       <if test="supportMate!=null">
         SUPPORT_MATE = #{supportMate},
       </if>
@@ -347,6 +382,9 @@
       <if test="favorite!=null">
         FAVORITE = #{favorite},
       </if>
+      <if test="rank!=null">
+        RANK = #{rank},
+      </if>
       <if test="createDatetime!=null">
         CREATE_DATETIME = #{createDatetime},
       </if>
@@ -385,6 +423,7 @@
       ,#{skillS}
       ,#{skillE}
       ,#{limitPlus}
+      ,#{dragonFlower}
       ,#{supportMate}
       ,#{blessing}
       ,#{moveType}
@@ -398,6 +437,7 @@
       ,#{specTag}
       ,#{pool}
       ,#{favorite}
+      ,#{rank}
       ,#{createDatetime}
       ,#{updateDatetime}
     )

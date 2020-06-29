@@ -8,7 +8,7 @@ import com.app.model.HeroContent;
 
 @Repository
 public interface HeroContentRepository{
-    HeroContent selectOne(@Param("id")Integer id);
+    HeroContent selectOneById(@Param("id")Integer id);
 
     List<HeroContent> selectByDto(HeroContent heroContent);
 
@@ -17,5 +17,7 @@ public interface HeroContentRepository{
     void update(HeroContent heroContent);
 
     int uniqueCheck(@Param("categoryId")String categoryId,@Param("codeId")String codeId);
+
+    HeroContent selectOneByUniqueKey(@Param("categoryId")String categoryId,@Param("codeId")String codeId);
 
 }

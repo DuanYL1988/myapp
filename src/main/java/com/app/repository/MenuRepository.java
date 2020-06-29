@@ -8,7 +8,7 @@ import com.app.model.Menu;
 
 @Repository
 public interface MenuRepository{
-    Menu selectOne(@Param("id")Integer id);
+    Menu selectOneById(@Param("id")Integer id);
 
     List<Menu> selectByDto(Menu menu);
 
@@ -17,5 +17,7 @@ public interface MenuRepository{
     void update(Menu menu);
 
     int uniqueCheck(@Param("categore")String categore,@Param("name")String name);
+
+    Menu selectOneByUniqueKey(@Param("categore")String categore,@Param("name")String name);
 
 }

@@ -1,40 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
 <mapper namespace="com.app.repository.HeroMasterRepository" >
   <resultMap id="HeroMasterResultMap" type="com.app.model.HeroMaster" >
     <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ORIGIN_ID" property="originId" jdbcType="VARCHAR" />
+    <result column="ORIGIN_NAME" property="originName" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="ORIGIN" property="origin" jdbcType="VARCHAR" />
-    <result column="EXPAND_COL1" property="expandCol1" jdbcType="VARCHAR" />
-    <result column="EXPAND_COL2" property="expandCol2" jdbcType="VARCHAR" />
-    <result column="EXPAND_COL3" property="expandCol3" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="select_column_list">
     HERO_MASTER.ID
+    ,HERO_MASTER.ORIGIN_ID
+    ,HERO_MASTER.ORIGIN_NAME
     ,HERO_MASTER.NAME
-    ,HERO_MASTER.ORIGIN
-    ,HERO_MASTER.EXPAND_COL1
-    ,HERO_MASTER.EXPAND_COL2
-    ,HERO_MASTER.EXPAND_COL3
   </sql>
 
   <sql id="insert_column_list">
     ID
+    ,ORIGIN_ID
+    ,ORIGIN_NAME
     ,NAME
-    ,ORIGIN
-    ,EXPAND_COL1
-    ,EXPAND_COL2
-    ,EXPAND_COL3
   </sql>
 
-  <select id="selectOne" resultMap="HeroMasterResultMap">
+  <select id="selectOneById" resultMap="HeroMasterResultMap">
     SELECT
       <include refid="select_column_list"></include>
     FROM 
       HERO_MASTER
     WHERE
       ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="HeroMasterResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      HERO_MASTER
+    <where>
+      <if test="originId!=null">
+        AND ORIGIN_ID = #{originId}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.HeroMaster" resultMap="HeroMasterResultMap">
@@ -44,53 +53,46 @@
       HERO_MASTER
     <where>
       <if test="id!=null">
-        ID = #{id}
+        AND ID = #{id}
+      </if>
+      <if test="originId!=null">
+        AND ORIGIN_ID = #{originId}
+      </if>
+      <if test="originName!=null">
+        AND ORIGIN_NAME = #{originName}
       </if>
       <if test="name!=null">
-        NAME = #{name}
-      </if>
-      <if test="origin!=null">
-        ORIGIN = #{origin}
-      </if>
-      <if test="expandCol1!=null">
-        EXPAND_COL1 = #{expandCol1}
-      </if>
-      <if test="expandCol2!=null">
-        EXPAND_COL2 = #{expandCol2}
-      </if>
-      <if test="expandCol3!=null">
-        EXPAND_COL3 = #{expandCol3}
+        AND NAME = #{name}
       </if>
     </where>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count
+    SELECT count(*) AS count
     FROM 
       HERO_MASTER
-    WHERE
-      NAME = #{name}
-      AND ORIGIN = #{origin}
+    <where>
+      <if test="originId!=null">
+        AND ORIGIN_ID = #{originId}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
   </select>
 
   <update id="update" parameterType="com.app.model.HeroMaster" >
     UPDATE
       HERO_MASTER
     <set>
+      <if test="originId!=null">
+        ORIGIN_ID = #{originId},
+      </if>
+      <if test="originName!=null">
+        ORIGIN_NAME = #{originName},
+      </if>
       <if test="name!=null">
         NAME = #{name},
-      </if>
-      <if test="origin!=null">
-        ORIGIN = #{origin},
-      </if>
-      <if test="expandCol1!=null">
-        EXPAND_COL1 = #{expandCol1},
-      </if>
-      <if test="expandCol2!=null">
-        EXPAND_COL2 = #{expandCol2},
-      </if>
-      <if test="expandCol3!=null">
-        EXPAND_COL3 = #{expandCol3},
       </if>
     </set>
     WHERE
@@ -105,11 +107,9 @@
     <include refid="insert_column_list"></include>
     ) VALUES (
       #{id}
+      ,#{originId}
+      ,#{originName}
       ,#{name}
-      ,#{origin}
-      ,#{expandCol1}
-      ,#{expandCol2}
-      ,#{expandCol3}
     )
   </insert>
 </mapper>

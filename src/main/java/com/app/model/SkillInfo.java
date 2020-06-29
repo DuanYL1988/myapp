@@ -29,7 +29,7 @@ public class SkillInfo{
     /**
      * 武器威力
      */
-    private String weaponPower;
+    private Integer weaponPower;
 
     /**
      * 特殊效果
@@ -104,14 +104,14 @@ public class SkillInfo{
     /**
      * 设定武器威力
      */
-    public void setWeaponpower(String weaponPower){
+    public void setWeaponPower(Integer weaponPower){
         this.weaponPower = weaponPower;
     }
 
     /**
      * 取得武器威力
      */
-    public String getWeaponpower(){
+    public Integer getWeaponPower(){
         return weaponPower;
     }
     /**

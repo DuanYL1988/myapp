@@ -11,7 +11,7 @@ public class Hero{
     /**
      * 关联主表主键
      */
-    private String masterId;
+    private Integer masterId;
 
     /**
      * 称号EXISTCOL
@@ -104,9 +104,14 @@ public class Hero{
     private Integer limitPlus;
 
     /**
+     * 神龙之花
+     */
+    private Integer dragonFlower;
+
+    /**
      * 支援对象
      */
-    private String supportMate;
+    private Integer supportMate;
 
     /**
      * 祝福
@@ -169,6 +174,11 @@ public class Hero{
     private String favorite;
 
     /**
+     * 评价等级
+     */
+    private String rank;
+
+    /**
      * 登录日期
      */
     private Date createDatetime;
@@ -194,27 +204,27 @@ public class Hero{
     /**
      * 设定关联主表主键
      */
-    public void setMasterid(String masterId){
+    public void setMasterId(Integer masterId){
         this.masterId = masterId;
     }
 
     /**
      * 取得关联主表主键
      */
-    public String getMasterid(){
+    public Integer getMasterId(){
         return masterId;
     }
     /**
      * 设定称号EXISTCOL
      */
-    public void setTitlename(String titleName){
+    public void setTitleName(String titleName){
         this.titleName = titleName;
     }
 
     /**
      * 取得称号EXISTCOL
      */
-    public String getTitlename(){
+    public String getTitleName(){
         return titleName;
     }
     /**
@@ -233,27 +243,27 @@ public class Hero{
     /**
      * 设定昵称
      */
-    public void setNickname(String nickName){
+    public void setNickName(String nickName){
         this.nickName = nickName;
     }
 
     /**
      * 取得昵称
      */
-    public String getNickname(){
+    public String getNickName(){
         return nickName;
     }
     /**
      * 设定立绘图片文件夹名
      */
-    public void setImgname(String imgName){
+    public void setImgName(String imgName){
         this.imgName = imgName;
     }
 
     /**
      * 取得立绘图片文件夹名
      */
-    public String getImgname(){
+    public String getImgName(){
         return imgName;
     }
     /**
@@ -350,105 +360,118 @@ public class Hero{
     /**
      * 设定A技能
      */
-    public void setSkilla(String skillA){
+    public void setSkillA(String skillA){
         this.skillA = skillA;
     }
 
     /**
      * 取得A技能
      */
-    public String getSkilla(){
+    public String getSkillA(){
         return skillA;
     }
     /**
      * 设定B技能
      */
-    public void setSkillb(String skillB){
+    public void setSkillB(String skillB){
         this.skillB = skillB;
     }
 
     /**
      * 取得B技能
      */
-    public String getSkillb(){
+    public String getSkillB(){
         return skillB;
     }
     /**
      * 设定C技能
      */
-    public void setSkillc(String skillC){
+    public void setSkillC(String skillC){
         this.skillC = skillC;
     }
 
     /**
      * 取得C技能
      */
-    public String getSkillc(){
+    public String getSkillC(){
         return skillC;
     }
     /**
      * 设定圣印技能
      */
-    public void setSkilld(String skillD){
+    public void setSkillD(String skillD){
         this.skillD = skillD;
     }
 
     /**
      * 取得圣印技能
      */
-    public String getSkilld(){
+    public String getSkillD(){
         return skillD;
     }
     /**
      * 设定支援技能
      */
-    public void setSkills(String skillS){
+    public void setSkillS(String skillS){
         this.skillS = skillS;
     }
 
     /**
      * 取得支援技能
      */
-    public String getSkills(){
+    public String getSkillS(){
         return skillS;
     }
     /**
      * 设定必杀技能
      */
-    public void setSkille(String skillE){
+    public void setSkillE(String skillE){
         this.skillE = skillE;
     }
 
     /**
      * 取得必杀技能
      */
-    public String getSkille(){
+    public String getSkillE(){
         return skillE;
     }
     /**
      * 设定突破极限
      */
-    public void setLimitplus(Integer limitPlus){
+    public void setLimitPlus(Integer limitPlus){
         this.limitPlus = limitPlus;
     }
 
     /**
      * 取得突破极限
      */
-    public Integer getLimitplus(){
+    public Integer getLimitPlus(){
         return limitPlus;
+    }
+    /**
+     * 设定神龙之花
+     */
+    public void setDragonFlower(Integer dragonFlower){
+        this.dragonFlower = dragonFlower;
+    }
+
+    /**
+     * 取得神龙之花
+     */
+    public Integer getDragonFlower(){
+        return dragonFlower;
     }
     /**
      * 设定支援对象
      */
-    public void setSupportmate(String supportMate){
+    public void setSupportMate(Integer supportMate){
         this.supportMate = supportMate;
     }
 
     /**
      * 取得支援对象
      */
-    public String getSupportmate(){
+    public Integer getSupportMate(){
         return supportMate;
     }
     /**
@@ -467,27 +490,27 @@ public class Hero{
     /**
      * 设定兵种
      */
-    public void setMovetype(String moveType){
+    public void setMoveType(String moveType){
         this.moveType = moveType;
     }
 
     /**
      * 取得兵种
      */
-    public String getMovetype(){
+    public String getMoveType(){
         return moveType;
     }
     /**
      * 设定武器类型
      */
-    public void setWeapontype(String weaponType){
+    public void setWeaponType(String weaponType){
         this.weaponType = weaponType;
     }
 
     /**
      * 取得武器类型
      */
-    public String getWeapontype(){
+    public String getWeaponType(){
         return weaponType;
     }
     /**
@@ -519,14 +542,14 @@ public class Hero{
     /**
      * 设定英雄类型(连翼/传承)
      */
-    public void setHerotype(String heroType){
+    public void setHeroType(String heroType){
         this.heroType = heroType;
     }
 
     /**
      * 取得英雄类型(连翼/传承)
      */
-    public String getHerotype(){
+    public String getHeroType(){
         return heroType;
     }
     /**
@@ -545,40 +568,40 @@ public class Hero{
     /**
      * 设定技能点
      */
-    public void setSkillpoint(Integer skillPoint){
+    public void setSkillPoint(Integer skillPoint){
         this.skillPoint = skillPoint;
     }
 
     /**
      * 取得技能点
      */
-    public Integer getSkillpoint(){
+    public Integer getSkillPoint(){
         return skillPoint;
     }
     /**
      * 设定英雄点
      */
-    public void setHeropoint(Integer heroPoint){
+    public void setHeroPoint(Integer heroPoint){
         this.heroPoint = heroPoint;
     }
 
     /**
      * 取得英雄点
      */
-    public Integer getHeropoint(){
+    public Integer getHeroPoint(){
         return heroPoint;
     }
     /**
      * 设定特效标签
      */
-    public void setSpectag(String specTag){
+    public void setSpecTag(String specTag){
         this.specTag = specTag;
     }
 
     /**
      * 取得特效标签
      */
-    public String getSpectag(){
+    public String getSpecTag(){
         return specTag;
     }
     /**
@@ -608,29 +631,42 @@ public class Hero{
         return favorite;
     }
     /**
+     * 设定评价等级
+     */
+    public void setRank(String rank){
+        this.rank = rank;
+    }
+
+    /**
+     * 取得评价等级
+     */
+    public String getRank(){
+        return rank;
+    }
+    /**
      * 设定登录日期
      */
-    public void setCreatedatetime(Date createDatetime){
+    public void setCreateDatetime(Date createDatetime){
         this.createDatetime = createDatetime;
     }
 
     /**
      * 取得登录日期
      */
-    public Date getCreatedatetime(){
+    public Date getCreateDatetime(){
         return createDatetime;
     }
     /**
      * 设定更新日期
      */
-    public void setUpdatedatetime(Date updateDatetime){
+    public void setUpdateDatetime(Date updateDatetime){
         this.updateDatetime = updateDatetime;
     }
 
     /**
      * 取得更新日期
      */
-    public Date getUpdatedatetime(){
+    public Date getUpdateDatetime(){
         return updateDatetime;
     }
 

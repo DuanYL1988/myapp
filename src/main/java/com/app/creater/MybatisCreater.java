@@ -8,7 +8,7 @@ import com.app.util.Field;
 import com.app.util.FileUtils;
 
 /**
- * mybatis的映射xml内容生成类
+ * MYBATIS的映射xml内容生成类
  *
  * @author dylsw
  *
@@ -21,7 +21,7 @@ public class MybatisCreater {
     private static final String MODEL_LOCATION = "src\\main\\java\\com\\app\\model\\";
     /* Repository路径 */
     private static final String REPOSITORY_LOCATION = "src\\main\\java\\com\\app\\repository\\";
-    /* mybatis匹配xml路径 */
+    /* MYBATIS匹配XML路径 */
     private static final String MAPPING_XML_LOCATION = "src\\main\\java\\com\\app\\mapping\\";
     /* 换行 */
     private static final String CRLF = "\r\n";
@@ -33,20 +33,30 @@ public class MybatisCreater {
     private static boolean FILE_OUTPUT_FLAG = false;
     /* 表名 */
     private String TABLE_NM = "";
+
+    /* 函数-通过ID查找唯一记录 */
+    private static final String METHOD_SELECT_ONE_BY_ID = "selectOneById";
+    /* 函数-通过逻辑字段查找唯一记录 */
+    private static final String METHOD_SELECT_ONE_BY_UNIQUE_KEY = "selectOneByUniqueKey";
+
     /* 工程路径 */
     private String projectPath = "";
     /* DB实体类名 */
     private String modelClassNm = "";
     /* repository名 */
     private String repositoryNm = "";
-    /* mybatis的匹配resultMap */
+    /* MYBATIS的匹配resultMap */
     private String resultMapNm = "";
-    /* mybatis的参数parameterType */
+    /* MYBATIS的参数parameterType */
     private String parameterType = "";
 
+    /* 表字段集合 */
     private List<Field> fields = new ArrayList<Field>();
-    private List<Field> existCol = new ArrayList<Field>();
 
+    /* 逻辑上不重复字段 */
+    private List<Field> uniqueCol = new ArrayList<Field>();
+
+    /* 日期字段判断FLAG */
     private boolean dateColFlag = false;
 
     FileUtils fileUtil;
@@ -61,7 +71,7 @@ public class MybatisCreater {
         File tableDDL = new File(projectPath + RESOUCE_LOCATION + TABLE_NM + ".sql");
         // 取得DDL内容
         fields = fileUtil.getFieldListFromDDL(tableDDL);
-        existCol = getExistColumn();
+        uniqueCol = getExistColumn();
         parameterType = "com.app.model."+modelClassNm;
     }
 
@@ -69,6 +79,7 @@ public class MybatisCreater {
         FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
         String[] targetTblList = new String[] {"HERO","MENU","HERO_MASTER","SKILL_INFO","HERO_CONTENT"};
+//        String[] targetTblList = new String[] {"HERO"};
         for(String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -101,34 +112,36 @@ public class MybatisCreater {
     }
 
     /**
-     * 创建mybatis的xml
+     * 创建MYBATIS的xml
      *
      */
     public String createMappingXml() {
         // myBatis的xml
-        StringBuilder mybatisXml = new StringBuilder();
-        mybatisXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+CRLF);
-        mybatisXml.append("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\" >"+CRLF);
-        mybatisXml.append("<mapper namespace=\"com.app.repository."+repositoryNm+"\" >"+CRLF);
+        StringBuilder MYBATISXml = new StringBuilder();
+        MYBATISXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+CRLF);
+        MYBATISXml.append("<!DOCTYPE mapper PUBLIC \"-//MYBATIS.org//DTD Mapper 3.0//EN\" \"http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd\" >"+CRLF);
+        MYBATISXml.append("<mapper namespace=\"com.app.repository."+repositoryNm+"\" >"+CRLF);
         // <resultMap>
-        mybatisXml.append(createResultMap());
+        MYBATISXml.append(createResultMap());
         // <sql id="select_column_list">
-        mybatisXml.append(createSelectCol());
+        MYBATISXml.append(createSelectCol());
         // <sql id="insert_column_list">
-        mybatisXml.append(createInsertCol());
-        // <select id="selectOne">
-        mybatisXml.append(createSelectOne());
+        MYBATISXml.append(createInsertCol());
+        // <select id="selectOneById">
+        MYBATISXml.append(createSelectOneById());
+        // <select id="selectOneByUniqueKey">
+        MYBATISXml.append(createSelectOneByUniqueKey());
         // <select id="selectByDto">
-        mybatisXml.append(createSelectByDto());
+        MYBATISXml.append(createSelectByDto());
         // <select id="uniqueCheck">
-        mybatisXml.append(createExistCheck());
+        MYBATISXml.append(createExistCheck());
         // <update>
-        mybatisXml.append(createUpdate());
+        MYBATISXml.append(createUpdate());
         // <insert>
-        mybatisXml.append(createInsert());
+        MYBATISXml.append(createInsert());
         // 结束标签
-        mybatisXml.append("</mapper>"+CRLF);
-        return mybatisXml.toString();
+        MYBATISXml.append("</mapper>"+CRLF);
+        return MYBATISXml.toString();
     }
 
     /**
@@ -136,6 +149,7 @@ public class MybatisCreater {
      */
     public String createRepository() {
         StringBuilder repository = new StringBuilder();
+        // package和import
         repository.append("package com.app.repository;"+CRLF+CRLF);
         repository.append("import java.util.List;"+CRLF);
         repository.append("import org.apache.ibatis.annotations.Param;"+CRLF);
@@ -143,19 +157,33 @@ public class MybatisCreater {
         repository.append("import com.app.model."+modelClassNm+";"+CRLF+CRLF);
         repository.append("@Repository"+CRLF);
         repository.append("public interface "+repositoryNm+"{"+CRLF);
-        repository.append(FOUR_SPACE+modelClassNm+" selectOne(@Param(\"id\")Integer id);"+CRLF+CRLF);
+        // selectOneById
+        repository.append(FOUR_SPACE+modelClassNm+" "+METHOD_SELECT_ONE_BY_ID+"(@Param(\"id\")Integer id);"+CRLF+CRLF);
+        // 通过检索Dto查找
         repository.append(FOUR_SPACE+"List<"+modelClassNm+"> selectByDto("+modelClassNm+" " +fileUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
+        // 插入
         repository.append(FOUR_SPACE+"void insert("+modelClassNm+" " +fileUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
+        // 更新
         repository.append(FOUR_SPACE+"void update("+modelClassNm+" " +fileUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
-        repository.append(FOUR_SPACE+"int uniqueCheck(");
-        for(int i=0;i<existCol.size();i++) {
+
+        // 逻辑字段编辑
+        StringBuilder uniqueCondition = new StringBuilder();
+        for(int i=0;i<uniqueCol.size();i++) {
             String mark = ",";
-            if (i==existCol.size()-1) {
+            if (i==uniqueCol.size()-1) {
                 mark=");"+CRLF+CRLF;
             }
-            String javaNm = existCol.get(i).getJavaNm();
-            repository.append("@Param(\""+javaNm+"\")String "+javaNm+mark);
+            String javaNm = uniqueCol.get(i).getJavaNm();
+            uniqueCondition.append("@Param(\""+javaNm+"\")String "+javaNm+mark);
         }
+
+        // 排他check以及鉴证用
+        repository.append(FOUR_SPACE+"int uniqueCheck(");
+        repository.append(uniqueCondition.toString());
+        // selectOneByUniqueKey
+        repository.append(FOUR_SPACE+modelClassNm+" "+METHOD_SELECT_ONE_BY_UNIQUE_KEY+"(");
+        repository.append(uniqueCondition.toString());
+
         repository.append("}");
         return repository.toString();
     }
@@ -194,13 +222,13 @@ public class MybatisCreater {
             setAndGet.append(FOUR_SPACE+"/**"+CRLF);
             setAndGet.append(FOUR_SPACE+" * 设定"+logicNm+CRLF);
             setAndGet.append(FOUR_SPACE+" */"+CRLF);
-            setAndGet.append(FOUR_SPACE+"public void set"+fileUtil.changeNm(javaNm, true)+"("+type+" "+javaNm+"){"+CRLF);
+            setAndGet.append(FOUR_SPACE+"public void set"+fileUtil.changeNm(field.getDbNm(), true)+"("+type+" "+javaNm+"){"+CRLF);
             setAndGet.append(FOUR_SPACE+"    this."+javaNm+" = "+javaNm+";"+CRLF);
             setAndGet.append(FOUR_SPACE+"}"+CRLF+CRLF);
             setAndGet.append(FOUR_SPACE+"/**"+CRLF);
             setAndGet.append(FOUR_SPACE+" * 取得"+logicNm+CRLF);
             setAndGet.append(FOUR_SPACE+" */"+CRLF);
-            setAndGet.append(FOUR_SPACE+"public "+type+" get"+fileUtil.changeNm(javaNm, true)+"(){"+CRLF);
+            setAndGet.append(FOUR_SPACE+"public "+type+" get"+fileUtil.changeNm(field.getDbNm(), true)+"(){"+CRLF);
             setAndGet.append(FOUR_SPACE+"    return "+javaNm+";"+CRLF);
             setAndGet.append(FOUR_SPACE+"}"+CRLF);
         }
@@ -212,7 +240,7 @@ public class MybatisCreater {
     }
 
     /**
-     * mybatis的xml的resultMap
+     * MYBATIS的XML的resultMap
      */
     public String createResultMap() {
         StringBuilder resultMap = new StringBuilder();
@@ -276,9 +304,9 @@ public class MybatisCreater {
     /**
      * 通过ID主键查找唯一1条
      */
-    public String createSelectOne() {
+    public String createSelectOneById() {
         StringBuilder selectOne = new StringBuilder();
-        selectOne.append(TWO_SPACE+"<select id=\"selectOne\" resultMap=\""+resultMapNm+"\">"+CRLF);
+        selectOne.append(TWO_SPACE+"<select id=\""+METHOD_SELECT_ONE_BY_ID+"\" resultMap=\""+resultMapNm+"\">"+CRLF);
         selectOne.append(FOUR_SPACE+"SELECT"+CRLF);
         selectOne.append(FOUR_SPACE+TWO_SPACE+"<include refid=\"select_column_list\"></include>"+CRLF);
         selectOne.append(FOUR_SPACE+"FROM "+CRLF);
@@ -290,6 +318,25 @@ public class MybatisCreater {
             }
         }
         selectOne.append(TWO_SPACE+"</select>"+CRLF+CRLF);
+        return selectOne.toString();
+    }
+
+    /**
+     * 通过ID主键查找唯一1条
+     */
+    public String createSelectOneByUniqueKey() {
+        StringBuilder selectOne = new StringBuilder();
+        selectOne.append(TWO_SPACE + "<select id=\"" + METHOD_SELECT_ONE_BY_UNIQUE_KEY + "\" resultMap=\"" + resultMapNm + "\">" + CRLF);
+        selectOne.append(FOUR_SPACE + "SELECT" + CRLF);
+        selectOne.append(FOUR_SPACE + TWO_SPACE + "<include refid=\"select_column_list\"></include>" + CRLF);
+        selectOne.append(FOUR_SPACE + "FROM " + CRLF);
+        selectOne.append(FOUR_SPACE + TWO_SPACE + TABLE_NM + CRLF);
+        selectOne.append(FOUR_SPACE + "<where>" + CRLF);
+        for (Field field : uniqueCol) {
+            appendCheckCols(selectOne, field, "AND");
+        }
+        selectOne.append(FOUR_SPACE + "</where>" + CRLF);
+        selectOne.append(TWO_SPACE + "</select>" + CRLF + CRLF);
         return selectOne.toString();
     }
 
@@ -362,37 +409,32 @@ public class MybatisCreater {
      */
     public String createExistCheck() {
         StringBuilder uniqueCheck = new StringBuilder();
-        uniqueCheck.append(TWO_SPACE+"<select id=\"uniqueCheck\"  resultType=\"Integer\">"+CRLF);
-        uniqueCheck.append(FOUR_SPACE+"SELECT COUNT(*) AS count"+CRLF);
-        uniqueCheck.append(FOUR_SPACE+"FROM "+CRLF);
-        uniqueCheck.append(FOUR_SPACE+TWO_SPACE+TABLE_NM+CRLF);
-        uniqueCheck.append(FOUR_SPACE+"WHERE"+CRLF);
-        boolean firstCol = true;
-        for(Field field : existCol) {
-                String comma = "AND ";
-                if (firstCol) {
-                    comma = "";
-                    firstCol = false;
-                }
-                uniqueCheck.append(FOUR_SPACE+TWO_SPACE+comma+field.getDbNm()+" = "+"#{"+field.getJavaNm()+"}"+CRLF);
+        uniqueCheck.append(TWO_SPACE + "<select id=\"uniqueCheck\"  resultType=\"Integer\">" + CRLF);
+        uniqueCheck.append(FOUR_SPACE + "SELECT count(*) AS count" + CRLF);
+        uniqueCheck.append(FOUR_SPACE + "FROM " + CRLF);
+        uniqueCheck.append(FOUR_SPACE + TWO_SPACE + TABLE_NM + CRLF);
+        uniqueCheck.append(FOUR_SPACE + "<where>" + CRLF);
+        for (Field field : uniqueCol) {
+            appendCheckCols(uniqueCheck, field, "AND");
         }
-        uniqueCheck.append(TWO_SPACE+"</select>"+CRLF+CRLF);
+        uniqueCheck.append(FOUR_SPACE + "</where>" + CRLF);
+        uniqueCheck.append(TWO_SPACE + "</select>" + CRLF + CRLF);
         return uniqueCheck.toString();
     }
 
     /**
-     * mybatis的字段空判断
-     * 创建select文时kbn传入"select"
+     * MYBATIS的字段空判断
+     * 创建select文时KBN传入"select"
      * select文因为在<where>标签中所以不用加[,]
      *
      * @param 构筑函数中取得的表中所有的字段集合 fields
-     * @param select和update的区分 kbn
+     * @param select和update的区分 KBN
      * @return
      */
     private String createColCheck(List<Field> fields,String kbn) {
         StringBuilder condition = new StringBuilder();
         boolean updateFlag = "update".equals(kbn);
-        String comma = "";
+        String comma = "AND";
         if(updateFlag) {
             comma = ",";
         }
@@ -401,11 +443,22 @@ public class MybatisCreater {
             if(field.isPrimaryKey() && updateFlag) {
                 continue;
             }
-            condition.append(FOUR_SPACE+TWO_SPACE+"<if test=\""+field.getJavaNm()+"!=null\">"+CRLF);
-            condition.append(FOUR_SPACE+FOUR_SPACE+field.getDbNm()+" = "+"#{"+field.getJavaNm()+"}"+comma+CRLF);
-            condition.append(FOUR_SPACE+TWO_SPACE+"</if>"+CRLF);
+            appendCheckCols(condition, field, comma);
         }
         return condition.toString();
+    }
+
+    /**
+     * MYBATIS使用tag自动去除AND,逗号时使用
+     */
+    private void appendCheckCols(StringBuilder condition,Field field,String mark) {
+        condition.append(FOUR_SPACE+TWO_SPACE+"<if test=\""+field.getJavaNm()+"!=null\">"+CRLF);
+        if ("AND".equals(mark)) {
+            condition.append(FOUR_SPACE+FOUR_SPACE+mark+" "+field.getDbNm()+" = "+"#{"+field.getJavaNm()+"}"+CRLF);
+        } else if (",".equals(mark)) {
+            condition.append(FOUR_SPACE+FOUR_SPACE+field.getDbNm()+" = "+"#{"+field.getJavaNm()+"}"+mark+CRLF);
+        }
+        condition.append(FOUR_SPACE+TWO_SPACE+"</if>"+CRLF);
     }
 
     /**
@@ -413,19 +466,19 @@ public class MybatisCreater {
      */
     private List<Field> getExistColumn(){
         // 业务逻辑上唯一记录的字段集合
-        if (existCol.size()>0) {
-            return existCol;
+        if (uniqueCol.size()>0) {
+            return uniqueCol;
         } else {
             for(Field field : fields) {
                 if (field.isExistColumn()) {
-                    existCol.add(field);
+                    uniqueCol.add(field);
                 }
                 // 顺带判断表中是否有日期字段
                 if ("TIMESTAMP".equals(field.getDbType())) {
                     dateColFlag = true;
                 }
             }
-            return existCol;
+            return uniqueCol;
         }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
 <mapper namespace="com.app.repository.MenuRepository" >
   <resultMap id="MenuResultMap" type="com.app.model.Menu" >
     <id column="ID" property="id" jdbcType="INTEGER" />
@@ -37,13 +37,28 @@
     ,HTML_IMAGE_SRC
   </sql>
 
-  <select id="selectOne" resultMap="MenuResultMap">
+  <select id="selectOneById" resultMap="MenuResultMap">
     SELECT
       <include refid="select_column_list"></include>
     FROM 
       MENU
     WHERE
       ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="MenuResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      MENU
+    <where>
+      <if test="categore!=null">
+        AND CATEGORE = #{categore}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
   </select>
 
   <select id="selectByDto" parameterType="com.app.model.Menu" resultMap="MenuResultMap">
@@ -53,42 +68,47 @@
       MENU
     <where>
       <if test="id!=null">
-        ID = #{id}
+        AND ID = #{id}
       </if>
       <if test="parentId!=null">
-        PARENT_ID = #{parentId}
+        AND PARENT_ID = #{parentId}
       </if>
       <if test="menuLevel!=null">
-        MENU_LEVEL = #{menuLevel}
+        AND MENU_LEVEL = #{menuLevel}
       </if>
       <if test="categore!=null">
-        CATEGORE = #{categore}
+        AND CATEGORE = #{categore}
       </if>
       <if test="name!=null">
-        NAME = #{name}
+        AND NAME = #{name}
       </if>
       <if test="actionUrl!=null">
-        ACTION_URL = #{actionUrl}
+        AND ACTION_URL = #{actionUrl}
       </if>
       <if test="htmlUrl!=null">
-        HTML_URL = #{htmlUrl}
+        AND HTML_URL = #{htmlUrl}
       </if>
       <if test="imageSrc!=null">
-        IMAGE_SRC = #{imageSrc}
+        AND IMAGE_SRC = #{imageSrc}
       </if>
       <if test="htmlImageSrc!=null">
-        HTML_IMAGE_SRC = #{htmlImageSrc}
+        AND HTML_IMAGE_SRC = #{htmlImageSrc}
       </if>
     </where>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
-    SELECT COUNT(*) AS count
+    SELECT count(*) AS count
     FROM 
       MENU
-    WHERE
-      CATEGORE = #{categore}
-      AND NAME = #{name}
+    <where>
+      <if test="categore!=null">
+        AND CATEGORE = #{categore}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
   </select>
 
   <update id="update" parameterType="com.app.model.Menu" >
