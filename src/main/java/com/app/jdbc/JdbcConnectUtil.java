@@ -96,6 +96,7 @@ public class JdbcConnectUtil {
         getStatement();
         ResultSet result = null;
         try {
+            System.out.println(query);
             result = st.executeQuery(query);
             System.out.println("-> Excute SQL SUCCESS!");
         } catch (SQLException e) {
