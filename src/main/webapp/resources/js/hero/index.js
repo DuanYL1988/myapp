@@ -1,6 +1,6 @@
 var htmlFlag;
 var path;
-var imgBox = [{id:'col1',height:0},{id:'col2',height:0},{id:'col3',height:0}];
+var imgBox = [{id:'col1',height:0},{id:'col2',height:0},{id:'col3',height:0},{id:'col4',height:0}];
 $(function() {
     // 未定义返回ture
     var htmlFlag = typeof(jsonData)=="undefined";
@@ -23,16 +23,12 @@ $(function() {
  */
 function initlize(jsonData,htmlFlag){
     $.each(jsonData,function(){
-        /*
-           只是单纯文字列,得到图片信息需要再次取得元素对象所以不使用
-         var imgHtml = "<img src='#{src}'/>";
-        */
-        // 图片div块
-        var imageDivEle = document.createElement('div');
-        imageDivEle.className = "imageArea";
-        // TODO 文字div
-        var txtDivEle = document.createElement('div');
-        txtDivEle.className = "textArea";
+        // div块
+        var parentDivEle = document.createElement('div');
+        parentDivEle.className = "ih-item square effect6 from_top_and_bottom";
+        // 图片块
+        var imgDiv = document.createElement('div');
+        imgDiv.className = "img";
         // 链接
         var linkEle = document.createElement('a');
         // 直接创建img对象
@@ -44,15 +40,31 @@ function initlize(jsonData,htmlFlag){
             imgEle.src = path+this.imageSrc;
             linkEle.href = this.actionUrl;
         }
+        // 文字div
+        var txtDivEle = document.createElement('div');
+        txtDivEle.className = "info";
+        var txtLine1 = document.createElement('h3');
+        txtLine1.innerHTML = this.name
+        var txtLine2 = document.createElement('p');
+        txtDivEle.appendChild(txtLine1);
+        txtDivEle.appendChild(txtLine2);
+        
+        // 图片块添加图片
+        imgDiv.appendChild(imgEle);
+        
+        // 连接块添加图片块
+        linkEle.appendChild(imgDiv);
+        
+        // 连接块添加文本块
+        linkEle.appendChild(txtDivEle);
+        
+        parentDivEle.appendChild(linkEle);
         // 加载图片信息需要一段时间
         sleep(100);
         // 取得最短列id
         var targetId = getShortDivId(imgEle.height);
-        linkEle.appendChild(imgEle);
-        imageDivEle.appendChild(linkEle);
         // 添加图片元素
-        document.getElementById(targetId).appendChild(imageDivEle);
-        document.getElementById(targetId).appendChild(txtDivEle);
+        document.getElementById(targetId).appendChild(parentDivEle);
     });
 }
 
