@@ -30,7 +30,7 @@ public class CommonUtils {
 
     /**
      * 打印对象所有get方法的值
-     * 
+     *
      * @param obj
      */
     public Map<String,String> printBean(Object obj) {
@@ -62,7 +62,7 @@ public class CommonUtils {
 
     /**
      * Copy Same Object
-     * 
+     *
      * @param target
      * @param destination
      */
@@ -86,7 +86,7 @@ public class CommonUtils {
 
     /**
      * 通过键（不重复）把list转为map<key,object>
-     * 
+     *
      * @param list
      * @param primanyKey
      * @return
@@ -94,9 +94,7 @@ public class CommonUtils {
     public <M> Map<String, M> listConventToMap(List<M> list,
             String primanyKey) {
         Map<String, M> map = new HashMap<String, M>();
-        String getter = "get"
-                + primanyKey.substring(0, 1).toUpperCase(Locale.ROOT)
-                + primanyKey.substring(1);
+        String getter = "get" + primanyKey.substring(0, 1).toUpperCase(Locale.ROOT) + primanyKey.substring(1);
         Object target = list.get(0);
         try {
             Method method = target.getClass().getMethod(getter, new Class[] {});
@@ -112,7 +110,7 @@ public class CommonUtils {
 
     /**
      * 技能种类分类
-     * 
+     *
      * @return Map<String,List<String>>
      */
     public Map<String, List<String>> getSkillMap() {
@@ -143,24 +141,28 @@ public class CommonUtils {
 
     /**
      * 通过list中的逻辑主键将list对象转为Map对象
-     * 
+     *
      * @param keyName 逻辑主键
      * @param originList
      * @return
      */
     public <M> Map<String, List<M>> groupByList(String keyName,
             List<M> originList) {
+        // prefix-key判断
+        String prefix = "";
+        if (keyName.indexOf("-")>=0) {
+            String[] fullinfo = keyName.split("-");
+            keyName = fullinfo[1];
+            prefix = fullinfo[0];
+        }
         Map<String, List<M>> result = new HashMap<String, List<M>>();
-        String getter = "get" + keyName.substring(0, 1).toUpperCase(Locale.ROOT)
-                + keyName.substring(1);
+        String getter = "get" + keyName.substring(0, 1).toUpperCase(Locale.ROOT) + keyName.substring(1);
         for (M obj : originList) {
             Method method;
             try {
                 method = obj.getClass().getMethod(getter, new Class[] {});
-                String keyValue = method.invoke(obj, new Class[] {}).toString();
-                List<M> list = ((null == result.get(keyValue))
-                        ? new ArrayList<M>()
-                        : result.get(keyValue));
+                String keyValue = prefix+method.invoke(obj, new Class[] {}).toString();
+                List<M> list = ((null == result.get(keyValue))  ? new ArrayList<M>()  : result.get(keyValue));
                 list.add(obj);
                 result.put(keyValue, list);
             } catch (Exception e) {
@@ -170,4 +172,26 @@ public class CommonUtils {
         return result;
     }
 
+    /**
+     * 数据库字段名转为java变量名
+     */
+    public String changeNm(String dbNm, boolean upFlag) {
+        String javaNm = "";
+        String[] nms = dbNm.split("_");
+        if (nms.length == 1) {
+            javaNm = dbNm.toLowerCase();
+        } else {
+            StringBuilder sb = new StringBuilder(nms[0].toLowerCase());
+            for (int i = 1; i < nms.length; i++) {
+                String tmp = nms[i];
+                sb.append(tmp.substring(0, 1));
+                sb.append(tmp.substring(1).toLowerCase());
+            }
+            javaNm = sb.toString();
+        }
+        if (upFlag) {
+            javaNm = javaNm.substring(0, 1).toUpperCase() + javaNm.substring(1);
+        }
+        return javaNm.toString();
+    }
 }

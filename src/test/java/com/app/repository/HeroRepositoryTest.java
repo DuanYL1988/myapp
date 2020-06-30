@@ -39,14 +39,10 @@ public class HeroRepositoryTest {
     @Test
     public void testheroRepo() {
         Hero condition = new Hero();
-        condition.setTitleName("0001");
-        condition.setName("0001");
+        condition.setOrderBy("WEAPON_TYPE");
 
         List<Hero> heroList = heroRepo.selectByDto(condition);
-        assertTrue(0 == heroList.size());
-
-        Hero result = heroRepo.selectOneByUniqueKey("0001", "01");
-        assertTrue(null == result);
+        assertTrue(0 < heroList.size());
     }
 
 

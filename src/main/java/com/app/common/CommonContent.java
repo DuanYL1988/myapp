@@ -3,6 +3,8 @@ package com.app.common;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.app.dto.AjaxResponseDto;
+
 public class CommonContent {
 
     public static final String MODE_UPDATE = "update";
@@ -36,8 +38,8 @@ public class CommonContent {
     /* 逗号 */
     public static final String COMMA = ",";
 
-    /* 逗号 */
-    public static final String SESSION_TAG_OBJ_KEY = "TAG_OBJ_KEY ";
+    /* 上次操作的数据ID */
+    public static final String SESSION_PRE_ID = "PRE_ID";
 
     /**
      * 自定义标签使用
@@ -55,5 +57,13 @@ public class CommonContent {
         contentList.put("0006", "specTag");
 
         return contentList.get(key);
+    }
+
+    public static AjaxResponseDto setResponseDto(String code,String message,Object data) {
+        AjaxResponseDto result = new AjaxResponseDto();
+        result.setCode(code);
+        result.setMessage(message);
+        result.setData(data);
+        return result;
     }
 }

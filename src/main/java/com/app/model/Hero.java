@@ -2,7 +2,7 @@ package com.app.model;
 
 import java.util.Date;
 
-public class Hero{
+public class Hero extends ExpandCondition{
     /**
      * PRIMARYKEY
      */

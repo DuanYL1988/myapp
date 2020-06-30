@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.thymeleaf.util.StringUtils;
 
+import com.app.util.CommonUtils;
 import com.app.util.FileUtils;
 
 public class BootStrapCreater {
@@ -20,10 +21,12 @@ public class BootStrapCreater {
 
     private final String paramObject;
     private final FileUtils fileUtil;
+    private final CommonUtils commUtil;
     List<String> fileLineList = new ArrayList<String>();
     public BootStrapCreater(String name) {
         fileUtil = new FileUtils();
-        paramObject = fileUtil.changeNm(name, false);
+        commUtil = new CommonUtils();
+        paramObject = commUtil.changeNm(name, false);
         fileLineList = fileUtil.getFileText(new File(RES_PATH+name+".txt"));
     }
 
@@ -62,7 +65,7 @@ public class BootStrapCreater {
             }
 
             String[] lineInfo = line.split(",");
-            String propNm = fileUtil.changeNm(lineInfo[0], false);
+            String propNm = commUtil.changeNm(lineInfo[0], false);
             String required = lineInfo[1];
             String titleNm = lineInfo[2];
             String inputType = lineInfo[3];

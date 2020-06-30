@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.util.CommonUtils;
 import com.app.util.Field;
 import com.app.util.FileUtils;
 
@@ -61,11 +62,14 @@ public class MybatisCreater {
 
     FileUtils fileUtil;
 
+    CommonUtils commonUtil;
+
     public MybatisCreater(String tblNm) {
         fileUtil = new FileUtils();
+        commonUtil = new CommonUtils();
         projectPath = fileUtil.getPath();
         TABLE_NM = tblNm;
-        modelClassNm =fileUtil.changeNm(TABLE_NM, true);
+        modelClassNm =commonUtil.changeNm(TABLE_NM, true);
         resultMapNm = modelClassNm+"ResultMap";
         repositoryNm = modelClassNm+"Repository";
         File tableDDL = new File(projectPath + RESOUCE_LOCATION + TABLE_NM + ".sql");
@@ -160,11 +164,11 @@ public class MybatisCreater {
         // selectOneById
         repository.append(FOUR_SPACE+modelClassNm+" "+METHOD_SELECT_ONE_BY_ID+"(@Param(\"id\")Integer id);"+CRLF+CRLF);
         // 通过检索Dto查找
-        repository.append(FOUR_SPACE+"List<"+modelClassNm+"> selectByDto("+modelClassNm+" " +fileUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
+        repository.append(FOUR_SPACE+"List<"+modelClassNm+"> selectByDto("+modelClassNm+" " +commonUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
         // 插入
-        repository.append(FOUR_SPACE+"void insert("+modelClassNm+" " +fileUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
+        repository.append(FOUR_SPACE+"void insert("+modelClassNm+" " +commonUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
         // 更新
-        repository.append(FOUR_SPACE+"void update("+modelClassNm+" " +fileUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
+        repository.append(FOUR_SPACE+"void update("+modelClassNm+" " +commonUtil.changeNm(TABLE_NM, false)+");"+CRLF+CRLF);
 
         // 逻辑字段编辑
         StringBuilder uniqueCondition = new StringBuilder();
@@ -200,7 +204,7 @@ public class MybatisCreater {
             javaClass.append("import java.util.Date;"+CRLF+CRLF);
         }
 
-        javaClass.append("public class "+modelClassNm+"{"+CRLF);
+        javaClass.append("public class "+modelClassNm+" extends ExpandCondition {"+CRLF);
         // 参数部分
         StringBuilder param = new StringBuilder();
         // get和set部分
@@ -222,13 +226,13 @@ public class MybatisCreater {
             setAndGet.append(FOUR_SPACE+"/**"+CRLF);
             setAndGet.append(FOUR_SPACE+" * 设定"+logicNm+CRLF);
             setAndGet.append(FOUR_SPACE+" */"+CRLF);
-            setAndGet.append(FOUR_SPACE+"public void set"+fileUtil.changeNm(field.getDbNm(), true)+"("+type+" "+javaNm+"){"+CRLF);
+            setAndGet.append(FOUR_SPACE+"public void set"+commonUtil.changeNm(field.getDbNm(), true)+"("+type+" "+javaNm+"){"+CRLF);
             setAndGet.append(FOUR_SPACE+"    this."+javaNm+" = "+javaNm+";"+CRLF);
             setAndGet.append(FOUR_SPACE+"}"+CRLF+CRLF);
             setAndGet.append(FOUR_SPACE+"/**"+CRLF);
             setAndGet.append(FOUR_SPACE+" * 取得"+logicNm+CRLF);
             setAndGet.append(FOUR_SPACE+" */"+CRLF);
-            setAndGet.append(FOUR_SPACE+"public "+type+" get"+fileUtil.changeNm(field.getDbNm(), true)+"(){"+CRLF);
+            setAndGet.append(FOUR_SPACE+"public "+type+" get"+commonUtil.changeNm(field.getDbNm(), true)+"(){"+CRLF);
             setAndGet.append(FOUR_SPACE+"    return "+javaNm+";"+CRLF);
             setAndGet.append(FOUR_SPACE+"}"+CRLF);
         }
@@ -353,6 +357,9 @@ public class MybatisCreater {
         selectByDto.append(FOUR_SPACE+"<where>"+CRLF);
         selectByDto.append(createColCheck(fields,"select"));
         selectByDto.append(FOUR_SPACE+"</where>"+CRLF);
+        selectByDto.append(FOUR_SPACE+"<if text=\"orderBy!=null\">"+CRLF);
+        selectByDto.append(FOUR_SPACE+"  ORDER BY ${orderBy}"+CRLF);
+        selectByDto.append(FOUR_SPACE+"</if>"+CRLF);
         selectByDto.append(TWO_SPACE+"</select>"+CRLF+CRLF);
         return selectByDto.toString();
     }

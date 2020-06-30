@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileUtils {
 
+    CommonUtils commonUtil = new CommonUtils();
+
     public static void main(String[] args) {
         FileUtils thisClass = new FileUtils();
         String localPath = thisClass.getPath();
@@ -130,29 +132,6 @@ public class FileUtils {
     }
 
     /**
-     * 数据库字段名转为java变量名
-     */
-    public String changeNm(String dbNm, boolean upFlag) {
-        String javaNm = "";
-        String[] nms = dbNm.split("_");
-        if (nms.length == 1) {
-            javaNm = dbNm.toLowerCase();
-        } else {
-            StringBuilder sb = new StringBuilder(nms[0].toLowerCase());
-            for (int i = 1; i < nms.length; i++) {
-                String tmp = nms[i];
-                sb.append(tmp.substring(0, 1));
-                sb.append(tmp.substring(1).toLowerCase());
-            }
-            javaNm = sb.toString();
-        }
-        if (upFlag) {
-            javaNm = javaNm.substring(0, 1).toUpperCase() + javaNm.substring(1);
-        }
-        return javaNm.toString();
-    }
-
-    /**
      * 数据库类型与java类型匹配
      */
     public String changeType(String type, String direct) {
@@ -184,7 +163,7 @@ public class FileUtils {
             String[] lineInfo = line.split(" ");
             String dbNm = lineInfo[0].replaceAll("\"", "");
             field.setDbNm(dbNm);
-            field.setJavaNm(changeNm(dbNm, false));
+            field.setJavaNm(commonUtil.changeNm(dbNm, false));
             String type = lineInfo[1];
             if (type.indexOf("(")>=0) {
                 type = lineInfo[1].substring(0, lineInfo[1].indexOf("("));

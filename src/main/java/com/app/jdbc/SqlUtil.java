@@ -34,28 +34,6 @@ public class SqlUtil {
     OracleCommonRepository oracleUtil;
 
     /**
-     * 数据库字段名转为java变量名
-     *
-     * @param fieldName
-     * @return
-     */
-    public String dbNameToJavaName(String fieldName) {
-        String javaName = "";
-        // 大写转小写
-        fieldName = fieldName.toLowerCase();
-        //
-        String[] name = fieldName.split(UNDERLINE);
-        // 转换
-        javaName = name[0];
-        for (int i = 1; i < name.length; i++) {
-            // 首字母大写
-            javaName += name[i].substring(0, 1).toUpperCase();
-            javaName += name[i].substring(1);
-        }
-        return javaName;
-    }
-
-    /**
      * 生成select部分
      *
      * @param tableName
