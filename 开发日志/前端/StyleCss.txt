@@ -1,2 +1,5 @@
 Q:div横向排列显示
+方法一:在子div设置下列样式
 style="display:inline-block;float:left"
+方法二:在父div设置下列样式
+style="display:flex"
