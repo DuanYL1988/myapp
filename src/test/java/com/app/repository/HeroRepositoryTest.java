@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.app.model.Hero;
 import com.app.model.Menu;
+import com.app.util.CommonUtils;
 import com.app.util.JsonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,21 +31,24 @@ public class HeroRepositoryTest {
     @Autowired
     JsonUtil jsonUtil;
 
+    @Autowired
+    CommonUtils commonUtil;
+
     @Test
     public void testGetNextvalFromSeq() {
         System.out.println(oracleRepository.getNextval("SEQ_HERO_MASTER"));
         System.out.println(oracleRepository.getCurrentval("SEQ_HERO_MASTER"));
     }
 
+
     @Test
-    public void testheroRepo() {
+    public void createJsonData() {
         Hero condition = new Hero();
         condition.setOrderBy("WEAPON_TYPE");
 
         List<Hero> heroList = heroRepo.selectByDto(condition);
-        assertTrue(0 < heroList.size());
+        System.out.println(jsonUtil.praseObjToJson(commonUtil.groupByList("0002-weaponType", heroList)));;
     }
-
 
     @Test
     public void testMenuRepo() {

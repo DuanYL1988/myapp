@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.app.common.CommonContent;
 import com.app.dto.AjaxResponseDto;
 import com.app.form.HeroRegistForm;
+import com.app.form.HeroSearchForm;
 import com.app.model.Hero;
 import com.app.model.Menu;
 import com.app.repository.MenuRepository;
@@ -46,6 +49,8 @@ public class HeroController {
     @RequestMapping(value = "regist")
     public String goRegist(Model model,HttpSession session) {
 
+        session.removeAttribute(CommonContent.SESSION_PRE_ID);
+
         HeroRegistForm inputForm = new HeroRegistForm();
         Hero hero = new Hero();
         inputForm.setHero(hero);
@@ -55,8 +60,14 @@ public class HeroController {
     }
 
     @RequestMapping(value = "regist/excute")
-    public String doRegist(Model model,HeroRegistForm form) {
+    public String doRegist(Model model,HeroRegistForm form,HttpSession session) {
         AjaxResponseDto result = service.heroRegist(form);
+
+        // 判断是更新还是新规
+        String priId = (String)session.getAttribute(CommonContent.SESSION_PRE_ID);
+        if (priId.equals(form.getHero().getTitleName()+";"+form.getHero().getName())) {
+            form.setMode(CommonContent.MODE_UPDATE);
+        }
 
         HeroRegistForm inputForm = new HeroRegistForm();
         Hero hero = new Hero();
@@ -65,5 +76,20 @@ public class HeroController {
         model.addAttribute("inputForm", inputForm);
         model.addAttribute("result", result);
         return "hero/regist";
+    }
+
+    @RequestMapping(value = "search")
+    public String doSearch(Model model,HeroSearchForm form) {
+
+        if (null == form.getHero()) {
+            form.setHero(new Hero());
+            form.setMode("search");
+        }
+
+        Map<String, List<Hero>> resultMapList = service.doSearch(form);
+
+        model.addAttribute("form", form);
+        model.addAttribute("resultMapList", resultMapList);
+        return "hero/hero_list";
     }
 }

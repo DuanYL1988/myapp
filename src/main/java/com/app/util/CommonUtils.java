@@ -153,7 +153,7 @@ public class CommonUtils {
         if (keyName.indexOf("-")>=0) {
             String[] fullinfo = keyName.split("-");
             keyName = fullinfo[1];
-            prefix = fullinfo[0];
+            prefix = fullinfo[0]+"-";
         }
         Map<String, List<M>> result = new HashMap<String, List<M>>();
         String getter = "get" + keyName.substring(0, 1).toUpperCase(Locale.ROOT) + keyName.substring(1);

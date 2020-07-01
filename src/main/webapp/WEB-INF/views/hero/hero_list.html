@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>英雄一览页面</title>
+<link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet" />
+<style>
+.row {padding-left: 15px; display:flex}
+.leftArea {width:120px;height: 50px;display: inline-block; float: left;}
+.leftArea img {width:100px;height:auto;float: center}
+.rightArea {display: inline-block; float: left;}
+.ih-item.circle{display:inline-block; float: left;margin-top: 10px;}
+
+
+
+</style>
+
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script th:inline="javascript">
+    var mode = [[${form.mode}]];
+</script>
+<script src="../../../resources/js/hero/search.js" th:src="@{/resources/js/hero/search.js}"></script>
+</head>
+<body style="background: #decfcf">
+  <div class="top" style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999">
+    <span>导航栏-固定位置</span>
+  </div>
+
+  <main id="main" style="padding-top: 3em;width:80%">
+    <div th:each="maps:${resultMapList}" class="row">
+      <div class="leftArea">
+        <img dyl:src="${maps.key}" />
+      </div>
+
+      <div class="rightArea" id="imageListArea">
+        <div th:each="hero:${maps.value}" class="ih-item circle effect19">
+          <a th:href="'/myapp/hero/detail/'+${hero.id}">
+            <div class="spinner"></div>
+            <div class="img">
+              <img th:src="'/myapp/resources/images/feh/acter/'+${hero.imgName}+'/face.png'">
+            </div>
+            <div class="info">
+              <div class="info-back">
+                <h3 th:text="${hero.name}"></h3>
+                <p th:text="${hero.titleName}"></p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside style="background: #fff; width: 300px; padding-left: 25px; float: right">
+    <div class="link_box">
+      <a href="#">回到桌面</a>
+    </div>
+  </aside>
+
+</body>
+</html>

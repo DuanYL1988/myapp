@@ -46,6 +46,12 @@ public class FileUtils {
         return fileTxtList;
     }
 
+    /**
+     * 从DDL中取得FIELD集合信息
+     *
+     * @param file
+     * @return
+     */
     public List<Field> getFieldListFromDDL(File file) {
         List<Field> fieldList = new ArrayList<Field>();
         try {
