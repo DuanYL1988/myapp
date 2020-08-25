@@ -1,0 +1,24 @@
+2020/8/25
+html读取静态json文本有下面几种方法
+1.使用ajax读取
+<script type='javascript'>
+    $.ajax({
+        type : 'GET',
+            url :'json.json',
+            data :jsonData,
+            dataType : 'json',
+            success : function(data){
+                alert(JSON.stringify(data))
+            },
+            error:function(data){
+                alert(JSON.stringify(data))
+            }
+    });
+</script>
+但是可能会发生跨域错误
+Access to XMLHttpRequest at 'file:////...' from origin 'null' has been blocked by CORS policy
+
+2.直接导入
+<script src="searchList.json"></script>
+这种写法需要在json文件中定义变量
+var staticJsonData = {jsondata}
