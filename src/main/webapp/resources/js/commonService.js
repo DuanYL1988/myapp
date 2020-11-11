@@ -11,10 +11,10 @@
             type : 'GET',
             url :url,
             data :jsonData,
-            dataType : 'JSON',
+            dataType : 'json',
             success : callback,
-            error:function(){
-                alert('Error')
+            error:function(data){
+                alert(JSON.stringify(data))
             }
         });
   }

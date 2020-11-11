@@ -4,14 +4,13 @@ var imgBox = [{id:'col1',height:0},{id:'col2',height:0},{id:'col3',height:0},{id
 $(function() {
     // 未定义返回ture
     var htmlFlag = typeof(jsonData)=="undefined";
+
     if(htmlFlag){
         console.log("display from static html");
         path = "../../../resources/images/feh/";
         // 静态页面加载json数据
-        ajaxGet("indexJson.json",null,function(data){
-            var jsonData = data;
-            initlize(jsonData,htmlFlag);
-        });
+        initlize(staticJson,htmlFlag);
+
     } else {
         path = "/myapp/resources/images/feh/";
         initlize(jsonData,htmlFlag);
@@ -60,7 +59,7 @@ function initlize(jsonData,htmlFlag){
         
         parentDivEle.appendChild(linkEle);
         // 加载图片信息需要一段时间
-        sleep(100);
+        sleep(200);
         // 取得最短列id
         var targetId = getShortDivId(imgEle.height);
         // 添加图片元素

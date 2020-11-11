@@ -6,10 +6,8 @@ $(function() {
         console.log("display from static html");
         path = "../../../resources/images/feh/acter/";
         // 静态页面加载json数据
-        ajaxGet("searchList.json",null,function(data){
-            var jsonData = data;
-            initHtml(jsonData);
-        });
+        initHtml(staticJson);
+
     }
 });
 
@@ -31,7 +29,7 @@ function initHtml(jsonData){
 function secondLoop(id,data){
     var parentDiv = document.createElement("div");
     parentDiv.className = "row";
-    
+    /*
     var leftDiv = document.createElement("div");
     leftDiv.className = "leftArea";
     
@@ -39,44 +37,45 @@ function secondLoop(id,data){
     textEle.innerHTML = id;
     leftDiv.appendChild(textEle);
     parentDiv.appendChild(leftDiv);
-    
+    */
     var rightDiv = document.createElement("div");
     rightDiv.className = "rightArea";
     
-  $.each(data,function(){
+    $.each(data,function(){
     
-    var cellDiv = document.createElement("div");
-    cellDiv.className = "ih-item circle effect19";
-    var linkEle = document.createElement("a");
-    linkEle.href = "detail.html";
-    
-    var spinner = document.createElement("div");
-    spinner.className = "spinner";
-    linkEle.appendChild(spinner);
-    
-    var imgDiv = document.createElement("div");
-    imgDiv.className = "img";
-    var imgEle = document.createElement("img");
-    imgEle.src = path+this.imgName+"/face.png";
-    imgDiv.appendChild(imgEle);
-    linkEle.appendChild(imgDiv);
-    
-    var infoDiv = document.createElement("div");
-    infoDiv.className = "info";
-    var infoBackDiv = document.createElement("div");
-    infoBackDiv.className = "infoBackDiv";
-    var h3Ele = document.createElement("h3");
-    h3Ele.innerHTML = this.name;
-    var pEle = document.createElement("p");
-    pEle.innerHTML = this.titleName;
-    infoBackDiv.appendChild(h3Ele);
-    infoBackDiv.appendChild(pEle);
-    infoDiv.appendChild(infoBackDiv);
-    linkEle.appendChild(infoDiv);
-    
-    cellDiv.appendChild(linkEle);
-    rightDiv.appendChild(cellDiv);
+      var cellDiv = document.createElement("div");
+      cellDiv.className = "ih-item circle effect19";
+      var linkEle = document.createElement("a");
+      linkEle.href = "detail.html";
+      
+      var spinner = document.createElement("div");
+      spinner.className = "spinner";
+      linkEle.appendChild(spinner);
+      
+      var imgDiv = document.createElement("div");
+      imgDiv.className = "img";
+      var imgEle = document.createElement("img");
+      imgEle.src = path+this.imgName+"/face.png";
+      imgDiv.appendChild(imgEle);
+      linkEle.appendChild(imgDiv);
+      
+      var infoDiv = document.createElement("div");
+      infoDiv.className = "info";
+      var infoBackDiv = document.createElement("div");
+      infoBackDiv.className = "infoBackDiv";
+      var h3Ele = document.createElement("h3");
+      h3Ele.innerHTML = this.name;
+      var pEle = document.createElement("p");
+      pEle.innerHTML = this.titleName;
+      infoBackDiv.appendChild(h3Ele);
+      infoBackDiv.appendChild(pEle);
+      infoDiv.appendChild(infoBackDiv);
+      linkEle.appendChild(infoDiv);
+      
+      cellDiv.appendChild(linkEle);
+      rightDiv.appendChild(cellDiv);
   });
   parentDiv.appendChild(rightDiv);
   document.getElementById("main").appendChild(parentDiv);
+
 }

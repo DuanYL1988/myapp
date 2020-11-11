@@ -1,4 +1,4 @@
-{
+var staticJson = {
     "0002-04": [
         {
             "groupBy": null,

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 <title>英雄初始页面</title>
 <link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet"/>
 <style>
@@ -17,10 +18,11 @@ img{max-width:100%;height:auto;}
 <script th:inline="javascript">
     var jsonData = [[${menuList}]];
 </script>
+<script src="indexJson.json" th:src=""></script>
 <script src="../../../resources/js/hero/index.js" th:src="@{/resources/js/hero/index.js}"></script>
 </head>
 <body style="background:#decfcf">
-    <div class="top" style="background:#fff;width:100%;position:fixed;top:0;left:0;line-height:2em">
+    <div class="top" style="background:#fff;width:100%;position:fixed;top:0;left:0;line-height:2em;z-index:999">
         <span>导航栏-固定位置</span>
     </div>
     

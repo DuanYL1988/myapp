@@ -1,4 +1,4 @@
-[
+var staticJson = [
     {
         "id": 1,
         "categore": "火纹",
