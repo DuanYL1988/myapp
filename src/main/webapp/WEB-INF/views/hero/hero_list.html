@@ -5,11 +5,11 @@
 <title>英雄一览页面</title>
 <link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet" />
 <style>
-.row {padding-left: 15px; display:flex}
+.row {display:flex}
 .leftArea {display: inline-block; float: left;}
 .leftArea img {width:100px;height:auto;float: center}
 .rightArea {display: inline-block; float: left;}
-.ih-item.circle{display:inline-block; float: left;margin-top: 10px;}
+.ih-item.circle{display:inline-block; float: left;margin-top: 10px;margin-left: 5px;}
 
 </style>
 
@@ -26,7 +26,7 @@
     <span>导航栏-固定位置</span>
   </div>
 
-  <main id="main" style="padding-top: 3em;width:80%">
+  <main id="main" style="padding-top: 3em;width:85%">
     <div th:each="maps:${resultMapList}" class="row">
       <div class="leftArea">
         <img dyl:src="${maps.key}" />

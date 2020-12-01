@@ -49,6 +49,7 @@ public class RadioProcessor extends AbstractAttributeTagProcessor {
         JdbcConnectUtil dbUtil = new JdbcConnectUtil();
         dbUtil.mode = 1;
         String name = CommonContent.getMapping(attributeValue);
+        String value = tag.getAttributeValue("value");
 
         String query = "select CODE_ID,IMG_SRC from HERO_CONTENT where CATEGORY_ID = '"+attributeValue+"' and IMG_SRC is not null order by code_id";
         List<Map<String, String>> resultMap = dbUtil.excuteSelectQuery(query);
@@ -58,10 +59,13 @@ public class RadioProcessor extends AbstractAttributeTagProcessor {
             String id = result.get("CODE_ID");
             String text = CommonContent.IMG_MYAPP_FEH +result.get("IMG_SRC");
             text = "<img src=\""+text+"\"></img>";
-
             html.append("<div class=\"custom-control custom-radio\">"+CRLF);
-            html.append("<input id=\""+name+id+"\" class=\"custom-control-input\" type=\"radio\" value=\""+id+"\" name=\"hero."+name+"\" required>"+CRLF);
-            html.append("<label for=\""+name+id+"\" class=\"custom-control-label\">"+text+"</label>"+CRLF);
+            html.append("<input id=\""+name+id+"\" class=\"custom-control-input\" type=\"radio\" value=\""+id+"\" name=\"hero."+name+"\" ");
+            if (id.equals(value)) {
+                html.append(" selected = 'selected' "+CRLF);
+            }
+            html.append(" required>"+CRLF);
+            html.append("<label for=\""+name+id+"\" class=\"custom-control-label\" style='margin-left:25px' >"+text+"</label>"+CRLF);
             html.append("</div>"+CRLF);
         }
 

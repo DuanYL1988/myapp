@@ -264,7 +264,7 @@
       </if>
     </where>
     <if test="orderBy!=null">
-        ORDER BY ${orderBy}
+      ORDER BY ${orderBy}
     </if>
   </select>
 
@@ -405,45 +405,52 @@
         </selectKey>
     INSERT INTO HERO(
     <include refid="insert_column_list"></include>
-    ) VALUES (
-      #{id}
-      ,#{masterId}
-      ,#{titleName}
-      ,#{name}
-      ,#{nickName}
-      ,#{imgName}
-      ,#{origin}
-      ,#{hp}
-      ,#{attact}
-      ,#{speed}
-      ,#{def}
-      ,#{mdf}
-      ,#{weapon}
-      ,#{skillA}
-      ,#{skillB}
-      ,#{skillC}
-      ,#{skillD}
-      ,#{skillS}
-      ,#{skillE}
-      ,#{limitPlus}
-      ,#{dragonFlower}
-      ,#{supportMate}
-      ,#{blessing}
-      ,#{moveType}
-      ,#{weaponType}
-      ,#{color}
-      ,#{race}
-      ,#{heroType}
-      ,#{team}
-      ,#{skillPoint}
-      ,#{heroPoint}
-      ,#{specTag}
-      ,#{pool}
-      ,#{favorite}
-      ,#{rank}
-      ,#{createDatetime}
-      ,#{updateDatetime}
-    )
+    ) SELECT 
+       #{id}
+      , #{masterId}
+      , #{titleName}
+      , #{name}
+      , #{nickName}
+      , #{imgName}
+      , #{origin}
+      , #{hp}
+      , #{attact}
+      , #{speed}
+      , #{def}
+      , #{mdf}
+      , #{weapon}
+      , #{skillA}
+      , #{skillB}
+      , #{skillC}
+      , #{skillD}
+      , #{skillS}
+      , #{skillE}
+      , #{limitPlus}
+      , #{dragonFlower}
+      , #{supportMate}
+      , #{blessing}
+      , #{moveType}
+      , #{weaponType}
+      , #{color}
+      , #{race}
+      , #{heroType}
+      , #{team}
+      , #{skillPoint}
+      , #{heroPoint}
+      , #{specTag}
+      , #{pool}
+      , #{favorite}
+      , #{rank}
+      , #{createDatetime}
+      , #{updateDatetime}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM HERO
+         WHERE 1=1 
+         AND TITLE_NAME = #{titleName} 
+         AND NAME = #{name} )
+     AND ROWNUM = 1
   </insert>
 </mapper>
 

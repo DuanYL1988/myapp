@@ -44,6 +44,7 @@ public class HeroRepositoryTest {
     @Test
     public void createJsonData() {
         Hero condition = new Hero();
+        condition.setId(140);
         condition.setOrderBy("WEAPON_TYPE");
 
         List<Hero> heroList = heroRepo.selectByDto(condition);

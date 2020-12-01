@@ -1,6 +1,6 @@
 package com.app.model;
 
-public class SkillInfo{
+public class SkillInfo extends ExpandCondition {
     /**
      * PRIMARYKEY
      */

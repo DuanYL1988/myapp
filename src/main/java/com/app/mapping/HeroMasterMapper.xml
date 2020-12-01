@@ -65,6 +65,9 @@
         AND NAME = #{name}
       </if>
     </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
@@ -105,12 +108,19 @@
         </selectKey>
     INSERT INTO HERO_MASTER(
     <include refid="insert_column_list"></include>
-    ) VALUES (
-      #{id}
-      ,#{originId}
-      ,#{originName}
-      ,#{name}
-    )
+    ) SELECT 
+       #{id}
+      , #{originId}
+      , #{originName}
+      , #{name}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM HERO_MASTER
+         WHERE 1=1 
+         AND ORIGIN_ID = #{originId} 
+         AND NAME = #{name} )
+     AND ROWNUM = 1
   </insert>
 </mapper>
 

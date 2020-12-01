@@ -83,6 +83,9 @@
         AND EFFECTS = #{effects}
       </if>
     </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
@@ -132,15 +135,22 @@
         </selectKey>
     INSERT INTO SKILL_INFO(
     <include refid="insert_column_list"></include>
-    ) VALUES (
-      #{id}
-      ,#{name}
-      ,#{type}
-      ,#{extend}
-      ,#{info}
-      ,#{weaponPower}
-      ,#{effects}
-    )
+    ) SELECT 
+       #{id}
+      , #{name}
+      , #{type}
+      , #{extend}
+      , #{info}
+      , #{weaponPower}
+      , #{effects}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM SKILL_INFO
+         WHERE 1=1 
+         AND NAME = #{name} 
+         AND TYPE = #{type} )
+     AND ROWNUM = 1
   </insert>
 </mapper>
 

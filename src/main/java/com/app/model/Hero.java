@@ -2,9 +2,9 @@ package com.app.model;
 
 import java.util.Date;
 
-public class Hero extends ExpandCondition{
+public class Hero extends ExpandCondition {
     /**
-     * PRIMARYKEY
+     * ID
      */
     private Integer id;
 
@@ -14,12 +14,12 @@ public class Hero extends ExpandCondition{
     private Integer masterId;
 
     /**
-     * 称号EXISTCOL
+     * 称号
      */
     private String titleName;
 
     /**
-     * 角色名EXISTCOL
+     * 名
      */
     private String name;
 
@@ -189,14 +189,14 @@ public class Hero extends ExpandCondition{
     private Date updateDatetime;
 
     /**
-     * 设定PRIMARYKEY
+     * 设定ID
      */
     public void setId(Integer id){
         this.id = id;
     }
 
     /**
-     * 取得PRIMARYKEY
+     * 取得ID
      */
     public Integer getId(){
         return id;
@@ -215,27 +215,27 @@ public class Hero extends ExpandCondition{
         return masterId;
     }
     /**
-     * 设定称号EXISTCOL
+     * 设定称号
      */
     public void setTitleName(String titleName){
         this.titleName = titleName;
     }
 
     /**
-     * 取得称号EXISTCOL
+     * 取得称号
      */
     public String getTitleName(){
         return titleName;
     }
     /**
-     * 设定角色名EXISTCOL
+     * 设定名
      */
     public void setName(String name){
         this.name = name;
     }
 
     /**
-     * 取得角色名EXISTCOL
+     * 取得名
      */
     public String getName(){
         return name;

@@ -1,6 +1,6 @@
 package com.app.model;
 
-public class HeroMaster{
+public class HeroMaster extends ExpandCondition {
     /**
      * PRIMARYKEY
      */

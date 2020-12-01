@@ -44,19 +44,19 @@
         <div class="row">
           <div class="col-md-4">
             <label for="origin">角色作品</label>
-            <select id="origin" class="custom-select" dyl:options="0004" th:name="hero.origin" name="origin" required>
-              <option value="">Choose...</option>
+            <select id="origin" class="custom-select"  th:field="*{hero.origin}" required>
+              <option dyl:options="0004" th:value="${inputForm.hero.origin}" />
             </select>
             <div class="invalid-feedback">origin is required</div>
           </div>
           <div class="col-md-4">
             <label for="titleName">称号</label>
-            <input id="titleName" class="form-control" type="text" th:name="hero.titleName" name="titleName" th:value="${inputForm.hero.titleName}" placeholder="伟大的女爵" required>
+            <input id="titleName" class="form-control" type="text" th:field="*{hero.titleName}" placeholder="伟大的女爵" required>
             <div class="invalid-feedback">titleName is required</div>
           </div>
           <div class="col-md-4">
             <label for="name">角色名</label>
-            <input id="name" class="form-control" type="text" th:name="hero.name" name="name" th:value="${inputForm.hero.name}" placeholder="琳" required>
+            <input id="name" class="form-control" type="text" th:field="*{hero.name}" placeholder="琳" required>
             <div class="invalid-feedback">name is required</div>
           </div>
         </div>
@@ -64,11 +64,11 @@
         <div class="row">
           <div class="col-md-4">
             <label for="nickName">昵称</label>
-            <input id="nickName" class="form-control" type="text" th:name="hero.nickName" name="nickName" th:value="${inputForm.hero.nickName}" placeholder="总选举琳">
+            <input id="nickName" class="form-control" type="text" th:field="*{hero.nickName}" placeholder="总选举琳">
           </div>
           <div class="col-md-6">
             <label for="imgName">立绘名</label>
-            <input id="imgName" class="form-control" type="text" th:name="hero.imgName" name="imgName" th:value="${inputForm.hero.imgName}" placeholder="Nailah_F_BlessedQueen" required>
+            <input id="imgName" class="form-control" type="text" th:field="*{hero.imgName}" placeholder="Nailah_F_BlessedQueen" required>
             <div class="invalid-feedback">imgName is required</div>
           </div>
         </div>
@@ -76,32 +76,32 @@
         <div class="row">
           <div class="col-md-2">
             <label for="hp">生命值</label>
-            <input id="hp" class="form-control" type="text" th:name="hero.hp" name="hp" th:value="${inputForm.hero.hp}" placeholder="50" required>
+            <input id="hp" class="form-control" type="text" th:field="*{hero.hp}" placeholder="50" required>
             <div class="invalid-feedback">hp is required</div>
           </div>
           <div class="col-md-2">
             <label for="attact">攻击</label>
-            <input id="attact" class="form-control" type="text" th:name="hero.attact" name="attact" th:value="${inputForm.hero.attact}" placeholder="50" required>
+            <input id="attact" class="form-control" type="text" th:field="*{hero.attact}" placeholder="50" required>
             <div class="invalid-feedback">attact is required</div>
           </div>
           <div class="col-md-2">
             <label for="speed">速度</label>
-            <input id="speed" class="form-control" type="text" th:name="hero.speed" name="speed" th:value="${inputForm.hero.speed}" placeholder="50" required>
+            <input id="speed" class="form-control" type="text" th:field="*{hero.speed}" placeholder="50" required>
             <div class="invalid-feedback">speed is required</div>
           </div>
           <div class="col-md-2">
             <label for="def">防御</label>
-            <input id="def" class="form-control" type="text" th:name="hero.def" name="def" th:value="${inputForm.hero.def}" placeholder="50" required>
+            <input id="def" class="form-control" type="text"  th:field="*{hero.def}" placeholder="50" required>
             <div class="invalid-feedback">def is required</div>
           </div>
           <div class="col-md-2">
             <label for="mdf">魔防</label>
-            <input id="mdf" class="form-control" type="text" th:name="hero.mdf" name="mdf" th:value="${inputForm.hero.mdf}" placeholder="50" required>
+            <input id="mdf" class="form-control" type="text" th:field="*{hero.mdf}" placeholder="50" required>
             <div class="invalid-feedback">mdf is required</div>
           </div>
           <div class="col-md-2">
             <label for="rank">评价等级</label>
-            <select id="rank" class="custom-select" th:name="hero.rank" name="rank">
+            <select id="rank" class="custom-select" th:field="*{hero.rank}" name="rank">
               <option value="">Choose...</option>
               <option value="S">S</option>
               <option value="A">A</option>
@@ -114,19 +114,19 @@
         <div class="row">
           <div class="col-md-4">
             <label for="skillPoint">技能点</label>
-            <input id="skillPoint" class="form-control" type="text" th:name="hero.skillPoint" name="skillPoint" th:value="${inputForm.hero.skillPoint}" placeholder="9999">
+            <input id="skillPoint" class="form-control" type="text" th:field="*{hero.skillPoint}" placeholder="9999">
           </div>
           <div class="col-md-4">
             <label for="heroPoint">英雄点</label>
-            <input id="heroPoint" class="form-control" type="text" th:name="hero.heroPoint" name="heroPoint" th:value="${inputForm.hero.heroPoint}" placeholder="6000">
+            <input id="heroPoint" class="form-control" type="text" th:field="*{hero.heroPoint}" placeholder="6000">
           </div>
           <div class="col-md-2">
             <label for="limitPlus">突破极限</label>
-            <input id="limitPlus" class="form-control" type="text" th:name="hero.limitPlus" name="limitPlus" th:value="${inputForm.hero.limitPlus}" placeholder="+10">
+            <input id="limitPlus" class="form-control" type="text" th:field="*{hero.limitPlus}" placeholder="+10">
           </div>
           <div class="col-md-2">
             <label for="dragonFlower">神龙之花</label>
-            <input id="dragonFlower" class="form-control" type="text" th:name="hero.dragonFlower" name="dragonFlower" th:value="${inputForm.hero.dragonFlower}" placeholder="+5">
+            <input id="dragonFlower" class="form-control" type="text" th:field="*{hero.dragonFlower}" placeholder="5">
           </div>
         </div>
 
@@ -134,19 +134,19 @@
         <div class="row">
           <div class="col-md-4">
             <label for="weaponType">武器类型</label>
-            <select id="weaponType" class="custom-select" dyl:options="0002" th:name="hero.weaponType" name="weaponType" required>
-              <option value="">Choose...</option>
+            <select id="weaponType" class="custom-select" th:field="*{hero.weaponType}" name="weaponType" required>
+              <option dyl:options="0002" th:value="${inputForm.hero.weaponType}" />
             </select>
             <div class="invalid-feedback">weaponType is required</div>
           </div>
           <div class="col-md-6">
             <label for="weapon">武器名</label>
-            <input id="weapon" class="form-control" type="text" th:name="hero.weapon" name="weapon" th:value="${inputForm.hero.weapon}" placeholder="法尔西昂" required>
+            <input id="weapon" class="form-control" type="text" th:field="*{hero.weapon}" placeholder="法尔西昂" required>
             <div class="invalid-feedback">weapon is required</div>
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">
-              <input id="extendWeapon" class="custom-control-input" type="checkbox" th:name="hero.extendWeapon" name="extendWeapon">
+              <input id="extendWeapon" class="custom-control-input" type="checkbox" name="extendWeapon">
               <label for="extendWeapon" class="custom-control-label">继承</label>
             </div>
           </div>
@@ -155,28 +155,28 @@
         <div class="row">
           <div class="col-md-12">
             <label for="weaponInfo">描述</label>
-            <input id="weaponInfo" class="form-control" type="text" th:name="weaponInfo" name="weaponInfo" placeholder="法尔西昂">
+            <input id="weaponInfo" class="form-control" type="text" name="weaponInfo" placeholder="法尔西昂">
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-4">
             <label for="skillA">主动技能</label>
-            <input id="skillA" class="form-control" type="text" th:name="hero.skillA" name="skillA" th:value="${inputForm.hero.skillA}" placeholder="鬼神飞燕击">
+            <input id="skillA" class="form-control" type="text" th:field="*{hero.skillA}" placeholder="鬼神飞燕击">
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">
-              <input id="extendA" class="custom-control-input" type="checkbox" th:name="hero.extendA" name="extendA">
+              <input id="extendA" class="custom-control-input" type="checkbox" name="extendA">
               <label for="extendA" class="custom-control-label">继承</label>
             </div>
           </div>
           <div class="col-md-4">
             <label for="skillB">被动技能</label>
-            <input id="skillB" class="form-control" type="text" th:name="hero.skillB" name="skillB" th:value="${inputForm.hero.skillB}" placeholder="埋伏">
+            <input id="skillB" class="form-control" type="text" th:field="*{hero.skillB}" placeholder="埋伏">
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">
-              <input id="extendB" class="custom-control-input" type="checkbox" th:name="extendB">
+              <input id="extendB" class="custom-control-input" type="checkbox" name="extendB">
               <label for="extendB" class="custom-control-label">继承</label>
             </div>
           </div>
@@ -185,7 +185,7 @@
         <div class="row">
           <div class="col-md-4">
             <label for="skillC">增益技能</label>
-            <input id="skillC" class="form-control" type="text" th:name="hero.skillC" name="skillC" th:value="${inputForm.hero.skillC}" placeholder="飞行支援">
+            <input id="skillC" class="form-control" type="text"th:field="*{hero.skillC}" placeholder="飞行支援">
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">
@@ -195,7 +195,7 @@
           </div>
           <div class="col-md-4">
             <label for="skillS">支援技能</label>
-            <input id="skillS" class="form-control" type="text" th:name="hero.skillS" name="skillS" th:value="${inputForm.hero.skillS}" placeholder="拉近">
+            <input id="skillS" class="form-control" type="text" th:field="*{hero.skillS}" placeholder="拉近">
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">
@@ -208,7 +208,7 @@
         <div class="row">
           <div class="col-md-4">
             <label for="skillE">必杀技能</label>
-            <input id="skillE" class="form-control" type="text" th:name="hero.skillE" name="skillE" th:value="${inputForm.hero.skillE}" placeholder="疾风迅雷">
+            <input id="skillE" class="form-control" type="text" th:field="*{hero.skillE}" placeholder="疾风迅雷">
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">
@@ -218,57 +218,50 @@
           </div>
           <div class="col-md-3">
             <label for="blessing">祝福</label>
-            <select id="blessing" class="custom-select" dyl:options="0003" th:name="hero.blessing" name="blessing">
+            <select id="blessing" class="custom-select" th:field="*{hero.blessing}" >
               <option value="">Choose...</option>
+              <option dyl:options="0003" th:value="${inputForm.hero.blessing}" />
             </select>
           </div>
           <div class="col-md-3">
             <label for="heroType">SPEC</label>
-            <select id="heroType" class="custom-select" dyl:options="0007" th:name="hero.heroType" name="heroType">
+            <select id="heroType" class="custom-select" th:field="*{hero.heroType}">
               <option value="">Choose...</option>
+              <option dyl:options="0007" th:value="${inputForm.hero.heroType}" />
             </select>
           </div>
         </div>
 
         <h4 class="mb-3">类型选择</h4>
-        <div class="row" dyl:radioImage="0005">
-          <h4 class="mb-3">兵种</h4>
-        </div>
+        <h4 class="mb-2">兵种</h4>
+        <div class="row" dyl:radioImage="0005" th:value="${inputForm.hero.moveType}" />
 
-        <div class="row" dyl:radioImage="0001">
-          <h4 class="mb-3">宝珠颜色</h4>
+        <h4 class="mb-2">宝珠颜色</h4>
+        <div class="row" dyl:radioImage="0001" th:value="${inputForm.hero.color}" />
 
-        </div>
-
+        <h4 class="mb-2">种族</h4>
         <div class="row">
-          <h4 class="mb-3">种族</h4>
 
           <div class="custom-control custom-radio">
-            <input id="race1" class="custom-control-input" type="radio" th:name="hero.race" name="race" value="01" required>
+            <input id="race1" class="custom-control-input" type="radio" th:field="*{hero.race}" name="race" value="01" required>
             <label for="race1" class="custom-control-label">人</label>
             <div class="invalid-feedback">weapon is required</div>
           </div>
-
-
           <div class="custom-control custom-radio">
-            <input id="race2" class="custom-control-input" type="radio" th:name="hero.race" name="race" value="02" required>
+            <input id="race2" class="custom-control-input" type="radio" th:field="*{hero.race}" name="race" value="02" required>
             <label for="race2" class="custom-control-label">龙</label>
             <div class="invalid-feedback">weapon is required</div>
           </div>
-
-
           <div class="custom-control custom-radio">
-            <input id="race3" class="custom-control-input" type="radio" th:name="hero.race" name="race" value="03" required>
+            <input id="race3" class="custom-control-input" type="radio" th:field="*{hero.race}" name="race" value="03" required>
             <label for="race3" class="custom-control-label">兽</label>
             <div class="invalid-feedback">weapon is required</div>
           </div>
         </div>
 
 
-        <div class="row" dyl:checkboxImage="0006">
-          <h4 class="mb-3">特效</h4>
-
-        </div>
+        <h4 class="mb-2">特效</h4>
+        <div class="row" dyl:checkboxImage="0006" />
 
         <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
       </form>

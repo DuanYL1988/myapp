@@ -49,6 +49,7 @@ public class CheckboxProcessor extends AbstractAttributeTagProcessor {
         dbUtil.mode = 1;
 
         String name = CommonContent.getMapping(attributeValue);
+        String value = tag.getAttributeValue("value");
 
         String query = "select CODE_ID,IMG_SRC from HERO_CONTENT where CATEGORY_ID = '"+attributeValue+"' and IMG_SRC is not null order by code_id";
         List<Map<String, String>> resultMap = dbUtil.excuteSelectQuery(query);
@@ -60,7 +61,11 @@ public class CheckboxProcessor extends AbstractAttributeTagProcessor {
             text = "<img src=\""+text+"\"></img>";
 
             html.append("<div class=\"custom-control custom-checkbox\">"+CRLF);
-            html.append("<input id=\""+name+id+"\" class=\"custom-control-input\" type=\"checkbox\" value=\""+id+"\" name=\"hero."+name+"\">"+CRLF);
+            html.append("<input id=\""+name+id+"\" class=\"custom-control-input\" type=\"checkbox\" value=\""+id+"\" name=\"hero."+name+"\" ");
+            if (id.equals(value)) {
+                html.append(" selected = 'selected' ");
+            }
+            html.append(" />"+CRLF);
             html.append("<label for=\""+name+id+"\" class=\"custom-control-label\">"+text+"</label>"+CRLF);
             html.append("</div>"+CRLF);
         }

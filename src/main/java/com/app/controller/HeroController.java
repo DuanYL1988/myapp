@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.common.CommonContent;
@@ -16,6 +17,7 @@ import com.app.form.HeroRegistForm;
 import com.app.form.HeroSearchForm;
 import com.app.model.Hero;
 import com.app.model.Menu;
+import com.app.repository.HeroRepository;
 import com.app.repository.MenuRepository;
 import com.app.service.HeroService;
 import com.app.util.JsonUtil;
@@ -33,6 +35,8 @@ public class HeroController {
     @Autowired
     HeroService service;
 
+    @Autowired
+    HeroRepository heroRepo;
     /**
      * 初期表示
      */
@@ -47,7 +51,7 @@ public class HeroController {
      * 登录页面
      */
     @RequestMapping(value = "regist")
-    public String goRegist(Model model,HttpSession session) {
+    public String goRegist(Model model, HttpSession session) {
 
         session.removeAttribute(CommonContent.SESSION_PRE_ID);
 
@@ -60,12 +64,12 @@ public class HeroController {
     }
 
     @RequestMapping(value = "regist/excute")
-    public String doRegist(Model model,HeroRegistForm form,HttpSession session) {
+    public String doRegist(Model model, HeroRegistForm form, HttpSession session) {
         AjaxResponseDto result = service.heroRegist(form);
 
         // 判断是更新还是新规
-        String priId = (String)session.getAttribute(CommonContent.SESSION_PRE_ID);
-        if (priId.equals(form.getHero().getTitleName()+";"+form.getHero().getName())) {
+        String priId = (String) session.getAttribute(CommonContent.SESSION_PRE_ID);
+        if (priId.equals(form.getHero().getTitleName() + ";" + form.getHero().getName())) {
             form.setMode(CommonContent.MODE_UPDATE);
         }
 
@@ -78,8 +82,15 @@ public class HeroController {
         return "hero/regist";
     }
 
+    /**
+     * 结果list
+     * 
+     * @param model
+     * @param form
+     * @return
+     */
     @RequestMapping(value = "search")
-    public String doSearch(Model model,HeroSearchForm form) {
+    public String doSearch(Model model, HeroSearchForm form) {
 
         if (null == form.getHero()) {
             form.setHero(new Hero());
@@ -91,5 +102,17 @@ public class HeroController {
         model.addAttribute("form", form);
         model.addAttribute("resultMapList", resultMapList);
         return "hero/hero_list";
+    }
+
+    @RequestMapping(value = "detail/{id}")
+    public String getDetail(@PathVariable("id") Integer id,Model model) {
+        Hero hero = new Hero();
+        HeroRegistForm inputForm = new HeroRegistForm();
+        if (id > 0) {
+            hero = heroRepo.selectOneById(id);
+        }
+        inputForm.setHero(hero);
+        model.addAttribute("inputForm", inputForm);
+        return "hero/regist";
     }
 }

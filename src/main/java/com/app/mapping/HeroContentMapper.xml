@@ -77,6 +77,9 @@
         AND IMG_SRC = #{imgSrc}
       </if>
     </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
@@ -123,14 +126,21 @@
         </selectKey>
     INSERT INTO HERO_CONTENT(
     <include refid="insert_column_list"></include>
-    ) VALUES (
-      #{id}
-      ,#{categoryId}
-      ,#{categoryName}
-      ,#{codeId}
-      ,#{codeName}
-      ,#{imgSrc}
-    )
+    ) SELECT 
+       #{id}
+      , #{categoryId}
+      , #{categoryName}
+      , #{codeId}
+      , #{codeName}
+      , #{imgSrc}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM HERO_CONTENT
+         WHERE 1=1 
+         AND CATEGORY_ID = #{categoryId} 
+         AND CODE_ID = #{codeId} )
+     AND ROWNUM = 1
   </insert>
 </mapper>
 

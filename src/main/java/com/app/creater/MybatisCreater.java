@@ -82,8 +82,7 @@ public class MybatisCreater {
     public static void main(String[] args) {
         FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] {"HERO","MENU","HERO_MASTER","SKILL_INFO","HERO_CONTENT"};
-//        String[] targetTblList = new String[] {"HERO"};
+        String[] targetTblList = new String[] {"HERO"};
         for(String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -357,7 +356,7 @@ public class MybatisCreater {
         selectByDto.append(FOUR_SPACE+"<where>"+CRLF);
         selectByDto.append(createColCheck(fields,"select"));
         selectByDto.append(FOUR_SPACE+"</where>"+CRLF);
-        selectByDto.append(FOUR_SPACE+"<if text=\"orderBy!=null\">"+CRLF);
+        selectByDto.append(FOUR_SPACE+"<if test=\"orderBy!=null\">"+CRLF);
         selectByDto.append(FOUR_SPACE+"  ORDER BY ${orderBy}"+CRLF);
         selectByDto.append(FOUR_SPACE+"</if>"+CRLF);
         selectByDto.append(TWO_SPACE+"</select>"+CRLF+CRLF);
@@ -396,17 +395,31 @@ public class MybatisCreater {
         insert.append(FOUR_SPACE+FOUR_SPACE+"</selectKey>"+CRLF);
         insert.append(FOUR_SPACE+"INSERT INTO "+TABLE_NM+"("+CRLF);
         insert.append(FOUR_SPACE+"<include refid=\"insert_column_list\"></include>"+CRLF);
-        insert.append(FOUR_SPACE+") VALUES ("+CRLF);
+//        insert.append(FOUR_SPACE+") VALUES ("+CRLF);
+        insert.append(FOUR_SPACE+") SELECT "+CRLF);
         boolean firstFlg = true;
+        String uniqueCondition = FOUR_SPACE+" WHERE 1=1 ";
         for(Field field : fields) {
             String comma = ",";
             if (firstFlg) {
                 comma = "";
                 firstFlg = false;
             }
-            insert.append(FOUR_SPACE+TWO_SPACE+comma+"#{"+field.getJavaNm()+"}"+CRLF);
+            insert.append(FOUR_SPACE+TWO_SPACE+comma+" #{"+field.getJavaNm()+"}"+CRLF);
         }
-        insert.append(FOUR_SPACE+")"+CRLF);
+        for(int i=0;i<uniqueCol.size();i++) {
+
+            String javaNm = uniqueCol.get(i).getJavaNm();
+            String dbNm = uniqueCol.get(i).getDbNm();
+            uniqueCondition += CRLF +FOUR_SPACE +FOUR_SPACE+ " AND "+dbNm+" = "+"#{"+javaNm+"} ";
+        }
+//        insert.append(FOUR_SPACE+")"+CRLF);
+        insert.append(FOUR_SPACE+" FROM DUAL "+CRLF);
+        insert.append(FOUR_SPACE+" WHERE 1=1 "+CRLF);
+        insert.append(FOUR_SPACE+" AND NOT EXISTS "+CRLF);
+        insert.append(FOUR_SPACE+" (SELECT 1 FROM "+TABLE_NM+CRLF);
+        insert.append(FOUR_SPACE+uniqueCondition+")"+CRLF);
+        insert.append(FOUR_SPACE+" AND ROWNUM = 1"+CRLF);
         insert.append(TWO_SPACE+"</insert>"+CRLF);
         return insert.toString();
     }

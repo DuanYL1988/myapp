@@ -1,6 +1,6 @@
 package com.app.model;
 
-public class Menu{
+public class Menu extends ExpandCondition {
     /**
      * PRIMARYKEY
      */

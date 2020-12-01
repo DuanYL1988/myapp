@@ -139,6 +139,9 @@ public class FileUtils {
 
     /**
      * 数据库类型与java类型匹配
+     * @param type 类型
+     * @param direct 匹配方向<br>1:db→java<br>2:java→db
+     * @return
      */
     public String changeType(String type, String direct) {
         Map<String, String> mapping = new HashMap<String, String>();
@@ -161,30 +164,52 @@ public class FileUtils {
         return "";
     }
 
+    /**
+     * 取得表字段信息
+     * @param line
+     * @return
+     */
     private Field getFieldInfoFromDDL(String line) {
-        if (line.indexOf("CREATE TABLE") >= 0 || line.indexOf("PRIMARY KEY") >= 0 ) {
+        // 去除第一行和最后一行
+        line = line.toUpperCase();
+        if (line.indexOf("CREATE TABLE") >= 0 || line.indexOf("PRIMARY KEY(") >= 0 ) {
             return null;
         } else {
             Field field = new Field();
+            // 根据space分割
             String[] lineInfo = line.split(" ");
+            // 去除双引号和逗号
             String dbNm = lineInfo[0].replaceAll("\"", "");
+            dbNm = lineInfo[0].replaceAll(",", "");
+            // 字段名
             field.setDbNm(dbNm);
+            // java命名方式
             field.setJavaNm(commonUtil.changeNm(dbNm, false));
+            // 字段类型
             String type = lineInfo[1];
+            // 取得字段长度
             if (type.indexOf("(")>=0) {
                 type = lineInfo[1].substring(0, lineInfo[1].indexOf("("));
                 field.setSize(Integer.parseInt(lineInfo[1].substring(lineInfo[1].indexOf("(")+1, lineInfo[1].indexOf(")"))));
             }
             field.setDbType(type);
+            // 匹配java的类型
             field.setJavaType(changeType(type, "1"));
+            // 取得注释后的伦理名
             String logicNm = (lineInfo[lineInfo.length-1].replace("--", ""));
-            field.setLogicNm(logicNm);
-            if("PRIMARYKEY".equals(logicNm)) {
+            logicNm = logicNm.toUpperCase();
+            // 是否是主键PRIMARYKEY
+            if(logicNm.indexOf("PRIMARYKEY")>0) {
                 field.setPrimaryKey(true);
             }
-            if(logicNm.indexOf("EXISTCOL")>0) {
+            // 业务上唯一标识
+            if(logicNm.indexOf("EXISTCOL")>0||logicNm.indexOf("UNIQUE")>0) {
                 field.setExistColumn(true);
             }
+            logicNm = logicNm.replaceAll("PRIMARYKEY", "");
+            logicNm = logicNm.replaceAll("EXISTCOL", "");
+            logicNm = logicNm.replaceAll("UNIQUE", "");
+            field.setLogicNm(logicNm);
             return field;
         }
     }

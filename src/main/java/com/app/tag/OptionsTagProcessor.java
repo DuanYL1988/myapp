@@ -43,16 +43,18 @@ public class OptionsTagProcessor extends AbstractAttributeTagProcessor {
         String query = "select CODE_ID,CODE_NAME from HERO_CONTENT where CATEGORY_ID = '"+attributeValue+"' order by code_id";
         List<Map<String, String>> resultMap = dbUtil.excuteSelectQuery(query);
 
-        String baseHtml = "<option value='#id#'>#text#</option>";
+        String baseHtml = "<option value='#id#' #selected#>#text#</option>";
         StringBuilder html = new StringBuilder();
-        html.append("<option></option>");
-
         for (Map<String, String> result : resultMap) {
             String row = "";
             String id = result.get("CODE_ID");
             String text = result.get("CODE_NAME");
+            String value = tag.getAttributeValue("value");
             row = baseHtml.replace("#id#", id);
             row = row.replace("#text#", text);
+            if (text.equals(value) || id.equals(value) ) {
+                row = row.replace("#selected#", "selected='selected' ");
+            }
             html.append(row);
         }
 

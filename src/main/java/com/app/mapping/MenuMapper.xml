@@ -95,6 +95,9 @@
         AND HTML_IMAGE_SRC = #{htmlImageSrc}
       </if>
     </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
   </select>
 
   <select id="uniqueCheck"  resultType="Integer">
@@ -150,17 +153,24 @@
         </selectKey>
     INSERT INTO MENU(
     <include refid="insert_column_list"></include>
-    ) VALUES (
-      #{id}
-      ,#{parentId}
-      ,#{menuLevel}
-      ,#{categore}
-      ,#{name}
-      ,#{actionUrl}
-      ,#{htmlUrl}
-      ,#{imageSrc}
-      ,#{htmlImageSrc}
-    )
+    ) SELECT 
+       #{id}
+      , #{parentId}
+      , #{menuLevel}
+      , #{categore}
+      , #{name}
+      , #{actionUrl}
+      , #{htmlUrl}
+      , #{imageSrc}
+      , #{htmlImageSrc}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM MENU
+         WHERE 1=1 
+         AND CATEGORE = #{categore} 
+         AND NAME = #{name} )
+     AND ROWNUM = 1
   </insert>
 </mapper>
 
