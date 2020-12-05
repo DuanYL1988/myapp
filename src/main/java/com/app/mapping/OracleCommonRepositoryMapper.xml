@@ -10,5 +10,70 @@
     SELECT ${sequenceName}.CURRVAL FROM DUAL
   </select>
   
+  <select id="getRoundMaxVal" parameterType="com.app.model.Hero" resultType="com.app.model.Universal">
+    SELECT
+        #{hp} AS localVal
+        , count(*) + 1 AS roundVal
+        , GETTOTALCOUNT('') AS totalVal
+        , CASE WHEN max(hp) IS NULL THEN #{hp} ELSE max(hp) END AS maxVal 
+    FROM
+        hero 
+    WHERE
+        hp > #{hp}
+    UNION ALL 
+    SELECT
+        #{attact} AS localVal
+        , count(*) + 1 AS roundVal
+        , GETTOTALCOUNT('') AS totalVal
+        , CASE WHEN max(attact) IS NULL THEN #{attact} ELSE max(attact) END AS maxVal 
+    FROM
+        hero 
+    WHERE
+        attact > #{attact}
+    UNION ALL 
+    SELECT
+        #{speed} AS localVal
+        , count(*) + 1 AS roundVal
+        , GETTOTALCOUNT('') AS totalVal
+        , CASE WHEN max(speed) IS NULL THEN #{speed} ELSE max(speed) END AS maxVal 
+    FROM
+        hero 
+    WHERE
+        speed > #{speed}
+    UNION ALL 
+    SELECT
+        #{def} AS localVal
+        , count(*) + 1 AS roundVal
+        , GETTOTALCOUNT('') AS totalVal
+        , CASE WHEN max(def) IS NULL THEN #{def} ELSE max(def) END AS maxVal 
+    FROM
+        hero 
+    WHERE
+        def > #{def}
+    UNION ALL 
+    SELECT
+        #{mdf} AS localVal
+        , count(*) + 1 AS roundVal
+        , GETTOTALCOUNT('') AS totalVal
+        , CASE WHEN max(mdf) IS NULL THEN #{mdf} ELSE max(mdf) END AS maxVal 
+    FROM
+        hero 
+    WHERE
+        mdf > #{mdf}
+    UNION ALL
+    SELECT
+        #{hp}+#{attact}+#{speed}+#{def}+#{mdf} AS localVal
+        , COUNT(*) +1  AS roundVal
+        , GETTOTALCOUNT('') AS totalVal
+        , CASE WHEN MAX(HP+ATTACT+SPEED+DEF+MDF) IS NULL THEN (#{hp}+#{attact}+#{speed}+#{def}+#{mdf}) ELSE MAX(HP+ATTACT+SPEED+DEF+MDF) END AS MAXVAL
+    FROM
+        hero
+    WHERE
+        HP+ATTACT+SPEED+DEF+MDF>#{hp}+#{attact}+#{speed}+#{def}+#{mdf}
+  </select>
+  
+  <select id="getHeroSkillInfo" parameterType="com.app.model.Hero">
+  </select>
+
 </mapper>
 

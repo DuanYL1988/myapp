@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
+<mapper namespace="com.app.repository.SkillRepository" >
+  <resultMap id="SkillResultMap" type="com.app.model.Skill" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="INFO" property="info" jdbcType="VARCHAR" />
+    <result column="EXTEND_FLAG" property="extendFlag" jdbcType="VARCHAR" />
+    <result column="POWER" property="power" jdbcType="INTEGER" />
+    <result column="HP_PLUS" property="hpPlus" jdbcType="INTEGER" />
+    <result column="POW_PLUS" property="powPlus" jdbcType="INTEGER" />
+    <result column="SPD_PLUS" property="spdPlus" jdbcType="INTEGER" />
+    <result column="DEF_PLUS" property="defPlus" jdbcType="INTEGER" />
+    <result column="MDF_PLUS" property="mdfPlus" jdbcType="INTEGER" />
+    <result column="HP_BUFF" property="hpBuff" jdbcType="INTEGER" />
+    <result column="POW_BUFF" property="powBuff" jdbcType="INTEGER" />
+    <result column="SPD_BUFF" property="spdBuff" jdbcType="INTEGER" />
+    <result column="DEF_BUFF" property="defBuff" jdbcType="INTEGER" />
+    <result column="MDF_BUFF" property="mdfBuff" jdbcType="INTEGER" />
+    <result column="HP_DEBUFF" property="hpDebuff" jdbcType="INTEGER" />
+    <result column="POW_DEBUFF" property="powDebuff" jdbcType="INTEGER" />
+    <result column="SPD_DEBUFF" property="spdDebuff" jdbcType="INTEGER" />
+    <result column="DEF_DEBUFF" property="defDebuff" jdbcType="INTEGER" />
+    <result column="MDF_DEBUFF" property="mdfDebuff" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    SKILL.ID
+    ,SKILL.NAME
+    ,SKILL.TYPE
+    ,SKILL.INFO
+    ,SKILL.EXTEND_FLAG
+    ,SKILL.POWER
+    ,SKILL.HP_PLUS
+    ,SKILL.POW_PLUS
+    ,SKILL.SPD_PLUS
+    ,SKILL.DEF_PLUS
+    ,SKILL.MDF_PLUS
+    ,SKILL.HP_BUFF
+    ,SKILL.POW_BUFF
+    ,SKILL.SPD_BUFF
+    ,SKILL.DEF_BUFF
+    ,SKILL.MDF_BUFF
+    ,SKILL.HP_DEBUFF
+    ,SKILL.POW_DEBUFF
+    ,SKILL.SPD_DEBUFF
+    ,SKILL.DEF_DEBUFF
+    ,SKILL.MDF_DEBUFF
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,NAME
+    ,TYPE
+    ,INFO
+    ,EXTEND_FLAG
+    ,POWER
+    ,HP_PLUS
+    ,POW_PLUS
+    ,SPD_PLUS
+    ,DEF_PLUS
+    ,MDF_PLUS
+    ,HP_BUFF
+    ,POW_BUFF
+    ,SPD_BUFF
+    ,DEF_BUFF
+    ,MDF_BUFF
+    ,HP_DEBUFF
+    ,POW_DEBUFF
+    ,SPD_DEBUFF
+    ,DEF_DEBUFF
+    ,MDF_DEBUFF
+  </sql>
+
+  <select id="selectOneById" resultMap="SkillResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      SKILL
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="SkillResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      SKILL
+    <where>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+      <if test="type!=null">
+        AND TYPE = #{type}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.Skill" resultMap="SkillResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      SKILL
+    <where>
+      <if test="id!=null">
+        AND ID = #{id}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+      <if test="type!=null">
+        AND TYPE = #{type}
+      </if>
+      <if test="info!=null">
+        AND INFO = #{info}
+      </if>
+      <if test="extendFlag!=null">
+        AND EXTEND_FLAG = #{extendFlag}
+      </if>
+      <if test="power!=null">
+        AND POWER = #{power}
+      </if>
+      <if test="hpPlus!=null">
+        AND HP_PLUS = #{hpPlus}
+      </if>
+      <if test="powPlus!=null">
+        AND POW_PLUS = #{powPlus}
+      </if>
+      <if test="spdPlus!=null">
+        AND SPD_PLUS = #{spdPlus}
+      </if>
+      <if test="defPlus!=null">
+        AND DEF_PLUS = #{defPlus}
+      </if>
+      <if test="mdfPlus!=null">
+        AND MDF_PLUS = #{mdfPlus}
+      </if>
+      <if test="hpBuff!=null">
+        AND HP_BUFF = #{hpBuff}
+      </if>
+      <if test="powBuff!=null">
+        AND POW_BUFF = #{powBuff}
+      </if>
+      <if test="spdBuff!=null">
+        AND SPD_BUFF = #{spdBuff}
+      </if>
+      <if test="defBuff!=null">
+        AND DEF_BUFF = #{defBuff}
+      </if>
+      <if test="mdfBuff!=null">
+        AND MDF_BUFF = #{mdfBuff}
+      </if>
+      <if test="hpDebuff!=null">
+        AND HP_DEBUFF = #{hpDebuff}
+      </if>
+      <if test="powDebuff!=null">
+        AND POW_DEBUFF = #{powDebuff}
+      </if>
+      <if test="spdDebuff!=null">
+        AND SPD_DEBUFF = #{spdDebuff}
+      </if>
+      <if test="defDebuff!=null">
+        AND DEF_DEBUFF = #{defDebuff}
+      </if>
+      <if test="mdfDebuff!=null">
+        AND MDF_DEBUFF = #{mdfDebuff}
+      </if>
+    </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT count(*) AS count
+    FROM 
+      SKILL
+    <where>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+      <if test="type!=null">
+        AND TYPE = #{type}
+      </if>
+    </where>
+  </select>
+
+  <update id="update" parameterType="com.app.model.Skill" >
+    UPDATE
+      SKILL
+    <set>
+      <if test="name!=null">
+        NAME = #{name},
+      </if>
+      <if test="type!=null">
+        TYPE = #{type},
+      </if>
+      <if test="info!=null">
+        INFO = #{info},
+      </if>
+      <if test="extendFlag!=null">
+        EXTEND_FLAG = #{extendFlag},
+      </if>
+      <if test="power!=null">
+        POWER = #{power},
+      </if>
+      <if test="hpPlus!=null">
+        HP_PLUS = #{hpPlus},
+      </if>
+      <if test="powPlus!=null">
+        POW_PLUS = #{powPlus},
+      </if>
+      <if test="spdPlus!=null">
+        SPD_PLUS = #{spdPlus},
+      </if>
+      <if test="defPlus!=null">
+        DEF_PLUS = #{defPlus},
+      </if>
+      <if test="mdfPlus!=null">
+        MDF_PLUS = #{mdfPlus},
+      </if>
+      <if test="hpBuff!=null">
+        HP_BUFF = #{hpBuff},
+      </if>
+      <if test="powBuff!=null">
+        POW_BUFF = #{powBuff},
+      </if>
+      <if test="spdBuff!=null">
+        SPD_BUFF = #{spdBuff},
+      </if>
+      <if test="defBuff!=null">
+        DEF_BUFF = #{defBuff},
+      </if>
+      <if test="mdfBuff!=null">
+        MDF_BUFF = #{mdfBuff},
+      </if>
+      <if test="hpDebuff!=null">
+        HP_DEBUFF = #{hpDebuff},
+      </if>
+      <if test="powDebuff!=null">
+        POW_DEBUFF = #{powDebuff},
+      </if>
+      <if test="spdDebuff!=null">
+        SPD_DEBUFF = #{spdDebuff},
+      </if>
+      <if test="defDebuff!=null">
+        DEF_DEBUFF = #{defDebuff},
+      </if>
+      <if test="mdfDebuff!=null">
+        MDF_DEBUFF = #{mdfDebuff},
+      </if>
+    </set>
+    WHERE
+      ID = #{id}
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.Skill" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+          SELECT SEQ_SKILL.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO SKILL(
+    <include refid="insert_column_list"></include>
+    ) SELECT 
+       #{id}
+      , #{name}
+      , #{type}
+      , #{info}
+      , #{extendFlag}
+      , #{power}
+      , #{hpPlus}
+      , #{powPlus}
+      , #{spdPlus}
+      , #{defPlus}
+      , #{mdfPlus}
+      , #{hpBuff}
+      , #{powBuff}
+      , #{spdBuff}
+      , #{defBuff}
+      , #{mdfBuff}
+      , #{hpDebuff}
+      , #{powDebuff}
+      , #{spdDebuff}
+      , #{defDebuff}
+      , #{mdfDebuff}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM SKILL
+         WHERE 1=1 
+         AND NAME = #{name} 
+         AND TYPE = #{type} )
+     AND ROWNUM = 1
+  </insert>
+</mapper>
+

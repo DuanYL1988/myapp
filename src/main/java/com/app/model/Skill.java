@@ -1,95 +1,383 @@
 package com.app.model;
 
-public class Skill {
-
+public class Skill extends ExpandCondition {
+    /**
+     * ID
+     */
     private Integer id;
 
-    private Integer skillId;
+    /**
+     * 技能名
+     */
+    private String name;
 
-    private String skillType;
+    /**
+     * 技能类型
+     */
+    private String type;
 
-    private String skillName;
+    /**
+     * 介绍
+     */
+    private String info;
 
-    private String skillColour;
+    /**
+     * 继承
+     */
+    private String extendFlag;
 
-    private Integer skillExtend;
+    /**
+     * 武器威力
+     */
+    private Integer power;
 
-    private Integer skillPower;
+    /**
+     * HP加成
+     */
+    private Integer hpPlus;
 
-    private String skillInfo;
+    /**
+     * POW加成
+     */
+    private Integer powPlus;
 
-    private String skillSpEffect;
+    /**
+     * SPD加成
+     */
+    private Integer spdPlus;
 
-    public Integer getId() {
-        return id;
-    }
+    /**
+     * DEF加成
+     */
+    private Integer defPlus;
 
-    public void setId(Integer id) {
+    /**
+     * MDF加成
+     */
+    private Integer mdfPlus;
+
+    /**
+     * HP增益
+     */
+    private Integer hpBuff;
+
+    /**
+     * POW增益
+     */
+    private Integer powBuff;
+
+    /**
+     * SPD增益
+     */
+    private Integer spdBuff;
+
+    /**
+     * DEF增益
+     */
+    private Integer defBuff;
+
+    /**
+     * MDF增益
+     */
+    private Integer mdfBuff;
+
+    /**
+     * HP减益
+     */
+    private Integer hpDebuff;
+
+    /**
+     * POW减益
+     */
+    private Integer powDebuff;
+
+    /**
+     * SPD减益
+     */
+    private Integer spdDebuff;
+
+    /**
+     * DEF减益
+     */
+    private Integer defDebuff;
+
+    /**
+     * MDF减益
+     */
+    private Integer mdfDebuff;
+
+    /**
+     * 设定ID
+     */
+    public void setId(Integer id){
         this.id = id;
     }
 
-    public Integer getSkillId() {
-        return skillId;
+    /**
+     * 取得ID
+     */
+    public Integer getId(){
+        return id;
+    }
+    /**
+     * 设定技能名
+     */
+    public void setName(String name){
+        this.name = name;
     }
 
-    public void setSkillId(Integer skillId) {
-        this.skillId = skillId;
+    /**
+     * 取得技能名
+     */
+    public String getName(){
+        return name;
+    }
+    /**
+     * 设定技能类型
+     */
+    public void setType(String type){
+        this.type = type;
     }
 
-    public String getSkillType() {
-        return skillType;
+    /**
+     * 取得技能类型
+     */
+    public String getType(){
+        return type;
+    }
+    /**
+     * 设定介绍
+     */
+    public void setInfo(String info){
+        this.info = info;
     }
 
-    public void setSkillType(String skillType) {
-        this.skillType = skillType;
+    /**
+     * 取得介绍
+     */
+    public String getInfo(){
+        return info;
+    }
+    /**
+     * 设定继承
+     */
+    public void setExtendFlag(String extendFlag){
+        this.extendFlag = extendFlag;
     }
 
-    public String getSkillName() {
-        return skillName;
+    /**
+     * 取得继承
+     */
+    public String getExtendFlag(){
+        return extendFlag;
+    }
+    /**
+     * 设定武器威力
+     */
+    public void setPower(Integer power){
+        this.power = power;
     }
 
-    public void setSkillName(String skillName) {
-        this.skillName = skillName;
+    /**
+     * 取得武器威力
+     */
+    public Integer getPower(){
+        return power;
+    }
+    /**
+     * 设定HP加成
+     */
+    public void setHpPlus(Integer hpPlus){
+        this.hpPlus = hpPlus;
     }
 
-    public String getSkillColour() {
-        return skillColour;
+    /**
+     * 取得HP加成
+     */
+    public Integer getHpPlus(){
+        return hpPlus;
+    }
+    /**
+     * 设定POW加成
+     */
+    public void setPowPlus(Integer powPlus){
+        this.powPlus = powPlus;
     }
 
-    public void setSkillColour(String skillColour) {
-        this.skillColour = skillColour;
+    /**
+     * 取得POW加成
+     */
+    public Integer getPowPlus(){
+        return powPlus;
+    }
+    /**
+     * 设定SPD加成
+     */
+    public void setSpdPlus(Integer spdPlus){
+        this.spdPlus = spdPlus;
     }
 
-    public Integer getSkillExtend() {
-        return skillExtend;
+    /**
+     * 取得SPD加成
+     */
+    public Integer getSpdPlus(){
+        return spdPlus;
+    }
+    /**
+     * 设定DEF加成
+     */
+    public void setDefPlus(Integer defPlus){
+        this.defPlus = defPlus;
     }
 
-    public void setSkillExtend(Integer skillExtend) {
-        this.skillExtend = skillExtend;
+    /**
+     * 取得DEF加成
+     */
+    public Integer getDefPlus(){
+        return defPlus;
+    }
+    /**
+     * 设定MDF加成
+     */
+    public void setMdfPlus(Integer mdfPlus){
+        this.mdfPlus = mdfPlus;
     }
 
-    public Integer getSkillPower() {
-        return skillPower;
+    /**
+     * 取得MDF加成
+     */
+    public Integer getMdfPlus(){
+        return mdfPlus;
+    }
+    /**
+     * 设定HP增益
+     */
+    public void setHpBuff(Integer hpBuff){
+        this.hpBuff = hpBuff;
     }
 
-    public void setSkillPower(Integer skillPower) {
-        this.skillPower = skillPower;
+    /**
+     * 取得HP增益
+     */
+    public Integer getHpBuff(){
+        return hpBuff;
+    }
+    /**
+     * 设定POW增益
+     */
+    public void setPowBuff(Integer powBuff){
+        this.powBuff = powBuff;
     }
 
-    public String getSkillInfo() {
-        return skillInfo;
+    /**
+     * 取得POW增益
+     */
+    public Integer getPowBuff(){
+        return powBuff;
+    }
+    /**
+     * 设定SPD增益
+     */
+    public void setSpdBuff(Integer spdBuff){
+        this.spdBuff = spdBuff;
     }
 
-    public void setSkillInfo(String skillInfo) {
-        this.skillInfo = skillInfo;
+    /**
+     * 取得SPD增益
+     */
+    public Integer getSpdBuff(){
+        return spdBuff;
+    }
+    /**
+     * 设定DEF增益
+     */
+    public void setDefBuff(Integer defBuff){
+        this.defBuff = defBuff;
     }
 
-    public String getSkillSpEffect() {
-        return skillSpEffect;
+    /**
+     * 取得DEF增益
+     */
+    public Integer getDefBuff(){
+        return defBuff;
+    }
+    /**
+     * 设定MDF增益
+     */
+    public void setMdfBuff(Integer mdfBuff){
+        this.mdfBuff = mdfBuff;
     }
 
-    public void setSkillSpEffect(String skillSpEffect) {
-        this.skillSpEffect = skillSpEffect;
+    /**
+     * 取得MDF增益
+     */
+    public Integer getMdfBuff(){
+        return mdfBuff;
+    }
+    /**
+     * 设定HP减益
+     */
+    public void setHpDebuff(Integer hpDebuff){
+        this.hpDebuff = hpDebuff;
+    }
+
+    /**
+     * 取得HP减益
+     */
+    public Integer getHpDebuff(){
+        return hpDebuff;
+    }
+    /**
+     * 设定POW减益
+     */
+    public void setPowDebuff(Integer powDebuff){
+        this.powDebuff = powDebuff;
+    }
+
+    /**
+     * 取得POW减益
+     */
+    public Integer getPowDebuff(){
+        return powDebuff;
+    }
+    /**
+     * 设定SPD减益
+     */
+    public void setSpdDebuff(Integer spdDebuff){
+        this.spdDebuff = spdDebuff;
+    }
+
+    /**
+     * 取得SPD减益
+     */
+    public Integer getSpdDebuff(){
+        return spdDebuff;
+    }
+    /**
+     * 设定DEF减益
+     */
+    public void setDefDebuff(Integer defDebuff){
+        this.defDebuff = defDebuff;
+    }
+
+    /**
+     * 取得DEF减益
+     */
+    public Integer getDefDebuff(){
+        return defDebuff;
+    }
+    /**
+     * 设定MDF减益
+     */
+    public void setMdfDebuff(Integer mdfDebuff){
+        this.mdfDebuff = mdfDebuff;
+    }
+
+    /**
+     * 取得MDF减益
+     */
+    public Integer getMdfDebuff(){
+        return mdfDebuff;
     }
 
 }
