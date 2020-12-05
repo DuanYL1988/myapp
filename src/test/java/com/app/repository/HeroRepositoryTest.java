@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.app.model.Hero;
 import com.app.model.Menu;
+import com.app.service.HeroService;
 import com.app.util.CommonUtils;
 import com.app.util.JsonUtil;
 
@@ -26,6 +27,9 @@ public class HeroRepositoryTest {
     HeroRepository heroRepo;
 
     @Autowired
+    HeroService heroService;
+
+    @Autowired
     OracleCommonRepository oracleRepository;
 
     @Autowired
@@ -35,20 +39,24 @@ public class HeroRepositoryTest {
     CommonUtils commonUtil;
 
     @Test
+    public void testGetHeroInfo() {
+        int id = 136;
+        heroService.getAjaxHeroInfo(id);
+    }
+
+    @Test
     public void testGetNextvalFromSeq() {
         System.out.println(oracleRepository.getNextval("SEQ_HERO_MASTER"));
         System.out.println(oracleRepository.getCurrentval("SEQ_HERO_MASTER"));
     }
 
-
     @Test
     public void createJsonData() {
         Hero condition = new Hero();
-        condition.setId(140);
-        condition.setOrderBy("WEAPON_TYPE");
 
         List<Hero> heroList = heroRepo.selectByDto(condition);
-        System.out.println(jsonUtil.praseObjToJson(commonUtil.groupByList("0002-weaponType", heroList)));;
+        System.out.println(jsonUtil.praseObjToJson(commonUtil.groupByList("weaponType", heroList)));
+        ;
     }
 
     @Test

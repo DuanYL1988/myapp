@@ -52,6 +52,7 @@ public class FireEmblemController {
 
     @Autowired
     JsonUtil jsonUtil;
+
     /**
      * 初期表示
      */
@@ -63,8 +64,7 @@ public class FireEmblemController {
     }
 
     @RequestMapping(value = "master/{category}")
-    public String goToMaster(@PathVariable("category") String category,
-            Model model) {
+    public String goToMaster(@PathVariable("category") String category, Model model) {
 
         return "feh/master";
     }
@@ -73,14 +73,12 @@ public class FireEmblemController {
      * 打开角色登陆画面（追加，更新）
      */
     @RequestMapping(value = "fehActerRegist/{type}/{acterId}")
-    public String acterRegist(@PathVariable("type") String type,
-            @PathVariable("acterId") String acterId,
+    public String acterRegist(@PathVariable("type") String type, @PathVariable("acterId") String acterId,
             FehCharActerForm charActerForm, BindingResult result, Model model) {
         //
         FehCharActerForm form = new FehCharActerForm();
-        form.setWeaponType(contentMasterRepository
-                .getContentByCategoryId("0001"));
-        form.setSkillMap(commonUtil.getSkillMap());
+        form.setWeaponType(contentMasterRepository.getContentByCategoryId("0001"));
+//        form.setSkillMap(commonUtil.getSkillMap());
         form.setOrigin(contentMasterRepository.getContentByCategoryId("0004"));
         //
         if (StringUtils.isEmpty(type) || "init".equals(type)) {
@@ -88,7 +86,7 @@ public class FireEmblemController {
             //
         } else if ("update".equals(type) && !StringUtils.isEmpty(acterId)) {
             Integer id = Integer.parseInt(acterId);
-            FehCharacter acter = fireEmblemRepository.selectOne(id,"");
+            FehCharacter acter = fireEmblemRepository.selectOne(id, "");
             if (null != acter) {
                 form.setCharActer(acter);
             } else {
@@ -123,9 +121,8 @@ public class FireEmblemController {
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResponseDto insertOrUpdate(
-            @RequestBody @Validated FehCharActerForm form,
-            BindingResult result, Model model) {
+    public AjaxResponseDto insertOrUpdate(@RequestBody @Validated FehCharActerForm form, BindingResult result,
+            Model model) {
         AjaxResponseDto response = fehService.doSave(form);
         return response;
     }
@@ -152,13 +149,13 @@ public class FireEmblemController {
         return "feh/gallery";
     }
 
-
     /**
      * 队伍编组
+     *
      * @param model
      * @return
      */
-    @RequestMapping(value="normalTeam",method = RequestMethod.GET)
+    @RequestMapping(value = "normalTeam", method = RequestMethod.GET)
     public String normalTeam(Model model) {
         TeamResultDto result = fehService.getTeamInfo();
         //
@@ -174,9 +171,10 @@ public class FireEmblemController {
      * @param teamId
      * @return
      */
-    @RequestMapping(value = "saveTeam",method = RequestMethod.GET)
+    @RequestMapping(value = "saveTeam", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResponseDto saveTeam(@RequestParam("acterIdList") String acterIdList,@RequestParam("teamId") String teamId) {
+    public AjaxResponseDto saveTeam(@RequestParam("acterIdList") String acterIdList,
+            @RequestParam("teamId") String teamId) {
         fehService.updateTeam(teamId, acterIdList);
         AjaxResponseDto response = new AjaxResponseDto();
         response.setMessage("TEAM SAVE COMPLETE");
@@ -194,20 +192,8 @@ public class FireEmblemController {
     }
 
     /**
-     * 转到技能编辑画面
-     * @return
-     */
-    @RequestMapping(value = "goToSkill")
-    public String goToSkill(Model model) {
-        List<Skill> skillList = skillRepository.getAllSkill();
-        String jsonString = jsonUtil.praseObjToJson(skillList);
-        model.addAttribute("skillList", skillList);
-        model.addAttribute("jsonObj", jsonString);
-        return "feh/skill";
-    }
-
-    /**
      * 保存编辑后技能信息
+     *
      * @param form
      * @return
      */
@@ -218,7 +204,7 @@ public class FireEmblemController {
         return response;
     }
 
-    @RequestMapping(value="sample")
+    @RequestMapping(value = "sample")
     public String sample() {
         return "feh/sample";
     }

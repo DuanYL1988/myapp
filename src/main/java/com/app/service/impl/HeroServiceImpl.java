@@ -14,6 +14,7 @@ import com.app.model.Hero;
 import com.app.model.HeroContent;
 import com.app.model.HeroMaster;
 import com.app.model.SkillInfo;
+import com.app.model.Universal;
 import com.app.repository.HeroContentRepository;
 import com.app.repository.HeroMasterRepository;
 import com.app.repository.HeroRepository;
@@ -47,10 +48,11 @@ public class HeroServiceImpl implements HeroService {
     @Autowired
     SkillInfoService skillService;
 
-    public Map<String, List<Hero>> doSearch(HeroSearchForm form){
+    @Override
+    public Map<String, List<Hero>> doSearch(HeroSearchForm form) {
 
         String orderKey = "WEAPON_TYPE";
-        String keyName = "0002-"+commonUtil.changeNm(orderKey, false);
+        String keyName = "0002-" + commonUtil.changeNm(orderKey, false);
 
         Hero condition = form.getHero();
         condition.setOrderBy(orderKey);
@@ -79,13 +81,28 @@ public class HeroServiceImpl implements HeroService {
 
         // 武器情报
         SkillInfo weapon = skillRepo.selectOneByUniqueKey(input.getWeapon(), "W");
-        if(null == weapon) {
+        if (null == weapon) {
             skillService.registFromHero(input.getWeapon(), form.getWeaponInfo(), "W", form.getExtendWeapon());
         }
 
-        result.setData(input.getTitleName()+";"+input.getName());
+        result.setData(input.getTitleName() + ";" + input.getName());
         result.setCode("0");
         result.setMessage("SUCCESS");
+
+        return result;
+    }
+
+    /**
+     * 右侧详细情报
+     */
+    @Override
+    public AjaxResponseDto getAjaxHeroInfo(Integer id) {
+        AjaxResponseDto result = new AjaxResponseDto();
+        Hero hero = heroRepo.selectOneById(id);
+        List<Universal> roundInfo = oracleRepo.getRoundMaxVal(hero);
+
+        result.setData(hero);
+        result.setListData01(roundInfo);
 
         return result;
     }

@@ -20,8 +20,14 @@ public interface HeroService {
 
     /**
      * 检索处理
+     *
      * @param 检索条件Form form
      * @return
      */
     Map<String, List<Hero>> doSearch(HeroSearchForm form);
+
+    /**
+     * @param id
+     */
+    AjaxResponseDto getAjaxHeroInfo(Integer id);
 }

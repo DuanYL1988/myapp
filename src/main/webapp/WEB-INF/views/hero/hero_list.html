@@ -10,33 +10,108 @@
 .leftArea img {width:100px;height:auto;float: center}
 .rightArea {display: inline-block; float: left;}
 .ih-item.circle{display:inline-block; float: left;margin-top: 10px;margin-left: 5px;}
-
+aside{position: fixed;top:40px;width: 600px;height:auto; right: 10px;background:url(../../../resources/images/feh/background.jpg);background-size:100% auto}
+aside table {color:#110a79}
+.button-group{display:inline-block}
+.status{height:14px;background:linear-gradient(to right, #083344 0%,#808294 50%,#20daafeb 100%);display:inline-block;}
+#block{position: fixed;width:100%;height:100%;background-color:gray;z-index:9999;opacity:0.6;top:0;left:0}
 </style>
 
 <script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
 <script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
 <script th:inline="javascript">
     var mode = [[${form.mode}]];
+    var jsonDate = [[${jsonDate}]];
 </script>
 <script src="searchList.json"></script>
 <script src="../../../resources/js/hero/search.js" th:src="@{/resources/js/hero/search.js}"></script>
 </head>
 <body style="background: #decfcf">
-  <div class="top" style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999">
+  <div id="block" style="display:none"><button id="cancel">Cancel</button></div>
+  <header style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999">
     <span>导航栏-固定位置</span>
-  </div>
+  </header>
 
-  <main id="main" style="padding-top: 3em;width:85%">
+  <main id="main" style="padding-top:20px;width:1200px;">
+
+  </main>
+
+  <aside id="leftDetailInfo" style="display:none;">
+    <table width="100%">
+      <tr>
+        <td rowspan="7" width="100px" ><img id="hero_img" src="../../../resources/images/feh/acter/Sallya_F_Obsessive/face.png" style="width:180px;"></td>
+        <td colspan="4" id="hero_titleName">titleName-name</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td width="40px">HP</td>
+        <td width="30px" id="hero_hp"></td>
+        <td width="120px" ><span id="round_hp"></span></td>
+        <td width="200px"><span id="stick_hp" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>POW</td>
+        <td id="hero_pow"></td>
+        <td><span id="round_pow"></span></td>
+        <td><span id="stick_pow" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>SPD</td>
+        <td id="hero_spd"></td>
+        <td><span id="round_spd"></span></td>
+        <td><span id="stick_spd" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>DEF</td>
+        <td id="hero_def"></td>
+        <td><span id="round_def"></span></td>
+        <td><span id="stick_def" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>MDF</td>
+        <td id="hero_mdf"></td>
+        <td><span id="round_mdf"></span></td>
+        <td><span id="stick_mdf" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td id="hero_total"></td>
+        <td><span id="round_total"></span></td>
+        <td><span id="stick_total" class="status" style="width:0px"/></td>
+      </tr>
+    </table>
+    <div class="paraBox" style="border:solid 6px #a9ff00c4;height:300px;background-color:#adaa9e69;padding-top:5px">
+    
+    </div>
+      
+    <table>
+      <tr>
+        <td width="200px" align="right">skillA</td>
+        <td width="40px"/>
+        <td>aa</td>
+      </tr>
+    <table>
+    
+    <div class="button-group">
+       <button id="picture" type="button">picture</button>
+       <button type="button">update</button>
+       <button id="hide" type="button">hide</button>
+    <div>
+  </aside>
+
+</body>
+</html>
+<!-- 2020/12/06 使用json在js中生成HTML,动态静态实现方式一致
     <div th:each="maps:${resultMapList}" class="row">
       <div class="leftArea">
-        <img dyl:src="${maps.key}" />
+         <img dyl:src="${maps.key}" /> 
       </div>
 
       <div class="rightArea" id="imageListArea">
         <div th:each="hero:${maps.value}" class="ih-item circle effect19">
-          <a th:href="'/myapp/hero/detail/'+${hero.id}">
+           <a th:href="'/myapp/hero/detail/'+${hero.id}"> 
             <div class="spinner"></div>
-            <div class="img">
+            <div class="img" th:onclick="'javascript:openInfoDiv('+${hero.id}+')'">
               <img th:src="'/myapp/resources/images/feh/acter/'+${hero.imgName}+'/face.png'">
             </div>
             <div class="info">
@@ -49,13 +124,4 @@
         </div>
       </div>
     </div>
-  </main>
-
-  <aside style="background: #fff; width: 300px; padding-left: 25px; float: right">
-    <div class="link_box">
-      <a href="#">回到桌面</a>
-    </div>
-  </aside>
-
-</body>
-</html>
+-->
