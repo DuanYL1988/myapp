@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>火纹自走棋V1.0 Beat</title>
+
+<style>
+/* 页面 */
+#main {
+  width: 100%
+}
+
+
+/* 红棋 */
+.left {
+  width: 32%;
+  display: inline-block;
+  float: left
+}
+
+#redTeam {
+  overflow-y: scroll;
+  height: 830px
+}
+
+
+/* 黑棋 */
+.right {
+  width: 32%;
+  display: inline-block;
+  float: left;
+  margin-left: 20px
+}
+
+#blackTeam {
+  overflow-y: scroll;
+  height: 830px
+}
+
+/* 棋盘 */
+#mapArea {
+  display: inline-block;
+  float: left;
+  margin-left: 20px
+}
+
+.map {
+  width: 600px;
+  height: 800px;
+  background: url(map.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat
+}
+
+.mapCell {
+  width: 100px;
+  height: 100px;
+  float: left
+}
+
+.mapCell img {
+  width: 100px;
+  height: 100px;
+  border: solid 8px;
+  box-sizing: border-box;
+  border-radius: 100%;
+  background-color: white
+}
+
+
+/* 通用 */
+.row {
+  display: inline-block;
+  margin-top: -3.5px
+}
+
+.img {
+  display: inline-block;
+  float: left;
+  margin-top: 10px;
+  margin-left: 2px;
+}
+
+.img :hover {
+  border: solid 2px yellow;
+  box-sizing: border-box;
+}
+
+.img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+/* 战斗详细 */
+
+.redTeamCombat {
+  display: inline-block
+}
+
+.team_member {
+  display: inline
+}
+
+.team_member img {
+  width: 200px;
+  height: 200px;
+}
+
+.memberFace {
+  float: left
+}
+
+.memberInfo {
+  float: left
+}
+
+.memberInfo li {
+  height: 30px;
+  width: 300px;
+  padding-top: 2px
+}
+
+</style>
+
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script th:inline="javascript">
+    var mode = [[${form.mode}]];
+    var jsonDate = [[${jsonDate}]];
+</script>
+<script src="game.json"></script>
+<script src="../../../resources/js/hero/game.js" th:src="@{/resources/js/hero/game.js}"></script>
+</head>
+<body style="background: #decfcf">
+
+  <main id="main" style="padding-top:20px;">
+    <div class="left">
+      <div id="redTeam">
+      </div>
+      <div id="redTeamCombat">
+      </div>
+    </div>
+    
+    <div id="mapArea" >
+      <div class="buttonArea">
+        <button onclick='javascript:gameStart()'>START</button>
+      </div>
+      <div class="map"></div>
+    </div>
+    
+    <div class="right">
+      <div id="blackTeam">
+      </div>
+      <div id="blackTeamCombat">
+      </div>
+    </div>
+  </main>
+  
+  <div>
+    <!--  <audio id='bgm' src="theme.mp3" autoplay='autoplay'  loop='loop' controls='controls'  /> -->
+  </div>
+
+</body>
+</html>
