@@ -5,12 +5,6 @@
 <title>火纹自走棋V1.0 Beat</title>
 
 <style>
-/* 页面 */
-#main {
-  width: 100%
-}
-
-
 /* 红棋 */
 .left {
   width: 32%;
@@ -58,6 +52,15 @@
   float: left
 }
 
+.mapCell.move{
+  border:1px black;
+  background-color:#091cff87;
+}
+
+.mapCell.attact{
+  background-color:#ff090959;
+}
+
 .mapCell img {
   width: 100px;
   height: 100px;
@@ -103,26 +106,33 @@
 }
 
 .team_member img {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 
 .memberFace {
-  float: left
+  float: left;
+  height: 160px;
 }
 
 .memberInfo {
-  float: left
+  float: left;
+  height: 160px;
+}
+
+.memberInfo ul {
+  margin:0px;
 }
 
 .memberInfo li {
-  height: 30px;
+  height: 15px;
   width: 300px;
-  padding-top: 2px
+  font-size:small
 }
+/*  */
+#screen{position: fixed;width:600px;height:800px;background-color:#665e96c7;z-index:9;top:30px;left:630px;overflow: hidden}
 
 </style>
-
 <script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
 <script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
 <script th:inline="javascript">
@@ -134,7 +144,7 @@
 </head>
 <body style="background: #decfcf">
 
-  <main id="main" style="padding-top:20px;">
+  <main id="main">
     <div class="left">
       <div id="redTeam">
       </div>
@@ -142,11 +152,17 @@
       </div>
     </div>
     
-    <div id="mapArea" >
+    <div id="mapArea">
       <div class="buttonArea">
-        <button onclick='javascript:gameStart()'>START</button>
+        <button id='btn_gameStart'>开始</button>
+        <button id='btn_trunEnd'>结束行动</button>
+        <button id='btn_cancel'>取消</button>
       </div>
+      <div id='screen'><img id='screenImg' src="" style="width:100%;"></img></div>
       <div class="map"></div>
+      <div>
+        <textarea id="consoleInfo" cols="80" rows="10" readonly="true"></textarea>
+      </div>
     </div>
     
     <div class="right">
