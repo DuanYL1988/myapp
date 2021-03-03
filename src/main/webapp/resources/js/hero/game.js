@@ -10,6 +10,7 @@ var wenponCd = ['R-W','R-M','R-D','R-B','R-BOW','R-Dart',
 var heroObj = {};
 var redTeam = [];
 var blackTeam = [];
+var selectChessHtml = '';
 
 $(function() {
     // 未定义返回ture
@@ -44,6 +45,8 @@ $(function() {
     $('#btn_cancel').on('click',function(){
       $('.mapCell.move').prop('className','mapCell');
       $('.mapCell.attact').prop('className','mapCell');
+      $(".chessman_black").find('img').prop('className','black');
+      $(".chessman_red").find('img').prop('className','red');
     });
 
     // 人物选择选中事件
@@ -86,16 +89,17 @@ $(function() {
 
 function selectChess(color,obj){
   // 选中棋子为绿色
-  $(".chessman_black").find('img').css('borderColor','black');
-  $(".chessman_red").find('img').css('borderColor','red');
-  $(obj).find('img').css('borderColor','green');
+  $(".chessman_black").find('img').prop('className','black');
+  $(".chessman_red").find('img').prop('className','red');
+  $(obj).find('img').prop('className','selected');
   // 取得选中棋子的坐标
   var chessmanCoordinate = getCoordinate(obj.parentElement);
   // 清除移动范围
   $('.mapCell.move').prop('className','mapCell');
   $('.mapCell.attact').prop('className','mapCell');
   // 取得棋子信息
-  var heroObj = blackTeam[obj.id.replace(color,'')].hero;
+  var heroObj;
+  selectChessHtml = obj.outerHTML;
   if(color=='black'){
     heroObj = blackTeam[obj.id.replace(color,'')].hero;
   } else {
@@ -177,7 +181,7 @@ function createMap(){
         chessman.className = classNm;
         chessman.id = id;
         var imgElement = document.createElement("img");
-        imgElement.style.borderColor=deployColor;
+        imgElement.className=deployColor;
         chessman.appendChild(imgElement);
         colDiv.appendChild(chessman);
       }
@@ -367,27 +371,31 @@ function getCoordinate(mapCell){
 /**
  * 取得移动范围
  */
-function getMoveRange(startCoor,range,moveType){
+function getMoveRange(startCoor,range,moveType,direct){
   if(range<=0){
     return;
   } else {
     var coorObj;
     range = range-1;
-    if(startCoor.y>0){
+    if(startCoor.y>0 && direct!='right'){
+      var direct = 'left';
       coorObj = {'x':startCoor.x,'y':startCoor.y-1};
-      divClassChange(coorObj,range,moveType);
+      divClassChange(coorObj,range,moveType,direct);
     }
-    if(startCoor.y<5){
+    if(startCoor.y<5 && direct!='left'){
+      var direct = 'right';
       coorObj = {'x':startCoor.x,'y':startCoor.y+1};
-      divClassChange(coorObj,range,moveType);
+      divClassChange(coorObj,range,moveType,direct);
     }
-    if(startCoor.x>0){
+    if(startCoor.x>0 && direct!='down'){
+      var direct = 'up';
       coorObj = {'x':startCoor.x-1,'y':startCoor.y};
-      divClassChange(coorObj,range,moveType);
+      divClassChange(coorObj,range,moveType,direct);
     }
-    if(startCoor.x<7){
+    if(startCoor.x<7 && direct!='up'){
+      var direct = 'down';
       coorObj = {'x':startCoor.x+1,'y':startCoor.y};
-      divClassChange(coorObj,range,moveType);
+      divClassChange(coorObj,range,moveType,direct);
     }
   }
 }
@@ -395,7 +403,7 @@ function getMoveRange(startCoor,range,moveType){
 /**
  * 地形影响判断
  */
-function divClassChange(coor,range,moveType){
+function divClassChange(coor,range,moveType,direct){
   var divId = coor.x+'-'+coor.y;
   var mapInfo = map[coor.x][coor.y];
   if(moveType!='03'){
@@ -417,7 +425,7 @@ function divClassChange(coor,range,moveType){
     $('#'+divId).prop('className','mapCell move');
   }
   // 取得攻击范围
-  getMoveRange(coor,range,moveType);
+  getMoveRange(coor,range,moveType,direct);
 }
 
 /**

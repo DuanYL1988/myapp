@@ -1,6 +1,10 @@
 var htmlFlag;
 var heroImagePath = '/myapp/resources/images/feh/acter/';
-
+var wenponCd = ['R-W','R-M','R-D','R-B','R-BOW','R-Dart',
+  'B-W','B-M','B-D','R-B','B-BOW','B-Dart',
+  'G-W','G-M','G-D','R-B','G-BOW','G-Dart',
+  'N-W','N-Dart','N-Staff','N-D'];
+  
 $(function() {
     // 未定义返回ture
     htmlFlag = typeof(mode)=="undefined";
@@ -45,10 +49,7 @@ $(function() {
  */
 function initHtml(jsonData){
   document.getElementById("main").innerHTML = "";
-  var wenponCd = ['R-W','R-M','R-D','R-B','R-BOW','R-Dart',
-  'B-W','B-M','B-D','R-B','B-BOW','B-Dart',
-  'G-W','G-M','G-D','R-B','G-BOW','G-Dart',
-  'N-W','N-Dart','N-Staff','N-D'];
+  
   for(var i=0;i<=wenponCd.length;i++){
     var data = jsonData[wenponCd[i]];
     secondLoop(data)

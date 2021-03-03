@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>相册</title>
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+<script th:inline="javascript">
+    var mode = [[${form.mode}]];
+    var jsonData = [[${jsonDate}]];
+</script>
+<script src="image.json"></script>
+<script src="album.js"></script>
+</head>
+<body style="background: #decfcf">
+
+  <main id="main">
+
+  </main>
+
+</body>
+</html>
