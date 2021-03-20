@@ -3,3 +3,32 @@ Q:div横向排列显示
 style="display:inline-block;float:left"
 方法二:在父div设置下列样式
 style="display:flex"
+
+Q:1对多时checkbox的rowspan
+step1.通过SQL把N求出并排序
+SELECT
+    sub.count --第一个为N,后续的因为没有关联所以为0
+    , main.* 
+FROM
+    HERO main 
+    LEFT JOIN ( 
+        SELECT
+            min(id) AS id -- 只去最开始的一条
+            , name AS name
+            , count(name) AS count  --记数
+        FROM
+            hero 
+        GROUP BY
+            name 
+        ORDER BY
+            id
+    ) sub 
+ON main.id = sub.id 
+ORDER BY
+    main.master_id, sub.count desc nulls last, main.id --分组字段,个数
+step2.页面上判断count且进行跨行
+<c:forEach items="${list}" var="hero">
+    <c:if test="${hero.count >0}">
+        <td rowspan="${hero.count }"><input class="detailCheckbox" type="checkbox"/></td>
+    </c:if>
+    ...

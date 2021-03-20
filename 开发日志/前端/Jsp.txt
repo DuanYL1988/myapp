@@ -1,0 +1,27 @@
+2021/3/22
+1.導入共通資源文件
+使用<jsp:include page="">可能出现无法使用正常使用标签
+<%@ include file="resources.jsp" %>
+
+2.前台传list到后台
+在JS中把对象转为对象(保证数据完整性),再把对象转为json字符串传至后台
+function getSelectRow(){
+    var detailList = [];
+    $.each($(".detailCheckbox"),function(index,checkEle){
+        if(checkEle.checked){
+            var hero = {};
+            var name = $("input[name='detailList["+index+"].name']").val();
+            hero.name = name;
+            hero.selected = "true";
+            detailList.push(hero);
+        }
+    });
+    var txt = JSON.stringify(detailList);
+    $("#selectRows").val(txt);
+    $("form").submit();
+}
+在后台把字符串转为list对象(简便的方法需要jar支持)
+public String goDetail(javax.servlet.ServletRequest request){
+    String listTxt = request.getParameter("detailList");
+    List<Hero> selectedList = JSONArray.parseArray(listTxt, Hero.class);
+}
