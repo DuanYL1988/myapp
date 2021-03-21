@@ -42,3 +42,34 @@ function changeColor(obj){
         });
     }
 }
+
+/*
+ * 检查每一列是否有修改
+ */
+function getDetailClassify(){
+    var tableBody = $("#detailList");
+    var detailList = [];
+    // 循环行
+    $.each($(tableBody).children(),function(){
+        var index = $.trim($(this).find("td[class='detal_index']")[0].innerHTML);
+        var obj = {};
+        // 循环列
+        $.each($(this).children(),function(){
+            // 单元格
+            var hdnEle = $(this).find("input[type='hidden']")[0];
+            if(null != hdnEle){
+                obj[hdnEle.name]= hdnEle.value;
+            }
+            var inputEle = $(this).find("input[class='list_input']")[0];
+            if(null!=inputEle) {
+                obj[hdnEle.name]= inputEle.value;
+                if(hdnEle.value != inputEle.value){
+                    obj.type = 'UPD';
+                    $("span[name='list["+index+"].type']")[0].innerHTML = "UPD";
+                }
+            }
+        });
+        detailList.push(obj);
+    });
+    console.log(JSON.stringify(detailList));
+}

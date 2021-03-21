@@ -9,6 +9,16 @@ $(function(){
     $("input[class='detailCheckbox']").on('click',function(){
         changeColor(this);
     });
+    
+    if(!${requestScope.nextFlag}) {
+        $("#getNext").attr('disabled', 'disabled');
+     }
+    // getNext
+    $("#getNext").on('click',function(){
+        var form = $('form')[0]
+        form.action='getNext';
+        form.submit();
+    });
 });
 
 </script>
@@ -16,12 +26,18 @@ $(function(){
 <body>
     <div id="buttonArea">
         <a href="index" >返回</a>
+        <input type="button" id="getNext" value="next"/>
+        <input type="button" id="editCheck" value="分类区分" onclick="getDetailClassify()"/>
     </div>
     <form action="" method="post">
+        <!-- 使用单引号 -->
+        <input type="hidden" name="detailList" id="selectRows" value='${detailList }'>
     <table>
         <thead>
             <tr>
+                <td><span>No.</span></td>
                 <td><input type="checkbox" id="checkAll" onclick="detailSelectAll(this)"/></td>
+                <td><span>分类</span></td>
                 <td><span>NAME</span></td>
                 <td><span>IMG</span></td>
                 <td><span>TITLE NAME</span></td>
@@ -35,25 +51,58 @@ $(function(){
                 <td><span>WEAPON</span></td>
             </tr>
         </thead>
-        <tbody>
-            <c:forEach items="${list}" var="hero">
+        <tbody id="detailList">
+            <c:forEach items="${list}" var="hero" varStatus="status">
                 <tr class="${hero.masterId }">
+                    <td class="detal_index">${status.index }</td>
                     <c:if test="${hero.count >0}">
                         <td rowspan="${hero.count }"><input class="detailCheckbox" type="checkbox"/></td>
                     </c:if>
+                    <td><span name="list[${status.index}].type">${hero.type }</span></td>
                     <td>
                         <span>${hero.name }</span>
+                        <input type="hidden" name="name" value="${hero.name }">
                     </td>
-                    <td><img class='list_face' src="${pageContext.request.contextPath}/resources/images/feh/acter/${hero.imgName}/face.png"></td>
-                    <td><span>${hero.titleName }</span></td>
-                    <td><span>${hero.origin }</span></td>
-                    <td><span>${hero.hp }</span></td>
-                    <td><span>${hero.attact }</span></td>
-                    <td><span>${hero.speed }</span></td>
-                    <td><span>${hero.def }</span></td>
-                    <td><span>${hero.mdf }</span></td>
-                    <td><span>${hero.moveType }</span></td>
-                    <td><span>${hero.weapon }</span></td>
+                    <td>
+                        <img class='list_face' src="${pageContext.request.contextPath}/resources/images/feh/acter/${hero.imgName}/face.png">
+                        <input type="hidden" name="imgName" value="${hero.imgName }">
+                    </td>
+                    <td>
+                        <span>${hero.titleName }</span>
+                        <input type="hidden" name="titleName" value="${hero.titleName }">
+                    </td>
+                    <td>
+                        <span>${hero.origin }</span>
+                        <input type="hidden" name="origin" value="${hero.origin }">
+                    </td>
+                    <td>
+                        <input type="number" class="list_input" name="list[${status.index }].hp" value="${hero.hp }">
+                        <input type="hidden" name="hp" value="${hero.hp }">
+                    </td>
+                    <td>
+                        <input type="number" class="list_input" name="list[${status.index }].attact" value="${hero.attact }">
+                        <input type="hidden" name="attact" value="${hero.attact }">
+                    </td>
+                    <td>
+                        <input type="number" class="list_input" name="list[${status.index }].speed" value="${hero.speed }">
+                        <input type="hidden" name="speed" value="${hero.speed }">
+                    </td>
+                    <td>
+                        <input type="number" class="list_input" name="list[${status.index }].def" value="${hero.def }">
+                        <input type="hidden" name="def" value="${hero.def }">
+                    </td>
+                    <td>
+                        <input type="number" class="list_input" name="list[${status.index }].mdf" value="${hero.mdf }">
+                        <input type="hidden" name="mdf" value="${hero.mdf }">
+                    </td>
+                    <td>
+                        <span>${hero.moveType }</span>
+                        <input type="hidden" name="moveType" value="${hero.moveType }">
+                    </td>
+                    <td>
+                        <span>${hero.weapon }</span>
+                        <input type="hidden" name="weapon" value="${hero.weapon }">
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
