@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONArray;
+import com.app.form.HeroRegistForm;
 import com.app.model.Hero;
 import com.app.repository.HeroRepository;
 
@@ -28,7 +28,7 @@ public class JspAction {
     HeroRepository heroRepo;
 
     @RequestMapping(value = "index")
-    public String goIndexJsp(HttpServletRequest request, Model model) {
+    public String goIndexJsp(HttpServletRequest request) {
         Hero custom = new Hero();
         custom.setSelectQuary(" sub.count,main.* ");
         custom.setJoinPart(
@@ -58,7 +58,8 @@ public class JspAction {
         } else if ("refence".equals(type)) {
             name = getNextNm(request);
         } else {
-            return "redirect: jsp/index";
+            request.setAttribute("heroList", heroRepo.selectByDto(new Hero()));
+            return "redirect: index";
         }
         request.setAttribute("list", page2Search(name));
         return "Jsp/detail";
@@ -66,7 +67,11 @@ public class JspAction {
     }
 
     @RequestMapping(value = "getNext")
-    public String showNext(ServletRequest request) {
+    public String showNext(ServletRequest request, HeroRegistForm form) {
+        List<Hero> heroList = form.getHeroList();
+        for (Hero hero : heroList) {
+            System.out.println(hero.getHp());
+        }
         String name = getNextNm(request);
         request.setAttribute("list", page2Search(name));
         return "Jsp/detail";
@@ -122,4 +127,5 @@ public class JspAction {
         request.setAttribute("detailList", listTxt);
         return name;
     }
+
 }

@@ -44,11 +44,12 @@ function changeColor(obj){
 }
 
 /*
- * 检查每一列是否有修改
+ *
  */
 function getDetailClassify(){
     var tableBody = $("#detailList");
     var detailList = [];
+    var changeFlag = false;
     // 循环行
     $.each($(tableBody).children(),function(){
         var index = $.trim($(this).find("td[class='detal_index']")[0].innerHTML);
@@ -65,11 +66,17 @@ function getDetailClassify(){
                 obj[hdnEle.name]= inputEle.value;
                 if(hdnEle.value != inputEle.value){
                     obj.type = 'UPD';
-                    $("span[name='list["+index+"].type']")[0].innerHTML = "UPD";
+                    changeFlag = true;
+                    $("span[name='heroList["+index+"].type']")[0].innerHTML = "UPD";
                 }
             }
         });
         detailList.push(obj);
     });
     console.log(JSON.stringify(detailList));
+    if(changeFlag){
+        var form = $('form')[0]
+        form.action='getNext';
+        form.submit();
+    }
 }

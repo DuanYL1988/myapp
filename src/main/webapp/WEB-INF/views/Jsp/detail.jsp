@@ -58,7 +58,7 @@ $(function(){
                     <c:if test="${hero.count >0}">
                         <td rowspan="${hero.count }"><input class="detailCheckbox" type="checkbox"/></td>
                     </c:if>
-                    <td><span name="list[${status.index}].type">${hero.type }</span></td>
+                    <td><span name="heroList[${status.index}].type">${hero.type }</span></td>
                     <td>
                         <span>${hero.name }</span>
                         <input type="hidden" name="name" value="${hero.name }">
@@ -76,23 +76,23 @@ $(function(){
                         <input type="hidden" name="origin" value="${hero.origin }">
                     </td>
                     <td>
-                        <input type="number" class="list_input" name="list[${status.index }].hp" value="${hero.hp }">
+                        <input type="number" class="list_input" name="heroList[${status.index }].hp" value="${hero.hp }">
                         <input type="hidden" name="hp" value="${hero.hp }">
                     </td>
                     <td>
-                        <input type="number" class="list_input" name="list[${status.index }].attact" value="${hero.attact }">
+                        <input type="number" class="list_input" name="heroList[${status.index }].attact" value="${hero.attact }">
                         <input type="hidden" name="attact" value="${hero.attact }">
                     </td>
                     <td>
-                        <input type="number" class="list_input" name="list[${status.index }].speed" value="${hero.speed }">
+                        <input type="number" class="list_input" name="heroList[${status.index }].speed" value="${hero.speed }">
                         <input type="hidden" name="speed" value="${hero.speed }">
                     </td>
                     <td>
-                        <input type="number" class="list_input" name="list[${status.index }].def" value="${hero.def }">
+                        <input type="number" class="list_input" name="heroList[${status.index }].def" value="${hero.def }">
                         <input type="hidden" name="def" value="${hero.def }">
                     </td>
                     <td>
-                        <input type="number" class="list_input" name="list[${status.index }].mdf" value="${hero.mdf }">
+                        <input type="number" class="list_input" name="heroList[${status.index }].mdf" value="${hero.mdf }">
                         <input type="hidden" name="mdf" value="${hero.mdf }">
                     </td>
                     <td>

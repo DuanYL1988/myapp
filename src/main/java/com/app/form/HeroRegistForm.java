@@ -1,5 +1,7 @@
 package com.app.form;
 
+import java.util.List;
+
 import com.app.model.Hero;
 
 /**
@@ -8,9 +10,11 @@ import com.app.model.Hero;
  * @author dylsw
  *
  */
-public class HeroRegistForm extends BaseForm{
+public class HeroRegistForm extends BaseForm {
 
     private Hero hero;
+
+    private List<Hero> heroList;
 
     private String extendWeapon;
 
@@ -32,6 +36,14 @@ public class HeroRegistForm extends BaseForm{
 
     public void setHero(Hero hero) {
         this.hero = hero;
+    }
+
+    public List<Hero> getHeroList() {
+        return heroList;
+    }
+
+    public void setHeroList(List<Hero> heroList) {
+        this.heroList = heroList;
     }
 
     public String getExtendWeapon() {
