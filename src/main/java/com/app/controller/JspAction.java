@@ -1,14 +1,19 @@
 package com.app.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSONArray;
 import com.app.form.HeroRegistForm;
@@ -36,7 +41,11 @@ public class JspAction {
         custom.setCondition(" and rownum < 30");
         custom.setOrderBy(" sub.count desc,main.master_id,main.id");
 
-        List<Hero> heroList = heroRepo.customQuary(custom);
+        List<Hero> tmpList = (List<Hero>) request.getAttribute("heroList");
+        List<Hero> heroList = null == tmpList ? heroRepo.customQuary(custom) : tmpList;
+
+        String txt = (String) request.getAttribute("stringTxt");
+        String txt4 = request.getParameter("name");
 
         String jsonDate = JSONArray.toJSONString(heroList);
 
@@ -50,7 +59,9 @@ public class JspAction {
     @RequestMapping(value = "goDetail")
     public String goDetail(ServletRequest request) {
         String type = request.getParameter("type");
-
+        // 无中生response对象,也可写在方法的参数内
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getResponse();
         String name = "";
         if ("addNew".equals(type)) {
             name = "琳迪斯";
@@ -58,8 +69,18 @@ public class JspAction {
         } else if ("refence".equals(type)) {
             name = getNextNm(request);
         } else {
-            request.setAttribute("heroList", heroRepo.selectByDto(new Hero()));
-            return "redirect: index";
+            Hero cond = new Hero();
+            cond.setName("琳迪斯");
+            request.setAttribute("heroList", heroRepo.selectByDto(cond));
+            request.setAttribute("stringTxt", "ttttt");
+            try {
+                // 请求转发
+                request.getRequestDispatcher("index?name=txt").forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         request.setAttribute("list", page2Search(name));
         return "Jsp/detail";
@@ -75,6 +96,11 @@ public class JspAction {
         String name = getNextNm(request);
         request.setAttribute("list", page2Search(name));
         return "Jsp/detail";
+    }
+
+    @RequestMapping(value = "ie5")
+    public String ie5(ServletRequest request) {
+        return "Jsp/ie5";
     }
 
     /**

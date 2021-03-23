@@ -1,0 +1,14 @@
+1.如何传list
+a.依赖框架springMVC,struts,可以定义xxform.java,在form内定义list
+画面上输入项目<input name='list[${status.index}].prop' />
+后台public String doRequest(List<pojo> list)
+b.js中把list转为json,把json传到后台再转为list
+c.放入session(不推荐)
+
+2.后台request重定向传递list
+需要response对象,可以放在方法参数内 例:public String goDetail(ServletRequest request,ServletResponse response) {略},
+也可无中生有 : HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+->request.setAttribute("heroList", heroRepo.selectByDto(cond));
+->request.getRequestDispatcher("index?name=txt").forward(request, response);
+<-@RequestMapping(value = "index")
+<-List<Hero> tmpList = (List<Hero>) request.getAttribute("heroList");
