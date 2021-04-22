@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class JspAction {
     @Autowired
     HeroRepository heroRepo;
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "index")
     public String goIndexJsp(HttpServletRequest request) {
         Hero custom = new Hero();
@@ -43,9 +45,6 @@ public class JspAction {
 
         List<Hero> tmpList = (List<Hero>) request.getAttribute("heroList");
         List<Hero> heroList = null == tmpList ? heroRepo.customQuary(custom) : tmpList;
-
-        String txt = (String) request.getAttribute("stringTxt");
-        String txt4 = request.getParameter("name");
 
         String jsonDate = JSONArray.toJSONString(heroList);
 
@@ -85,6 +84,69 @@ public class JspAction {
         request.setAttribute("list", page2Search(name));
         return "Jsp/detail";
 
+    }
+
+    @RequestMapping(value = "downloadPage")
+    public String openDLpage() {
+
+        return "Jsp/download";
+    }
+
+    @RequestMapping(value = "download")
+    public void fileDownload(HttpServletResponse response) {
+        Hero condition = new Hero();
+        condition.setId(36);
+        condition.setOrderBy("ID");
+        List<Hero> heroList = heroRepo.selectByDto(condition);
+        response.setContentType("application/octet-stream;charset=UTF-8");
+        response.setHeader("Content-Disposition", "attachment; filename=db.csv");
+        try {
+            PrintWriter out = response.getWriter();
+            for (Hero data : heroList) {
+                StringBuilder txt = new StringBuilder();
+                txt.append(data.getId() + ",");
+                txt.append(data.getMasterId() + ",");
+                txt.append(data.getTitleName() + ",");
+                txt.append(data.getName() + ",");
+                txt.append(data.getNickName() + ",");
+                txt.append(data.getImgName() + ",");
+                txt.append(data.getOrigin() + ",");
+                txt.append(data.getHp() + ",");
+                txt.append(data.getAttact() + ",");
+                txt.append(data.getSpeed() + ",");
+                txt.append(data.getDef() + ",");
+                txt.append(data.getMdf() + ",");
+                txt.append(data.getWeapon() + ",");
+                txt.append(data.getSkillA() + ",");
+                txt.append(data.getSkillB() + ",");
+                txt.append(data.getSkillC() + ",");
+                txt.append(data.getSkillD() + ",");
+                txt.append(data.getSkillS() + ",");
+                txt.append(data.getSkillE() + ",");
+                txt.append(data.getLimitPlus() + ",");
+                txt.append(data.getDragonFlower() + ",");
+                txt.append(data.getSupportMate() + ",");
+                txt.append(data.getBlessing() + ",");
+                txt.append(data.getMoveType() + ",");
+                txt.append(data.getWeaponType() + ",");
+                txt.append(data.getColor() + ",");
+                txt.append(data.getRace() + ",");
+                txt.append(data.getHeroType() + ",");
+                txt.append(data.getTeam() + ",");
+                txt.append(data.getSkillPoint() + ",");
+                txt.append(data.getHeroPoint() + ",");
+                txt.append(data.getSpecTag() + ",");
+                txt.append(data.getPool() + ",");
+                txt.append(data.getFavorite() + ",");
+                txt.append(data.getRank() + ",");
+                txt.append(data.getCreateDatetime() + ",");
+                txt.append(data.getUpdateDatetime() + "\r\n");
+
+                out.print(txt.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value = "getNext")

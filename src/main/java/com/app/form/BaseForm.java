@@ -8,6 +8,8 @@ public class BaseForm {
 
     private String pageNo;
 
+    private String selected;
+
     public String getMode() {
         return mode;
     }
@@ -30,6 +32,14 @@ public class BaseForm {
 
     public void setPageNo(String pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
     }
 
 }

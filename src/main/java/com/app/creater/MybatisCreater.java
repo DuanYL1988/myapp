@@ -39,6 +39,8 @@ public class MybatisCreater {
     private static final String METHOD_SELECT_ONE_BY_ID = "selectOneById";
     /* 函数-通过逻辑字段查找唯一记录 */
     private static final String METHOD_SELECT_ONE_BY_UNIQUE_KEY = "selectOneByUniqueKey";
+    /* 自定義SQL */
+    private static final String METHOD_CUSTOM_QUARY = "customQuary";
 
     /* 工程路径 */
     private String projectPath = "";
@@ -80,9 +82,9 @@ public class MybatisCreater {
     }
 
     public static void main(String[] args) {
-        FILE_OUTPUT_FLAG = true;
+        FILE_OUTPUT_FLAG = false;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] { "SKILL" };
+        String[] targetTblList = new String[] { "HERO" };
         for (String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -144,6 +146,9 @@ public class MybatisCreater {
         MYBATISXml.append(createUpdate());
         // <insert>
         MYBATISXml.append(createInsert());
+        // <select id="customQuary">
+        MYBATISXml.append(createCustomQuery());
+
         // 结束标签
         MYBATISXml.append("</mapper>" + CRLF);
         return MYBATISXml.toString();
@@ -192,6 +197,9 @@ public class MybatisCreater {
         // selectOneByUniqueKey
         repository.append(FOUR_SPACE + modelClassNm + " " + METHOD_SELECT_ONE_BY_UNIQUE_KEY + "(");
         repository.append(uniqueCondition.toString());
+        // 自定義查找
+        repository.append(FOUR_SPACE + "List<" + modelClassNm + "> " + METHOD_CUSTOM_QUARY + "(" + modelClassNm + " "
+                + commonUtil.changeNm(TABLE_NM, false) + ");" + CRLF + CRLF);
 
         repository.append("}");
         return repository.toString();
@@ -400,7 +408,7 @@ public class MybatisCreater {
     /**
      * 追加
      */
-    public String createInsert() {
+    private String createInsert() {
         StringBuilder insert = new StringBuilder();
         insert.append(TWO_SPACE + "<insert id=\"insert\" parameterType=\"" + parameterType + "\" >" + CRLF);
         insert.append(FOUR_SPACE + FOUR_SPACE
@@ -434,14 +442,46 @@ public class MybatisCreater {
         insert.append(FOUR_SPACE + " (SELECT 1 FROM " + TABLE_NM + CRLF);
         insert.append(FOUR_SPACE + uniqueCondition + ")" + CRLF);
         insert.append(FOUR_SPACE + " AND ROWNUM = 1" + CRLF);
-        insert.append(TWO_SPACE + "</insert>" + CRLF);
+        insert.append(TWO_SPACE + "</insert>" + CRLF + CRLF);
         return insert.toString();
+    }
+
+    private String createCustomQuery() {
+        StringBuilder custom = new StringBuilder();
+
+        custom.append("  <select id=\"customQuary\" parameterType=\"" + parameterType + "\" resultType=\""
+                + parameterType + "\">" + CRLF);
+        custom.append(FOUR_SPACE + "SELECT" + CRLF);
+        custom.append("       ${selectQuary}" + CRLF);
+        custom.append("    FROM" + CRLF);
+        custom.append(FOUR_SPACE + TWO_SPACE + TABLE_NM + CRLF);
+        custom.append("    <if test=\"joinPart!=null\">" + CRLF);
+        custom.append("        ${joinPart}" + CRLF);
+        custom.append("    </if>" + CRLF);
+        custom.append("    <where>" + CRLF);
+        custom.append("        1 = 1" + CRLF);
+        custom.append("        <if test=\"condition!=null\">" + CRLF);
+        custom.append("         AND ${condition}" + CRLF);
+        custom.append("        </if>" + CRLF);
+        custom.append("    </where>" + CRLF);
+        custom.append("    <if test=\"groupBy!=null\">" + CRLF);
+        custom.append("      GROUP BY ${groupBy}" + CRLF);
+        custom.append("    </if>" + CRLF);
+        custom.append("    <if test=\"having!=null\">" + CRLF);
+        custom.append("      HAVING ${having}" + CRLF);
+        custom.append("    </if>" + CRLF);
+        custom.append("    <if test=\"orderBy!=null\">" + CRLF);
+        custom.append("      ORDER BY ${orderBy}" + CRLF);
+        custom.append("    </if>" + CRLF);
+        custom.append("  </select>" + CRLF + CRLF);
+
+        return custom.toString();
     }
 
     /**
      * 业务逻辑上不重复check
      */
-    public String createExistCheck() {
+    private String createExistCheck() {
         StringBuilder uniqueCheck = new StringBuilder();
         uniqueCheck.append(TWO_SPACE + "<select id=\"uniqueCheck\"  resultType=\"Integer\">" + CRLF);
         uniqueCheck.append(FOUR_SPACE + "SELECT count(*) AS count" + CRLF);

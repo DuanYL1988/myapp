@@ -15,6 +15,7 @@ $(function(){
   <div id="buttonArea"> 
     <input type="button" value="參照" onclick="getSelectRow()" /> 
     <input type="button" value="追加" onclick="javascript : document.getElementById('type').value='addNew'" /> 
+    <input type="button" value="CSV DL" onclick="window.open('downloadPage')" /> 
   </div>
   <form action="goDetail" method="post">
    <input type="hidden" name="type" id="type" value="">

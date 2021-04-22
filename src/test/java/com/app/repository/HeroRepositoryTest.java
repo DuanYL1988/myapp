@@ -51,6 +51,21 @@ public class HeroRepositoryTest {
     }
 
     @Test
+    public void testCustom() {
+        Hero custom = new Hero();
+        custom.setSelectQuary(" sub.count,main.* ");
+        custom.setJoinPart(
+                " main left join(select min(id) as id,name as name,count(name) as count from hero group by name order by id) sub on main.id = sub.id");
+        custom.setCondition(" and main.name = '琳迪斯'");
+        custom.setOrderBy(" main.master_id,main.id");
+        List<Hero> rst = heroRepo.customQuary(custom);
+        System.out.println(rst.size());
+    }
+
+    /**
+     * Hero数据转换成Json
+     */
+    @Test
     public void createJsonData() {
         Hero condition = new Hero();
 

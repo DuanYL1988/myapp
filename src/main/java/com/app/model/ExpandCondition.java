@@ -2,9 +2,53 @@ package com.app.model;
 
 public class ExpandCondition {
 
-    private String groupBy;
+    private String selectQuary;
+
+    private String joinPart;
+
+    private String condition;
 
     private String orderBy;
+
+    private String groupBy;
+
+    private String having;
+
+    private int count;
+
+    private String type;
+
+    public String getSelectQuary() {
+        return selectQuary;
+    }
+
+    public void setSelectQuary(String selectQuary) {
+        this.selectQuary = selectQuary;
+    }
+
+    public String getJoinPart() {
+        return joinPart;
+    }
+
+    public void setJoinPart(String joinPart) {
+        this.joinPart = joinPart;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
 
     public String getGroupBy() {
         return groupBy;
@@ -14,12 +58,28 @@ public class ExpandCondition {
         this.groupBy = groupBy;
     }
 
-    public String getOrderBy() {
-        return orderBy;
+    public String getHaving() {
+        return having;
     }
 
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
+    public void setHaving(String having) {
+        this.having = having;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

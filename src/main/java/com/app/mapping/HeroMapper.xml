@@ -39,6 +39,7 @@
     <result column="RANK" property="rank" jdbcType="VARCHAR" />
     <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_DATETIME" property="updateDatetime" jdbcType="TIMESTAMP" />
+    <result column="COUNT" property="count" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="select_column_list">
@@ -452,5 +453,29 @@
          AND NAME = #{name} )
      AND ROWNUM = 1
   </insert>
+  
+  <select id="customQuary" parameterType="com.app.model.Hero" resultMap="HeroResultMap">
+    SELECT
+        ${selectQuary}
+    FROM
+        HERO
+    <if test="joinPart!=null">
+        ${joinPart}
+    </if>
+    <where>
+        1 = 1
+        ${condition}
+    </where>
+    <if test="groupBy!=null">
+      GROUP BY ${groupBy}
+    </if>
+    <if test="having!=null">
+      HAVING ${having}
+    </if>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+  
 </mapper>
 

@@ -311,10 +311,85 @@ var imageList =
         "level": 1
     },
     {
-        "folder": "",
+        "folder": "Seiros_SaintofLegend",
         "images": [
             "normal.png"
         ],
         "level": 2
+    },
+    {
+        "folder": "Sallya_F_Obsessive",
+        "images": [
+            "normal.png",
+            "attact.png",
+            "break.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Lean_F_Normal",
+        "images": [
+            "normal.png",
+            "break.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Dorothea_TwilitHarmony",
+        "images": [
+            "normal.png",
+            "attact.png",
+            "break.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Selena_Fluorspar",
+        "images": [
+            "normal.png",
+            "break.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Guinivere_PrincessofBern",
+        "images": [
+            "attact.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Micaiah_DawnWind'sDuo",
+        "images": [
+            "normal.png",
+            "attact.png",
+            "break.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Ethlyn_GlimmeringLady",
+        "images": [
+            "normal.png",
+            "extra.png"
+        ],
+        "level": 2
+    },
+    {
+        "folder": "Eirik_F_Xmas",
+        "images": [
+            "normal.png",
+            "extra.png",
+            "break.png"
+        ],
+        "level": 1
+    },
+    {
+        "folder": "Erinys_EarnestKnight",
+        "images": [
+            "normal.png",
+            "attact.png"
+        ],
+        "level": 0
     }
 ];

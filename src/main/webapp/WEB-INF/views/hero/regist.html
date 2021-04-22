@@ -33,7 +33,14 @@
     var result = [[${result}]];
 </script>
 <script src="../../../resources/js/hero/regist.js" th:src="@{/resources/js/hero/regist.js}"></script>
-
+<script type="text/javascript">
+function openChildWindow(){
+  var args = {"name":$("#weaponType").val()};
+  var resultTxt = window.showModalDialog("subWeapon.html",args,"dialogHeight:500px;dialogWidth:800px;dialogLeft:50px;dialogTop:20px");
+  var resultObj = JSON.parse(resultTxt);
+  $("#weapon").val(resultObj.weapon);
+}
+</script>
 </head>
 <body class="bg-light">
   <main>
@@ -139,10 +146,15 @@
             </select>
             <div class="invalid-feedback">weaponType is required</div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label for="weapon">武器名</label>
             <input id="weapon" class="form-control" type="text" th:field="*{hero.weapon}" placeholder="法尔西昂" required>
             <div class="invalid-feedback">weapon is required</div>
+          </div>
+          <div class="col-md-2">
+            <div class="custom-checkbox" style="padding-top: 2.2em">
+              <input type="button" class="btn btn-primary btn-lg btn-block" value="Pick" onclick="javascript:openChildWindow()" />
+            </div>
           </div>
           <div class="col-md-2">
             <div class="custom-checkbox" style="padding-top: 2.2em">

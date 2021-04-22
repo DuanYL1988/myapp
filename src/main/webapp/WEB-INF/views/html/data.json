@@ -40,7 +40,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -81,7 +81,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -122,7 +122,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -163,7 +163,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -204,7 +204,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -222,7 +222,7 @@ var staticJson =
             "def": 17,
             "mdf": 28,
             "weapon": "清冷的法具",
-            "skillA": "青色死斗飞行3",
+            "skillA": "青色死斗 飞行3",
             "skillB": "特技飞行",
             "skillC": "攻击指挥3",
             "skillD": null,
@@ -245,7 +245,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -286,7 +286,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -327,7 +327,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -368,7 +368,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -386,7 +386,7 @@ var staticJson =
             "def": 16,
             "mdf": 27,
             "weapon": "幸福之花",
-            "skillA": "青色死斗飞行3",
+            "skillA": "青色死斗 飞行3",
             "skillB": "特技飞行",
             "skillC": "魔防鼓舞4",
             "skillD": null,
@@ -409,7 +409,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -450,7 +450,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -491,7 +491,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -532,7 +532,89 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 208,
+            "masterId": 107,
+            "titleName": "萤石",
+            "name": "瑟莱娜",
+            "nickName": null,
+            "imgName": "Selena_Fluorspar",
+            "origin": "圣魔光石",
+            "hp": 40,
+            "attact": 40,
+            "speed": 40,
+            "def": 40,
+            "mdf": 40,
+            "weapon": "-",
+            "skillA": "-",
+            "skillB": "-",
+            "skillC": "-",
+            "skillD": "-",
+            "skillS": "-",
+            "skillE": "-",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "B-M",
+            "color": "B",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 211,
+            "masterId": 132,
+            "titleName": "PrincessofBern",
+            "name": "桂妮薇儿",
+            "nickName": null,
+            "imgName": "Guinivere_PrincessofBern",
+            "origin": "封印之剑",
+            "hp": 40,
+            "attact": 40,
+            "speed": 40,
+            "def": 40,
+            "mdf": 40,
+            "weapon": "-",
+            "skillA": "-",
+            "skillB": "-",
+            "skillC": "-",
+            "skillD": "-",
+            "skillS": "-",
+            "skillE": "-",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "B-M",
+            "color": "B",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
         },
         {
             "groupBy": null,
@@ -573,7 +655,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -614,7 +696,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -655,7 +737,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -696,7 +778,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -737,7 +819,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "N-B": [
@@ -780,7 +862,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -821,7 +903,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -862,7 +944,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "N-D": [
@@ -905,7 +987,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -915,7 +997,7 @@ var staticJson =
             "titleName": "炎祸之魂的悸哭",
             "name": "神威",
             "nickName": null,
-            "imgName": "Kamui_F_WailingSoul",
+            "imgName": "Kamui_F_Wailing Soul",
             "origin": "IF",
             "hp": 44,
             "attact": 54,
@@ -946,7 +1028,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -987,7 +1069,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1028,7 +1110,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1069,7 +1151,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1110,7 +1192,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-M": [
@@ -1153,7 +1235,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1194,7 +1276,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1214,7 +1296,7 @@ var staticJson =
             "weapon": "破晓之光",
             "skillA": "攻击魔防羁绊4",
             "skillB": "芸娜的低语",
-            "skillC": "前导传令地3",
+            "skillC": "前导传令 地3",
             "skillD": null,
             "skillS": "带回",
             "skillE": "冰华",
@@ -1235,7 +1317,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1276,7 +1358,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1317,7 +1399,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1358,7 +1440,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1399,7 +1481,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1440,7 +1522,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1481,7 +1563,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1522,7 +1604,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1563,7 +1645,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1604,7 +1686,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1645,7 +1727,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1686,7 +1768,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1727,7 +1809,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1768,7 +1850,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-Dart": [
@@ -1811,7 +1893,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1852,7 +1934,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "B-BOW": [
@@ -1895,7 +1977,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -1936,7 +2018,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "R-D": [
@@ -1979,7 +2061,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2020,7 +2102,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2061,7 +2143,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2102,7 +2184,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2143,7 +2225,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "N-Dart": [
@@ -2186,7 +2268,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2227,7 +2309,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2268,7 +2350,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2309,7 +2391,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2329,7 +2411,7 @@ var staticJson =
             "weapon": "贝壳匕首+",
             "skillA": null,
             "skillB": "防守魔防大共谋3",
-            "skillC": "魔防之波偶数3",
+            "skillC": "魔防之波 偶数3",
             "skillD": null,
             "skillS": null,
             "skillE": null,
@@ -2350,7 +2432,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2391,7 +2473,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2432,7 +2514,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2473,7 +2555,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2514,7 +2596,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2555,7 +2637,130 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 207,
+            "masterId": 39,
+            "titleName": "DawnWind'sDuo",
+            "name": "米卡雅",
+            "nickName": null,
+            "imgName": "Micaiah_DawnWind'sDuo",
+            "origin": "晓之巫女",
+            "hp": 40,
+            "attact": 40,
+            "speed": 40,
+            "def": 40,
+            "mdf": 40,
+            "weapon": "-",
+            "skillA": "-",
+            "skillB": "-",
+            "skillC": "-",
+            "skillD": "-",
+            "skillS": "-",
+            "skillE": "-",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "N-Dart",
+            "color": "N",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 209,
+            "masterId": 130,
+            "titleName": "黑曜石",
+            "name": "迪塞尔",
+            "nickName": null,
+            "imgName": "Duessel_Obsidian",
+            "origin": "风花雪月",
+            "hp": 44,
+            "attact": 55,
+            "speed": 18,
+            "def": 42,
+            "mdf": 28,
+            "weapon": "黑曜之枪",
+            "skillA": "防守魔防孤军4",
+            "skillB": "攻击防守静谧3",
+            "skillC": "防守魔防奋起3",
+            "skillD": null,
+            "skillS": null,
+            "skillE": "绯炎",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "N-Dart",
+            "color": "N",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 210,
+            "masterId": 19,
+            "titleName": "FirelightLeader",
+            "name": "莉莉娜",
+            "nickName": null,
+            "imgName": "Lilina_FirelightLeader",
+            "origin": "封印之剑",
+            "hp": 40,
+            "attact": 40,
+            "speed": 40,
+            "def": 40,
+            "mdf": 40,
+            "weapon": "-",
+            "skillA": "-",
+            "skillB": "-",
+            "skillC": "-",
+            "skillD": "-",
+            "skillS": "-",
+            "skillE": "-",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "N-Dart",
+            "color": "N",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
         },
         {
             "groupBy": null,
@@ -2596,7 +2801,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2637,7 +2842,48 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 212,
+            "masterId": 42,
+            "titleName": "GlimmeringLady",
+            "name": "艾丝琳",
+            "nickName": null,
+            "imgName": "Ethlyn_GlimmeringLady",
+            "origin": "圣战的系谱",
+            "hp": 40,
+            "attact": 40,
+            "speed": 40,
+            "def": 40,
+            "mdf": 40,
+            "weapon": "-",
+            "skillA": "-",
+            "skillB": "-",
+            "skillC": "-",
+            "skillD": "-",
+            "skillS": "-",
+            "skillE": "-",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "N-Dart",
+            "color": "N",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
         }
     ],
     "B-W": [
@@ -2680,7 +2926,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2721,7 +2967,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2762,7 +3008,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2803,7 +3049,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2844,7 +3090,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2854,7 +3100,7 @@ var staticJson =
             "titleName": "真挚的思恋",
             "name": "塔妮丝",
             "nickName": null,
-            "imgName": "Tanith_ForthrightHeart",
+            "imgName": "Tanith_Forthright Heart",
             "origin": "晓之巫女",
             "hp": 37,
             "attact": 51,
@@ -2885,7 +3131,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2926,7 +3172,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -2967,7 +3213,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3008,7 +3254,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3049,7 +3295,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3090,7 +3336,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3131,7 +3377,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3172,7 +3418,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3213,7 +3459,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3254,7 +3500,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3295,7 +3541,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3336,7 +3582,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3377,7 +3623,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3397,7 +3643,7 @@ var staticJson =
             "weapon": "海角的星枪",
             "skillA": "鬼神金刚瞬击",
             "skillB": "警戒姿态3",
-            "skillC": "速度之波奇数3",
+            "skillC": "速度之波 奇数3",
             "skillD": null,
             "skillS": "带回",
             "skillE": "月虹",
@@ -3418,7 +3664,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3459,7 +3705,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3500,7 +3746,48 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 205,
+            "masterId": 128,
+            "titleName": "认真的天马骑士",
+            "name": "菲莉",
+            "nickName": null,
+            "imgName": "Erinys_EarnestKnight",
+            "origin": "圣战的系谱",
+            "hp": 44,
+            "attact": 62,
+            "speed": 43,
+            "def": 30,
+            "mdf": 25,
+            "weapon": "西里西亚之冰晶",
+            "skillA": "青色死斗 飞行4",
+            "skillB": "攻击速度封杀2",
+            "skillC": "攻击防守牵制3",
+            "skillD": null,
+            "skillS": "带回",
+            "skillE": "月虹",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": null,
+            "blessing": "0",
+            "moveType": "03",
+            "weaponType": "B-W",
+            "color": "B",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
         },
         {
             "groupBy": null,
@@ -3541,7 +3828,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3582,7 +3869,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3623,7 +3910,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3664,7 +3951,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3705,7 +3992,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3746,7 +4033,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3787,7 +4074,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "N-M": [
@@ -3830,7 +4117,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3871,7 +4158,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-W": [
@@ -3914,7 +4201,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3955,7 +4242,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -3996,7 +4283,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4037,7 +4324,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4078,7 +4365,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4119,7 +4406,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4160,7 +4447,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4201,7 +4488,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4242,7 +4529,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4283,7 +4570,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4324,7 +4611,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4365,7 +4652,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4406,7 +4693,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4447,7 +4734,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4488,7 +4775,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4529,7 +4816,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "R-M": [
@@ -4572,7 +4859,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4613,7 +4900,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4654,7 +4941,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4695,7 +4982,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4736,7 +5023,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4777,7 +5064,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4818,7 +5105,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4859,7 +5146,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4900,7 +5187,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4941,7 +5228,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -4982,7 +5269,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5023,7 +5310,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5064,7 +5351,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5106,6 +5393,47 @@ var staticJson =
             "rank": null,
             "createDatetime": 1607186923000,
             "updateDatetime": 1607186923000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 213,
+            "masterId": 131,
+            "titleName": "照亮夜幕的双灯",
+            "name": "多洛缇雅",
+            "nickName": null,
+            "imgName": "Dorothea_TwilitHarmony",
+            "origin": "风花雪月",
+            "hp": 37,
+            "attact": 55,
+            "speed": 35,
+            "def": 12,
+            "mdf": 29,
+            "weapon": "幽暗邪痕的烛台",
+            "skillA": "飞燕明镜瞬击",
+            "skillB": "业火疾风之舞",
+            "skillC": "攻击速度牵制3",
+            "skillD": null,
+            "skillS": "再动",
+            "skillE": null,
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "03",
+            "weaponType": "R-M",
+            "color": "R",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
         }
     ],
     "N-Staff": [
@@ -5148,7 +5476,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5189,7 +5517,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5230,7 +5558,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5271,7 +5599,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5312,7 +5640,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5353,7 +5681,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5394,7 +5722,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5435,7 +5763,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "B-B": [
@@ -5478,7 +5806,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5519,7 +5847,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "N-W": [
@@ -5562,7 +5890,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5603,7 +5931,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5613,7 +5941,7 @@ var staticJson =
             "titleName": "永恒的奉献",
             "name": "露易丝",
             "nickName": null,
-            "imgName": "Louise_EternalDevotion",
+            "imgName": "Louise_Eternal Devotion",
             "origin": "烈火之剑",
             "hp": 41,
             "attact": 43,
@@ -5644,7 +5972,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5685,7 +6013,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5726,7 +6054,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-BOW": [
@@ -5748,7 +6076,7 @@ var staticJson =
             "weapon": "鸣镝+",
             "skillA": "攻击防守羁绊3",
             "skillB": "攻击速度连动3",
-            "skillC": "魔防之波偶数3",
+            "skillC": "魔防之波 偶数3",
             "skillD": null,
             "skillS": "带回",
             "skillE": null,
@@ -5769,7 +6097,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5810,7 +6138,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "B-D": [
@@ -5822,7 +6150,7 @@ var staticJson =
             "titleName": "神龙王",
             "name": "那迦",
             "nickName": null,
-            "imgName": "Naga_DragonDivinity",
+            "imgName": "Naga_Dragon Divinity",
             "origin": "觉醒",
             "hp": 38,
             "attact": 53,
@@ -5853,7 +6181,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5894,7 +6222,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5935,7 +6263,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -5976,7 +6304,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6017,7 +6345,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-A": [
@@ -6060,7 +6388,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6101,7 +6429,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "R-W": [
@@ -6144,7 +6472,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6185,7 +6513,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6226,7 +6554,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6267,7 +6595,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6308,7 +6636,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6326,7 +6654,7 @@ var staticJson =
             "def": 36,
             "mdf": 17,
             "weapon": "尼乌",
-            "skillA": "赤色死斗飞行3",
+            "skillA": "赤色死斗 飞行3",
             "skillB": "攻击封杀3",
             "skillC": "飞刃纹章",
             "skillD": null,
@@ -6349,7 +6677,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6369,7 +6697,7 @@ var staticJson =
             "weapon": "瑞瓦提恩",
             "skillA": "丝线3",
             "skillB": "埋伏3",
-            "skillC": "速度之波奇数3",
+            "skillC": "速度之波 奇数3",
             "skillD": null,
             "skillS": "替换",
             "skillE": "凶星",
@@ -6390,7 +6718,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6431,7 +6759,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6472,7 +6800,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6513,7 +6841,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6554,7 +6882,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6595,7 +6923,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6636,7 +6964,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6677,7 +7005,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6687,7 +7015,7 @@ var staticJson =
             "titleName": "忠义的新娘",
             "name": "希葛伦",
             "nickName": null,
-            "imgName": "Sigrun_SteadfastBride",
+            "imgName": "Sigrun_Steadfast Bride",
             "origin": "晓之巫女",
             "hp": 39,
             "attact": 45,
@@ -6718,7 +7046,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6759,7 +7087,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6800,7 +7128,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6841,7 +7169,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6882,7 +7210,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6923,7 +7251,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -6964,7 +7292,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7005,7 +7333,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7046,7 +7374,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7066,7 +7394,7 @@ var staticJson =
             "weapon": "天帝之剑",
             "skillA": "远距离反击",
             "skillB": "速度封杀3",
-            "skillC": "速度之波奇数3",
+            "skillC": "速度之波 奇数3",
             "skillD": null,
             "skillS": null,
             "skillE": "破天",
@@ -7087,7 +7415,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7128,7 +7456,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7169,7 +7497,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7210,7 +7538,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7251,7 +7579,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7292,7 +7620,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7333,7 +7661,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7374,7 +7702,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7415,7 +7743,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7456,7 +7784,48 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
+        },
+        {
+            "groupBy": null,
+            "orderBy": null,
+            "id": 206,
+            "masterId": 129,
+            "titleName": "SaintofLegend",
+            "name": "塞洛斯",
+            "nickName": null,
+            "imgName": "Seiros_SaintofLegend",
+            "origin": "风花雪月",
+            "hp": 40,
+            "attact": 40,
+            "speed": 40,
+            "def": 40,
+            "mdf": 40,
+            "weapon": "-",
+            "skillA": "-",
+            "skillB": "-",
+            "skillC": "-",
+            "skillD": "-",
+            "skillS": "-",
+            "skillE": "-",
+            "limitPlus": 0,
+            "dragonFlower": 0,
+            "supportMate": 0,
+            "blessing": "0",
+            "moveType": "01",
+            "weaponType": "R-W",
+            "color": "R",
+            "race": null,
+            "heroType": null,
+            "team": null,
+            "skillPoint": 0,
+            "heroPoint": 0,
+            "specTag": null,
+            "pool": null,
+            "favorite": null,
+            "rank": null,
+            "createDatetime": 1614782193000,
+            "updateDatetime": 1614782193000
         },
         {
             "groupBy": null,
@@ -7497,7 +7866,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7514,7 +7883,7 @@ var staticJson =
             "speed": 46,
             "def": 24,
             "mdf": 26,
-            "weapon": "索尔卡提",
+            "weapon": "索尔 卡提",
             "skillA": "死线3",
             "skillB": "埋伏3",
             "skillC": "防守威吓2",
@@ -7538,7 +7907,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7579,7 +7948,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7620,7 +7989,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7661,7 +8030,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7702,7 +8071,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7743,7 +8112,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7784,7 +8153,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7825,7 +8194,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7866,7 +8235,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7907,7 +8276,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7948,7 +8317,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -7989,7 +8358,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-B": [
@@ -8032,7 +8401,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8073,7 +8442,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8114,7 +8483,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ],
     "G-D": [
@@ -8157,7 +8526,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8198,7 +8567,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8239,7 +8608,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8280,7 +8649,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8321,7 +8690,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8362,7 +8731,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         },
         {
             "groupBy": null,
@@ -8403,7 +8772,7 @@ var staticJson =
             "favorite": null,
             "rank": null,
             "createDatetime": 1607186923000,
-            "updateDatetime": 1607186923000
+            "updateDatetime": 1614781731000
         }
     ]
 };
