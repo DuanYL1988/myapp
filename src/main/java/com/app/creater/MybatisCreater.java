@@ -82,9 +82,9 @@ public class MybatisCreater {
     }
 
     public static void main(String[] args) {
-        FILE_OUTPUT_FLAG = false;
+        FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] { "HERO" };
+        String[] targetTblList = new String[] { "HERO_CONTENT" };
         for (String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -401,6 +401,9 @@ public class MybatisCreater {
                 update.append(FOUR_SPACE + TWO_SPACE + field.getDbNm() + " = " + "#{" + field.getJavaNm() + "}" + CRLF);
             }
         }
+        update.append(FOUR_SPACE + "<if test=\"condition!=null\">" + CRLF);
+        update.append(FOUR_SPACE + "    OR ${condition}" + CRLF);
+        update.append(FOUR_SPACE + "</if>" + CRLF);
         update.append(TWO_SPACE + "</update>" + CRLF + CRLF);
         return update.toString();
     }

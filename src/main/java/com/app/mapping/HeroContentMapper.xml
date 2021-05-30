@@ -8,6 +8,15 @@
     <result column="CODE_ID" property="codeId" jdbcType="VARCHAR" />
     <result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
     <result column="IMG_SRC" property="imgSrc" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND1" property="nameExpand1" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND2" property="nameExpand2" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND3" property="nameExpand3" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND4" property="nameExpand4" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND5" property="nameExpand5" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND6" property="nameExpand6" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND7" property="nameExpand7" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND8" property="nameExpand8" jdbcType="VARCHAR" />
+    <result column="NAME_EXPAND9" property="nameExpand9" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="select_column_list">
@@ -17,6 +26,15 @@
     ,HERO_CONTENT.CODE_ID
     ,HERO_CONTENT.CODE_NAME
     ,HERO_CONTENT.IMG_SRC
+    ,HERO_CONTENT.NAME_EXPAND1
+    ,HERO_CONTENT.NAME_EXPAND2
+    ,HERO_CONTENT.NAME_EXPAND3
+    ,HERO_CONTENT.NAME_EXPAND4
+    ,HERO_CONTENT.NAME_EXPAND5
+    ,HERO_CONTENT.NAME_EXPAND6
+    ,HERO_CONTENT.NAME_EXPAND7
+    ,HERO_CONTENT.NAME_EXPAND8
+    ,HERO_CONTENT.NAME_EXPAND9
   </sql>
 
   <sql id="insert_column_list">
@@ -26,6 +44,15 @@
     ,CODE_ID
     ,CODE_NAME
     ,IMG_SRC
+    ,NAME_EXPAND1
+    ,NAME_EXPAND2
+    ,NAME_EXPAND3
+    ,NAME_EXPAND4
+    ,NAME_EXPAND5
+    ,NAME_EXPAND6
+    ,NAME_EXPAND7
+    ,NAME_EXPAND8
+    ,NAME_EXPAND9
   </sql>
 
   <select id="selectOneById" resultMap="HeroContentResultMap">
@@ -76,6 +103,33 @@
       <if test="imgSrc!=null">
         AND IMG_SRC = #{imgSrc}
       </if>
+      <if test="nameExpand1!=null">
+        AND NAME_EXPAND1 = #{nameExpand1}
+      </if>
+      <if test="nameExpand2!=null">
+        AND NAME_EXPAND2 = #{nameExpand2}
+      </if>
+      <if test="nameExpand3!=null">
+        AND NAME_EXPAND3 = #{nameExpand3}
+      </if>
+      <if test="nameExpand4!=null">
+        AND NAME_EXPAND4 = #{nameExpand4}
+      </if>
+      <if test="nameExpand5!=null">
+        AND NAME_EXPAND5 = #{nameExpand5}
+      </if>
+      <if test="nameExpand6!=null">
+        AND NAME_EXPAND6 = #{nameExpand6}
+      </if>
+      <if test="nameExpand7!=null">
+        AND NAME_EXPAND7 = #{nameExpand7}
+      </if>
+      <if test="nameExpand8!=null">
+        AND NAME_EXPAND8 = #{nameExpand8}
+      </if>
+      <if test="nameExpand9!=null">
+        AND NAME_EXPAND9 = #{nameExpand9}
+      </if>
     </where>
     <if test="orderBy!=null">
       ORDER BY ${orderBy}
@@ -115,9 +169,39 @@
       <if test="imgSrc!=null">
         IMG_SRC = #{imgSrc},
       </if>
+      <if test="nameExpand1!=null">
+        NAME_EXPAND1 = #{nameExpand1},
+      </if>
+      <if test="nameExpand2!=null">
+        NAME_EXPAND2 = #{nameExpand2},
+      </if>
+      <if test="nameExpand3!=null">
+        NAME_EXPAND3 = #{nameExpand3},
+      </if>
+      <if test="nameExpand4!=null">
+        NAME_EXPAND4 = #{nameExpand4},
+      </if>
+      <if test="nameExpand5!=null">
+        NAME_EXPAND5 = #{nameExpand5},
+      </if>
+      <if test="nameExpand6!=null">
+        NAME_EXPAND6 = #{nameExpand6},
+      </if>
+      <if test="nameExpand7!=null">
+        NAME_EXPAND7 = #{nameExpand7},
+      </if>
+      <if test="nameExpand8!=null">
+        NAME_EXPAND8 = #{nameExpand8},
+      </if>
+      <if test="nameExpand9!=null">
+        NAME_EXPAND9 = #{nameExpand9},
+      </if>
     </set>
     WHERE
       ID = #{id}
+    <if test="condition!=null">
+        OR ${condition}
+    </if>
   </update>
 
   <insert id="insert" parameterType="com.app.model.HeroContent" >
@@ -133,6 +217,15 @@
       , #{codeId}
       , #{codeName}
       , #{imgSrc}
+      , #{nameExpand1}
+      , #{nameExpand2}
+      , #{nameExpand3}
+      , #{nameExpand4}
+      , #{nameExpand5}
+      , #{nameExpand6}
+      , #{nameExpand7}
+      , #{nameExpand8}
+      , #{nameExpand9}
      FROM DUAL 
      WHERE 1=1 
      AND NOT EXISTS 
@@ -142,5 +235,31 @@
          AND CODE_ID = #{codeId} )
      AND ROWNUM = 1
   </insert>
+
+  <select id="customQuary" parameterType="com.app.model.HeroContent" resultType="com.app.model.HeroContent">
+    SELECT
+       ${selectQuary}
+    FROM
+      HERO_CONTENT
+    <if test="joinPart!=null">
+        ${joinPart}
+    </if>
+    <where>
+        1 = 1
+        <if test="condition!=null">
+         AND ${condition}
+        </if>
+    </where>
+    <if test="groupBy!=null">
+      GROUP BY ${groupBy}
+    </if>
+    <if test="having!=null">
+      HAVING ${having}
+    </if>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
 </mapper>
 

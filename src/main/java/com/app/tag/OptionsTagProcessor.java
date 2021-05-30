@@ -25,22 +25,23 @@ public class OptionsTagProcessor extends AbstractAttributeTagProcessor {
      * elementName：匹配标签元素名。举例来说如果是div，则我们的自定义标签只能用在div标签中。为null能够匹配所有的标签。<br>
      * prefixElementName: 标签名是否要求前缀。 attributeName: 自定义标签属性名。即xxx:yyy中的yyy。<br>
      * prefixAttributeName：属性名是否要求前缀，如果为true，Thymeeleaf会要求使用text属性时必须加上前缀，即xxx:text。<br>
-     * precedence：标签处理的优先级，此处使用和Thymeleaf标准方言相同的优先级。 removeAttribute：标签处理后是否移除自定义属性。<br>
+     * precedence：标签处理的优先级，此处使用和Thymeleaf标准方言相同的优先级。
+     * removeAttribute：标签处理后是否移除自定义属性。<br>
      */
     public OptionsTagProcessor(final String dialectPrefix) {
         super(TemplateMode.HTML, dialectPrefix, null, false, ATTR_NAME, true, PRECEDENCE, true);
     }
 
     /**
-     * attributeName:标签属性名
-     * attributeValue:页面上标签设定的值
+     * attributeName:标签属性名 attributeValue:页面上标签设定的值
      */
     @Override
     public void doProcess(ITemplateContext context, IProcessableElementTag tag, AttributeName attributeName,
             String attributeValue, IElementTagStructureHandler structureHandler) {
 
         dbUtil.mode = 1;
-        String query = "select CODE_ID,CODE_NAME from HERO_CONTENT where CATEGORY_ID = '"+attributeValue+"' order by code_id";
+        String query = "select CODE_ID,CODE_NAME from HERO_CONTENT where CATEGORY_ID = '" + attributeValue
+                + "' and CODE_ID <> '00' order by code_id";
         List<Map<String, String>> resultMap = dbUtil.excuteSelectQuery(query);
 
         String baseHtml = "<option value='#id#' #selected#>#text#</option>";
@@ -52,7 +53,7 @@ public class OptionsTagProcessor extends AbstractAttributeTagProcessor {
             String value = tag.getAttributeValue("value");
             row = baseHtml.replace("#id#", id);
             row = row.replace("#text#", text);
-            if (text.equals(value) || id.equals(value) ) {
+            if (text.equals(value) || id.equals(value)) {
                 row = row.replace("#selected#", "selected='selected' ");
             }
             html.append(row);

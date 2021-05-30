@@ -20,4 +20,6 @@ public interface HeroContentRepository{
 
     HeroContent selectOneByUniqueKey(@Param("categoryId")String categoryId,@Param("codeId")String codeId);
 
+    List<HeroContent> customQuary(HeroContent heroContent);
+
 }

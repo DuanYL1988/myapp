@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
+<mapper namespace="com.app.repository.FarmRepository" >
+  <resultMap id="FarmResultMap" type="com.app.model.Farm" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="PARENT_FARM" property="parentFarm" jdbcType="INTEGER" />
+    <result column="INDEX_NUM" property="indexNum" jdbcType="INTEGER" />
+    <result column="CROP_ID" property="cropId" jdbcType="VARCHAR" />
+    <result column="CROP_NM" property="cropNm" jdbcType="VARCHAR" />
+    <result column="CROP_HP" property="cropHp" jdbcType="INTEGER" />
+    <result column="CROP_PRICE" property="cropPrice" jdbcType="INTEGER" />
+    <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+    <result column="TOTAL_LEVEL" property="totalLevel" jdbcType="INTEGER" />
+    <result column="SIZE_LEVEL" property="sizeLevel" jdbcType="INTEGER" />
+    <result column="SPEED_LEVEL" property="speedLevel" jdbcType="INTEGER" />
+    <result column="QUALITY_LEVEL" property="qualityLevel" jdbcType="INTEGER" />
+    <result column="COUNT_LEVEL" property="countLevel" jdbcType="INTEGER" />
+    <result column="HEALTH" property="health" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    FARM.ID
+    ,FARM.LOCATION
+    ,FARM.PARENT_FARM
+    ,FARM.INDEX_NUM
+    ,FARM.CROP_ID
+    ,FARM.CROP_NM
+    ,FARM.CROP_HP
+    ,FARM.CROP_PRICE
+    ,FARM.START_DATE
+    ,FARM.TOTAL_LEVEL
+    ,FARM.SIZE_LEVEL
+    ,FARM.SPEED_LEVEL
+    ,FARM.QUALITY_LEVEL
+    ,FARM.COUNT_LEVEL
+    ,FARM.HEALTH
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,LOCATION
+    ,PARENT_FARM
+    ,INDEX_NUM
+    ,CROP_ID
+    ,CROP_NM
+    ,CROP_HP
+    ,CROP_PRICE
+    ,START_DATE
+    ,TOTAL_LEVEL
+    ,SIZE_LEVEL
+    ,SPEED_LEVEL
+    ,QUALITY_LEVEL
+    ,COUNT_LEVEL
+    ,HEALTH
+  </sql>
+
+  <select id="selectOneById" resultMap="FarmResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      FARM
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="FarmResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      FARM
+    <where>
+      <if test="location!=null">
+        AND LOCATION = #{location}
+      </if>
+      <if test="parentFarm!=null">
+        AND PARENT_FARM = #{parentFarm}
+      </if>
+      <if test="indexNum!=null">
+        AND INDEX_NUM = #{indexNum}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.Farm" resultMap="FarmResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      FARM
+    <where>
+      <if test="id!=null">
+        AND ID = #{id}
+      </if>
+      <if test="location!=null">
+        AND LOCATION = #{location}
+      </if>
+      <if test="parentFarm!=null">
+        AND PARENT_FARM = #{parentFarm}
+      </if>
+      <if test="indexNum!=null">
+        AND INDEX_NUM = #{indexNum}
+      </if>
+      <if test="cropId!=null">
+        AND CROP_ID = #{cropId}
+      </if>
+      <if test="cropNm!=null">
+        AND CROP_NM = #{cropNm}
+      </if>
+      <if test="cropHp!=null">
+        AND CROP_HP = #{cropHp}
+      </if>
+      <if test="cropPrice!=null">
+        AND CROP_PRICE = #{cropPrice}
+      </if>
+      <if test="startDate!=null">
+        AND START_DATE = #{startDate}
+      </if>
+      <if test="totalLevel!=null">
+        AND TOTAL_LEVEL = #{totalLevel}
+      </if>
+      <if test="sizeLevel!=null">
+        AND SIZE_LEVEL = #{sizeLevel}
+      </if>
+      <if test="speedLevel!=null">
+        AND SPEED_LEVEL = #{speedLevel}
+      </if>
+      <if test="qualityLevel!=null">
+        AND QUALITY_LEVEL = #{qualityLevel}
+      </if>
+      <if test="countLevel!=null">
+        AND COUNT_LEVEL = #{countLevel}
+      </if>
+      <if test="health!=null">
+        AND HEALTH = #{health}
+      </if>
+    </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT count(*) AS count
+    FROM 
+      FARM
+    <where>
+      <if test="location!=null">
+        AND LOCATION = #{location}
+      </if>
+      <if test="parentFarm!=null">
+        AND PARENT_FARM = #{parentFarm}
+      </if>
+      <if test="indexNum!=null">
+        AND INDEX_NUM = #{indexNum}
+      </if>
+    </where>
+  </select>
+
+  <update id="update" parameterType="com.app.model.Farm" >
+    UPDATE
+      FARM
+    <set>
+      <if test="location!=null">
+        LOCATION = #{location},
+      </if>
+      <if test="parentFarm!=null">
+        PARENT_FARM = #{parentFarm},
+      </if>
+      <if test="indexNum!=null">
+        INDEX_NUM = #{indexNum},
+      </if>
+      <if test="cropId!=null">
+        CROP_ID = #{cropId},
+      </if>
+      <if test="cropNm!=null">
+        CROP_NM = #{cropNm},
+      </if>
+      <if test="cropHp!=null">
+        CROP_HP = #{cropHp},
+      </if>
+      <if test="cropPrice!=null">
+        CROP_PRICE = #{cropPrice},
+      </if>
+      <if test="startDate!=null">
+        START_DATE = #{startDate},
+      </if>
+      <if test="totalLevel!=null">
+        TOTAL_LEVEL = #{totalLevel},
+      </if>
+      <if test="sizeLevel!=null">
+        SIZE_LEVEL = #{sizeLevel},
+      </if>
+      <if test="speedLevel!=null">
+        SPEED_LEVEL = #{speedLevel},
+      </if>
+      <if test="qualityLevel!=null">
+        QUALITY_LEVEL = #{qualityLevel},
+      </if>
+      <if test="countLevel!=null">
+        COUNT_LEVEL = #{countLevel},
+      </if>
+      <if test="health!=null">
+        HEALTH = #{health},
+      </if>
+    </set>
+    WHERE
+      ID = #{id}
+    <if test="condition!=null">
+        OR ${condition}
+    </if>
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.Farm" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+          SELECT SEQ_FARM.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO FARM(
+    <include refid="insert_column_list"></include>
+    ) SELECT 
+       #{id}
+      , #{location}
+      , #{parentFarm}
+      , #{indexNum}
+      , #{cropId}
+      , #{cropNm}
+      , #{cropHp}
+      , #{cropPrice}
+      , #{startDate}
+      , #{totalLevel}
+      , #{sizeLevel}
+      , #{speedLevel}
+      , #{qualityLevel}
+      , #{countLevel}
+      , #{health}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM FARM
+         WHERE 1=1 
+         AND LOCATION = #{location} 
+         AND PARENT_FARM = #{parentFarm} 
+         AND INDEX_NUM = #{indexNum} )
+     AND ROWNUM = 1
+  </insert>
+
+  <select id="customQuary" parameterType="com.app.model.Farm" resultType="com.app.model.Farm">
+    SELECT
+       ${selectQuary}
+    FROM
+      FARM
+    <if test="joinPart!=null">
+        ${joinPart}
+    </if>
+    <where>
+        1 = 1
+        <if test="condition!=null">
+         AND ${condition}
+        </if>
+    </where>
+    <if test="groupBy!=null">
+      GROUP BY ${groupBy}
+    </if>
+    <if test="having!=null">
+      HAVING ${having}
+    </if>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+</mapper>
+
