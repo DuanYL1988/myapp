@@ -6,34 +6,37 @@
   <link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet" />
   <style>
     .parent_farm {
-      width: 1000px;
-      height: 1000px;
+      width: 800px;
+      position: absolute;
+      left: 25%
+    }
+    
+    .earth_dragon {
+      width: 1100px;
       position: absolute;
       left: 25%
     }
 
     .parent_cell {
-      width: 230px;
-      height: 230px;
+      width: 170px;
+      height: 170px;
       display: inline-block;
       float: left
     }
 
     .item_farm {
-      width: 100px;
-      height: 100px;
+      width: 70px;
+      height: 70px;
       background-color: #adb16f;
       float: left;
-      margin: 5px 5px 5px 5px
-    }
-
-    .a:hover {
-      background-color: #7e7fa9
+      margin: 5px 5px 5px 5px;
+      text-align:center;
+      font-size:5px;
     }
 
     .item_farm_clicked {
-      width: 100px;
-      height: 100px;
+      width: 70px;
+      height: 70px;
       background-color: #8a6183;
       float: left;
       margin: 5px 5px 5px 5px
@@ -51,34 +54,55 @@
   <script src="../../../resources/js/runeFactory/farm.js" th:src="@{/resources/js/runeFactory/farm.js}"></script>
 </head>
 <body style="background: #decfcf">
-  <div class="topControl"> <a href="/myapp/rune/farm/01">初始田</a> <a href="/myapp/rune/farm/02">土龙</a> <a href="/myapp/rune/farm/03">火龙</a> </div>
+  <div class="topControl"> <a href="/myapp/rune/farm?type=01">初始田</a> <a href="/myapp/rune/farm?type=02">土龙</a> <a href="/myapp/rune/farm?type=03">火龙</a> </div>
   <div id="firstFarm" class="parent_farm" style="display:none"> </div>
   <div class="farmInfo">
-    <form th:object="${outPutForm}"> <input type="hidden" th:value="${outPutForm.farmType}" id="farmType" />
+    <form th:object="${outPutForm}">
+      <input type="hidden" th:value="${outPutForm.farmType}" id="farmType" />
+      <input type="hidden" th:value="${outPutForm.mode}" id="mode" />
+      <input type="hidden" th:value="${outPutForm.farmIdList}" id="farmIdList" />
       <table>
         <tr class="input_line">
           <td>日期</td>
-          <td> <input type="button" value="<" /><input type="text" id="gameDate" th:name="gameDate" th:value="${outPutForm.gameDate}" /><input type="button" value=">" /> </td>
+          <td>
+            <input type="button" onclick="changeDate('prev')" value="<" />
+            <input type="text" id="gameDate" th:name="gameDate" th:value="${outPutForm.gameDate}" />
+            <input type="button" onclick="changeDate('next')" value=">" />
+          </td>
         </tr>
         <tr class="input_line">
           <td>种子</td>
-          <td> <select id="sctCorpId" th:name="corpId" required>
-                    <option dyl:options="1001" />
-                </select> </td>
+          <td>
+            <select id="sctCorpId" th:name="corpId" required>
+              <option dyl:options="1001" />
+            </select>
+          </td>
         </tr>
         <tr class="input_line">
           <td>田地编号</td>
-          <td> <input type="text" th:name="farm.id" id="farmId" /> </td>
+          <td>
+            <input type="text" th:name="farm.id" id="farmId" />
+          </td>
         </tr>
         <tr class="input_line">
           <td>作物名</td>
-          <td> <input type="hidden" th:name="farm.cropId" id="cropId" /> <input type="text" th:name="farm.cropNm" id="cropNm" /> </td>
+          <td>
+            <input type="hidden" th:name="farm.cropId" id="cropId" />
+            <input type="text" th:name="farm.cropNm" id="cropNm" />
+          </td>
         </tr>
         <tr class="input_line">
           <td>种植日期</td>
-          <td> <input type="text" th:name="farm.startDate" id="startDate" /> </td>
+          <td>
+            <input type="text" th:name="farm.startDate" id="startDate" />
+          </td>
         </tr>
-      </table> <input type="button" value="播种" /> <input type="button" value="收获" /> <input type="button" onclick="seed('batch')" value="批量播種" /> </form>
+      </table>
+      <input type="button" value="播种" />
+      <input type="button" value="收获" />
+      <input type="button" onclick="seed('batch')" value="批量播種" />
+      <input type="button" onclick="seed('updateDate')" value="更新游戏时间" />
+    </form>
   </div>
 </body>
 </html>

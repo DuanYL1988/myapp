@@ -17,15 +17,22 @@ public class RuneFactoryTest {
 
     @Test
     public void testInsert() {
-        for (int parent = 1; parent <= 16; parent++) {
+        for (int parent = 17; parent <= 24; parent++) {
 
             for (int cell = 1; cell <= 4; cell++) {
                 Farm farm = new Farm();
-                farm.setLocation("家门口");
+                farm.setLocation("03");
                 farm.setParentFarm(parent);
                 farm.setIndexNum(cell);
                 farmRepo.insert(farm);
             }
         }
+    }
+
+    @Test
+    public void testSelect() {
+        Farm inDto = new Farm();
+        inDto.setLocation("01");
+        farmRepo.selectByDto(inDto);
     }
 }

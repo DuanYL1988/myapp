@@ -84,21 +84,24 @@
 
   <select id="selectByDto" parameterType="com.app.model.Farm" resultMap="FarmResultMap">
     SELECT
-      <include refid="select_column_list"></include>
+      *
     FROM 
-      FARM
+      FARM farm 
+    LEFT JOIN HERO_CONTENT content
+      ON farm.CROP_ID = content.CODE_ID 
+        AND content.CATEGORY_ID = '1001'
     <where>
       <if test="id!=null">
-        AND ID = #{id}
+        AND farm.ID = #{id}
       </if>
       <if test="location!=null">
-        AND LOCATION = #{location}
+        AND farm.LOCATION = #{location}
       </if>
       <if test="parentFarm!=null">
-        AND PARENT_FARM = #{parentFarm}
+        AND farm.PARENT_FARM = #{parentFarm}
       </if>
       <if test="indexNum!=null">
-        AND INDEX_NUM = #{indexNum}
+        AND farm.INDEX_NUM = #{indexNum}
       </if>
       <if test="cropId!=null">
         AND CROP_ID = #{cropId}

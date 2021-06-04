@@ -84,7 +84,7 @@ public class MybatisCreater {
     public static void main(String[] args) {
         FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] { "HERO_CONTENT" };
+        String[] targetTblList = new String[] { "RECIPE" };
         for (String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();

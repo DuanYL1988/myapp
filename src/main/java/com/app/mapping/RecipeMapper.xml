@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//MYBATIS.org//DTD Mapper 3.0//EN" "http://MYBATIS.org/dtd/MYBATIS-3-mapper.dtd" >
+<mapper namespace="com.app.repository.RecipeRepository" >
+  <resultMap id="RecipeResultMap" type="com.app.model.Recipe" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CATEGORY_MAIN" property="categoryMain" jdbcType="VARCHAR" />
+    <result column="CATEGORY_SUB" property="categorySub" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="INTEGER" />
+    <result column="SKILL_LEVEL" property="skillLevel" jdbcType="INTEGER" />
+    <result column="RECIPE1" property="recipe1" jdbcType="VARCHAR" />
+    <result column="RECIPE2" property="recipe2" jdbcType="VARCHAR" />
+    <result column="RECIPE3" property="recipe3" jdbcType="VARCHAR" />
+    <result column="RECIPE4" property="recipe4" jdbcType="VARCHAR" />
+    <result column="RECIPE5" property="recipe5" jdbcType="VARCHAR" />
+    <result column="RECIPE6" property="recipe6" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="select_column_list">
+    RECIPE.ID
+    ,RECIPE.CATEGORY_MAIN
+    ,RECIPE.CATEGORY_SUB
+    ,RECIPE.NAME
+    ,RECIPE.PRICE
+    ,RECIPE.SKILL_LEVEL
+    ,RECIPE.RECIPE1
+    ,RECIPE.RECIPE2
+    ,RECIPE.RECIPE3
+    ,RECIPE.RECIPE4
+    ,RECIPE.RECIPE5
+    ,RECIPE.RECIPE6
+  </sql>
+
+  <sql id="insert_column_list">
+    ID
+    ,CATEGORY_MAIN
+    ,CATEGORY_SUB
+    ,NAME
+    ,PRICE
+    ,SKILL_LEVEL
+    ,RECIPE1
+    ,RECIPE2
+    ,RECIPE3
+    ,RECIPE4
+    ,RECIPE5
+    ,RECIPE6
+  </sql>
+
+  <select id="selectOneById" resultMap="RecipeResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      RECIPE
+    WHERE
+      ID = #{id}
+  </select>
+
+  <select id="selectOneByUniqueKey" resultMap="RecipeResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      RECIPE
+    <where>
+      <if test="categoryMain!=null">
+        AND CATEGORY_MAIN = #{categoryMain}
+      </if>
+      <if test="categorySub!=null">
+        AND CATEGORY_SUB = #{categorySub}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByDto" parameterType="com.app.model.Recipe" resultMap="RecipeResultMap">
+    SELECT
+      <include refid="select_column_list"></include>
+    FROM 
+      RECIPE
+    <where>
+      <if test="id!=null">
+        AND ID = #{id}
+      </if>
+      <if test="categoryMain!=null">
+        AND CATEGORY_MAIN = #{categoryMain}
+      </if>
+      <if test="categorySub!=null">
+        AND CATEGORY_SUB = #{categorySub}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+      <if test="price!=null">
+        AND PRICE = #{price}
+      </if>
+      <if test="skillLevel!=null">
+        AND SKILL_LEVEL = #{skillLevel}
+      </if>
+      <if test="recipe1!=null">
+        AND RECIPE1 = #{recipe1}
+      </if>
+      <if test="recipe2!=null">
+        AND RECIPE2 = #{recipe2}
+      </if>
+      <if test="recipe3!=null">
+        AND RECIPE3 = #{recipe3}
+      </if>
+      <if test="recipe4!=null">
+        AND RECIPE4 = #{recipe4}
+      </if>
+      <if test="recipe5!=null">
+        AND RECIPE5 = #{recipe5}
+      </if>
+      <if test="recipe6!=null">
+        AND RECIPE6 = #{recipe6}
+      </if>
+    </where>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="uniqueCheck"  resultType="Integer">
+    SELECT count(*) AS count
+    FROM 
+      RECIPE
+    <where>
+      <if test="categoryMain!=null">
+        AND CATEGORY_MAIN = #{categoryMain}
+      </if>
+      <if test="categorySub!=null">
+        AND CATEGORY_SUB = #{categorySub}
+      </if>
+      <if test="name!=null">
+        AND NAME = #{name}
+      </if>
+    </where>
+  </select>
+
+  <update id="update" parameterType="com.app.model.Recipe" >
+    UPDATE
+      RECIPE
+    <set>
+      <if test="categoryMain!=null">
+        CATEGORY_MAIN = #{categoryMain},
+      </if>
+      <if test="categorySub!=null">
+        CATEGORY_SUB = #{categorySub},
+      </if>
+      <if test="name!=null">
+        NAME = #{name},
+      </if>
+      <if test="price!=null">
+        PRICE = #{price},
+      </if>
+      <if test="skillLevel!=null">
+        SKILL_LEVEL = #{skillLevel},
+      </if>
+      <if test="recipe1!=null">
+        RECIPE1 = #{recipe1},
+      </if>
+      <if test="recipe2!=null">
+        RECIPE2 = #{recipe2},
+      </if>
+      <if test="recipe3!=null">
+        RECIPE3 = #{recipe3},
+      </if>
+      <if test="recipe4!=null">
+        RECIPE4 = #{recipe4},
+      </if>
+      <if test="recipe5!=null">
+        RECIPE5 = #{recipe5},
+      </if>
+      <if test="recipe6!=null">
+        RECIPE6 = #{recipe6},
+      </if>
+    </set>
+    WHERE
+      ID = #{id}
+    <if test="condition!=null">
+        OR ${condition}
+    </if>
+  </update>
+
+  <insert id="insert" parameterType="com.app.model.Recipe" >
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+          SELECT SEQ_RECIPE.NEXTVAL FROM DUAL
+        </selectKey>
+    INSERT INTO RECIPE(
+    <include refid="insert_column_list"></include>
+    ) SELECT 
+       #{id}
+      , #{categoryMain}
+      , #{categorySub}
+      , #{name}
+      , #{price}
+      , #{skillLevel}
+      , #{recipe1}
+      , #{recipe2}
+      , #{recipe3}
+      , #{recipe4}
+      , #{recipe5}
+      , #{recipe6}
+     FROM DUAL 
+     WHERE 1=1 
+     AND NOT EXISTS 
+     (SELECT 1 FROM RECIPE
+         WHERE 1=1 
+         AND CATEGORY_MAIN = #{categoryMain} 
+         AND CATEGORY_SUB = #{categorySub} 
+         AND NAME = #{name} )
+     AND ROWNUM = 1
+  </insert>
+
+  <select id="customQuary" parameterType="com.app.model.Recipe" resultType="com.app.model.Recipe">
+    SELECT
+       ${selectQuary}
+    FROM
+      RECIPE
+    <if test="joinPart!=null">
+        ${joinPart}
+    </if>
+    <where>
+        1 = 1
+        <if test="condition!=null">
+         AND ${condition}
+        </if>
+    </where>
+    <if test="groupBy!=null">
+      GROUP BY ${groupBy}
+    </if>
+    <if test="having!=null">
+      HAVING ${having}
+    </if>
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+</mapper>
+

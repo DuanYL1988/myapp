@@ -1,8 +1,11 @@
 $(function() {
     var farmType = $("#farmType").val();
     var farm = document.getElementById('firstFarm');
-    if ("01" == farmType) {
+    if ("" != farmType) {
         farm.style.display = "";
+        if ("02" == farmType || "03" == farmType) {
+            farm.className = "earth_dragon";
+        }
     }
 
     var index = 1;
@@ -21,30 +24,120 @@ $(function() {
 
 });
 
+/**
+ * 农田信息
+ */
 function createDiv(id, classNm, farm) {
-    var aEle = document.createElement("a");
-    aEle.href = "#";
-    aEle.className = classNm;
     var div = document.createElement("div");
+    div.className = classNm;
     div.id = id;
     if ("item_farm" == classNm) {
-        var farmInfo = "";
-        farmInfo += "作物:" + setValue(farm.cropNm);
+        if (null != farm.startDate && "" != farm.startDate) {
+            var farmObj = calFarmInfo(farm);
+            var farmInfo = "";
+            farmInfo += setValue(farm.cropNm) +'<br>';
+            farmInfo += setValue(farm.startDate) +'<br>';
+            farmInfo += farmObj.endDate +'<br>';
+            farmInfo += farmObj.persent +'<br>';
+            farmInfo += farmObj.price +'<br>';
+    
+            div.innerHTML = farmInfo;
+        }
 
-        div.innerHTML = farmInfo;
-
-        aEle.id = farm.id;
-        aEle.onmousedown = function() {
+        div.id = farm.id;
+        div.onclick = function() {
             setFarmInfo(farm);
-            if ("item_farm_clicked" == aEle.className) {
-                aEle.className = "item_farm";
+            if ("item_farm" == div.className) {
+                div.className = "item_farm_clicked";
             } else {
-                aEle.className = "item_farm_clicked";
+                div.className = "item_farm";
+            }
+        }
+        div.onmouseover = function(){
+            div.style.backgroundColor = "#7dd069e0";
+        }
+        div.onmouseout = function(){
+            if ("item_farm"==div.className) {
+                div.style.backgroundColor = "#adb16f";
+            } else {
+                div.style.backgroundColor = "#8a6183";
             }
         }
     }
-    aEle.appendChild(div);
-    return aEle;
+    return div;
+}
+
+function calFarmInfo(farm){
+    // 一熟日期
+    var explant1 = farm.nameExpand2;
+    // 2熟日期
+    var explant2 = farm.nameExpand3;
+    // 播种时间
+    var stDate = farm.startDate;
+    // 间隔
+    var days = getDays(stDate,$("#gameDate").val());
+    // 收获
+    farm['endDate'] = getEndDate(days,explant1,explant2);
+    // 售价
+    farm['price']= farm.nameExpand2;
+    // 成长度
+    farm['persent']  = getPersent(days,explant1,explant2);
+    
+    return farm;
+}
+
+function getEndDate(days,explant1,explant2) {
+    if (parseInt(explant1) > parseInt(days)) {
+        days = parseInt(explant1) - parseInt(days);
+    } else {
+        days = parseInt(days) - (parseInt(explant1) + parseInt(explant2));
+        days = days < 0 ? 0 : days;
+    }
+    var result = "";
+    for (var d = 0; d < days ; d++) {
+        result = changeDate("add");
+    }
+    return result;
+}
+
+/**
+ * 成长度
+ */
+function getPersent(days,explant1,explant2){
+    var persent = parseFloat("0");
+    // 一熟
+    if (parseInt(explant1) > parseInt(days)) {
+        persent = 100/(parseInt(explant1));
+        persent = persent * (parseInt(explant1) - parseInt(days));
+        persent = persent + "";
+        persent = persent.toFixed(2) + "%";
+    } // TODO 2熟
+    else if (parseInt(explant1) < parseInt(days)){
+        persent = 100/(parseInt(explant2));
+        days = parseInt(days) - (parseInt(explant1) + parseInt(explant2));
+        days = days < 0 ? 0 : days;
+        days = (days + parseInt(explant2)) % parseInt(explant2);
+        if (days == 0) {
+            persent = "100%";
+        } else {
+            persent = persent * days;
+            persent = persent + "";
+            persent = persent.toFixed(2) + "%";
+        }
+    } else {
+        persent = "100%";
+    }
+    return persent;
+}
+
+function getDays(startDate,endDate) {
+    var startDay = parseInt(startDate.split('/')[1]);
+    var endDay =  parseInt(endDate.split('/')[1]);
+    if (startDay > endDay) {
+        endDay = endDay+30;
+    }
+    return endDay - startDay;
+    
 }
 
 function setFarmInfo(farm) {
@@ -54,21 +147,26 @@ function setFarmInfo(farm) {
     $("#startDate").val(farm.startDate);
 }
 
+/**
+ * ajax更新
+ */
 function seed(type) {
     if ('batch' == type) {
         var idList = "";
-        $.each($("a[class='item_farm_clicked']"), function() {
+        $.each($("div[class='item_farm_clicked']"), function() {
             idList += this.id + ",";
         })
         idList += "0";
 
-        var param = {
-            "cropId": $("#sctCorpId").val(),
-            "farm.cropId": $("#sctCorpId").val(),
-            "gameDate": $("#gameDate").val(),
-            "farmIdList": idList
-        }
+        $("#farmIdList").val(idList);
+        $("#mode").val(type);
+        $("form")[0].submit();
 
+    } else if ("updateDate" == type) {
+        var param = {
+            "cropId": "999",
+            "gameDate": $("#gameDate").val(),
+        }
         ajaxPost('/myapp/rune/seed', param, function(data) {
             console.log(data);
         });
@@ -81,4 +179,38 @@ function setValue(value) {
     } else {
         return value;
     }
+}
+
+/** 
+ * 游戏时间变更
+ */
+function changeDate(type) {
+    var gameDate = $("#gameDate").val();
+    var month = gameDate.split('/')[0];
+    var day = gameDate.split('/')[1];
+    if ('next' == type || 'add' == type) {
+        day = parseInt(day) + 1;
+    } else {
+        day = parseInt(day) - 1;
+    }
+    
+    if (day == 31) {
+        day = 1;
+        month = parseInt(month) + 1;
+    } else if (day == 0) {
+        day = 30;
+        month = parseInt(month) - 1;
+    }
+    
+    if (month == 5) {
+        month = 1;
+    } else if (month == 0) {
+        month = 4;
+    }
+    
+    if ('add' == type) {
+        return month+'/'+day;
+    }
+    
+    $("#gameDate").val(month+'/'+day);
 }
