@@ -17,11 +17,11 @@ public class RuneFactoryTest {
 
     @Test
     public void testInsert() {
-        for (int parent = 17; parent <= 24; parent++) {
+        for (int parent = 1; parent <= 24; parent++) {
 
             for (int cell = 1; cell <= 4; cell++) {
                 Farm farm = new Farm();
-                farm.setLocation("03");
+                farm.setLocation("02");
                 farm.setParentFarm(parent);
                 farm.setIndexNum(cell);
                 farmRepo.insert(farm);

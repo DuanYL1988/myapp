@@ -16,7 +16,7 @@ public class FarmForm extends BaseForm {
 
     private String gameDate;
 
-    private String cropId;
+    private String selectCorpId;
 
     private String farmIdList;
 
@@ -36,12 +36,12 @@ public class FarmForm extends BaseForm {
         this.gameDate = gameDate;
     }
 
-    public String getCropId() {
-        return cropId;
+    public String getSelectCorpId() {
+        return selectCorpId;
     }
 
-    public void setCropId(String cropId) {
-        this.cropId = cropId;
+    public void setSelectCorpId(String selectCorpId) {
+        this.selectCorpId = selectCorpId;
     }
 
     public String getFarmIdList() {

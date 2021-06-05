@@ -25,7 +25,7 @@ public class RuneFactoryServiceImpl implements RuneFactoryService {
     public AjaxResponseDto seedBatch(FarmForm form) {
         AjaxResponseDto result = new AjaxResponseDto();
 
-        HeroContent masterInfo = masterResp.selectOneByUniqueKey("1001", form.getCropId());
+        HeroContent masterInfo = masterResp.selectOneByUniqueKey("1001", form.getSelectCorpId());
 
         Farm inputDto = new Farm();
         inputDto.setCropId(masterInfo.getCodeId());

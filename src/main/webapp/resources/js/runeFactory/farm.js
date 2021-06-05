@@ -36,10 +36,14 @@ function createDiv(id, classNm, farm) {
             var farmObj = calFarmInfo(farm);
             var farmInfo = "";
             farmInfo += setValue(farm.cropNm) +'<br>';
-            farmInfo += setValue(farm.startDate) +'<br>';
-            farmInfo += farmObj.endDate +'<br>';
+            farmInfo += setValue(farm.startDate) + '~' + farmObj.endDate +'<br>';
             farmInfo += farmObj.persent +'<br>';
             farmInfo += farmObj.price +'<br>';
+            
+            //
+            if ('100%' == farmObj.persent) {
+                div.style.backgroundColor = "#707162";
+            }
     
             div.innerHTML = farmInfo;
         }
@@ -69,9 +73,9 @@ function createDiv(id, classNm, farm) {
 
 function calFarmInfo(farm){
     // 一熟日期
-    var explant1 = farm.nameExpand2;
+    var explant1 = farm.nameExpand3;
     // 2熟日期
-    var explant2 = farm.nameExpand3;
+    var explant2 = farm.nameExpand4;
     // 播种时间
     var stDate = farm.startDate;
     // 间隔
@@ -108,8 +112,7 @@ function getPersent(days,explant1,explant2){
     // 一熟
     if (parseInt(explant1) > parseInt(days)) {
         persent = 100/(parseInt(explant1));
-        persent = persent * (parseInt(explant1) - parseInt(days));
-        persent = persent + "";
+        persent = persent * (parseInt(days));
         persent = persent.toFixed(2) + "%";
     } // TODO 2熟
     else if (parseInt(explant1) < parseInt(days)){
@@ -121,7 +124,6 @@ function getPersent(days,explant1,explant2){
             persent = "100%";
         } else {
             persent = persent * days;
-            persent = persent + "";
             persent = persent.toFixed(2) + "%";
         }
     } else {
@@ -160,12 +162,13 @@ function seed(type) {
 
         $("#farmIdList").val(idList);
         $("#mode").val(type);
+        $("#selectCorpId").val($("#sctCorpId").val());
         $("form")[0].submit();
 
     } else if ("updateDate" == type) {
         var param = {
-            "cropId": "999",
-            "gameDate": $("#gameDate").val(),
+            "selectCorpId": "999",
+            "gameDate": $("#gameDate").val()
         }
         ajaxPost('/myapp/rune/seed', param, function(data) {
             console.log(data);

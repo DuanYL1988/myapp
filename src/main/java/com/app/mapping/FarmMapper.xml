@@ -84,7 +84,12 @@
 
   <select id="selectByDto" parameterType="com.app.model.Farm" resultMap="FarmResultMap">
     SELECT
-      *
+      farm.*
+      , content.NAME_EXPAND1 AS nameExpand1
+      , content.NAME_EXPAND2 AS nameExpand2
+      , content.NAME_EXPAND3 AS nameExpand3
+      , content.NAME_EXPAND4 AS nameExpand4
+      , content.NAME_EXPAND5 AS nameExpand5
     FROM 
       FARM farm 
     LEFT JOIN HERO_CONTENT content

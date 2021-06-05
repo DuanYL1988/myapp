@@ -77,7 +77,7 @@ public class RuneFactoryController {
 
         AjaxResponseDto response = new AjaxResponseDto();
 
-        if ("999".equals(form.getCropId())) {
+        if ("999".equals(form.getSelectCorpId())) {
             HeroContent masterDto = masterResp.selectOneByUniqueKey("9001", "01");
             masterDto.setNameExpand1(form.getGameDate());
             masterResp.update(masterDto);
@@ -92,17 +92,16 @@ public class RuneFactoryController {
         if ("batch".equals(form.getMode())) {
             service.seedBatch(form);
         }
-        String type = form.getFarmType();
-        if (StringUtils.isEmpty(type)) {
-            type = "01";
-        }
+        String type = form.getMode();
+
         Farm searchDto = new Farm();
         searchDto.setLocation(type);
         searchDto.setOrderBy(" PARENT_FARM , INDEX_NUM ");
 
         List<Farm> farmList = farmResp.selectByDto(searchDto);
-        // model.addAttribute("list", farmList);
         model.addAttribute("jsonDate", jsonUtil.praseObjToJson(farmList));
+
+        model.addAttribute("outPutForm", form);
         return "runeFactory/farm";
     }
 }
