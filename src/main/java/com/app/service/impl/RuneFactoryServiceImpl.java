@@ -2,6 +2,7 @@ package com.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.app.common.CommonContent;
 import com.app.dto.AjaxResponseDto;
@@ -25,12 +26,19 @@ public class RuneFactoryServiceImpl implements RuneFactoryService {
     public AjaxResponseDto seedBatch(FarmForm form) {
         AjaxResponseDto result = new AjaxResponseDto();
 
-        HeroContent masterInfo = masterResp.selectOneByUniqueKey("1001", form.getSelectCorpId());
-
         Farm inputDto = new Farm();
-        inputDto.setCropId(masterInfo.getCodeId());
-        inputDto.setCropNm(masterInfo.getCodeName());
-        inputDto.setStartDate(form.getGameDate());
+        if (StringUtils.isEmpty(form.getSelectCorpId())) {
+            inputDto.setCropId("");
+            inputDto.setCropNm("");
+            inputDto.setStartDate("");
+        } else {
+            HeroContent masterInfo = masterResp.selectOneByUniqueKey("1001", form.getSelectCorpId());
+
+            inputDto.setCropId(masterInfo.getCodeId());
+            inputDto.setCropNm(masterInfo.getCodeName());
+            inputDto.setStartDate(form.getGameDate());
+        }
+
         inputDto.setId(0);
 
         inputDto.setCondition(" ID IN (" + form.getFarmIdList() + ")");

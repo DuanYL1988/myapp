@@ -151,4 +151,13 @@ public class CommonUtils {
         }
         return javaNm.toString();
     }
+
+    public boolean isInclude(String[] aStrArr, String target) {
+        for (String name : aStrArr) {
+            if (name.equals(target)) {
+                return true;
+            }
+        }
+        return true;
+    }
 }

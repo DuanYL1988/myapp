@@ -1,3 +1,6 @@
+var getCount = 0;
+var getMoney = 0;
+var compIdArr = [];
 $(function() {
     var farmType = $("#farmType").val();
     var farm = document.getElementById('firstFarm');
@@ -22,6 +25,10 @@ $(function() {
         }
     }
 
+    if(getCount>0){
+        $("#100count").html(getCount);
+        $("#100price").html(getMoney);
+    }
 });
 
 /**
@@ -32,17 +39,22 @@ function createDiv(id, classNm, farm) {
     div.className = classNm;
     div.id = id;
     if ("item_farm" == classNm) {
+        var compFlag = false;
         if (null != farm.startDate && "" != farm.startDate) {
             var farmObj = calFarmInfo(farm);
             var farmInfo = "";
             farmInfo += setValue(farm.cropNm) +'<br>';
             farmInfo += setValue(farm.startDate) + '~' + farmObj.endDate +'<br>';
             farmInfo += farmObj.persent +'<br>';
-            farmInfo += farmObj.price +'<br>';
+            farmInfo += 'Lv:' +farmObj.totalLevel + ';HP:' + farmObj.health +'<br>';
             
             //
             if ('100%' == farmObj.persent) {
                 div.style.backgroundColor = "#707162";
+                getCount++;
+                getMoney = getMoney + (parseFloat(farmObj.price)*parseFloat(farmObj.count));
+                compIdArr.push(farm.id);
+                compFlag = true;
             }
     
             div.innerHTML = farmInfo;
@@ -57,14 +69,17 @@ function createDiv(id, classNm, farm) {
                 div.className = "item_farm";
             }
         }
-        div.onmouseover = function(){
-            div.style.backgroundColor = "#7dd069e0";
-        }
-        div.onmouseout = function(){
-            if ("item_farm"==div.className) {
-                div.style.backgroundColor = "#adb16f";
-            } else {
-                div.style.backgroundColor = "#8a6183";
+        
+        if (!compFlag) {
+            div.onmouseover = function(){
+                div.style.backgroundColor = "#7dd069e0";
+            }
+            div.onmouseout = function(){
+                if ("item_farm"==div.className) {
+                    div.style.backgroundColor = "#adb16f";
+                } else {
+                    div.style.backgroundColor = "#8a6183";
+                }
             }
         }
     }
@@ -84,6 +99,8 @@ function calFarmInfo(farm){
     farm['endDate'] = getEndDate(days,explant1,explant2);
     // 售价
     farm['price']= farm.nameExpand2;
+    // 个数
+    farm['count']= farm.nameExpand3;
     // 成长度
     farm['persent']  = getPersent(days,explant1,explant2);
     
@@ -144,25 +161,44 @@ function getDays(startDate,endDate) {
 
 function setFarmInfo(farm) {
     $("#farmId").val(farm.id);
+    $("#location").val(farm.location);
+    $("#parentFarm").val(farm.parentFarm);
     $("#cropId").val(farm.cropId);
     $("#cropNm").val(farm.cropNm);
     $("#startDate").val(farm.startDate);
+
+    $("#totalLevel").val(farm.totalLevel);
+    $("#health").val(farm.health);
+    $("#sizeLevel").val(farm.sizeLevel);
+    $("#speedLevel").val(farm.speedLevel);
+    $("#qualityLevel").val(farm.qualityLevel);
+    $("#countLevel").val(farm.countLevel);
 }
 
 /**
  * ajax更新
  */
 function seed(type) {
-    if ('batch' == type) {
+    $("#mode").val(type);
+    if ('batchPut' == type || 'batchGet' == type) {
         var idList = "";
-        $.each($("div[class='item_farm_clicked']"), function() {
-            idList += this.id + ",";
-        })
-        idList += "0";
 
+        $("#mode").val('batch');
+        
+        if ('batchPut' == type) {
+            $("#selectCorpId").val($("#sctCorpId").val());
+            $.each($("div[class='item_farm_clicked']"), function() {
+                idList += this.id + ",";
+            });
+        } else {
+            $("#selectCorpId").val("");
+            $.each(compIdArr, function() {
+                idList += this + ",";
+            });
+        }
+        idList += "0";
         $("#farmIdList").val(idList);
-        $("#mode").val(type);
-        $("#selectCorpId").val($("#sctCorpId").val());
+        
         $("form")[0].submit();
 
     } else if ("updateDate" == type) {
@@ -173,7 +209,9 @@ function seed(type) {
         ajaxPost('/myapp/rune/seed', param, function(data) {
             console.log(data);
         });
+        return;
     }
+    $("form")[0].submit();
 }
 
 function setValue(value) {

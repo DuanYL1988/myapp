@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <link rel="icon" type="image/x-ico" href="../../../resources/images/rune5/title.png" th:href="@{/resources/images/rune5/title.png}"/>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>农田</title>
   <link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet" />
@@ -82,6 +83,8 @@
           <td>田地编号</td>
           <td>
             <input type="text" th:name="farm.id" id="farmId" />
+            <input type="hidden" th:name="farm.location" id="location" />
+            <input type="hidden" th:name="farm.parentFarm" id="parentFarm" />
           </td>
         </tr>
         <tr class="input_line">
@@ -97,10 +100,51 @@
             <input type="text" th:name="farm.startDate" id="startDate" />
           </td>
         </tr>
+        <tr class="input_line">
+          <td>土地等级</td>
+          <td>
+            <input type="text" th:name="farm.totalLevel" id="totalLevel" />
+          </td>
+        </tr>
+        <tr class="input_line">
+          <td>健康度</td>
+          <td>
+            <input type="text" th:name="farm.health" id="health" />
+          </td>
+        </tr>
+        <tr class="input_line">
+          <td>大小</td>
+          <td>
+            <input type="text" th:name="farm.sizeLevel" id="sizeLevel" />
+          </td>
+        </tr>
+        <tr class="input_line">
+          <td>速度</td>
+          <td>
+            <input type="text" th:name="farm.speedLevel" id="speedLevel" />
+          </td>
+        </tr>
+        <tr class="input_line">
+          <td>质量</td>
+          <td>
+            <input type="text" th:name="farm.qualityLevel" id="qualityLevel" />
+          </td>
+        </tr>
+        <tr class="input_line">
+          <td>数量</td>
+          <td>
+            <input type="text" th:name="farm.countLevel" id="countLevel" />
+          </td>
+        </tr>
+        <tr class="input_line">
+          <td colspan="2">
+            今天有[<span id="100count">0</span>]田收获,出售额:<span id="100price">0</span>
+          </td>
+        </tr>
       </table>
-      <input type="button" value="播种" />
-      <input type="button" value="收获" />
-      <input type="button" onclick="seed('batch')" value="批量播種" />
+      <input type="button" onclick="seed('updateFarm')" value="土地信息更新" />
+      <input type="button" onclick="seed('batchPut')" value="批量播種" />
+      <input type="button" onclick="seed('batchGet')" value="批量收获" />
       <input type="button" onclick="seed('updateDate')" value="更新游戏时间" />
     </form>
   </div>
