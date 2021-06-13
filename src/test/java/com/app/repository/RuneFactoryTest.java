@@ -17,13 +17,20 @@ public class RuneFactoryTest {
 
     @Test
     public void testInsert() {
-        for (int parent = 1; parent <= 24; parent++) {
+        for (int parent = 1; parent <= 40; parent++) {
 
             for (int cell = 1; cell <= 4; cell++) {
                 Farm farm = new Farm();
-                farm.setLocation("02");
+                farm.setLocation("04");
                 farm.setParentFarm(parent);
                 farm.setIndexNum(cell);
+
+                farm.setTotalLevel(1.00d);
+                farm.setSizeLevel(1.00d);
+                farm.setSpeedLevel(1.00d);
+                farm.setQualityLevel(1.00d);
+                farm.setCountLevel(1.00d);
+                farm.setHealth(64);
                 farmRepo.insert(farm);
             }
         }

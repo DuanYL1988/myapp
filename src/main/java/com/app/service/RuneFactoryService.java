@@ -13,4 +13,5 @@ public interface RuneFactoryService {
      */
     AjaxResponseDto seedBatch(FarmForm form);
 
+    public void updateFarmInfo(FarmForm form);
 }

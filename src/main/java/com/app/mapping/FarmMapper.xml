@@ -210,6 +210,9 @@
       <if test="health!=null">
         HEALTH = #{health},
       </if>
+      <if test="selectQuary!=null">
+        ${selectQuary}
+      </if>
     </set>
     WHERE
       ID = #{id}

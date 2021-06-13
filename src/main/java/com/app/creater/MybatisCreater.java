@@ -84,7 +84,7 @@ public class MybatisCreater {
     public static void main(String[] args) {
         FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] { "RECIPE" };
+        String[] targetTblList = new String[] { "FARM" };
         for (String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -241,7 +241,13 @@ public class MybatisCreater {
             setAndGet.append(FOUR_SPACE + " */" + CRLF);
             setAndGet.append(FOUR_SPACE + "public void set" + commonUtil.changeNm(field.getDbNm(), true) + "(" + type
                     + " " + javaNm + "){" + CRLF);
-            setAndGet.append(FOUR_SPACE + "    this." + javaNm + " = " + javaNm + ";" + CRLF);
+            // this.location = null == location ? "" : location;
+            if ("String".equals(type)) {
+                setAndGet.append(FOUR_SPACE + "    this." + javaNm + " = null == " + javaNm + " ? \"\" : " + javaNm
+                        + ";" + CRLF);
+            } else {
+                setAndGet.append(FOUR_SPACE + "    this." + javaNm + " = " + javaNm + ";" + CRLF);
+            }
             setAndGet.append(FOUR_SPACE + "}" + CRLF + CRLF);
             setAndGet.append(FOUR_SPACE + "/**" + CRLF);
             setAndGet.append(FOUR_SPACE + " * 取得" + logicNm + CRLF);

@@ -49,27 +49,27 @@ public class Farm extends HeroContent {
     /**
      * 土地等级
      */
-    private Integer totalLevel;
+    private Double totalLevel;
 
     /**
      * 大小等级
      */
-    private Integer sizeLevel;
+    private Double sizeLevel;
 
     /**
      * 速度等级
      */
-    private Integer speedLevel;
+    private Double speedLevel;
 
     /**
      * 质量等级
      */
-    private Integer qualityLevel;
+    private Double qualityLevel;
 
     /**
      * 数量等级
      */
-    private Integer countLevel;
+    private Double countLevel;
 
     /**
      * 健康度
@@ -207,70 +207,70 @@ public class Farm extends HeroContent {
     /**
      * 设定土地等级
      */
-    public void setTotalLevel(Integer totalLevel) {
+    public void setTotalLevel(Double totalLevel) {
         this.totalLevel = totalLevel;
     }
 
     /**
      * 取得土地等级
      */
-    public Integer getTotalLevel() {
+    public Double getTotalLevel() {
         return totalLevel;
     }
 
     /**
      * 设定大小等级
      */
-    public void setSizeLevel(Integer sizeLevel) {
+    public void setSizeLevel(Double sizeLevel) {
         this.sizeLevel = sizeLevel;
     }
 
     /**
      * 取得大小等级
      */
-    public Integer getSizeLevel() {
+    public Double getSizeLevel() {
         return sizeLevel;
     }
 
     /**
      * 设定速度等级
      */
-    public void setSpeedLevel(Integer speedLevel) {
+    public void setSpeedLevel(Double speedLevel) {
         this.speedLevel = speedLevel;
     }
 
     /**
      * 取得速度等级
      */
-    public Integer getSpeedLevel() {
+    public Double getSpeedLevel() {
         return speedLevel;
     }
 
     /**
      * 设定质量等级
      */
-    public void setQualityLevel(Integer qualityLevel) {
+    public void setQualityLevel(Double qualityLevel) {
         this.qualityLevel = qualityLevel;
     }
 
     /**
      * 取得质量等级
      */
-    public Integer getQualityLevel() {
+    public Double getQualityLevel() {
         return qualityLevel;
     }
 
     /**
      * 设定数量等级
      */
-    public void setCountLevel(Integer countLevel) {
+    public void setCountLevel(Double countLevel) {
         this.countLevel = countLevel;
     }
 
     /**
      * 取得数量等级
      */
-    public Integer getCountLevel() {
+    public Double getCountLevel() {
         return countLevel;
     }
 

@@ -3,7 +3,9 @@
       'ajaxGet': ajaxGet,
       'ajaxPost': ajaxPost,
       'getValByKey':getValByKey,
-      'changeNull':changeNull
+      'changeNull':changeNull,
+      'isEmpty':isEmpty,
+      'isNotEmpty':isNotEmpty
   });
   
   function ajaxGet(url,jsonData,callback){
@@ -53,6 +55,26 @@
       }
       return text;
   }
+  
+  function isEmpty(arg) {
+      arg = $.trim(arg);
+      if (typeof arg == 'undefined') {
+          return true;
+      } else {
+          if (typeof arg == 'object') {
+              return false;
+          } else if (''==arg || null == arg || 'null' == arg) {
+              return true;
+          }
+          return false;
+      }
+  }
+  
+  function isNotEmpty(arg) {
+      var rslt = isEmpty(arg) ? false : true;
+      return rslt;
+  }
+  
   $.fn.serializeObject = function(){
       var jsonObj = {};
       var formParam = this.serializeArray();

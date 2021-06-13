@@ -95,28 +95,7 @@ public class RuneFactoryController {
         }
         // 单个土地更新
         if ("updateFarm".equals(form.getMode())) {
-            Farm updDto = form.getFarm();
-            if (!StringUtils.isEmpty(updDto.getId() + "")) {
-                farmResp.update(updDto);
-                // 4整块更新
-                if (!StringUtils.isEmpty(updDto.getLocation()) && !StringUtils.isEmpty(updDto.getParentFarm() + "")) {
-                    Farm parentDto = new Farm();
-                    parentDto.setId(0);
-                    parentDto.setTotalLevel(updDto.getTotalLevel());
-                    parentDto.setSizeLevel(updDto.getSizeLevel());
-                    parentDto.setSpeedLevel(updDto.getSpeedLevel());
-                    parentDto.setQualityLevel(updDto.getQualityLevel());
-                    parentDto.setCountLevel(updDto.getCountLevel());
-                    parentDto.setHealth(updDto.getHealth());
-
-                    StringBuilder cond = new StringBuilder();
-                    cond.append(" PARENT_FARM = " + updDto.getParentFarm());
-                    cond.append(" AND LOCATION = " + updDto.getLocation());
-                    parentDto.setCondition(" PARENT_FARM = " + updDto.getParentFarm());
-
-                    farmResp.update(parentDto);
-                }
-            }
+            service.updateFarmInfo(form);
         }
         String type = form.getFarmType();
 

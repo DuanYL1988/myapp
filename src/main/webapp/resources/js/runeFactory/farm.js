@@ -1,6 +1,9 @@
 var getCount = 0;
 var getMoney = 0;
 var compIdArr = [];
+var todoArr = [];
+// 空闲土地
+var todoCnt = 0;
 $(function() {
     var farmType = $("#farmType").val();
     var farm = document.getElementById('firstFarm');
@@ -8,6 +11,13 @@ $(function() {
         farm.style.display = "";
         if ("02" == farmType || "03" == farmType) {
             farm.className = "earth_dragon";
+            $('body').css("zoom","1");
+        } else if ("04" == farmType) {
+            farm.className = "ice_dragon";
+            $('body').css("zoom","0.85");
+            farm.style.left = '12%';
+        } else {
+            $('body').css("zoom","1");
         }
     }
 
@@ -29,6 +39,7 @@ $(function() {
         $("#100count").html(getCount);
         $("#100price").html(getMoney);
     }
+    $("#todoFarm").html(todoCnt);
 });
 
 /**
@@ -40,24 +51,32 @@ function createDiv(id, classNm, farm) {
     div.id = id;
     if ("item_farm" == classNm) {
         var compFlag = false;
-        if (null != farm.startDate && "" != farm.startDate) {
+        if (isNotEmpty(farm.cropId)) {
             var farmObj = calFarmInfo(farm);
             var farmInfo = "";
-            farmInfo += setValue(farm.cropNm) +'<br>';
+            farmInfo += "<span class='farmCellTitle'>" + setValue(farm.cropNm) +'</span><br>';
             farmInfo += setValue(farm.startDate) + '~' + farmObj.endDate +'<br>';
-            farmInfo += farmObj.persent +'<br>';
-            farmInfo += 'Lv:' +farmObj.totalLevel + ';HP:' + farmObj.health +'<br>';
-            
-            //
+            // 二熟植物残HP
+            if (isNotEmpty(farm.nameExpand4)) {
+                farmInfo += 'HP:' + setValue(farm.cropHp,'0') +'<br>';
+            }
+            // 成熟植物
             if ('100%' == farmObj.persent) {
                 div.style.backgroundColor = "#707162";
                 getCount++;
                 getMoney = getMoney + (parseFloat(farmObj.price)*parseFloat(farmObj.count));
-                compIdArr.push(farm.id);
+                if (isEmpty(farm.nameExpand4)) {
+                    compIdArr.push(farm.id);
+                }
                 compFlag = true;
             }
-    
+            farmInfo += farmObj.persent +'<br>';
+            
+            farmInfo += 'Lv:' +farmObj.totalLevel + ';Heal:' + farmObj.health +'<br>';
             div.innerHTML = farmInfo;
+        } else {
+            todoCnt ++ ;
+            todoArr.push(farm.id);
         }
 
         div.id = farm.id;
@@ -88,13 +107,15 @@ function createDiv(id, classNm, farm) {
 
 function calFarmInfo(farm){
     // 一熟日期
-    var explant1 = farm.nameExpand3;
+    var explant1 = setValue(farm.nameExpand3);
     // 2熟日期
-    var explant2 = farm.nameExpand4;
+    var explant2 = setValue(farm.nameExpand4);
     // 播种时间
     var stDate = farm.startDate;
     // 间隔
     var days = getDays(stDate,$("#gameDate").val());
+    // HP
+    farm.cropHp = setValue(farm.cropHp);
     // 收获
     farm['endDate'] = getEndDate(days,explant1,explant2);
     // 售价
@@ -108,15 +129,17 @@ function calFarmInfo(farm){
 }
 
 function getEndDate(days,explant1,explant2) {
-    if (parseInt(explant1) > parseInt(days)) {
+    // 还没一熟
+    if (parseInt(explant1) >= parseInt(days)) {
         days = parseInt(explant1) - parseInt(days);
     } else {
-        days = parseInt(days) - (parseInt(explant1) + parseInt(explant2));
-        days = days < 0 ? 0 : days;
+        // 多熟
+        days = parseInt(days) - parseInt(explant1); //+ parseInt(explant2));
+        days = (parseInt(days) + parseInt(explant2)) % parseInt(explant2);
     }
     var result = "";
     for (var d = 0; d < days ; d++) {
-        result = changeDate("add");
+        result = changeDate("add",result);
     }
     return result;
 }
@@ -149,6 +172,9 @@ function getPersent(days,explant1,explant2){
     return persent;
 }
 
+/**
+ * 间隔
+ */
 function getDays(startDate,endDate) {
     var startDay = parseInt(startDate.split('/')[1]);
     var endDay =  parseInt(endDate.split('/')[1]);
@@ -165,6 +191,7 @@ function setFarmInfo(farm) {
     $("#parentFarm").val(farm.parentFarm);
     $("#cropId").val(farm.cropId);
     $("#cropNm").val(farm.cropNm);
+    $("#cropHp").val(farm.cropHp);
     $("#startDate").val(farm.startDate);
 
     $("#totalLevel").val(farm.totalLevel);
@@ -185,16 +212,30 @@ function seed(type) {
 
         $("#mode").val('batch');
         
+        $.each($("div[class='item_farm_clicked']"), function() {
+            idList += this.id + ",";
+        });
+        
         if ('batchPut' == type) {
+            // 种子
+            if (isEmpty($("#sctCorpId").val())){
+                alert('选择种子');
+                return;
+            }
+            if (isEmpty(idList)){
+                $.each(todoArr, function() {
+                    idList += this + ",";
+                });
+            }
+            
             $("#selectCorpId").val($("#sctCorpId").val());
-            $.each($("div[class='item_farm_clicked']"), function() {
-                idList += this.id + ",";
-            });
         } else {
             $("#selectCorpId").val("");
-            $.each(compIdArr, function() {
-                idList += this + ",";
-            });
+            if (isEmpty(idList)){
+                $.each(compIdArr, function() {
+                    idList += this + ",";
+                });
+            }
         }
         idList += "0";
         $("#farmIdList").val(idList);
@@ -214,9 +255,9 @@ function seed(type) {
     $("form")[0].submit();
 }
 
-function setValue(value) {
-    if ("undefined" == value || typeof value == "undefined" || null == value) {
-        return "";
+function setValue(value,defVal) {
+    if (isEmpty(value)) {
+        return isEmpty(defVal) ? "" : defVal;
     } else {
         return value;
     }
@@ -225,8 +266,10 @@ function setValue(value) {
 /** 
  * 游戏时间变更
  */
-function changeDate(type) {
-    var gameDate = $("#gameDate").val();
+function changeDate(type,gameDate) {
+    if (isEmpty(gameDate)) {
+         gameDate = $("#gameDate").val();
+    }
     var month = gameDate.split('/')[0];
     var day = gameDate.split('/')[1];
     if ('next' == type || 'add' == type) {
