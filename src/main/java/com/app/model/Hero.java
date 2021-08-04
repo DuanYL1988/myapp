@@ -218,7 +218,7 @@ public class Hero extends ExpandCondition {
      * 设定称号
      */
     public void setTitleName(String titleName){
-        this.titleName = titleName;
+        this.titleName = null == titleName ? "" : titleName;
     }
 
     /**
@@ -231,7 +231,7 @@ public class Hero extends ExpandCondition {
      * 设定名
      */
     public void setName(String name){
-        this.name = name;
+        this.name = null == name ? "" : name;
     }
 
     /**
@@ -244,7 +244,7 @@ public class Hero extends ExpandCondition {
      * 设定昵称
      */
     public void setNickName(String nickName){
-        this.nickName = nickName;
+        this.nickName = null == nickName ? "" : nickName;
     }
 
     /**
@@ -257,7 +257,7 @@ public class Hero extends ExpandCondition {
      * 设定立绘图片文件夹名
      */
     public void setImgName(String imgName){
-        this.imgName = imgName;
+        this.imgName = null == imgName ? "" : imgName;
     }
 
     /**
@@ -270,7 +270,7 @@ public class Hero extends ExpandCondition {
      * 设定角色作品
      */
     public void setOrigin(String origin){
-        this.origin = origin;
+        this.origin = null == origin ? "" : origin;
     }
 
     /**
@@ -348,7 +348,7 @@ public class Hero extends ExpandCondition {
      * 设定武器名
      */
     public void setWeapon(String weapon){
-        this.weapon = weapon;
+        this.weapon = null == weapon ? "" : weapon;
     }
 
     /**
@@ -361,7 +361,7 @@ public class Hero extends ExpandCondition {
      * 设定A技能
      */
     public void setSkillA(String skillA){
-        this.skillA = skillA;
+        this.skillA = null == skillA ? "" : skillA;
     }
 
     /**
@@ -374,7 +374,7 @@ public class Hero extends ExpandCondition {
      * 设定B技能
      */
     public void setSkillB(String skillB){
-        this.skillB = skillB;
+        this.skillB = null == skillB ? "" : skillB;
     }
 
     /**
@@ -387,7 +387,7 @@ public class Hero extends ExpandCondition {
      * 设定C技能
      */
     public void setSkillC(String skillC){
-        this.skillC = skillC;
+        this.skillC = null == skillC ? "" : skillC;
     }
 
     /**
@@ -400,7 +400,7 @@ public class Hero extends ExpandCondition {
      * 设定圣印技能
      */
     public void setSkillD(String skillD){
-        this.skillD = skillD;
+        this.skillD = null == skillD ? "" : skillD;
     }
 
     /**
@@ -413,7 +413,7 @@ public class Hero extends ExpandCondition {
      * 设定支援技能
      */
     public void setSkillS(String skillS){
-        this.skillS = skillS;
+        this.skillS = null == skillS ? "" : skillS;
     }
 
     /**
@@ -426,7 +426,7 @@ public class Hero extends ExpandCondition {
      * 设定必杀技能
      */
     public void setSkillE(String skillE){
-        this.skillE = skillE;
+        this.skillE = null == skillE ? "" : skillE;
     }
 
     /**
@@ -478,7 +478,7 @@ public class Hero extends ExpandCondition {
      * 设定祝福
      */
     public void setBlessing(String blessing){
-        this.blessing = blessing;
+        this.blessing = null == blessing ? "" : blessing;
     }
 
     /**
@@ -491,7 +491,7 @@ public class Hero extends ExpandCondition {
      * 设定兵种
      */
     public void setMoveType(String moveType){
-        this.moveType = moveType;
+        this.moveType = null == moveType ? "" : moveType;
     }
 
     /**
@@ -504,7 +504,7 @@ public class Hero extends ExpandCondition {
      * 设定武器类型
      */
     public void setWeaponType(String weaponType){
-        this.weaponType = weaponType;
+        this.weaponType = null == weaponType ? "" : weaponType;
     }
 
     /**
@@ -517,7 +517,7 @@ public class Hero extends ExpandCondition {
      * 设定宝珠颜色
      */
     public void setColor(String color){
-        this.color = color;
+        this.color = null == color ? "" : color;
     }
 
     /**
@@ -530,7 +530,7 @@ public class Hero extends ExpandCondition {
      * 设定种族
      */
     public void setRace(String race){
-        this.race = race;
+        this.race = null == race ? "" : race;
     }
 
     /**
@@ -543,7 +543,7 @@ public class Hero extends ExpandCondition {
      * 设定英雄类型(连翼/传承)
      */
     public void setHeroType(String heroType){
-        this.heroType = heroType;
+        this.heroType = null == heroType ? "" : heroType;
     }
 
     /**
@@ -595,7 +595,7 @@ public class Hero extends ExpandCondition {
      * 设定特效标签
      */
     public void setSpecTag(String specTag){
-        this.specTag = specTag;
+        this.specTag = null == specTag ? "" : specTag;
     }
 
     /**
@@ -608,7 +608,7 @@ public class Hero extends ExpandCondition {
      * 设定卡池
      */
     public void setPool(String pool){
-        this.pool = pool;
+        this.pool = null == pool ? "" : pool;
     }
 
     /**
@@ -621,7 +621,7 @@ public class Hero extends ExpandCondition {
      * 设定喜欢
      */
     public void setFavorite(String favorite){
-        this.favorite = favorite;
+        this.favorite = null == favorite ? "" : favorite;
     }
 
     /**
@@ -634,7 +634,7 @@ public class Hero extends ExpandCondition {
      * 设定评价等级
      */
     public void setRank(String rank){
-        this.rank = rank;
+        this.rank = null == rank ? "" : rank;
     }
 
     /**

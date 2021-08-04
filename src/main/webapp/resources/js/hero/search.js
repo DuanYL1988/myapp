@@ -1,9 +1,9 @@
 var htmlFlag;
 var heroImagePath = '/myapp/resources/images/feh/acter/';
 var wenponCd = ['R-W','R-M','R-D','R-B','R-BOW','R-Dart',
-  'B-W','B-M','B-D','R-B','B-BOW','B-Dart',
-  'G-W','G-M','G-D','R-B','G-BOW','G-Dart',
-  'N-W','N-Dart','N-Staff','N-D'];
+  'B-W','B-M','B-D','B-B','B-BOW','B-Dart',
+  'G-W','G-M','G-D','G-B','G-BOW','G-Dart',
+  'N-W','N-Dart','N-Staff','N-D','N-B'];
   
 $(function() {
     // 未定义返回ture
@@ -42,13 +42,18 @@ $(function() {
        $("#block").css("display","none");
        $("body").css("overflow-y","");
     });
+    
+    $('#picture').on('click',function(){
+       $("#block").css("display","");
+       $("body").css("overflow-y","hidden");
+    });
 });
 
 /**
  * 静态html打开时,读取json设置隐藏区域的图片
  */
 function initHtml(jsonData){
-  document.getElementById("main").innerHTML = "";
+  //document.getElementById("main").innerHTML = "";
   
   for(var i=0;i<=wenponCd.length;i++){
     var data = jsonData[wenponCd[i]];
@@ -100,10 +105,11 @@ function secondLoop(data){
 
 }
 
-/*
- *
+/**
+ * 打开信息面板(服务器)
  */
 function openInfoDiv(id){
+    // ajax取得英雄信息
     var url ='/myapp/hero/openLeftInfo/' +id;
     
     ajaxGet(url,null,function(data){
@@ -139,8 +145,13 @@ function openInfoDiv(id){
         $("#stick_mdf").css('width',(localMdf/data.listData01[4].maxVal)*180+"px");
         $("#stick_total").css('width',(localTotal/data.listData01[5].maxVal)*180+"px");
     });
+    
+    $("#heroId").val(id);
 }
 
+/**
+ * 打开信息面板(静态页面json)
+ */
 function opInfoWhenHtml(heroId,weaponType){
   var data = jsonDate[weaponType];
   $.each(data,function(){
@@ -156,4 +167,11 @@ function opInfoWhenHtml(heroId,weaponType){
           $("#hero_total").html(this.hp+this.attact+this.speed+this.def+this.mdf);
       }
   });
+}
+
+function updateHeroInfo(){
+    var id = $("#heroId").val();
+    var url = '/myapp/hero/regist/' +id + "";
+    var iLeft = (window.screen.availWidth - 10 - 850) / 2;
+    window.open(url,"英雄更新","height=900 , width=850 , top=20 , left= " + iLeft, false);
 }

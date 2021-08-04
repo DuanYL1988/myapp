@@ -59,7 +59,7 @@ function initlize(jsonData,htmlFlag){
         
         parentDivEle.appendChild(linkEle);
         // 加载图片信息需要一段时间
-        sleep(200);
+        sleep(50);
         // 取得最短列id
         var targetId = getShortDivId(imgEle.height);
         // 添加图片元素

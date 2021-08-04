@@ -1,5 +1,7 @@
 package com.app.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -27,6 +29,7 @@ public class RuneFactoryServiceImpl implements RuneFactoryService {
         AjaxResponseDto result = new AjaxResponseDto();
 
         Farm inputDto = new Farm();
+        String condition = " 1 = 1 ";
         if (StringUtils.isEmpty(form.getSelectCorpId())) {
             inputDto.setCropId("");
             inputDto.setCropNm("");
@@ -43,11 +46,15 @@ public class RuneFactoryServiceImpl implements RuneFactoryService {
             inputDto.setCropNm(masterInfo.getCodeName());
             inputDto.setCropHp(100);
             inputDto.setStartDate(form.getGameDate());
+            // 玉米
+            if ("21".equals(form.getFarm().getCropId())) {
+                condition += " AND INDEX_NUM = 2 ";
+            }
         }
 
         inputDto.setId(0);
 
-        inputDto.setCondition(" ID IN (" + form.getFarmIdList() + ")");
+        inputDto.setCondition(condition + " AND ID IN (" + form.getFarmIdList() + ")");
 
         farmResp.update(inputDto);
 
@@ -77,10 +84,23 @@ public class RuneFactoryServiceImpl implements RuneFactoryService {
                 StringBuilder cond = new StringBuilder();
                 cond.append(" PARENT_FARM = " + updDto.getParentFarm());
                 cond.append(" AND LOCATION = " + updDto.getLocation());
-                parentDto.setCondition(" PARENT_FARM = " + updDto.getParentFarm());
+                parentDto.setCondition(cond.toString());
 
                 farmResp.update(parentDto);
             }
         }
+    }
+
+    @Override
+    public List<Farm> getFreeCntByLocation() {
+        Farm searchDto = new Farm();
+        searchDto.setSelectQuary(" location,count(*) as count ");
+        searchDto.setCondition(" trim(crop_id) is null ");
+        searchDto.setGroupBy(" location ");
+
+        searchDto.setUnionAll(
+                " UNION ALL SELECT 'TOTAL' AS location,COUNT(*) as count FROM FARM WHERE TRIM(CROP_ID) IS NULL ORDER BY  location");
+        List<Farm> rslt = farmResp.customQuary(searchDto);
+        return rslt;
     }
 }

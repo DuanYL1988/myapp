@@ -84,7 +84,7 @@ public class MybatisCreater {
     public static void main(String[] args) {
         FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] { "FARM" };
+        String[] targetTblList = new String[] { "FARM", "HERO" };
         for (String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -533,13 +533,13 @@ public class MybatisCreater {
      * MYBATIS使用tag自动去除AND,逗号时使用
      */
     private void appendCheckCols(StringBuilder condition, Field field, String mark) {
-        condition.append(FOUR_SPACE + TWO_SPACE + "<if test=\"" + field.getJavaNm() + "!=null\">" + CRLF);
+        String javaNm = field.getJavaNm();
+        condition.append(FOUR_SPACE + TWO_SPACE + "<if test=\"" + javaNm + "!=null and " + javaNm + "!=''\">" + CRLF);
         if ("AND".equals(mark)) {
-            condition.append(FOUR_SPACE + FOUR_SPACE + mark + " " + field.getDbNm() + " = " + "#{" + field.getJavaNm()
-                    + "}" + CRLF);
-        } else if (",".equals(mark)) {
             condition.append(
-                    FOUR_SPACE + FOUR_SPACE + field.getDbNm() + " = " + "#{" + field.getJavaNm() + "}" + mark + CRLF);
+                    FOUR_SPACE + FOUR_SPACE + mark + " " + field.getDbNm() + " = " + "#{" + javaNm + "}" + CRLF);
+        } else if (",".equals(mark)) {
+            condition.append(FOUR_SPACE + FOUR_SPACE + field.getDbNm() + " = " + "#{" + javaNm + "}" + mark + CRLF);
         }
         condition.append(FOUR_SPACE + TWO_SPACE + "</if>" + CRLF);
     }

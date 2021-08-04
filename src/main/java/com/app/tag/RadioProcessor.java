@@ -28,19 +28,21 @@ public class RadioProcessor extends AbstractAttributeTagProcessor {
      *
      * @param dialectPrefix 标签方言前缀
      *
-     * templateMode: 模板模式，这里使用HTML模板。 dialectPrefix: 标签前缀。即xxx:text中的xxx。<br>
-     * elementName：匹配标签元素名。举例来说如果是div，则我们的自定义标签只能用在div标签中。为null能够匹配所有的标签。<br>
-     * prefixElementName: 标签名是否要求前缀。 attributeName: 自定义标签属性名。即xxx:yyy中的yyy。<br>
-     * prefixAttributeName：属性名是否要求前缀，如果为true，Thymeeleaf会要求使用text属性时必须加上前缀，即xxx:text。<br>
-     * precedence：标签处理的优先级，此处使用和Thymeleaf标准方言相同的优先级。 removeAttribute：标签处理后是否移除自定义属性。<br>
+     *                      templateMode: 模板模式，这里使用HTML模板。 dialectPrefix:
+     *                      标签前缀。即xxx:text中的xxx。<br>
+     *                      elementName：匹配标签元素名。举例来说如果是div，则我们的自定义标签只能用在div标签中。为null能够匹配所有的标签。<br>
+     *                      prefixElementName: 标签名是否要求前缀。 attributeName:
+     *                      自定义标签属性名。即xxx:yyy中的yyy。<br>
+     *                      prefixAttributeName：属性名是否要求前缀，如果为true，Thymeeleaf会要求使用text属性时必须加上前缀，即xxx:text。<br>
+     *                      precedence：标签处理的优先级，此处使用和Thymeleaf标准方言相同的优先级。
+     *                      removeAttribute：标签处理后是否移除自定义属性。<br>
      */
     public RadioProcessor(final String dialectPrefix) {
         super(TemplateMode.HTML, dialectPrefix, null, false, ATTR_NAME, true, PRECEDENCE, true);
     }
 
     /**
-     * attributeName:标签属性名
-     * attributeValue:页面上标签设定的值
+     * attributeName:标签属性名 attributeValue:页面上标签设定的值
      */
     @Override
     public void doProcess(ITemplateContext context, IProcessableElementTag tag, AttributeName attributeName,
@@ -51,22 +53,26 @@ public class RadioProcessor extends AbstractAttributeTagProcessor {
         String name = CommonContent.getMapping(attributeValue);
         String value = tag.getAttributeValue("value");
 
-        String query = "select CODE_ID,IMG_SRC from HERO_CONTENT where CATEGORY_ID = '"+attributeValue+"' and IMG_SRC is not null order by code_id";
+        String query = "select CODE_ID,IMG_SRC from HERO_CONTENT where CATEGORY_ID = '" + attributeValue
+                + "' order by code_id";
+
         List<Map<String, String>> resultMap = dbUtil.excuteSelectQuery(query);
         StringBuilder html = new StringBuilder();
 
-        for(Map<String, String> result :resultMap) {
+        for (Map<String, String> result : resultMap) {
             String id = result.get("CODE_ID");
-            String text = CommonContent.IMG_MYAPP_FEH +result.get("IMG_SRC");
-            text = "<img src=\""+text+"\"></img>";
-            html.append("<div class=\"custom-control custom-radio\">"+CRLF);
-            html.append("<input id=\""+name+id+"\" class=\"custom-control-input\" type=\"radio\" value=\""+id+"\" name=\"hero."+name+"\" ");
+            String text = CommonContent.IMG_MYAPP_FEH + result.get("IMG_SRC");
+            text = "<img src=\"" + text + "\"></img>";
+            html.append("<div class=\"custom-control custom-radio\">" + CRLF);
+            html.append("<input id=\"" + name + id + "\" class=\"custom-control-input\" type=\"radio\" value=\"" + id
+                    + "\" name=\"hero." + name + "\" ");
             if (id.equals(value)) {
-                html.append(" selected = 'selected' "+CRLF);
+                html.append(" checked " + CRLF);
             }
-            html.append(" required>"+CRLF);
-            html.append("<label for=\""+name+id+"\" class=\"custom-control-label\" style='margin-left:25px' >"+text+"</label>"+CRLF);
-            html.append("</div>"+CRLF);
+            html.append(" required>" + CRLF);
+            html.append("<label for=\"" + name + id + "\" class=\"custom-control-label\" style='margin-left:25px' >"
+                    + text + "</label>" + CRLF);
+            html.append("</div>" + CRLF);
         }
 
         structureHandler.setBody(html.toString(), false);

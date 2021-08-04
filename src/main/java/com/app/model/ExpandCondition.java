@@ -14,6 +14,8 @@ public class ExpandCondition {
 
     private String having;
 
+    private String unionAll;
+
     private int count;
 
     private String type;
@@ -68,6 +70,14 @@ public class ExpandCondition {
 
     public int getCount() {
         return count;
+    }
+
+    public String getUnionAll() {
+        return unionAll;
+    }
+
+    public void setUnionAll(String unionAll) {
+        this.unionAll = unionAll;
     }
 
     public void setCount(int count) {

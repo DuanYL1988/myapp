@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+div{margin-left:15px}
+input{width:50px;height:20px;margin-left:10px}
+</style>
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<script th:inline="javascript">
+var runtime = 0;
+$(function() {
+  initPage();
+});
+
+function initPage(){
+  $("span[class='path']").attr('onclick','showChild(this)');
+}
+
+function showChild(target){
+  console.log(target.className);
+  
+  if($(target).next().length==0){
+    // 取得文件夹内容
+    createChild(target,target.textContent);
+  } else {
+    // 显示 隐藏
+    var parent = target.parentNode;
+    if(target.className.indexOf(' show')>0 || target.className=='path') {
+      target.className = target.className.replace(' show','');
+      target.className = target.className + ' hide';
+      $(parent).children('div').hide();
+    } else {
+      target.className = target.className.replace(' hide','');
+      target.className = target.className + ' show';
+      $(parent).children('div').show();
+    }
+  }
+}
+
+function createChild(target,path){
+  var parent = target.parentNode;
+  ajaxPost('/myapp/fileManagement/getChildren', {"selected":path}, function(data) {
+    console.log(data);
+    if(data.code=='1') {
+      $.each(data.data,function(){
+        createPathDiv(parent,this);
+      });
+    }
+  });
+}
+
+function createPathDiv(target,file){
+  var firstChar = file.fileName.substring(0,1);
+  if('.'==firstChar ||'$'==firstChar) {
+    return;
+  }
+  var divEle = document.createElement("div");
+  divEle.className = "child";
+  
+  var spanEle = document.createElement("span");
+  if (file.folder){
+    spanEle.className = "path";
+    spanEle.innerHTML = file.filePath;
+    $(spanEle).attr('onclick','showChild(this)');
+  } else {
+    spanEle.className = "file";
+    spanEle.innerHTML = file.fileName;
+  }
+  var delBtn = document.createElement("input");
+  delBtn.type = "button";
+  delBtn.value = "DEL";
+  $(delBtn).attr('onclick',"fileEvent(this,'del')");
+  
+  var goAlbemBtn = document.createElement("input");
+  goAlbemBtn.type = "button";
+  goAlbemBtn.value = "IMG";
+  $(goAlbemBtn).attr('onclick',"fileEvent(this,'image')");
+  
+  spanEle.appendChild(delBtn);
+  spanEle.appendChild(goAlbemBtn);
+
+  divEle.appendChild(spanEle);
+  target.appendChild(divEle);
+}
+
+function fileEvent(btn,type){
+  console.log(type);
+}
+</script>
+</head>
+<body>
+  <form>
+    <div class="root">
+      <span class="path">C:\</span>
+    </div>
+    <div class="root">
+      <span class="path">D:\</span>
+    </div>
+  </form>
+</body>
+</html>

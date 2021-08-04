@@ -39,7 +39,6 @@
     <result column="RANK" property="rank" jdbcType="VARCHAR" />
     <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_DATETIME" property="updateDatetime" jdbcType="TIMESTAMP" />
-    <result column="COUNT" property="count" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="select_column_list">
@@ -137,10 +136,10 @@
     FROM 
       HERO
     <where>
-      <if test="titleName!=null">
+      <if test="titleName!=null and titleName!=''">
         AND TITLE_NAME = #{titleName}
       </if>
-      <if test="name!=null">
+      <if test="name!=null and name!=''">
         AND NAME = #{name}
       </if>
     </where>
@@ -152,115 +151,115 @@
     FROM 
       HERO
     <where>
-      <if test="id!=null">
+      <if test="id!=null and id!=''">
         AND ID = #{id}
       </if>
-      <if test="masterId!=null">
+      <if test="masterId!=null and masterId!=''">
         AND MASTER_ID = #{masterId}
       </if>
-      <if test="titleName!=null">
+      <if test="titleName!=null and titleName!=''">
         AND TITLE_NAME = #{titleName}
       </if>
-      <if test="name!=null">
+      <if test="name!=null and name!=''">
         AND NAME = #{name}
       </if>
-      <if test="nickName!=null">
+      <if test="nickName!=null and nickName!=''">
         AND NICK_NAME = #{nickName}
       </if>
-      <if test="imgName!=null">
+      <if test="imgName!=null and imgName!=''">
         AND IMG_NAME = #{imgName}
       </if>
-      <if test="origin!=null">
+      <if test="origin!=null and origin!=''">
         AND ORIGIN = #{origin}
       </if>
-      <if test="hp!=null">
+      <if test="hp!=null and hp!=''">
         AND HP = #{hp}
       </if>
-      <if test="attact!=null">
+      <if test="attact!=null and attact!=''">
         AND ATTACT = #{attact}
       </if>
-      <if test="speed!=null">
+      <if test="speed!=null and speed!=''">
         AND SPEED = #{speed}
       </if>
-      <if test="def!=null">
+      <if test="def!=null and def!=''">
         AND DEF = #{def}
       </if>
-      <if test="mdf!=null">
+      <if test="mdf!=null and mdf!=''">
         AND MDF = #{mdf}
       </if>
-      <if test="weapon!=null">
+      <if test="weapon!=null and weapon!=''">
         AND WEAPON = #{weapon}
       </if>
-      <if test="skillA!=null">
+      <if test="skillA!=null and skillA!=''">
         AND SKILL_A = #{skillA}
       </if>
-      <if test="skillB!=null">
+      <if test="skillB!=null and skillB!=''">
         AND SKILL_B = #{skillB}
       </if>
-      <if test="skillC!=null">
+      <if test="skillC!=null and skillC!=''">
         AND SKILL_C = #{skillC}
       </if>
-      <if test="skillD!=null">
+      <if test="skillD!=null and skillD!=''">
         AND SKILL_D = #{skillD}
       </if>
-      <if test="skillS!=null">
+      <if test="skillS!=null and skillS!=''">
         AND SKILL_S = #{skillS}
       </if>
-      <if test="skillE!=null">
+      <if test="skillE!=null and skillE!=''">
         AND SKILL_E = #{skillE}
       </if>
-      <if test="limitPlus!=null">
+      <if test="limitPlus!=null and limitPlus!=''">
         AND LIMIT_PLUS = #{limitPlus}
       </if>
-      <if test="dragonFlower!=null">
+      <if test="dragonFlower!=null and dragonFlower!=''">
         AND DRAGON_FLOWER = #{dragonFlower}
       </if>
-      <if test="supportMate!=null">
+      <if test="supportMate!=null and supportMate!=''">
         AND SUPPORT_MATE = #{supportMate}
       </if>
-      <if test="blessing!=null">
+      <if test="blessing!=null and blessing!=''">
         AND BLESSING = #{blessing}
       </if>
-      <if test="moveType!=null">
+      <if test="moveType!=null and moveType!=''">
         AND MOVE_TYPE = #{moveType}
       </if>
-      <if test="weaponType!=null">
+      <if test="weaponType!=null and weaponType!=''">
         AND WEAPON_TYPE = #{weaponType}
       </if>
-      <if test="color!=null">
+      <if test="color!=null and color!=''">
         AND COLOR = #{color}
       </if>
-      <if test="race!=null">
+      <if test="race!=null and race!=''">
         AND RACE = #{race}
       </if>
-      <if test="heroType!=null">
+      <if test="heroType!=null and heroType!=''">
         AND HERO_TYPE = #{heroType}
       </if>
-      <if test="team!=null">
+      <if test="team!=null and team!=''">
         AND TEAM = #{team}
       </if>
-      <if test="skillPoint!=null">
+      <if test="skillPoint!=null and skillPoint!=''">
         AND SKILL_POINT = #{skillPoint}
       </if>
-      <if test="heroPoint!=null">
+      <if test="heroPoint!=null and heroPoint!=''">
         AND HERO_POINT = #{heroPoint}
       </if>
-      <if test="specTag!=null">
+      <if test="specTag!=null and specTag!=''">
         AND SPEC_TAG = #{specTag}
       </if>
-      <if test="pool!=null">
+      <if test="pool!=null and pool!=''">
         AND POOL = #{pool}
       </if>
-      <if test="favorite!=null">
+      <if test="favorite!=null and favorite!=''">
         AND FAVORITE = #{favorite}
       </if>
-      <if test="rank!=null">
+      <if test="rank!=null and rank!=''">
         AND RANK = #{rank}
       </if>
-      <if test="createDatetime!=null">
+      <if test="createDatetime!=null and createDatetime!=''">
         AND CREATE_DATETIME = #{createDatetime}
       </if>
-      <if test="updateDatetime!=null">
+      <if test="updateDatetime!=null and updateDatetime!=''">
         AND UPDATE_DATETIME = #{updateDatetime}
       </if>
     </where>
@@ -274,10 +273,10 @@
     FROM 
       HERO
     <where>
-      <if test="titleName!=null">
+      <if test="titleName!=null and titleName!=''">
         AND TITLE_NAME = #{titleName}
       </if>
-      <if test="name!=null">
+      <if test="name!=null and name!=''">
         AND NAME = #{name}
       </if>
     </where>
@@ -287,117 +286,120 @@
     UPDATE
       HERO
     <set>
-      <if test="masterId!=null">
+      <if test="masterId!=null and masterId!=''">
         MASTER_ID = #{masterId},
       </if>
-      <if test="titleName!=null">
+      <if test="titleName!=null and titleName!=''">
         TITLE_NAME = #{titleName},
       </if>
-      <if test="name!=null">
+      <if test="name!=null and name!=''">
         NAME = #{name},
       </if>
-      <if test="nickName!=null">
+      <if test="nickName!=null and nickName!=''">
         NICK_NAME = #{nickName},
       </if>
-      <if test="imgName!=null">
+      <if test="imgName!=null and imgName!=''">
         IMG_NAME = #{imgName},
       </if>
-      <if test="origin!=null">
+      <if test="origin!=null and origin!=''">
         ORIGIN = #{origin},
       </if>
-      <if test="hp!=null">
+      <if test="hp!=null and hp!=''">
         HP = #{hp},
       </if>
-      <if test="attact!=null">
+      <if test="attact!=null and attact!=''">
         ATTACT = #{attact},
       </if>
-      <if test="speed!=null">
+      <if test="speed!=null and speed!=''">
         SPEED = #{speed},
       </if>
-      <if test="def!=null">
+      <if test="def!=null and def!=''">
         DEF = #{def},
       </if>
-      <if test="mdf!=null">
+      <if test="mdf!=null and mdf!=''">
         MDF = #{mdf},
       </if>
-      <if test="weapon!=null">
+      <if test="weapon!=null and weapon!=''">
         WEAPON = #{weapon},
       </if>
-      <if test="skillA!=null">
+      <if test="skillA!=null and skillA!=''">
         SKILL_A = #{skillA},
       </if>
-      <if test="skillB!=null">
+      <if test="skillB!=null and skillB!=''">
         SKILL_B = #{skillB},
       </if>
-      <if test="skillC!=null">
+      <if test="skillC!=null and skillC!=''">
         SKILL_C = #{skillC},
       </if>
-      <if test="skillD!=null">
+      <if test="skillD!=null and skillD!=''">
         SKILL_D = #{skillD},
       </if>
-      <if test="skillS!=null">
+      <if test="skillS!=null and skillS!=''">
         SKILL_S = #{skillS},
       </if>
-      <if test="skillE!=null">
+      <if test="skillE!=null and skillE!=''">
         SKILL_E = #{skillE},
       </if>
-      <if test="limitPlus!=null">
+      <if test="limitPlus!=null and limitPlus!=''">
         LIMIT_PLUS = #{limitPlus},
       </if>
-      <if test="dragonFlower!=null">
+      <if test="dragonFlower!=null and dragonFlower!=''">
         DRAGON_FLOWER = #{dragonFlower},
       </if>
-      <if test="supportMate!=null">
+      <if test="supportMate!=null and supportMate!=''">
         SUPPORT_MATE = #{supportMate},
       </if>
-      <if test="blessing!=null">
+      <if test="blessing!=null and blessing!=''">
         BLESSING = #{blessing},
       </if>
-      <if test="moveType!=null">
+      <if test="moveType!=null and moveType!=''">
         MOVE_TYPE = #{moveType},
       </if>
-      <if test="weaponType!=null">
+      <if test="weaponType!=null and weaponType!=''">
         WEAPON_TYPE = #{weaponType},
       </if>
-      <if test="color!=null">
+      <if test="color!=null and color!=''">
         COLOR = #{color},
       </if>
-      <if test="race!=null">
+      <if test="race!=null and race!=''">
         RACE = #{race},
       </if>
-      <if test="heroType!=null">
+      <if test="heroType!=null and heroType!=''">
         HERO_TYPE = #{heroType},
       </if>
-      <if test="team!=null">
+      <if test="team!=null and team!=''">
         TEAM = #{team},
       </if>
-      <if test="skillPoint!=null">
+      <if test="skillPoint!=null and skillPoint!=''">
         SKILL_POINT = #{skillPoint},
       </if>
-      <if test="heroPoint!=null">
+      <if test="heroPoint!=null and heroPoint!=''">
         HERO_POINT = #{heroPoint},
       </if>
-      <if test="specTag!=null">
+      <if test="specTag!=null and specTag!=''">
         SPEC_TAG = #{specTag},
       </if>
-      <if test="pool!=null">
+      <if test="pool!=null and pool!=''">
         POOL = #{pool},
       </if>
-      <if test="favorite!=null">
+      <if test="favorite!=null and favorite!=''">
         FAVORITE = #{favorite},
       </if>
-      <if test="rank!=null">
+      <if test="rank!=null and rank!=''">
         RANK = #{rank},
       </if>
-      <if test="createDatetime!=null">
+      <if test="createDatetime!=null and createDatetime!=''">
         CREATE_DATETIME = #{createDatetime},
       </if>
-      <if test="updateDatetime!=null">
+      <if test="updateDatetime!=null and updateDatetime!=''">
         UPDATE_DATETIME = #{updateDatetime},
       </if>
     </set>
     WHERE
       ID = #{id}
+    <if test="condition!=null">
+        OR ${condition}
+    </if>
   </update>
 
   <insert id="insert" parameterType="com.app.model.Hero" >
@@ -453,18 +455,20 @@
          AND NAME = #{name} )
      AND ROWNUM = 1
   </insert>
-  
-  <select id="customQuary" parameterType="com.app.model.Hero" resultMap="HeroResultMap">
+
+  <select id="customQuary" parameterType="com.app.model.Hero" resultType="com.app.model.Hero">
     SELECT
-        ${selectQuary}
+       ${selectQuary}
     FROM
-        HERO
+      HERO
     <if test="joinPart!=null">
         ${joinPart}
     </if>
     <where>
         1 = 1
-        ${condition}
+        <if test="condition!=null">
+         AND ${condition}
+        </if>
     </where>
     <if test="groupBy!=null">
       GROUP BY ${groupBy}
@@ -476,6 +480,6 @@
       ORDER BY ${orderBy}
     </if>
   </select>
-  
+
 </mapper>
 

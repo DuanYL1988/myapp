@@ -39,7 +39,6 @@ $(function() {
         $("#100count").html(getCount);
         $("#100price").html(getMoney);
     }
-    $("#todoFarm").html(todoCnt);
 });
 
 /**
@@ -106,70 +105,24 @@ function createDiv(id, classNm, farm) {
 }
 
 function calFarmInfo(farm){
+    // 适应季节
+    var season = setValue(farm.nameExpand6);
     // 一熟日期
     var explant1 = setValue(farm.nameExpand3);
     // 2熟日期
     var explant2 = setValue(farm.nameExpand4);
     // 播种时间
     var stDate = farm.startDate;
-    // 间隔
-    var days = getDays(stDate,$("#gameDate").val());
     // HP
     farm.cropHp = setValue(farm.cropHp);
     // 收获
-    farm['endDate'] = getEndDate(days,explant1,explant2);
+    getEndDate(stDate,explant1,explant2,season,farm);
     // 售价
     farm['price']= farm.nameExpand2;
     // 个数
     farm['count']= farm.nameExpand3;
-    // 成长度
-    farm['persent']  = getPersent(days,explant1,explant2);
     
     return farm;
-}
-
-function getEndDate(days,explant1,explant2) {
-    // 还没一熟
-    if (parseInt(explant1) >= parseInt(days)) {
-        days = parseInt(explant1) - parseInt(days);
-    } else {
-        // 多熟
-        days = parseInt(days) - parseInt(explant1); //+ parseInt(explant2));
-        days = (parseInt(days) + parseInt(explant2)) % parseInt(explant2);
-    }
-    var result = "";
-    for (var d = 0; d < days ; d++) {
-        result = changeDate("add",result);
-    }
-    return result;
-}
-
-/**
- * 成长度
- */
-function getPersent(days,explant1,explant2){
-    var persent = parseFloat("0");
-    // 一熟
-    if (parseInt(explant1) > parseInt(days)) {
-        persent = 100/(parseInt(explant1));
-        persent = persent * (parseInt(days));
-        persent = persent.toFixed(2) + "%";
-    } // TODO 2熟
-    else if (parseInt(explant1) < parseInt(days)){
-        persent = 100/(parseInt(explant2));
-        days = parseInt(days) - (parseInt(explant1) + parseInt(explant2));
-        days = days < 0 ? 0 : days;
-        days = (days + parseInt(explant2)) % parseInt(explant2);
-        if (days == 0) {
-            persent = "100%";
-        } else {
-            persent = persent * days;
-            persent = persent.toFixed(2) + "%";
-        }
-    } else {
-        persent = "100%";
-    }
-    return persent;
 }
 
 /**
@@ -181,8 +134,75 @@ function getDays(startDate,endDate) {
     if (startDay > endDay) {
         endDay = endDay+30;
     }
-    return endDay - startDay;
-    
+    return  endDay - startDay;
+}
+
+/**
+ * 取得收获日
+ */
+function getEndDate(stDate,explant1,explant2,season,farm) {
+    var endDate = stDate;
+    //compareDate
+    var persent = parseFloat(0.00);
+    var displayP;
+    var currM = "";
+    while(persent<explant1){
+        var dayP = 1;
+        endDate = changeDate("add",endDate);
+        currM = endDate.split('/')[0];
+        // 合适月
+        if (season.indexOf(currM) >= 0) {
+            dayP = parseFloat(1.5);
+        }
+        // 土地补正
+        dayP = dayP * parseFloat(farm.speedLevel);
+        persent = persent + dayP;
+        // 进度
+        if (0 == compareDate($("#gameDate").val(),endDate)) {
+            displayP = parseFloat(persent/explant1);
+            displayP = displayP > 1 ? 1:displayP;
+        }
+    }
+    // 多熟
+    if (parseInt(explant2) > 0 && compareDate(endDate,$("#gameDate").val()) > 0) {
+        // 下次成熟间隔
+        var days = getDays(endDate,$("#gameDate").val());
+        days = (parseInt(days) + parseInt(explant2)) % parseInt(explant2);
+        // 当天为止进度
+        while(compareDate(endDate,$("#gameDate").val())>=0) {
+            var dayP = 1;
+            endDate = changeDate("add",endDate);
+            currM = endDate.split('/')[0];
+            // 合适月
+            if (season.indexOf(currM) >= 0) {
+                dayP = parseFloat(1.5);
+            }
+            // 土地补正
+            dayP = dayP * parseFloat(farm.speedLevel);
+            persent = persent + dayP;
+            persent = persent > parseFloat(explant2) ? 0:persent;
+            // 进度
+            displayP = parseFloat(persent/explant2);
+        }
+        // 下次成熟时间
+        while(persent<explant2){
+            var dayP = 1;
+            endDate = changeDate("add",endDate);
+            currM = endDate.split('/')[0];
+            // 合适月
+            if (season.indexOf(currM) >= 0) {
+                dayP = parseFloat(1.5);
+            }
+            // 土地补正
+            dayP = dayP * parseFloat(farm.speedLevel);
+            persent = persent + dayP;
+        }
+    }
+    displayP = displayP * 100;
+    displayP = displayP.toFixed(0) + "%";
+
+    farm['endDate'] = endDate;
+    farm['persent'] = displayP;
 }
 
 function setFarmInfo(farm) {
@@ -260,6 +280,33 @@ function setValue(value,defVal) {
         return isEmpty(defVal) ? "" : defVal;
     } else {
         return value;
+    }
+}
+
+/**
+ * 比较日期
+ */
+function compareDate(stDate,edDate){
+    var stM = stDate.split('/')[0];
+    var edM = edDate.split('/')[0];
+    if (parseInt(edM) > parseInt(stM)){
+        return 1;
+    } else if (parseInt(stM) == parseInt(edM)) {
+        var stD = stDate.split('/')[1];
+        var edD = edDate.split('/')[1];
+        if (parseInt(edD) > parseInt(stD)) {
+            return 1;
+        } else if (parseInt(edD) == parseInt(stD)) {
+            return 0;
+        } else {
+            return -1;
+        }
+    } else {
+        if (parseInt(edM) == 1 && parseInt(stM) == 4) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }
 

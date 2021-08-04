@@ -56,14 +56,14 @@ public class HeroController {
     /**
      * 登录页面
      */
-    @RequestMapping(value = "regist")
-    public String goRegist(Model model, HttpSession session) {
+    @RequestMapping(value = "regist/{acterId}")
+    public String goRegist(@PathVariable("acterId") String acterId, Model model, HttpSession session) {
 
         session.removeAttribute(CommonContent.SESSION_PRE_ID);
 
         HeroRegistForm inputForm = new HeroRegistForm();
-        Hero hero = new Hero();
-        inputForm.setHero(hero);
+        Hero hero = heroRepo.selectOneById(Integer.parseInt(acterId));
+        inputForm.setHero(null == hero ? new Hero() : hero);
 
         model.addAttribute("inputForm", inputForm);
         return "hero/regist";
@@ -71,20 +71,21 @@ public class HeroController {
 
     @RequestMapping(value = "regist/excute")
     public String doRegist(Model model, HeroRegistForm form, HttpSession session) {
-        AjaxResponseDto result = service.heroRegist(form);
 
         // 判断是更新还是新规
-        String priId = (String) session.getAttribute(CommonContent.SESSION_PRE_ID);
-        if (priId.equals(form.getHero().getTitleName() + ";" + form.getHero().getName())) {
+        String id = form.getHero().getId() + "";
+
+        if (id.length() > 0) {
             form.setMode(CommonContent.MODE_UPDATE);
+        } else {
+            form.setMode(CommonContent.MODE_INSERT);
         }
 
-        HeroRegistForm inputForm = new HeroRegistForm();
-        Hero hero = new Hero();
-        inputForm.setHero(hero);
+        AjaxResponseDto result = service.heroRegist(form);
 
-        model.addAttribute("inputForm", inputForm);
+        model.addAttribute("inputForm", form);
         model.addAttribute("result", result);
+
         return "hero/regist";
     }
 
@@ -101,7 +102,6 @@ public class HeroController {
         if (null == form.getHero()) {
             form.setHero(new Hero());
             form.setMode("search");
-            model.addAttribute("form", form);
         }
 
         // 使用thymeleaf标签生成页面
@@ -109,10 +109,11 @@ public class HeroController {
         model.addAttribute("resultMapList", resultMapList);
 
         // 使用Json在JS中生成页面内容
-        List<Hero> heroList = heroRepo.selectByDto(new Hero());
+        List<Hero> heroList = heroRepo.selectByDto(form.getHero());
         String jsonDate = jsonUtil.praseObjToJson(commonUtil.groupByList("weaponType", heroList));
         model.addAttribute("jsonDate", jsonDate);
 
+        model.addAttribute("form", form);
         return "hero/hero_list";
     }
 

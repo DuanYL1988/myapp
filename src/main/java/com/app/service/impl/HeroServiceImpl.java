@@ -13,7 +13,6 @@ import com.app.form.HeroSearchForm;
 import com.app.model.Hero;
 import com.app.model.HeroContent;
 import com.app.model.HeroMaster;
-import com.app.model.SkillInfo;
 import com.app.model.Universal;
 import com.app.repository.HeroContentRepository;
 import com.app.repository.HeroMasterRepository;
@@ -80,10 +79,11 @@ public class HeroServiceImpl implements HeroService {
         }
 
         // 武器情报
-        SkillInfo weapon = skillRepo.selectOneByUniqueKey(input.getWeapon(), "W");
-        if (null == weapon) {
-            skillService.registFromHero(input.getWeapon(), form.getWeaponInfo(), "W", form.getExtendWeapon());
-        }
+        /*
+         * SkillInfo weapon = skillRepo.selectOneByUniqueKey(input.getWeapon(), "W"); if
+         * (null == weapon) { skillService.registFromHero(input.getWeapon(),
+         * form.getWeaponInfo(), "W", form.getExtendWeapon()); }
+         */
 
         result.setData(input.getTitleName() + ";" + input.getName());
         result.setCode("0");

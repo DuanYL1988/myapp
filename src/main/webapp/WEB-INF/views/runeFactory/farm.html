@@ -53,8 +53,9 @@
     }
     
     .farmCellTitle{
-      font-size:8px !important;
-      color:blue
+      font-size:15px;
+      color:blue;
+      font-family:youyuan
     }
     
     .input_line{
@@ -171,9 +172,12 @@
         </tr>
         <tr class="input_line">
           <td colspan="2">
-            今天有[<span id="100count">0</span>]田收获,出售额:<span id="100price">0</span><br>
-            闲置土地:[<span id="todoFarm">0</span>]
+            闲置土地:
           </td>
+        </tr>
+        <tr th:each="farmGp:${farmCnt}">
+          <td th:text="${farmGp.location}"></td>
+          <td th:text="${farmGp.count}"></td>
         </tr>
       </table>
       <input type="button" onclick="seed('batchGet')" value="批量收获" />

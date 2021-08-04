@@ -15,6 +15,14 @@ aside table {color:#110a79}
 .button-group{display:inline-block}
 .status{height:14px;background:linear-gradient(to right, #083344 0%,#808294 50%,#20daafeb 100%);display:inline-block;}
 #block{position: fixed;width:100%;height:100%;background-color:gray;z-index:9999;opacity:0.6;top:0;left:0}
+
+.search {
+  display: flex;
+}
+
+.search img {
+  height: 25px;
+}
 </style>
 
 <script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
@@ -33,15 +41,40 @@ aside table {color:#110a79}
   </header>
 
   <main id="main" style="padding-top:20px;width:1200px;">
+    <form class="needs-validation" th:object="${form}" th:action="@{/hero/search}" method="post">
+      <label>种族:</label>
+      <input id="race1" type="radio" th:field="*{hero.race}" value="" />
+      <label>无</label>
+      <input id="race1" type="radio" th:field="*{hero.race}" value="01" />
+      <label>人</label>
+      <input id="race2" type="radio" th:field="*{hero.race}" value="02" />
+      <label>龙</label>
+      <input id="race3" type="radio" th:field="*{hero.race}" value="03" />
+      <label>兽</label>
+      &nbsp;&nbsp;
+      <label>武器:</label>
+      <select id="weaponType" class="custom-select" th:field="*{hero.weaponType}">
+        <option value=""></option>
+        <option dyl:options="0002" th:value="${form.hero.weaponType}" />
+      </select>
+      <br>
+      <label>兵种:</label>
+      <div class="search" dyl:radioImage="0005" th:value="${form.hero.moveType}" />
+      <br>
+      <label>颜色:</label>
+      <div class="search" dyl:radioImage="0001" th:value="${form.hero.color}" />
 
+      <br>
+      <input type="submit">检索</input>
+    </form>
   </main>
 
   <aside id="leftDetailInfo" style="display:none;">
     <table width="100%">
       <tr>
-        <td rowspan="7" width="100px" ><img id="hero_img" src=""></td>
+        <td rowspan="7" width="150px" ><img id="hero_img" style="width:150px" src=""></img></td>
         <td colspan="4" id="hero_titleName">titleName-name</td>
-        <td></td>
+        <td><input type="hidden" id="heroId" ></input></td>
       </tr>
       <tr>
         <td width="40px">HP</td>
@@ -80,23 +113,21 @@ aside table {color:#110a79}
         <td><span id="stick_total" class="status" style="width:0px"/></td>
       </tr>
     </table>
-    <div class="paraBox" style="border:solid 6px #a9ff00c4;height:300px;background-color:#adaa9e69;padding-top:5px">
-    
+    <div class="paraBox" style="border:solid 6px #a9ff00c4;height:600px;background-color:#5a7171ad;padding-top:5px">
+      <table>
+        <tr>
+          <td width="200px" align="right">skillA</td>
+          <td width="40px"/>
+          <td>aa</td>
+        </tr>
+      <table>
     </div>
-      
-    <table>
-      <tr>
-        <td width="200px" align="right">skillA</td>
-        <td width="40px"/>
-        <td>aa</td>
-      </tr>
-    <table>
     
     <div class="button-group">
        <button id="picture" type="button">picture</button>
-       <button type="button">update</button>
+       <button type="button" onclick="updateHeroInfo()">update</button>
        <button id="hide" type="button">hide</button>
-    <div>
+    </div>
   </aside>
 
 </body>

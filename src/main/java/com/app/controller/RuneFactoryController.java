@@ -67,6 +67,7 @@ public class RuneFactoryController {
         outPutForm.setFarmType(type);
 
         model.addAttribute("outPutForm", outPutForm);
+        model.addAttribute("farmCnt", service.getFreeCntByLocation());
 
         return "runeFactory/farm";
     }
@@ -107,6 +108,8 @@ public class RuneFactoryController {
         model.addAttribute("jsonDate", jsonUtil.praseObjToJson(farmList));
 
         model.addAttribute("outPutForm", form);
+        model.addAttribute("farmCnt", service.getFreeCntByLocation());
+
         return "runeFactory/farm";
     }
 }
