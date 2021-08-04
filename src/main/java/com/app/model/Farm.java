@@ -49,27 +49,27 @@ public class Farm extends ExpandCondition {
     /**
      * 土地等级
      */
-    private Integer totalLevel;
+    private Double totalLevel;
 
     /**
      * 大小等级
      */
-    private Integer sizeLevel;
+    private Double sizeLevel;
 
     /**
      * 速度等级
      */
-    private Integer speedLevel;
+    private Double speedLevel;
 
     /**
      * 质量等级
      */
-    private Integer qualityLevel;
+    private Double qualityLevel;
 
     /**
      * 数量等级
      */
-    private Integer countLevel;
+    private Double countLevel;
 
     /**
      * 健康度
@@ -79,196 +79,210 @@ public class Farm extends ExpandCondition {
     /**
      * 设定ID
      */
-    public void setId(Integer id){
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
      * 取得ID
      */
-    public Integer getId(){
+    public Integer getId() {
         return id;
     }
+
     /**
      * 设定位置
      */
-    public void setLocation(String location){
+    public void setLocation(String location) {
         this.location = null == location ? "" : location;
     }
 
     /**
      * 取得位置
      */
-    public String getLocation(){
+    public String getLocation() {
         return location;
     }
+
     /**
      * 设定父田
      */
-    public void setParentFarm(Integer parentFarm){
+    public void setParentFarm(Integer parentFarm) {
         this.parentFarm = parentFarm;
     }
 
     /**
      * 取得父田
      */
-    public Integer getParentFarm(){
+    public Integer getParentFarm() {
         return parentFarm;
     }
+
     /**
      * 设定编号
      */
-    public void setIndexNum(Integer indexNum){
+    public void setIndexNum(Integer indexNum) {
         this.indexNum = indexNum;
     }
 
     /**
      * 取得编号
      */
-    public Integer getIndexNum(){
+    public Integer getIndexNum() {
         return indexNum;
     }
+
     /**
      * 设定作物ID
      */
-    public void setCropId(String cropId){
+    public void setCropId(String cropId) {
         this.cropId = null == cropId ? "" : cropId;
     }
 
     /**
      * 取得作物ID
      */
-    public String getCropId(){
+    public String getCropId() {
         return cropId;
     }
+
     /**
      * 设定作物名
      */
-    public void setCropNm(String cropNm){
+    public void setCropNm(String cropNm) {
         this.cropNm = null == cropNm ? "" : cropNm;
     }
 
     /**
      * 取得作物名
      */
-    public String getCropNm(){
+    public String getCropNm() {
         return cropNm;
     }
+
     /**
      * 设定作物HP
      */
-    public void setCropHp(Integer cropHp){
+    public void setCropHp(Integer cropHp) {
         this.cropHp = cropHp;
     }
 
     /**
      * 取得作物HP
      */
-    public Integer getCropHp(){
+    public Integer getCropHp() {
         return cropHp;
     }
+
     /**
      * 设定售价
      */
-    public void setCropPrice(Integer cropPrice){
+    public void setCropPrice(Integer cropPrice) {
         this.cropPrice = cropPrice;
     }
 
     /**
      * 取得售价
      */
-    public Integer getCropPrice(){
+    public Integer getCropPrice() {
         return cropPrice;
     }
+
     /**
      * 设定种植日期
      */
-    public void setStartDate(String startDate){
+    public void setStartDate(String startDate) {
         this.startDate = null == startDate ? "" : startDate;
     }
 
     /**
      * 取得种植日期
      */
-    public String getStartDate(){
+    public String getStartDate() {
         return startDate;
     }
+
     /**
      * 设定土地等级
      */
-    public void setTotalLevel(Integer totalLevel){
+    public void setTotalLevel(Double totalLevel) {
         this.totalLevel = totalLevel;
     }
 
     /**
      * 取得土地等级
      */
-    public Integer getTotalLevel(){
+    public Double getTotalLevel() {
         return totalLevel;
     }
+
     /**
      * 设定大小等级
      */
-    public void setSizeLevel(Integer sizeLevel){
+    public void setSizeLevel(Double sizeLevel) {
         this.sizeLevel = sizeLevel;
     }
 
     /**
      * 取得大小等级
      */
-    public Integer getSizeLevel(){
+    public Double getSizeLevel() {
         return sizeLevel;
     }
+
     /**
      * 设定速度等级
      */
-    public void setSpeedLevel(Integer speedLevel){
+    public void setSpeedLevel(Double speedLevel) {
         this.speedLevel = speedLevel;
     }
 
     /**
      * 取得速度等级
      */
-    public Integer getSpeedLevel(){
+    public Double getSpeedLevel() {
         return speedLevel;
     }
+
     /**
      * 设定质量等级
      */
-    public void setQualityLevel(Integer qualityLevel){
+    public void setQualityLevel(Double qualityLevel) {
         this.qualityLevel = qualityLevel;
     }
 
     /**
      * 取得质量等级
      */
-    public Integer getQualityLevel(){
+    public Double getQualityLevel() {
         return qualityLevel;
     }
+
     /**
      * 设定数量等级
      */
-    public void setCountLevel(Integer countLevel){
+    public void setCountLevel(Double countLevel) {
         this.countLevel = countLevel;
     }
 
     /**
      * 取得数量等级
      */
-    public Integer getCountLevel(){
+    public Double getCountLevel() {
         return countLevel;
     }
+
     /**
      * 设定健康度
      */
-    public void setHealth(Integer health){
+    public void setHealth(Integer health) {
         this.health = health;
     }
 
     /**
      * 取得健康度
      */
-    public Integer getHealth(){
+    public Integer getHealth() {
         return health;
     }
 
