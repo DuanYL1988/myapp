@@ -13,14 +13,9 @@ main{text-align:center}
 </style>
 <script src="../../../resources/js/jquery-3.4.1.min.js"></script>
 <script src="../../../resources/js/commonService.js"></script>
-<script th:inline="javascript">
-/*
-    var mode = [[${form.mode}]];
-    var jsonData = [[${jsonDate}]];
-    */
-</script>
-<!-- <script src="filenames.json"></script> -->
+
 <script src="yellow.json"></script>
+<!--<script src="filenames.json"></script>-->
 <script src="yellow.js"></script>
 </head>
 <body style="background: #decfcf">
@@ -35,5 +30,8 @@ main{text-align:center}
       <div id="navImg"></div>
     </div>
   </main>
+  <div>
+    <audio id='bgm' src="yellow.mp3" autoplay='autoplay'  loop='loop' controls='controls'  />
+  </div>
 </body>
 </html>

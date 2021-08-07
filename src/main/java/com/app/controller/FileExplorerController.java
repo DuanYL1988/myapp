@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.dto.AjaxResponseDto;
+import com.app.dto.Gallery;
 import com.app.dto.LocalFile;
 import com.app.form.BaseForm;
 import com.app.util.CommonUtils;
@@ -29,13 +30,23 @@ public class FileExplorerController {
     @Autowired
     CommonUtils commonUtil;
 
-    /**
-     * 农田信息
-     */
     @RequestMapping(value = "menu")
     public String goIndex(Model model, HttpServletRequest request) {
 
         return "fileExplorer/menu";
+    }
+
+    @RequestMapping(value = "gallery")
+    public String goGallery(Model model, HttpServletRequest request) {
+        String path = request.getParameter("path");
+
+        path = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
+
+        Gallery gallery = new Gallery();
+        model.addAttribute("jsonDate", gallery.createObject(path));
+        gallery = null;
+
+        return "fileExplorer/gallery";
     }
 
     @RequestMapping(value = "getChildren")

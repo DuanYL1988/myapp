@@ -40,19 +40,13 @@ public class FehFileUtils {
 
     private static int COUNT = 0;
 
-    @SuppressWarnings("resource")
     public static void main(String[] args) throws Exception {
-        System.out.println("请输入文件夹路径,输入def使用默认路径");
-        Scanner scanner = new Scanner(System.in);
-        String folderPath = scanner.nextLine();
-        if("def".equals(folderPath)) {
-            folderPath = "D:\\Workspaces\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
-        }
+        String folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
         System.out.println("请选择需要执行的处理");
         System.out.println("0:重命名");
         System.out.println("1:删除多余文件");
         System.out.println("2:重命名文件夹");
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         String mode = scanner.nextLine();
         FehFileUtils thisUtils = new FehFileUtils();
         thisUtils.fehImgRename(folderPath, mode);
@@ -69,7 +63,7 @@ public class FehFileUtils {
         // 取得文件夹目录下文件
         File[] fileList = folder.listFiles();
 
-        if (null !=fileList) {
+        if (null != fileList) {
             for (File file : fileList) {
                 // 子文件是文件夹的情况
                 if (file.isDirectory()) {
@@ -138,10 +132,8 @@ public class FehFileUtils {
      */
     private void deletePngFile(File file) {
         String fileName = file.getName();
-        if (fileName.indexOf(NORMAL_AFT) < 0
-                && fileName.indexOf(ATTACT_AFT) < 0
-                && fileName.indexOf(BREAK_AFT) < 0
-                && fileName.indexOf(EXTRA_AFT) < 0) {
+        if (fileName.indexOf(NORMAL_AFT) < 0 && fileName.indexOf(ATTACT_AFT) < 0 && fileName.indexOf(BREAK_AFT) < 0
+                && fileName.indexOf(EXTRA_AFT) < 0 && fileName.indexOf(FACE) < 0) {
             System.out.println("DELETE FILE NAME IS :" + file.getPath());
             file.delete();
             COUNT++;
@@ -150,6 +142,7 @@ public class FehFileUtils {
 
     /**
      * 立绘图片名修正匹配
+     *
      * @return
      */
     private Map<String, String> initNameMappingMap() {

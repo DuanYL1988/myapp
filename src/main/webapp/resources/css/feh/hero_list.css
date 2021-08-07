@@ -1,0 +1,69 @@
+.row {
+  display: flex
+}
+
+.leftArea {
+  display: inline-block;
+  float: left;
+}
+
+.leftArea img {
+  width: 100px;
+  height: auto;
+  float: center
+}
+
+.rightArea {
+  display: inline-block;
+  float: left;
+}
+
+.ih-item.circle {
+  display: inline-block;
+  float: left;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+aside {
+  position: fixed;
+  top: 40px;
+  width: 600px;
+  height: auto;
+  right: 10px;
+  background: url(../../../resources/images/feh/background.jpg);
+  background-size: 100% auto
+}
+
+aside table {
+  color: #110a79
+}
+
+.button-group {
+  display: inline-block
+}
+
+.status {
+  height: 14px;
+  background: linear-gradient(to right, #083344 0%, #808294 50%, #20daafeb 100%);
+  display: inline-block;
+}
+
+#block {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  z-index: 9999;
+  opacity: 0.6;
+  top: 0;
+  left: 0
+}
+
+.search {
+  display: flex;
+}
+
+.search img {
+  height: 25px;
+}

@@ -41,6 +41,12 @@ public class CommonContent {
     /* 上次操作的数据ID */
     public static final String SESSION_PRE_ID = "PRE_ID";
 
+    public static final String WINDOWS_ENTRY = "\r\n";
+
+    public static final String SPACE_4 = "    ";
+    public static final String SPACE_8 = "        ";
+    public static final String SPACE_12 = "            ";
+
     /**
      * 自定义标签使用
      *
@@ -59,7 +65,7 @@ public class CommonContent {
         return contentList.get(key);
     }
 
-    public static AjaxResponseDto setResponseDto(String code,String message,Object data) {
+    public static AjaxResponseDto setResponseDto(String code, String message, Object data) {
         AjaxResponseDto result = new AjaxResponseDto();
         result.setCode(code);
         result.setMessage(message);

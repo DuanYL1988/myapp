@@ -158,6 +158,16 @@ public class CommonUtils {
                 return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    public boolean isImage(String fileNm) {
+        String[] filename = fileNm.split("\\.");
+        if (filename.length > 0) {
+            String type = filename[filename.length - 1];
+            return isInclude(new String[] { "gif", "jpg", "bmp", "png" }, type.toLowerCase());
+        } else {
+            return false;
+        }
     }
 }

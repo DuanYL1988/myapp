@@ -41,7 +41,6 @@ function showChild(target){
 function createChild(target,path){
   var parent = target.parentNode;
   ajaxPost('/myapp/fileManagement/getChildren', {"selected":path}, function(data) {
-    console.log(data);
     if(data.code=='1') {
       $.each(data.data,function(){
         createPathDiv(parent,this);
@@ -67,25 +66,23 @@ function createPathDiv(target,file){
     spanEle.className = "file";
     spanEle.innerHTML = file.fileName;
   }
-  var delBtn = document.createElement("input");
-  delBtn.type = "button";
-  delBtn.value = "DEL";
-  $(delBtn).attr('onclick',"fileEvent(this,'del')");
-  
+
   var goAlbemBtn = document.createElement("input");
   goAlbemBtn.type = "button";
   goAlbemBtn.value = "IMG";
-  $(goAlbemBtn).attr('onclick',"fileEvent(this,'image')");
+  $(goAlbemBtn).attr('onclick',"fileEvent('"+file.filePath+"')");
   
-  spanEle.appendChild(delBtn);
   spanEle.appendChild(goAlbemBtn);
 
   divEle.appendChild(spanEle);
   target.appendChild(divEle);
 }
 
-function fileEvent(btn,type){
-  console.log(type);
+function fileEvent(filePath){
+  var Reg;
+  Reg=/\\|\//g;
+  filePath=filePath.replace(Reg,"\\\\");
+  window.open("/myapp/fileManagement/gallery?path="+filePath);
 }
 </script>
 </head>

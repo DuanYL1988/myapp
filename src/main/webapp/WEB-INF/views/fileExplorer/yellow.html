@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>相册</title>
+<style>
+main{text-align:center}
+#navite {background-color:#99bfbc;overflow-x:scroll;height:140px;width:1990px;float:left}
+#navImg {float:left}
+#navImg img{width:auto;height:120px;}
+.showWindow {height:800px;padding-left:20px}
+.showFullWindow {text-align:center}
+</style>
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+
+<script src="yellow.json"></script>
+<!--<script src="filenames.json"></script>-->
+<script src="yellow.js"></script>
+</head>
+<body style="background: #decfcf">
+  <main>
+    <div id="selectFolder" style="padding-left:10px">
+        <select id="sctFolder" onchange="initilizeImage()"></select>
+    </div>
+    <div id="showWindow" class="showWindow" onclick="showInWindows()">
+      <img src='' id='showFullImg' style="height:790px"/>
+    </div>
+    <div id="navite">
+      <div id="navImg"></div>
+    </div>
+  </main>
+  <div>
+    <audio id='bgm' src="yellow.mp3" autoplay='autoplay'  loop='loop' controls='controls'  />
+  </div>
+</body>
+</html>

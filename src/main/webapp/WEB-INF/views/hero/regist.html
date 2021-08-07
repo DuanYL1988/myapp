@@ -52,7 +52,7 @@ function openChildWindow(){
     <!-- Form Info -->
     <div class="col-md-8 order-md-1" style="background-color:#bfbdce9e">
       <form class="needs-validation" th:object="${inputForm}" th:action="@{/hero/regist/excute}" method="post" novalidate>
-        <h4 class="mb-3">基本</h4>
+        <h4 class="mb-3">基本</h4><span id="updRst" style="color:red;display:none">SUCCESS</span>
         <div class="row">
           <div class="col-md-4">
             <label for="origin">角色作品</label>

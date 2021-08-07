@@ -1,8 +1,8 @@
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>哈哈SlickGrid</title>
-
+<title>DESKTOP</title>
+    <link rel="icon" type="image/x-ico" href="../../../resources/images/icon.png" th:href="@{/resources/images/icon.png}"/>
     <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" th:href="@{/resources/css/ext-all.css}"/>
     <link rel="stylesheet" type="text/css" href="../../resources/css/desktop.css" th:href="@{/resources/css/desktop.css}" />
     <!-- GC -->
@@ -13,17 +13,25 @@
     <script type="text/javascript" src="../../resources/desktop/ext-all.js" th:src="@{/resources/desktop/ext-all.js}"></script>
     <!-- DESKTOP -->
     <script type="text/javascript" th:inline="javascript">
-        var jsonFromJava = [[${jsonData}]];
-        function openNewWin(){
-            var iTop = (window.screen.height-500-30)/2;
-            var iLeft = (window.screen.width-10-1080)/2;
-            window.open("fireEmblem/init", "FEH", "height=500,width=1080,top="+iTop+",left="+iLeft+",location=no,status=no,scrollvars=no");
-        }
+        $(function() {
+          $("#fullscreen").click();
+        });
         
-        function openRegistTable(){
+        function fullscreen(url){
+          document.documentElement.requestFullscreen();
+        }
+
+        //var jsonFromJava = [[${jsonData}]];
+        function openNewWin(url){
             var iTop = (window.screen.height-500-30)/2;
             var iLeft = (window.screen.width-10-1080)/2;
-            window.open("rigstTable/init", "TBL", "height=500,width=1080,top="+iTop+",left="+iLeft+",location=no,status=no,scrollvars=no");
+            window.open(url);
+        }
+
+        function openPopup(url){
+            var iTop = (window.screen.height-500-30)/2;
+            var iLeft = (window.screen.width-10-1080)/2;
+            window.open(url, "TBL", "height=500,width=1080,top="+iTop+",left="+iLeft+",location=no,status=no,scrollvars=no");
         }
     </script>
     <script type="text/javascript" src="../../resources/desktop/StartMenu.js" th:src="@{/resources/desktop/StartMenu.js}"></script>
@@ -37,8 +45,10 @@
 <body scroll="no">
 
 <div id="x-desktop">
-    <a href="#" target="_blank" style="margin:5px; float:right;"><img src="../../resources/images/powered.gif" th:src="@{/resources/images/powered.gif}"/></a>
-    
+    <input id="fullscreen" class="fullscreen" type="button" onclick="fullscreen()" ></input>
+    <!--   
+    <a href="javascript:fullscreen()" target="_blank" style="margin:5px; float:right;"><img src="../../resources/images/powered.gif" th:src="@{/resources/images/powered.gif}"/></a>
+    -->
     <form action="">
         <input type="hidden" size="100" th:value="${jsonData}" id="jsonData">
     </form>
@@ -52,16 +62,26 @@
             <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}"/>
             <div>Accordion Window</div></a>
         </dt>
-        <dt id="feh-win-shortcut" onclick="javascript:openNewWin()">
-            <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}"/>
-            <div>FireEmblem HEROS</div></a>
+        <dt class="shortcut" onclick="javascript:openNewWin('hero/index')">
+            <a href="#"><img src="../../resources/images/feh.png"  th:src="@{/resources/images/feh.png}"/>
+              <div>FEH</div>
+            </a>
         </dt>
-        <!-- 
-        1. 复制Div
-        2. 
-        -->
-        <dt id="feh-win-shortcut" onclick="javascript:openRegistTable()">
-            <a href="#"><img src="../../resources/images/s.gif"  th:src="@{/resources/images/s.gif}"/>
+        
+        <dt class="shortcut" onclick="javascript:openNewWin('rune/farm')">
+            <a href="#"><img src="../../resources/images/rune5/title.png"  th:src="@{/resources/images/rune5/title.png}"/>
+              <div>符文工房</div>
+            </a>
+        </dt>
+
+        <dt class="shortcut" onclick="javascript:openNewWin('fileManagement/menu')">
+            <a href="#"><img src="../../resources/images/fileExp.png"  th:src="@{/resources/images/fileExp.png}"/>
+              <div>文件浏览器</div>
+            </a>
+        </dt>
+
+        <dt class="shortcut" onclick="javascript:openPopup('rigstTable/init')">
+            <a href="#"><img src="../../resources/images/registMaster.png"  th:src="@{/resources/images/registMaster.png}"/>
             <div>全能添加数据</div></a>
         </dt>
 
