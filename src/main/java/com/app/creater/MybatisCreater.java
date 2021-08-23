@@ -84,7 +84,7 @@ public class MybatisCreater {
     public static void main(String[] args) {
         FILE_OUTPUT_FLAG = true;
         // 需要创建的匹配表名称
-        String[] targetTblList = new String[] { "SERVANT" };
+        String[] targetTblList = new String[] { "HERO" };
         for (String tbl : targetTblList) {
             MybatisCreater thisClass = new MybatisCreater(tbl);
             thisClass.createMybatisFileSet();
@@ -382,9 +382,9 @@ public class MybatisCreater {
         selectByDto.append(FOUR_SPACE + TWO_SPACE + TABLE_NM + CRLF);
         selectByDto.append(FOUR_SPACE + "<where>" + CRLF);
         selectByDto.append(createColCheck(fields, "select"));
-        selectByDto.append(FOUR_SPACE + TWO_SPACE + "<if test=\"condition!=null and condition!=''\">");
-        selectByDto.append(FOUR_SPACE + FOUR_SPACE + "${condition}");
-        selectByDto.append(FOUR_SPACE + TWO_SPACE + "</if>");
+        selectByDto.append(FOUR_SPACE + TWO_SPACE + "<if test=\"condition!=null and condition!=''\">" + CRLF);
+        selectByDto.append(FOUR_SPACE + FOUR_SPACE + "${condition}" + CRLF);
+        selectByDto.append(FOUR_SPACE + TWO_SPACE + "</if>" + CRLF);
         selectByDto.append(FOUR_SPACE + "</where>" + CRLF);
         selectByDto.append(FOUR_SPACE + "<if test=\"orderBy!=null\">" + CRLF);
         selectByDto.append(FOUR_SPACE + "  ORDER BY ${orderBy}" + CRLF);
