@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.app.model.Hero;
 import com.app.model.Menu;
+import com.app.model.Servant;
 import com.app.service.HeroService;
 import com.app.util.CommonUtils;
 import com.app.util.JsonUtil;
@@ -37,6 +38,15 @@ public class HeroRepositoryTest {
 
     @Autowired
     CommonUtils commonUtil;
+
+    @Autowired
+    ServantRepository servantRepo;
+
+    @Test
+    public void testSearchServant() {
+        List<Servant> list = servantRepo.selectByDto(new Servant());
+        System.out.println(list.size());
+    }
 
     @Test
     public void testGetHeroInfo() {

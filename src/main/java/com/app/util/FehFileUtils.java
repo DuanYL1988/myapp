@@ -41,15 +41,24 @@ public class FehFileUtils {
     private static int COUNT = 0;
 
     public static void main(String[] args) throws Exception {
-        String folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
+        String folderPath = "";
+//        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
+        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\fgo\\servants";
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请选择需要执行的处理");
+        System.out.println("0:FEH");
+        System.out.println("1:FGO");
+        String type = scanner.nextLine();
+
         System.out.println("请选择需要执行的处理");
         System.out.println("0:重命名");
         System.out.println("1:删除多余文件");
         System.out.println("2:重命名文件夹");
-        Scanner scanner = new Scanner(System.in);
         String mode = scanner.nextLine();
+
         FehFileUtils thisUtils = new FehFileUtils();
-        thisUtils.fehImgRename(folderPath, mode);
+        thisUtils.fehImgRename(folderPath, mode, type);
         scanner.close();
         System.out.println("处理文件数：" + COUNT);
     }
@@ -57,12 +66,14 @@ public class FehFileUtils {
     /**
      * @param 文件夹目录
      */
-    public void fehImgRename(String folderPath, String mode) throws Exception {
+    public void fehImgRename(String folderPath, String mode, String type) throws Exception {
         // 取得文件夾文件對象
         File folder = new File(folderPath);
         // 取得文件夹目录下文件
         File[] fileList = folder.listFiles();
 
+        //
+        boolean firstFlag = true;
         if (null != fileList) {
             for (File file : fileList) {
                 // 子文件是文件夹的情况
@@ -71,14 +82,27 @@ public class FehFileUtils {
                         // reNameFolder(file);
                     } else {
                         // 重命名
-                        fehImgRename(file.getPath(), mode);
+                        fehImgRename(file.getPath(), mode, type);
                     }
 
                 } else {
+                    if (firstFlag) {
+                        String fireNm = file.getName();
+                        if (fireNm.indexOf("_Stage") > 0) {
+                            String id = fireNm.split("_")[0];
+                            String msg = id + "," + folder.getName();
+                            System.out.println(msg);
+                            firstFlag = false;
+                        }
+                    }
 
                     if (MODE_RENAME.equals(mode)) {
                         // 重命名文件
-                        getRenameByName(file);
+                        if ("0".equals(type)) {
+                            getRenameByName(file);
+                        } else {
+                            getFgoRenameByName(file);
+                        }
                     } else if (MODE_DELETE.equals(mode)) {
                         deletePngFile(file);
                     }
@@ -88,7 +112,7 @@ public class FehFileUtils {
     }
 
     /**
-     * 重命名文件
+     * 重命名文件(FEH)
      *
      * @param file
      */
@@ -107,6 +131,37 @@ public class FehFileUtils {
             reName(file, ATTACT_AFT);
         } else if (file.getName().indexOf(NORMAL_BEF) >= 0) {
             reName(file, NORMAL_AFT);
+        } else if (file.getName().indexOf("拷贝") >= 0) {
+            reName(file, FACE);
+        }
+    }
+
+    /**
+     * 重命名文件(FEH)
+     *
+     * @param file
+     */
+    private void getFgoRenameByName(File file) {
+        if (MAPPING_NAME_MAP == null) {
+            MAPPING_NAME_MAP = initFgoNameMappingMap();
+            MAPPING_NAME_MAP.put("_Stage4.png", "Stage4.png");
+            MAPPING_NAME_MAP.put("Icon.png", "Icon.png");
+        }
+        String rename = MAPPING_NAME_MAP.get(file.getName());
+
+        // TODO
+        if (null != rename && rename.length() > 0) {
+            reName(file, rename);
+        } else if (file.getName().indexOf("_Stage1.png") >= 0) {
+            reName(file, "Stage1.png");
+        } else if (file.getName().indexOf("_Stage2.png") >= 0) {
+            reName(file, "Stage2.png");
+        } else if (file.getName().indexOf("_Stage3.png") >= 0) {
+            reName(file, "Stage3.png");
+        } else if (file.getName().indexOf("_Stage4.png") >= 0) {
+            reName(file, "Stage4.png");
+        } else if (file.getName().indexOf("Icon.png") >= 0 && !"Icon.png".equals(file.getName())) {
+            reName(file, "Icon.png");
         } else if (file.getName().indexOf("拷贝") >= 0) {
             reName(file, FACE);
         }
@@ -141,7 +196,7 @@ public class FehFileUtils {
     }
 
     /**
-     * 立绘图片名修正匹配
+     * FEH立绘图片名修正匹配
      *
      * @return
      */
@@ -151,6 +206,21 @@ public class FehFileUtils {
         MAPPING_NAME_MAP.put(ATTACT_BEF, ATTACT_AFT);
         MAPPING_NAME_MAP.put(BREAK_BEF, BREAK_AFT);
         MAPPING_NAME_MAP.put(EXTRA_BEF, EXTRA_AFT);
+        return MAPPING_NAME_MAP;
+    }
+
+    /**
+     * FGO立绘图片名修正匹配
+     *
+     * @return
+     */
+    private Map<String, String> initFgoNameMappingMap() {
+        MAPPING_NAME_MAP = new HashMap<String, String>();
+        MAPPING_NAME_MAP.put("_Stage1.png", "Stage1.png");
+        MAPPING_NAME_MAP.put("_Stage2.png", "Stage2.png");
+        MAPPING_NAME_MAP.put("_Stage3.png", "Stage3.png");
+        MAPPING_NAME_MAP.put("_Stage4.png", "Stage4.png");
+        MAPPING_NAME_MAP.put("Icon.png", "Icon.png");
         return MAPPING_NAME_MAP;
     }
 
