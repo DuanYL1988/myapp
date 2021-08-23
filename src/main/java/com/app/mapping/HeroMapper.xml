@@ -262,6 +262,9 @@
       <if test="updateDatetime!=null and updateDatetime!=''">
         AND UPDATE_DATETIME = #{updateDatetime}
       </if>
+      <if test="condition!=null and condition!=''">
+        ${condition}
+      </if>
     </where>
     <if test="orderBy!=null">
       ORDER BY ${orderBy}
