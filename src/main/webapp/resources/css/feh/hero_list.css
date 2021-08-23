@@ -16,6 +16,7 @@
 .rightArea {
   display: inline-block;
   float: left;
+  border-bottom:2px solid #000;
 }
 
 .ih-item.circle {

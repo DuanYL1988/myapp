@@ -24,7 +24,15 @@ public interface HeroService {
      * @param 检索条件Form form
      * @return
      */
-    Map<String, List<Hero>> doSearch(HeroSearchForm form);
+    public List<Hero> doSearch(HeroSearchForm form);
+
+    /**
+     * 分组检索处理
+     *
+     * @param 检索条件Form form
+     * @return
+     */
+    Map<String, List<Hero>> doGroupSearch(HeroSearchForm form);
 
     /**
      * @param id

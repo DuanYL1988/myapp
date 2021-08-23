@@ -40,12 +40,10 @@ public class CommonController {
     @ResponseBody
     public AjaxResponseDto getInfoByCategory(@RequestBody CategoryDto master) {
         AjaxResponseDto result = new AjaxResponseDto();
-        ContentMaster category = masterRepository.selectOne(
-                master.getCatagoryId(), master.getCodeId());
+        ContentMaster category = masterRepository.selectOne(master.getCatagoryId(), master.getCodeId());
         List<ContentMaster> response = new ArrayList<>();
         if (null != category) {
-            response = charActerRepository.selectByOrigin(category
-                    .getCodeName());
+            response = charActerRepository.selectByOrigin(category.getCodeName());
         }
         result.setData(response);
         return result;

@@ -18,41 +18,65 @@
 <script src="../../../resources/js/hero/search.js" th:src="@{/resources/js/hero/search.js}"></script>
 </head>
 <body style="background: #decfcf">
-  <div id="block" style="display:none"><button id="cancel">Cancel</button></div>
+  <div id="block" style="display:none">
+    <button id="cancel">Cancel</button>
+    <img id="screenImage" src=""/>
+  </div>
   <header style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999">
     <span>导航栏-固定位置</span>
   </header>
 
   <main id="main" style="padding-top:20px;width:1200px;">
     <form class="needs-validation" th:object="${form}" th:action="@{/hero/search}" method="post">
-      <label>种族:</label>
-      <input id="race1" type="radio" th:field="*{hero.race}" value="" />
-      <label>无</label>
-      <input id="race1" type="radio" th:field="*{hero.race}" value="01" />
-      <label>人</label>
-      <input id="race2" type="radio" th:field="*{hero.race}" value="02" />
-      <label>龙</label>
-      <input id="race3" type="radio" th:field="*{hero.race}" value="03" />
-      <label>兽</label>
-      &nbsp;&nbsp;
-      <label>武器:</label>
-      <select id="weaponType" class="custom-select" th:field="*{hero.weaponType}">
-        <option value=""></option>
-        <option dyl:options="0002" th:value="${form.hero.weaponType}" />
-      </select>
-      <br>
-      <label>兵种:</label>
-      <div class="search" dyl:radioImage="0005" th:value="${form.hero.moveType}" />
-      <br>
-      <label>颜色:</label>
-      <div class="search" dyl:radioImage="0001" th:value="${form.hero.color}" />
+      <table>
+        <tr>
+          <td class="title"><label>种族</label></td>
+          <td class="info">
+            <input type="checkbox" th:field="*{hero.race}" value="02" />
+            <label>龙</label>
+            <input type="checkbox" th:field="*{hero.race}" value="03" />
+            <label>兽</label>
+          </td>
 
-      <br>
+          <td class="title"><label>武器</label></td>
+          <td class="info">
+            <select style="width:150px" id="weaponType" class="custom-select" th:field="*{hero.weaponType}">
+              <option value=""></option>
+              <option dyl:options="0002" th:value="${form.hero.weaponType}" />
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title"><label>兵种</label></td>
+          <td class="info">
+            <div class="search" dyl:checkboxImage="0005" th:value="${form.hero.moveType}" th:field="*{hero.moveType}" />
+          </td>
+          <td class="title"><label>颜色</label></td>
+          <td class="info">
+            <div class="search" dyl:checkboxImage="0001" th:value="${form.hero.color}" th:field="*{hero.color}" />
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="title"><label>分组</label></td>
+          <td class="info">
+            <input id="display_group" th:value="${form.group}" type="hidden" />
+            <input type="radio" th:name="form.group" th:field="*{group}" value="A">武器</input>
+            <input type="radio" th:name="form.group" th:field="*{group}" value="B">颜色</input>
+            <input type="radio" th:name="form.group" th:field="*{group}" value="C">兵种</input>
+          </td>
+          <td class="title"></td>
+          <td class="info">
+          </td>
+        </tr>
+      </table>
+
       <input type="submit">检索</input>
     </form>
   </main>
 
   <aside id="leftDetailInfo" style="display:none;">
+    <h2>基本信息</h2>
     <table width="100%">
       <tr>
         <td rowspan="7" width="150px" ><img id="hero_img" style="width:150px" src=""></img></td>
@@ -96,16 +120,54 @@
         <td><span id="stick_total" class="status" style="width:0px"/></td>
       </tr>
     </table>
-    <div class="paraBox" style="border:solid 6px #a9ff00c4;height:600px;background-color:#5a7171ad;padding-top:5px">
+    <!-- <div class="paraBox" style="border:solid 6px #a9ff00c4;height:600px;background-color:#5a7171ad;padding-top:5px"> -->
+    <h2>技能信息</h2>
       <table>
         <tr>
-          <td width="200px" align="right">skillA</td>
-          <td width="40px"/>
-          <td>aa</td>
+          <td width="200px" align="right">武器</td>
+          <td width="40px"/><td id="hero_weapon"></td>
+        </tr>
+        <tr>
+          <td width="200px" align="right">主动技能</td>
+          <td width="40px"/><td id="hero_skillA"></td>
+        </tr>
+        <tr>
+          <td width="200px" align="right">被动技能</td>
+          <td width="40px"/><td id="hero_skillB"></td>
+        </tr>
+        <tr>
+          <td width="200px" align="right">辅助技能</td>
+          <td width="40px"/><td id="hero_skillC"></td>
+        </tr>
+        <tr>
+          <td width="200px" align="right">支援技能</td>
+          <td width="40px"/><td id="hero_skillS"></td>
+        </tr>
+        <tr>
+          <td width="200px" align="right">必杀技能</td>
+          <td width="40px"/><td id="hero_skillE"></td>
         </tr>
       <table>
-    </div>
-    
+      
+    <h2>组队</h2>
+      <table>
+        <tr>
+        <td>
+      <div>
+        <input type="text" th:name="form.teamNo" id="teamNo">编号</input>
+        <input type="hidden" th:name="form.teamMember" id="teamMember"></input>
+        <br>
+        <div style="display: inline-block;float:left"><img id="team_1" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
+        <div style="display: inline-block;float:left"><img id="team_2" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
+        <div style="display: inline-block;float:left"><img id="team_3" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
+        <div style="display: inline-block;float:left"><img id="team_4" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
+        <button id="updTeam" type="button">更新</button>
+      </div>
+      </td>
+      </tr>
+      </table>
+    <!-- </div> -->
+    <h2>操作</h2>
     <div class="button-group">
        <button id="picture" type="button">picture</button>
        <button type="button" onclick="updateHeroInfo()">update</button>

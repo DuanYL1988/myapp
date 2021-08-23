@@ -1,11 +1,16 @@
 var htmlFlag;
 var imageBox=[];
 var currentIndex = -1;
+var imgHeight = '1080px';
 
 $(function() {
-    $.each(jsonData.album,function(){
-        $("#sctFolder").append("<option value='"+this.path+"'>"+this.path+"</option>");
-    });
+
+    if ('feh' == type) {
+        imageBox=['normal.png','attact.png','break.png','extra.png'];
+    } else if ('fgo' == type){
+        imageBox=['Stage1.png','Stage2.png','Stage3.png','Stage4.png'];
+    }
+
     initilizeImage();
     
     $(document).on('keydown',function(event){
@@ -24,26 +29,25 @@ $(function() {
         }
       }
       var src = imageBox[currentIndex];
-      $("#showFullImg").attr('src',src);
-      console.log(currentIndex);
+      $("#showFullImg").attr('src',path+"/"+src);
     });
 });
 
 function initilizeImage(){
-  var folder = $("#sctFolder").val();
-  document.getElementById("navImg").innerHTML = "";
-  imageBox=[];
-  $.each(jsonData.album,function(){
-    if (folder == this.path) {
-        $.each(this.images,function(){
-          imageBox.push(this);
-        });
-    }
+
+  $.each(imageBox,function(index,imgSrc){
+    createImg(path+"/"+imgSrc,index);
   });
   
-  $.each(imageBox,function(index,imgSrc){
-    createImg(this,index);
-  });
+  var popupFlag = window.opener != null;
+  if (popupFlag) {
+    if(type) {
+        $("#showFullImg").css('height',imgHeight);
+    }
+    $("#showFullImg").css('height',height+'px');
+  }
+  currentIndex = 0;
+  $("#showFullImg").attr('src',path+"/"+imageBox[0]);
 }
 
 function createImg(src,index){
@@ -62,7 +66,6 @@ function showImg(imgEle,index){
 
 function showInWindows(){
     var maxWidth = document.body.clientWidth+'px';
-    var maxHeight = document.body.clientHeight+'px';
     //var windows = $(document);
     var showDiv = $("#showWindow")[0];
     if (showDiv.className == "showWindow"){
@@ -71,13 +74,8 @@ function showInWindows(){
         $("#navite").css('display','none');
         showDiv.className = "showFullWindow";
         showDiv.style.width = maxWidth;
-        $("#showFullImg").css('width','auto');
         $("#showFullImg").css('height','1080px');
     } else {
-        $("#sctFolder").css('display','');
-        $("#navite").css('display','');
-        showDiv.className = "showWindow";
-        $("#showFullImg").css('width','auto');
-        $("#showFullImg").css('height','790px');
+        location.reload();
     }
 }

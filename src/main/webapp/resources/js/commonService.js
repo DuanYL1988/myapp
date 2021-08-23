@@ -5,7 +5,9 @@
       'getValByKey':getValByKey,
       'changeNull':changeNull,
       'isEmpty':isEmpty,
-      'isNotEmpty':isNotEmpty
+      'isNotEmpty':isNotEmpty,
+      'createImg':createImg,
+      'createElement':createElement
   });
   
   function ajaxGet(url,jsonData,callback){
@@ -73,6 +75,19 @@
   function isNotEmpty(arg) {
       var rslt = isEmpty(arg) ? false : true;
       return rslt;
+  }
+  
+  function createImg(path,id,name){
+      var imgEle = createElement('img',id,name);
+      imgEle.src = path;
+      return imgEle;
+  }
+  
+  function createElement(type,id,name) {
+    var ele = document.createElement(type);
+    ele.id = id;
+    ele.className = name;
+    return ele;
   }
   
   $.fn.serializeObject = function(){

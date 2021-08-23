@@ -44,8 +44,19 @@ public class FileExplorerController {
          * Gallery gallery = new Gallery(); model.addAttribute("jsonDate",
          * gallery.createObject(path)); gallery = null;
          */
+        String folder = "/myapp/resources/images";
+        String game = request.getParameter("game");
+        if ("feh".equals(game)) {
+            folder = folder + "/feh/acter/";
+        } else {
+            folder = folder + "/fgo/servant/";
+        }
+        String name = request.getParameter("name");
+        folder = folder + name;
 
-        model.addAttribute("testImg", "S119_Stage4.png");
+        model.addAttribute("folder", folder);
+        model.addAttribute("type", game);
+        model.addAttribute("height", request.getParameter("height"));
         return "fileExplorer/gallery";
     }
 

@@ -1,8 +1,8 @@
 package com.app.controller;
 
 import java.util.List;
-import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.util.StringUtils;
 
 import com.app.common.CommonContent;
 import com.app.dto.AjaxResponseDto;
@@ -54,6 +55,49 @@ public class HeroController {
     }
 
     /**
+     * 结果list
+     *
+     * @param model
+     * @param form
+     * @return
+     */
+    @RequestMapping(value = "search")
+    public String doSearch(Model model, HeroSearchForm form, HttpServletRequest request) {
+        // Menu请求中有参数
+        String type = request.getParameter("type");
+
+        if (null == form.getHero()) {
+            Hero condition = new Hero();
+            // 设置检索参数
+            if (!StringUtils.isEmpty(type)) {
+                setSearchType(condition, type);
+            }
+            form.setHero(condition);
+            form.setMode("search");
+            form.setGroup("A");
+        }
+
+        // 使用thymeleaf标签生成页面
+//        Map<String, List<Hero>> resultMapList = service.doGroupSearch(form);
+//        model.addAttribute("resultMapList", resultMapList);
+
+        // 使用Json在JS中生成页面内容
+        List<Hero> heroList = service.doSearch(form);
+        String jsonDate = "";
+        if ("A".equals(form.getGroup())) {
+            jsonDate = jsonUtil.praseObjToJson(commonUtil.groupByList("weaponType", heroList));
+        } else if ("B".equals(form.getGroup())) {
+            jsonDate = jsonUtil.praseObjToJson(commonUtil.groupByList("moveType", heroList));
+        } else if ("C".equals(form.getGroup())) {
+            jsonDate = jsonUtil.praseObjToJson(commonUtil.groupByList("color", heroList));
+        }
+        model.addAttribute("jsonDate", jsonDate);
+
+        model.addAttribute("form", form);
+        return "hero/hero_list";
+    }
+
+    /**
      * 登录页面
      */
     @RequestMapping(value = "regist/{acterId}")
@@ -71,7 +115,6 @@ public class HeroController {
 
     @RequestMapping(value = "regist/excute")
     public String doRegist(Model model, HeroRegistForm form, HttpSession session) {
-
         // 判断是更新还是新规
         String id = form.getHero().getId() + "";
 
@@ -87,34 +130,6 @@ public class HeroController {
         model.addAttribute("result", result);
 
         return "hero/regist";
-    }
-
-    /**
-     * 结果list
-     *
-     * @param model
-     * @param form
-     * @return
-     */
-    @RequestMapping(value = "search")
-    public String doSearch(Model model, HeroSearchForm form) {
-
-        if (null == form.getHero()) {
-            form.setHero(new Hero());
-            form.setMode("search");
-        }
-
-        // 使用thymeleaf标签生成页面
-        Map<String, List<Hero>> resultMapList = service.doSearch(form);
-        model.addAttribute("resultMapList", resultMapList);
-
-        // 使用Json在JS中生成页面内容
-        List<Hero> heroList = heroRepo.selectByDto(form.getHero());
-        String jsonDate = jsonUtil.praseObjToJson(commonUtil.groupByList("weaponType", heroList));
-        model.addAttribute("jsonDate", jsonDate);
-
-        model.addAttribute("form", form);
-        return "hero/hero_list";
     }
 
     @RequestMapping(value = "detail/{id}")
@@ -135,5 +150,17 @@ public class HeroController {
         AjaxResponseDto result = service.getAjaxHeroInfo(id);
 
         return result;
+    }
+
+    private void setSearchType(Hero condition, String type) {
+        if ("armor".equals(type)) {
+            condition.setMoveType("04");
+        } else if ("fly".equals(type)) {
+            condition.setMoveType("03");
+        } else if ("knight".equals(type)) {
+            condition.setMoveType("02");
+        } else if ("foot".equals(type)) {
+            condition.setMoveType("01");
+        }
     }
 }

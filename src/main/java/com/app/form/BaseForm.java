@@ -10,6 +10,8 @@ public class BaseForm {
 
     private String selected;
 
+    private String group;
+
     public String getMode() {
         return mode;
     }
@@ -40,6 +42,14 @@ public class BaseForm {
 
     public void setSelected(String selected) {
         this.selected = selected;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
 }

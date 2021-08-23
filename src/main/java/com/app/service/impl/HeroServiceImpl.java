@@ -1,10 +1,12 @@
 package com.app.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.app.common.CommonContent;
 import com.app.dto.AjaxResponseDto;
@@ -48,7 +50,7 @@ public class HeroServiceImpl implements HeroService {
     SkillInfoService skillService;
 
     @Override
-    public Map<String, List<Hero>> doSearch(HeroSearchForm form) {
+    public Map<String, List<Hero>> doGroupSearch(HeroSearchForm form) {
 
         String orderKey = "WEAPON_TYPE";
         String keyName = "0002-" + commonUtil.changeNm(orderKey, false);
@@ -59,6 +61,17 @@ public class HeroServiceImpl implements HeroService {
         List<Hero> searchList = heroRepo.selectByDto(condition);
 
         return commonUtil.groupByList(keyName, searchList);
+    }
+
+    @Override
+    public List<Hero> doSearch(HeroSearchForm form) {
+        Hero condition = form.getHero();
+        editCondition(condition);
+        condition.setOrderBy("ID");
+
+        List<Hero> searchList = heroRepo.selectByDto(condition);
+
+        return searchList;
     }
 
     @Override
@@ -78,13 +91,6 @@ public class HeroServiceImpl implements HeroService {
             heroRepo.update(input);
         }
 
-        // 武器情报
-        /*
-         * SkillInfo weapon = skillRepo.selectOneByUniqueKey(input.getWeapon(), "W"); if
-         * (null == weapon) { skillService.registFromHero(input.getWeapon(),
-         * form.getWeaponInfo(), "W", form.getExtendWeapon()); }
-         */
-
         result.setData(input.getTitleName() + ";" + input.getName());
         result.setCode("0");
         result.setMessage("SUCCESS");
@@ -99,14 +105,38 @@ public class HeroServiceImpl implements HeroService {
     public AjaxResponseDto getAjaxHeroInfo(Integer id) {
         AjaxResponseDto result = new AjaxResponseDto();
         Hero hero = heroRepo.selectOneById(id);
+        result.setData(hero);
+
         List<Universal> roundInfo = oracleRepo.getRoundMaxVal(hero);
 
-        result.setData(hero);
+        // 组队信息
+        Hero cond1 = new Hero();
+        if (null != hero.getTeam() && hero.getTeam() > 0) {
+            cond1.setTeam(hero.getTeam());
+            cond1.setCondition(" AND ID <> " + id + " ");
+            List<Hero> teamInfo = heroRepo.selectByDto(cond1);
+            if (teamInfo.size() > 0) {
+                if (teamInfo.size() > 3) {
+                    result.setMessage("该队伍人数超过4人");
+                    List<Hero> team = new ArrayList<Hero>();
+                    team.add(hero);
+                    team.addAll(teamInfo);
+                    result.setListData02(team);
+                }
+            }
+        }
+
         result.setListData01(roundInfo);
 
         return result;
     }
 
+    /**
+     * 角色登录
+     *
+     * @param input
+     * @return
+     */
     private boolean doInsert(Hero input) {
         int cnt = heroRepo.uniqueCheck(input.getTitleName(), input.getName());
         if (cnt > 0) {
@@ -130,5 +160,29 @@ public class HeroServiceImpl implements HeroService {
         input.setOrigin(hm.getOriginName());
         heroRepo.insert(input);
         return true;
+    }
+
+    private void editCondition(Hero condition) {
+        String cond = editQuary("MOVE_TYPE", condition.getMoveType());
+        String quary = condition.getCondition();
+        if (StringUtils.isEmpty(quary)) {
+            quary = "";
+        }
+
+        if (!StringUtils.isEmpty(cond)) {
+            condition.setMoveType("");
+            condition.setCondition(quary + cond);
+        }
+
+    }
+
+    private String editQuary(String col, String val) {
+        StringBuilder cond = new StringBuilder();
+        if (!StringUtils.isEmpty(val) && val.indexOf(",") > 0) {
+            cond.append(" AND " + col + " IN (" + val + ") ");
+            return cond.toString();
+        } else {
+            return null;
+        }
     }
 }

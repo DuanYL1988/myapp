@@ -4,7 +4,10 @@ var wenponCd = ['R-W','R-M','R-D','R-B','R-BOW','R-Dart',
   'B-W','B-M','B-D','B-B','B-BOW','B-Dart',
   'G-W','G-M','G-D','G-B','G-BOW','G-Dart',
   'N-W','N-Dart','N-Staff','N-D','N-B'];
-  
+
+var colorMoveCd = ['01','02','03','04'];
+var selectedHero;
+
 $(function() {
     // 未定义返回ture
     htmlFlag = typeof(mode)=="undefined";
@@ -34,62 +37,60 @@ $(function() {
     });
 
     $('#picture').on('click',function(){
+        /*
        $("#block").css("display","");
        $("body").css("overflow-y","hidden");
+       */
+        var url = "/myapp/fileManagement/gallery?game=feh&height=980&name="+selectedHero.imgName;
+        var iLeft = (window.screen.availWidth - 10 - 850) / 2;
+        window.open(url,"立绘","location=no,height=1100 , width=1000 , top=0 , left= " + iLeft, false);
     });
     
     $('#cancel').on('click',function(){
        $("#block").css("display","none");
        $("body").css("overflow-y","");
     });
-    
-    $('#picture').on('click',function(){
-       $("#block").css("display","");
-       $("body").css("overflow-y","hidden");
-    });
+
 });
 
 /**
  * 静态html打开时,读取json设置隐藏区域的图片
  */
 function initHtml(jsonData){
-  //document.getElementById("main").innerHTML = "";
+  var displayGroup = $("#display_group").val();
+  displayGroup = null == displayGroup ? "A" : displayGroup;
   
-  for(var i=0;i<=wenponCd.length;i++){
-    var data = jsonData[wenponCd[i]];
-    secondLoop(data)
+  if ("A"==displayGroup) {
+      for(var i=0;i<=wenponCd.length;i++){
+        var data = jsonData[wenponCd[i]];
+        secondLoop(data)
+      }
+  } else {
+     for(var i=0;i<=colorMoveCd.length;i++){
+        var data = jsonData[colorMoveCd[i]];
+        secondLoop(data)
+      }
   }
 }
 
 function secondLoop(data){
-    var parentDiv = document.createElement("div");
-    parentDiv.className = "row";
+    var parentDiv = createElement('div','','row');
+    var rightDiv = createElement('div','','rightArea');
 
-    var rightDiv = document.createElement("div");
-    rightDiv.className = "rightArea";
-    
     $.each(data,function(){
-    
-      var cellDiv = document.createElement("div");
-      cellDiv.className = "ih-item circle effect19";
+      var cellDiv = createElement('div','','ih-item circle effect19');
 
-      var spinner = document.createElement("div");
-      spinner.className = "spinner";
+      var spinner = createElement('div','','spinner');
       cellDiv.appendChild(spinner);
-      
-      var imgDiv = document.createElement("div");
-      imgDiv.className = "img";
-      imgDiv.id = this.id+";"+this.weaponType;
-      var imgEle = document.createElement("img");
-      imgEle.src = heroImagePath+this.imgName+"/face.png";
+
+      var imgDiv = createElement('div',this.id+";"+this.weaponType,'img');
+      var imgEle = createImg(heroImagePath+this.imgName+"/face.png",'','');
       imgDiv.appendChild(imgEle);
       cellDiv.appendChild(imgDiv);
       
-      var infoDiv = document.createElement("div");
-      infoDiv.className = "info";
-      var infoBackDiv = document.createElement("div");
-      infoBackDiv.className = "infoBackDiv";
-      var h3Ele = document.createElement("h3");
+      var infoDiv = createElement('div','','info');
+      var infoBackDiv = createElement('div','','infoBackDiv');
+      var h3Ele = createElement('h3','','');
       h3Ele.innerHTML = this.name;
       var pEle = document.createElement("p");
       pEle.innerHTML = this.titleName;
@@ -113,6 +114,9 @@ function openInfoDiv(id){
     var url ='/myapp/hero/openLeftInfo/' +id;
     
     ajaxGet(url,null,function(data){
+        // 选择的角色
+        selectedHero = data.data;
+
         var leftAside = $("#leftDetailInfo");
         leftAside.css("display","");
         leftAside.css("background","url('/myapp/resources/images/feh/background.jpg')");
@@ -130,6 +134,12 @@ function openInfoDiv(id){
         $("#hero_def").html(localDef);
         $("#hero_mdf").html(localMdf);
         $("#hero_total").html(localTotal);
+        $("#hero_weapon").html(data.data.weapon);
+        $("#hero_skillA").html(data.data.skillA);
+        $("#hero_skillB").html(data.data.skillB);
+        $("#hero_skillC").html(data.data.skillC);
+        $("#hero_skillS").html(data.data.skillS);
+        $("#hero_skillE").html(data.data.skillE);
         
         $("#round_hp").html('排位:'+data.listData01[0].roundVal+"/"+data.listData01[0].totalVal);
         $("#round_pow").html('排位:'+data.listData01[1].roundVal+"/"+data.listData01[1].totalVal);
@@ -144,6 +154,13 @@ function openInfoDiv(id){
         $("#stick_def").css('width',(localDef/data.listData01[3].maxVal)*180+"px");
         $("#stick_mdf").css('width',(localMdf/data.listData01[4].maxVal)*180+"px");
         $("#stick_total").css('width',(localTotal/data.listData01[5].maxVal)*180+"px");
+        
+        // 组队
+        if (null != data.listData02){
+            $.each(data.listData02,function(index,member){
+                $("#team_"+index).prop("src",heroImagePath+member.imgName+"/face.png");
+            });
+        }
     });
     
     $("#heroId").val(id);
@@ -165,6 +182,12 @@ function opInfoWhenHtml(heroId,weaponType){
           $("#hero_def").html(this.def);
           $("#hero_mdf").html(this.mdf);
           $("#hero_total").html(this.hp+this.attact+this.speed+this.def+this.mdf);
+          $("#hero_weapon").html(this.weapon);
+          $("#hero_skillA").html(this.skillA);
+          $("#hero_skillB").html(this.skillB);
+          $("#hero_skillC").html(this.skillC);
+          $("#hero_skillS").html(this.skillS);
+          $("#hero_skillE").html(this.skillE);
       }
   });
 }

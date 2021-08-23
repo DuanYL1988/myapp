@@ -8,9 +8,13 @@ import com.app.model.Hero;
  * @author dylsw
  *
  */
-public class HeroSearchForm extends BaseForm{
+public class HeroSearchForm extends BaseForm {
 
     private Hero hero;
+
+    private Integer teamNo;
+
+    private String teamMembers;
 
     public Hero getHero() {
         return hero;
@@ -20,5 +24,20 @@ public class HeroSearchForm extends BaseForm{
         this.hero = hero;
     }
 
+    public Integer getTeamNo() {
+        return teamNo;
+    }
+
+    public void setTeamNo(Integer teamNo) {
+        this.teamNo = teamNo;
+    }
+
+    public String getTeamMembers() {
+        return teamMembers;
+    }
+
+    public void setTeamMembers(String teamMembers) {
+        this.teamMembers = teamMembers;
+    }
 
 }

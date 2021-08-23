@@ -5,36 +5,31 @@
 <title>相册</title>
 <style>
 main{text-align:center}
-#navite {background-color:#99bfbc;overflow-x:scroll;height:140px;width:1990px;float:left}
+#navite {background-color:#99bfbc;overflow-x:scroll;height:140px;position:fixed;bottom:10px;right:20px}
 #navImg {float:left}
 #navImg img{width:auto;height:120px;}
-.showWindow {height:800px;padding-left:20px}
+.showWindow {margin-top:-10px}
 .showFullWindow {text-align:center}
 </style>
 <script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
 <script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
 <!--
+-->
 <script th:inline="javascript">
-    var jsonTxt = [[${jsonDate}]];
-    var jsonData = JSON.parse(jsonTxt);
+    var path = [[${folder}]];
+    var type = [[${type}]];
+    var height = [[${height}]];
 </script>
 <script src="../../../resources/js/hero/gallery.js" th:src="@{/resources/js/hero/gallery.js}"></script>
--->
 </head>
 <body style="background: #decfcf">
   <main>
-  <!--
-    <div id="selectFolder" style="padding-left:10px">
-        <select id="sctFolder" onchange="initilizeImage()"></select>
-    </div>
     <div id="showWindow" class="showWindow" onclick="showInWindows()">
-      <img src='' id='showFullImg' style="height:790px"/>
+      <img src='' id='showFullImg'/>
     </div>
-    <div id="navite">
+    <div id="navite" style="display:none">
       <div id="navImg"></div>
     </div>
-    -->
-    <img src="/images/S119_Stage4.png" />
   </main>
 </body>
 </html>
