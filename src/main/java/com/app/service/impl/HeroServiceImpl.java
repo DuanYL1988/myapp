@@ -63,6 +63,9 @@ public class HeroServiceImpl implements HeroService {
         return commonUtil.groupByList(keyName, searchList);
     }
 
+    /**
+     * 检索
+     */
     @Override
     public List<Hero> doSearch(HeroSearchForm form) {
         Hero condition = form.getHero();
@@ -74,6 +77,9 @@ public class HeroServiceImpl implements HeroService {
         return searchList;
     }
 
+    /**
+     * 单条记录更新
+     */
     @Override
     public AjaxResponseDto heroRegist(HeroRegistForm form) {
 
@@ -162,6 +168,46 @@ public class HeroServiceImpl implements HeroService {
         return true;
     }
 
+    /**
+     * 编队更新
+     *
+     * @param form
+     * @return
+     */
+    @Override
+    public AjaxResponseDto updateTeam(HeroRegistForm form) {
+        AjaxResponseDto result = new AjaxResponseDto();
+        // 队伍编号
+        String teamNo = form.getTeamNo();
+        String teamMember = form.getTeamMember();
+        if (StringUtils.isEmpty(teamNo) || StringUtils.isEmpty(teamMember)) {
+            result.setCode("ERROR");
+            return result;
+        }
+
+        // 重置编队信息
+        Hero updObj = new Hero();
+        updObj.setId(5000);
+        updObj.setTeam(99);
+        updObj.setCondition(" TEAM = " + teamNo + " ");
+        heroRepo.update(updObj);
+
+        Hero cond2 = new Hero();
+        cond2.setId(0);
+        cond2.setTeam(Integer.parseInt(teamNo));
+        teamMember += "0";
+        cond2.setCondition(" ID IN (" + teamMember + ") ");
+        heroRepo.update(cond2);
+
+        result.setCode("SUCCESS");
+        return result;
+    }
+
+    /**
+     * 编辑自定义检索条件
+     *
+     * @param condition
+     */
     private void editCondition(Hero condition) {
         String cond = editQuary("MOVE_TYPE", condition.getMoveType());
         String quary = condition.getCondition();

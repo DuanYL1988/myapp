@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>英雄一览页面</title>
+<link rel="icon" type="image/x-ico" href="../../../resources/images/feh.png" th:href="@{/resources/images/feh.png}"/>
+<link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet" />
+<link href="../../../resources/css/feh/hero_list.css" th:href="@{/resources/css/feh/hero_list.css}" rel="stylesheet" />
+<style>
+.memeberImg{width:110px;height:110px;border:solid 5px;box-sizing:border-box;border-color:#989647;background-color:#bec374}
+.teamMemberDiv{display:contents}
+.selected{border:solid 5px;box-sizing:border-box;border-color:#989647}
+.title{padding-left:10px}
+</style>
+<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
+<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+
+<script th:inline="javascript">
+    var mode = [[${form.mode}]];
+    var jsonDate = [[${jsonDate}]];
+</script>
+<script src="../../../resources/js/hero/team.js" th:src="@{/resources/js/hero/team.js}"></script>
+</head>
+<body style="background: #decfcf">
+  <div id="block" style="display:none">
+    <button id="cancel">Cancel</button>
+    <img id="screenImage" src=""/>
+  </div>
+  <header style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999">
+    <span>导航栏-固定位置</span>
+    <a href="/myapp/hero/index">Top</a>
+  </header>
+
+  <main id="main" style="padding-top:20px;width:1200px;">
+    <form id="ajaxSearchForm" th:object="${form}">
+      <table>
+        <tr>
+          <td class="title"><label>种族</label></td>
+          <td class="info">
+            <input type="checkbox" name="hero.race" th:field="*{hero.race}" value="02" />
+            <label>龙</label>
+            <input type="checkbox" name="hero.race" th:field="*{hero.race}" value="03" />
+            <label>兽</label>
+          </td>
+
+          <td class="title"><label>武器</label></td>
+          <td class="info">
+            <select style="width:150px" id="weaponType" class="custom-select" name="hero.weaponType"  th:field="*{hero.weaponType}">
+              <option value=""></option>
+              <option dyl:options="0002" th:value="${form.hero.weaponType}" />
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title"><label>兵种</label></td>
+          <td class="info">
+            <div class="search" dyl:checkboxImage="0005" th:value="${form.hero.moveType}" name="hero.moveType" th:field="*{hero.moveType}" />
+          </td>
+          <td class="title"><label>颜色</label></td>
+          <td class="info">
+            <div class="search" dyl:checkboxImage="0001" th:value="${form.hero.color}" name="hero.color" th:field="*{hero.color}" />
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="title"><label>分组</label></td>
+          <td class="info">
+            <input id="display_group" th:value="${form.group}" type="hidden" />
+            <input type="radio" th:name="form.group" th:field="*{group}" value="A">武器</input>
+            <input type="radio" th:name="form.group" th:field="*{group}" value="B">颜色</input>
+            <input type="radio" th:name="form.group" th:field="*{group}" value="C">兵种</input>
+          </td>
+          <td class="title"></td>
+          <td class="info">
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="title"><label>不显示已选队员</label></td>
+          <td class="info">
+            <input type="checkbox" id="hidnHeroChk" onclick="hidnHeroInTeam()"/>
+          </td>
+          <td class="title"></td>
+          <td class="info">
+          </td>
+        </tr>
+      </table>
+
+      <input type="button" onclick="ajaxSearch()" value="检索"/>
+    </form>
+  </main>
+
+  <aside id="teamInfoArea">
+    <div class="parent">
+      <div class="team" th:each="maps:${teamMap}">
+        <input type="hidden" th:value="${maps.key}"/>
+        <div class="teamMemberDiv" th:each="hero:${maps.value}" th:id="${hero.id}+','+${hero.imgName}">
+          <img class="memeberImg" th:src="'/myapp/resources/images/feh/acter/'+${hero.imgName}+'/face.png'">
+        </div>
+        <input type="button" th:onclick="'javascript:updateTeam('+${maps.key}+',this)'" value="更新"/>
+        <input type="checkbox" class="lockTeam">LOCK</input>
+      </div>
+    </div>
+    <div>
+      <input type="button" onclick="hideTeam(1)" value="1"/>
+      <input type="button" onclick="hideTeam(2)" value="2"/>
+      <input type="button" onclick="hideTeam(3)" value="3"/>
+      <input type="button" onclick="hideTeam(4)" value="4"/>
+    </div>
+  </aside>
+
+</body>
+</html>

@@ -42,8 +42,8 @@ public class FehFileUtils {
 
     public static void main(String[] args) throws Exception {
         String folderPath = "";
-//        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
-        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\fgo\\servants";
+        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
+//        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\fgo\\servants";
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("请选择需要执行的处理");
@@ -86,7 +86,7 @@ public class FehFileUtils {
                     }
 
                 } else {
-                    if (firstFlag) {
+                    if (firstFlag && "1".equals(type)) {
                         String fireNm = file.getName();
                         if (fireNm.indexOf("_Stage") > 0) {
                             String id = fireNm.split("_")[0];

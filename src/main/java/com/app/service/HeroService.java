@@ -38,4 +38,12 @@ public interface HeroService {
      * @param id
      */
     AjaxResponseDto getAjaxHeroInfo(Integer id);
+
+    /**
+     * 编队更新
+     *
+     * @param 更新form
+     * @return
+     */
+    AjaxResponseDto updateTeam(HeroRegistForm form);
 }

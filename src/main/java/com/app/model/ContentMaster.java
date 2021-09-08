@@ -1,12 +1,6 @@
 package com.app.model;
 
-import java.io.Serializable;
-
-public class ContentMaster implements Serializable {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 6531257892674588411L;
+public class ContentMaster {
 
     private Integer id;
 

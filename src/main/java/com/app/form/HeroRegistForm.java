@@ -30,6 +30,10 @@ public class HeroRegistForm extends BaseForm {
 
     private String weaponInfo;
 
+    private String teamNo;
+
+    private String teamMember;
+
     public Hero getHero() {
         return hero;
     }
@@ -100,6 +104,22 @@ public class HeroRegistForm extends BaseForm {
 
     public void setWeaponInfo(String weaponInfo) {
         this.weaponInfo = weaponInfo;
+    }
+
+    public String getTeamNo() {
+        return teamNo;
+    }
+
+    public void setTeamNo(String teamNo) {
+        this.teamNo = teamNo;
+    }
+
+    public String getTeamMember() {
+        return teamMember;
+    }
+
+    public void setTeamMember(String teamMember) {
+        this.teamMember = teamMember;
     }
 
 }

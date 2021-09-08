@@ -61,6 +61,15 @@ public class HeroRepositoryTest {
     }
 
     @Test
+    public void testUpdate() {
+        Hero updObj = new Hero();
+        updObj.setId(500);
+        updObj.setTeam(0);
+        updObj.setCondition(" TEAM = 1 ");
+        heroRepo.update(updObj);
+    }
+
+    @Test
     public void testCustom() {
         Hero custom = new Hero();
         custom.setSelectQuary(" sub.count,main.* ");
