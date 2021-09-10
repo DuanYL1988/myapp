@@ -14,7 +14,6 @@
     var mode = [[${form.mode}]];
     var jsonDate = [[${jsonDate}]];
 </script>
-<script src="searchList.json"></script>
 <script src="../../../resources/js/hero/search.js" th:src="@{/resources/js/hero/search.js}"></script>
 </head>
 <body style="background: #decfcf">
@@ -149,21 +148,12 @@
         </tr>
       <table>
       
-    <h2>组队</h2>
+    <h2>换皮</h2>
       <table>
         <tr>
         <td>
-      <div>
-        <input type="text" th:name="form.teamNo" id="teamNo">编号</input>
-        <input type="hidden" th:name="form.teamMember" id="teamMember"></input>
-        <br>
-        <div style="display: inline-block;float:left"><img id="team_1" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
-        <div style="display: inline-block;float:left"><img id="team_2" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
-        <div style="display: inline-block;float:left"><img id="team_3" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
-        <div style="display: inline-block;float:left"><img id="team_4" src="/myapp/resources/images/feh/acter/Julia_F_HeartUsurped/face.png" style="width:100px;"/></div>
-        <button id="updTeam" type="button">更新</button>
-      </div>
-      </td>
+          <div id="otherSkin"></div>
+        </td>
       </tr>
       </table>
     <!-- </div> -->
@@ -177,27 +167,3 @@
 
 </body>
 </html>
-<!-- 2020/12/06 使用json在js中生成HTML,动态静态实现方式一致
-    <div th:each="maps:${resultMapList}" class="row">
-      <div class="leftArea">
-         <img dyl:src="${maps.key}" /> 
-      </div>
-
-      <div class="rightArea" id="imageListArea">
-        <div th:each="hero:${maps.value}" class="ih-item circle effect19">
-           <a th:href="'/myapp/hero/detail/'+${hero.id}"> 
-            <div class="spinner"></div>
-            <div class="img" th:onclick="'javascript:openInfoDiv('+${hero.id}+')'">
-              <img th:src="'/myapp/resources/images/feh/acter/'+${hero.imgName}+'/face.png'">
-            </div>
-            <div class="info">
-              <div class="info-back">
-                <h3 th:text="${hero.name}"></h3>
-                <p th:text="${hero.titleName}"></p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
--->

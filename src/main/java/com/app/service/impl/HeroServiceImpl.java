@@ -1,6 +1,5 @@
 package com.app.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -114,25 +113,13 @@ public class HeroServiceImpl implements HeroService {
         result.setData(hero);
 
         List<Universal> roundInfo = oracleRepo.getRoundMaxVal(hero);
-
-        // 组队信息
-        Hero cond1 = new Hero();
-        if (null != hero.getTeam() && hero.getTeam() > 0) {
-            cond1.setTeam(hero.getTeam());
-            cond1.setCondition(" AND ID <> " + id + " ");
-            List<Hero> teamInfo = heroRepo.selectByDto(cond1);
-            if (teamInfo.size() > 0) {
-                if (teamInfo.size() > 3) {
-                    result.setMessage("该队伍人数超过4人");
-                    List<Hero> team = new ArrayList<Hero>();
-                    team.add(hero);
-                    team.addAll(teamInfo);
-                    result.setListData02(team);
-                }
-            }
-        }
-
         result.setListData01(roundInfo);
+
+        // 相同人物
+        Hero cond1 = new Hero();
+        cond1.setCondition(" AND ID <> " + id + " AND MASTER_ID = " + hero.getMasterId() + " ");
+        List<Hero> teamInfo = heroRepo.selectByDto(cond1);
+        result.setListData02(teamInfo);
 
         return result;
     }
