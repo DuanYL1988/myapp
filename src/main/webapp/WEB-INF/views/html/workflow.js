@@ -64,3 +64,47 @@ function arrIconSet(targetEle){
     }
   });
 }
+
+/**
+ * 输入验证
+ */
+function doValidation(){
+  // 清空
+  $(".error").prop('class','');
+
+  // 取得输入元素
+  var inputEleList = $("input[type='text']");
+  // 首个出错项目
+  var firstFlag = false;
+  $.each(inputEleList,function(){
+    // 可以输入
+    if(!this.disabled) {
+      
+      // 必须输入
+      if(isNotEmpty(this.attributes.notempty) && isEmpty(this.value)) {
+        this.placeholder = 'please input value!';
+        this.className = this.className + "error";
+        if (!firstFlag) {
+          this.focus();
+          firstFlag = true;
+        }
+      }
+
+      // 属性验证
+      if(isNotEmpty(this.attributes.validation) && isNotEmpty(this.value)) {
+        var valType = this.attributes.validation.value;
+        // TODO
+        if (!firstFlag && false) {
+          this.focus();
+          firstFlag = true;
+        }
+      }
+    }
+  });
+  
+  //
+  if(!firstFlag) {
+    var formObj = $("#infoForm").serializeObject();
+    console.dir(formObj);
+  }
+}

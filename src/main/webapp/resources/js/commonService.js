@@ -100,8 +100,9 @@
       $('#errMsg').html(message);
     }
   }
-  
+
   $.fn.serializeObject = function(){
+      console.log("excute serializeObject!");
       var jsonObj = {};
       var formParam = this.serializeArray();
       $.each(formParam,function(){
@@ -115,17 +116,14 @@
                   jsonObj[this.name.split('.')[0]][this.name.split('.')[1]] = this.value || '';
               }
           } else {
-              if(jsonObj[this.name]){
-                  if(!jsonObj[this.name].push){
-                      jsonObj[this.name] = [jsonObj[this.name]];
-                  }
-                  jsonObj[this.name].push(this.value || '');
+              if(jsonObj.hasOwnProperty(this.name)){
+                jsonObj[this.name].push(this.value || '');
               } else {
-                  jsonObj[this.name].push(this.value || '');
+                jsonObj[this.name] = this.value;
               }
           }
       });
       return jsonObj;
   }
-
+  
 })(jQuery);

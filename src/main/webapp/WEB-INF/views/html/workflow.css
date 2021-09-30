@@ -46,11 +46,27 @@ main {
   border-left: 10px solid red;
 }
 
+/* */
+.wk_info_area {
+  padding-top: 5px;
+  text-align:center;
+}
+
+.inputRow {
+  display:flex;
+}
+
+.inputCell {
+  padding-right:10px;
+}
+
 /* 按钮 */
 .eventArea {
   padding-top:20px;
 }
+
 .btn {
   float:right;
   display:inline-block
 }
+
