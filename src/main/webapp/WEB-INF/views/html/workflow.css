@@ -1,0 +1,56 @@
+body {
+  background-color: #decfcf;
+}
+
+main {
+  width:790px;
+}
+
+/* 流程图标区域 */
+.wk_icon_area{
+  display: flex;
+}
+
+.status {
+  display: flex;
+}
+
+/* 流程图标 */
+.wk_icon {
+  background-color: #689559;
+  width: 150px;
+  height: 30px;
+  text-align: center
+}
+
+.wk_icon_next {
+  border-top: 15px solid transparent;
+  border-left: 10px solid #689559;
+  border-bottom: 15px solid transparent;
+}
+
+.wk_icon_pre {
+  border-top: 15px solid transparent;
+  border-left: 10px solid #decfcf;
+  border-bottom: 15px solid transparent;
+  margin-right: -10px;
+  z-index:1;
+}
+
+/* 当前状态 */
+.wk_icon_area .current {
+  background-color: red
+}
+
+.wk_icon_area .currentNext {
+  border-left: 10px solid red;
+}
+
+/* 按钮 */
+.eventArea {
+  padding-top:20px;
+}
+.btn {
+  float:right;
+  display:inline-block
+}

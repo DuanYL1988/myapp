@@ -7,7 +7,8 @@
       'isEmpty':isEmpty,
       'isNotEmpty':isNotEmpty,
       'createImg':createImg,
-      'createElement':createElement
+      'createElement':createElement,
+      'showMsg':showMsg
   });
   
   function ajaxGet(url,jsonData,callback){
@@ -88,6 +89,16 @@
     ele.id = id;
     ele.className = name;
     return ele;
+  }
+  
+  function showMsg(type,message){
+    $('#warMsg').html('&nbsp');
+    $('#errMsg').html('&nbsp');
+    if ('war'==type) {
+      $('#warMsg').html(message);
+    } else if ('err'==type) {
+      $('#errMsg').html(message);
+    }
   }
   
   $.fn.serializeObject = function(){

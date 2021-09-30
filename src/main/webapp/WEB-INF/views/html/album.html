@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>相册</title>
+<style>
+#navite {background-color:#99bfbc;width:420px;overflow-y:scroll;height:1050px;float:left}
+#navImg {float:left}
+#navImg img{width:auto;height:220px;margin-left:5px}
+#showWindow {background-color:#b5b5d4;height:100%;margin-left:5px;float:left}
+</style>
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+<script src="album.json"></script>
+<script src="album.js"></script>
+</head>
+<body style="background: #decfcf">
+  <main>
+    <div id="navite">
+      <div id="navImg"></div>
+    </div>
+    <div id="showWindow">
+      <img src='' id='showFullImg' style='height:1050px'/>
+    </div>
+  </main>
+</body>
+</html>
