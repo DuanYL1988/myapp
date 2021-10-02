@@ -8,6 +8,7 @@
       'isNotEmpty':isNotEmpty,
       'createImg':createImg,
       'createElement':createElement,
+      'doValidation':doValidation,
       'showMsg':showMsg
   });
   
@@ -59,6 +60,10 @@
       return text;
   }
   
+  /**
+   * 对象为空判断
+   * @param arg js对象,值
+   */
   function isEmpty(arg) {
       arg = $.trim(arg);
       if (typeof arg == 'undefined') {
@@ -73,17 +78,29 @@
       }
   }
   
+  /**
+   * 对象不为空判断
+   * @param arg js对象,值
+   */
   function isNotEmpty(arg) {
       var rslt = isEmpty(arg) ? false : true;
       return rslt;
   }
   
+  /**
+   * 创建图片元素<img>
+   * @param arg js对象,值
+   */
   function createImg(path,id,name){
       var imgEle = createElement('img',id,name);
       imgEle.src = path;
       return imgEle;
   }
   
+  /**
+   * 创建html元素<img>
+   * @param arg js对象,值
+   */
   function createElement(type,id,name) {
     var ele = document.createElement(type);
     ele.id = id;
@@ -98,6 +115,53 @@
       $('#warMsg').html(message);
     } else if ('err'==type) {
       $('#errMsg').html(message);
+    }
+  }
+  
+  /**
+    * 输入验证
+    */
+  function doValidation(){
+    // 清空
+    $(".error").prop('class','');
+  
+    // 取得输入元素
+    var inputEleList = $("input[type='text']");
+    // 首个出错项目
+    var firstFlag = false;
+    $.each(inputEleList,function(){
+      // 可以输入
+      if(!this.disabled) {
+        
+        // 必须输入
+        if(isNotEmpty(this.attributes.notempty) && isEmpty(this.value)) {
+          this.placeholder = 'please input value!';
+          this.className = this.className + "error";
+          if (!firstFlag) {
+            this.focus();
+            firstFlag = true;
+          }
+        }
+  
+        // 属性验证
+        if(isNotEmpty(this.attributes.validation) && isNotEmpty(this.value)) {
+          var valType = this.attributes.validation.value;
+          // TODO
+          if (!firstFlag && false) {
+            this.focus();
+            firstFlag = true;
+          }
+        }
+      }
+    });
+  
+    //
+    if(!firstFlag) {
+      var formObj = $("#infoForm").serializeObject();
+      console.dir(formObj);
+      return false;
+    } else {
+      return true;
     }
   }
 
