@@ -2,10 +2,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>工作流</title>
-<link href="resources/css/common.css" rel="stylesheet" />
+<link href="../../../resources/css/common.css" rel="stylesheet" />
 <link href="workflow.css" rel="stylesheet" />
-<script src="resources/js/jquery-3.4.1.min.js"></script>
-<script src="resources/js/commonService.js"></script>
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+<script src="workflow.json"></script>
 <script src="workflow.js"></script>
 </head>
 <body>
@@ -16,34 +17,8 @@
       <span id="errMsg" style='color:red'>&nbsp</span>
     </div>
     <!-- 流程ICON区域 -->
-    <div class="wk_icon_area">
-      <div class="status" id="status_01">
-        <div class="wk_icon current"><span>情报输入</span></div>
-        <div class="wk_icon_next currentNext"></div>
-      </div>
-      
-      <div class="status" id="status_02">
-        <div class="wk_icon_pre"></div>
-        <div class="wk_icon"><span>输入确认</span></div>
-        <div class="wk_icon_next"></div>
-      </div>
-
-      <div class="status" id="status_11">
-        <div class="wk_icon_pre"></div>
-        <div class="wk_icon"><span>承认</span></div>
-        <div class="wk_icon_next"></div>
-      </div>
-      
-      <div class="status" id="status_21">
-        <div class="wk_icon_pre"></div>
-        <div class="wk_icon"><span>施工</span></div>
-        <div class="wk_icon_next"></div>
-      </div>
-      
-      <div class="status" id="status_09">
-        <div class="wk_icon_pre"></div>
-        <div class="wk_icon"><span>结果报告</span></div>
-      </div>
+    <div id="wk_icon_area">
+      <!-- 通过JS生成 -->
     </div>
     
     <!-- 输入区域 -->
@@ -110,22 +85,18 @@
         </datalist>        
         
         <datalist id="originList">
-          <option value="暗之龙与光之剑">
-          <option value="索菲亚复仇">
-          <option value="圣战系谱">
-          <option value="多拉基亚776">
-          <option value="封印之剑">
-          <option value="烈火之剑">
+          <option value="暗之龙与光之剑"/>
+          <option value="索菲亚复仇"/>
+          <option value="圣战系谱"/>
+          <option value="多拉基亚776"/>
+          <option value="封印之剑"/>
+          <option value="烈火之剑"/>
         </datalist>
       </div>
     </div>
     
     <!-- 按钮动作区域 -->
-    <div class="eventArea">
-      <button id="btn_submit" class="btn" onclick="doValidation()">Submit</button>
-      <button id="btn_next" class="btn" onclick="doEvent('Next')">下一步</button>
-      <button id="btn_pre" class="btn" onclick="doEvent('Pre')">上一步</button>
-      
+    <div id="eventArea">
     </div>
   </main>
 </body>

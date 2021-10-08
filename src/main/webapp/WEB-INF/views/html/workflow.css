@@ -1,13 +1,9 @@
-body {
-  background-color: #decfcf;
-}
-
 main {
-  width:790px;
+  width:1280px;
 }
 
 /* 流程图标区域 */
-.wk_icon_area{
+#wk_icon_area{
   display: flex;
 }
 
@@ -20,7 +16,8 @@ main {
   background-color: #689559;
   width: 150px;
   height: 30px;
-  text-align: center
+  text-align: center;
+  font-size:21px;
 }
 
 .wk_icon_next {
@@ -38,30 +35,21 @@ main {
 }
 
 /* 当前状态 */
-.wk_icon_area .current {
+#wk_icon_area .current {
   background-color: red
 }
 
-.wk_icon_area .currentNext {
+#wk_icon_area .currentNext {
   border-left: 10px solid red;
 }
 
-/* */
-.wk_info_area {
-  padding-top: 5px;
-  text-align:center;
-}
-
-.inputRow {
-  display:flex;
-}
-
-.inputCell {
-  padding-right:10px;
+.title {
+  font-size:x-large;
+  font-weight:bolder;
 }
 
 /* 按钮 */
-.eventArea {
+#eventArea {
   padding-top:20px;
 }
 
@@ -69,4 +57,3 @@ main {
   float:right;
   display:inline-block
 }
-

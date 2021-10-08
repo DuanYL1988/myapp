@@ -1,35 +1,119 @@
 /* 元素样式 */
+body {
+  background-color: #decfcf;
+}
+
 input[type='text'] {
   height:22px;
   width:140px;
   border:1px solid #949494;
   border-radius:5px;
+  font-family:ui-rounded;
 }
 
+textarea {
+  border:1px solid #949494;
+  border-radius:5px;
+  font-family:ui-rounded;
+  font-size:unset;
+}
+
+select {
+  height:27px;
+  width:145px;
+  border:1px solid #949494;
+  border-radius:5px;
+}
+
+/* 提示输入错误样式 */
 input[type='text'][class='error'] {
   border:2px solid red;
 }
 
+/* radio,checkbox Label */
+.checkItem {
+  display : inline-flex;
+}
+
+/* Layout Design */
+.vertical .inputCell{
+  display:block;
+}
+
+/* 输入区域一行 Div */
+.inputRow {
+  display:flex;
+  padding-left:20px;
+  flex-flow: row wrap;
+}
+
+/* 输入区域一行中单独元素 Div */
 .inputCell {
   display:flex;
+  padding-top:10px;
+  padding-right:15px;
 }
 
+/* 输入元素的标题 label */
 .inputCell label {
   display:block;
-  width:60px;
+  width:140px;
+  color:01018cfc;
 }
 
-.inputRow .vertical {
-  display:block;
+/**
+ * 多标签页面
+ */
+.group-layout {
+  padding-top:10px;
+}
+
+/* 标签Title Div */
+.group-title {
+  display:flex;
+  text-align:center;
+}
+
+/* 标签对应显示区域Div */
+.group-section {
+  display:none;
+  border:2px solid #CCCCCC;
+  background-color:#FFFFFF;
+  width:80%;
+}
+
+/* 标签对应显示区域标题SPAN */
+.layout-title {
+  float:left;
+  width:180px;
+  color:#006BBD;
+  background-color:#E3E5E7;
+  border-left:1px solid #CCCCCC;
+  border-right:1px solid #CCCCCC;
+  border-top:1px solid #CCCCCC;
+}
+
+/* 选中的标签 */
+.current-layout {
+  border-bottom:3px solid #0062E6;
+  background-color:#FFFFFF;
+}
+
+/* 编辑区域 Div */
+.editArea {
+  padding-top:15px;
 }
 
 button {
-  height:30px;
-  width:90px;
+  height:40px;
+  width:150px;
   margin-right:10px;
   background-color:#bfbfeca8;
+  border-radius:10px;
+  font-size:x-large;
+  font-weight:bolder;
 }
 
 button:hover {
-  background-color:#de4d4d99;
+  background-color:#8080fda8;
 }

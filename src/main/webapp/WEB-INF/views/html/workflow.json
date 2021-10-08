@@ -1,0 +1,45 @@
+var wkJson = {
+  "name" : "角色登录",
+  "currentStep" : "A-1",
+  "stepsStr" : ["A-1","A-2","A-3","A-4","A-5"],
+  "steps" : {
+    "A-1" : {
+      "id":"A-1",
+      "name":"选择游戏",
+      "actions" : [
+        {"name":"next","step":"A-2"}
+      ]
+    },
+    "A-2" : {
+      "id":"A-2",
+      "name":"基本信息登录",
+      "actions" : [
+        {"name":"prev","step":"A-1"},
+        {"name":"next","step":"A-3"}
+      ]
+    },
+    "A-3" : {
+      "id":"A-3",
+      "name":"技能设定",
+      "actions" : [
+        {"name":"prev","step":"A-2"},
+        {"name":"next","step":"A-4"}
+      ]
+    },
+    "A-4" : {
+      "id":"A-4",
+      "name":"队伍设定",
+      "actions" : [
+        {"name":"prev","step":"A-3"},
+        {"name":"next","step":"A-5"}
+      ]
+    },
+    "A-5" : {
+      "id":"A-5",
+      "name":"信息确认",
+      "actions" : [
+        {"name":"submit","step":""}
+      ]
+    }
+  } 
+}

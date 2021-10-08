@@ -1,25 +1,75 @@
-/** 初期化处理 */
+var CURRENT_STEP;
+
 $(function() {
-  var targetEle = arrIconReset();
-  arrIconSet(targetEle);
+  //console.dir(wkJson);
+  CURRENT_STEP = wkJson.currentStep;
+  initlize();
 });
+
+/** 初期化处理 */
+function initlize(){
+  document.getElementById("wk_icon_area").innerHTML = "";
+  // 进度条
+  $.each(wkJson.stepsStr,function(i,ele){
+    // 状态图标
+    var statusEle = createElement("div",this,"status");
+    
+    // 图标主体和方向箭头
+    var preEle = createElement("div","","wk_icon_pre");
+    var stepEle = createElement("div","","wk_icon");
+    var nextEle = createElement("div","","wk_icon_next");
+    
+    // 文字
+    var stepInfo = wkJson.steps[this];
+    stepEle.innerHTML = stepInfo.name;
+    
+    // 当前状态颜色设置
+    if(CURRENT_STEP == this) {
+      stepEle.className = "wk_icon current";
+      nextEle.className = "wk_icon_next currentNext";
+    }
+
+    // 第一个没有前方向,最后一个没有后方向
+    if (i>0) {
+      statusEle.appendChild(preEle);
+    }
+    statusEle.appendChild(stepEle);
+    if (i < wkJson.stepsStr.length - 1) {
+      statusEle.appendChild(nextEle);
+    }
+    statusEle.setAttribute("onclick","doEvent('"+this+"')");
+
+    // 添加
+    document.getElementById("wk_icon_area").appendChild(statusEle);
+  });
+  
+  // 按钮
+  document.getElementById("eventArea").innerHTML = "";
+  for(var i = wkJson.steps[CURRENT_STEP].actions.length; i > 0 ; i--) {
+    var eventInfo = wkJson.steps[CURRENT_STEP].actions[i-1];
+    var btnEle = createElement("button","","btn");
+    btnEle.innerHTML = eventInfo.name;
+    btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"')");
+    
+    // 添加
+    document.getElementById("eventArea").appendChild(btnEle);
+  }
+
+}
 
 /**
  * 工作流动作
  */
-function doEvent(type){
+function doEvent(step){
+  if (doValidation()) {
+    return;
+  }
+
   var parentEle = arrIconReset();
-  var targetEle;
   // 对象取得
-  if('Pre'==type) {
-    targetEle = $(parentEle).prev()[0];
-  } else if ('Next'==type){
-    targetEle = $(parentEle).next()[0];
-  }
-  // 处理
-  if(isEmpty(targetEle)){
-    targetEle = parentEle;
-  }
+  var targetEle = document.getElementById(step);
+  CURRENT_STEP = step
+
   arrIconSet(targetEle);
 }
 
@@ -63,48 +113,7 @@ function arrIconSet(targetEle){
       this.className = clsNm + ' currentNext';
     }
   });
-}
 
-/**
- * 输入验证
- */
-function doValidation(){
-  // 清空
-  $(".error").prop('class','');
-
-  // 取得输入元素
-  var inputEleList = $("input[type='text']");
-  // 首个出错项目
-  var firstFlag = false;
-  $.each(inputEleList,function(){
-    // 可以输入
-    if(!this.disabled) {
-      
-      // 必须输入
-      if(isNotEmpty(this.attributes.notempty) && isEmpty(this.value)) {
-        this.placeholder = 'please input value!';
-        this.className = this.className + "error";
-        if (!firstFlag) {
-          this.focus();
-          firstFlag = true;
-        }
-      }
-
-      // 属性验证
-      if(isNotEmpty(this.attributes.validation) && isNotEmpty(this.value)) {
-        var valType = this.attributes.validation.value;
-        // TODO
-        if (!firstFlag && false) {
-          this.focus();
-          firstFlag = true;
-        }
-      }
-    }
-  });
-  
-  //
-  if(!firstFlag) {
-    var formObj = $("#infoForm").serializeObject();
-    console.dir(formObj);
-  }
+  // 页面重置
+  initlize();
 }
