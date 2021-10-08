@@ -24,79 +24,15 @@
     <!-- 输入区域 -->
     <div class="wk_info_area">
       <form id="infoForm">
-        <div class="inputRow">
-          <div class="inputCell">
-            <label>游戏名</label>
-            <input type="text" name="gameName" autocomplete="off" list="gameList" />
-          </div>
-
-          <div class="inputCell">
-            <label>角色名</label>
-            <input type="text" name="imageName" style="width:200px" />
-          </div>
-        </div>
-        
-        <div class="fehInfoArea" style="padding-top:10px">
-          <div class="inputRow">
-            <div class="inputCell">
-              <label>名称</label>
-              <input type="text" name="hero.baseName" />
-            </div>
-            
-            <div class="inputCell">
-              <label>出处</label>
-              <input type="text" name="hero.origin" autocomplete="off" list="originList" />
-            </div>
-          </div>
-          
-          <div class="inputRow">
-            <div class="inputCell vertical">
-              <label>HP</label>
-              <input type="text" name="hero.hp" style="width:50px" notEmpty validation="numeric" value="1" />
-            </div>
-            <div class="inputCell vertical">
-              <label>POW</label>
-              <input type="text" name="hero.pow" style="width:50px" notEmpty validation="numeric" value="2" />
-            </div>
-            <div class="inputCell vertical">
-              <label>SPD</label>
-              <input type="text" name="hero.spd" style="width:50px" validation="numeric" />
-            </div>
-            <div class="inputCell vertical">
-              <label>DEF</label>
-              <input type="text" name="hero.def" style="width:50px" validation="numeric" />
-            </div>
-            <div class="inputCell vertical">
-              <label>MDF</label>
-              <input type="text" name="hero.mdf" style="width:50px" validation="numeric" />
-            </div>
-          </div>
-        </div>
-        
-        <div class="fgoInfoArea">
-        
-        </div>
-
+        <!-- 通过JS生成 -->
       </form>
-      <div class="hideArea">
-        <datalist id="gameList">
-          <option value="FEH">火纹</option>
-          <option value="FGO">Fata/Grand Order</option>
-        </datalist>        
-        
-        <datalist id="originList">
-          <option value="暗之龙与光之剑"/>
-          <option value="索菲亚复仇"/>
-          <option value="圣战系谱"/>
-          <option value="多拉基亚776"/>
-          <option value="封印之剑"/>
-          <option value="烈火之剑"/>
-        </datalist>
+      <div id="hideArea">
+        <!-- 通过JS生成 -->
       </div>
-    </div>
     
     <!-- 按钮动作区域 -->
     <div id="eventArea">
+      <!-- 通过JS生成 -->
     </div>
   </main>
 </body>
