@@ -1,10 +1,28 @@
 var CURRENT_STEP;
+var formEle;
 
 $(function() {
-  //console.dir(wkJson);
+  // 初始设定
   CURRENT_STEP = wkJson.currentStep;
+  formEle = document.getElementById("infoForm");
   initlize();
+  
+  // 基本情报
+  initEditArea(contract.baseInfo,formEle);
+  // 默认表示区域
+  initEditArea(contract[wkJson.displayArea],formEle);
+  
+  
 });
+
+function showSection(divEle){
+  var parentEle = $(divEle).parents()[0];
+  $(parentEle).children().attr('class','layout-title');
+  divEle.className = 'layout-title current-layout';
+  var nm = divEle.id.replace("title-","");
+  $("div[class^='group-section']").hide();
+  $("#"+nm).show();
+}
 
 /** 初期化处理 */
 function initlize(){
@@ -41,6 +59,7 @@ function initlize(){
 
     // 添加
     document.getElementById("wk_icon_area").appendChild(statusEle);
+    
   });
   
   // 按钮
@@ -54,7 +73,151 @@ function initlize(){
     // 添加
     document.getElementById("eventArea").appendChild(btnEle);
   }
+}
 
+/**
+ * 生产状态区域DIV
+ *
+ * @param obj 状态Object(包含状态，布局信息等情报)
+ * @param formEle 生产DIV的父DIV对象（Element）
+ */
+function initEditArea(obj,parentEle){
+  if (isNotEmpty(document.getElementById(obj.id))) {
+    document.getElementById(obj.id).style.display = "";
+    return;
+  }
+  if ("group"==obj.layout) {
+    
+    var stepEle = createElement("div",obj.id,"group-layout");
+    // 标题
+    /**/
+    var titleEle = createElement("span","","title");
+    titleEle.innerHTML = obj.title;
+    stepEle.appendChild(titleEle); 
+    
+    // Group标签标题部
+    var titleEle = createElement("div","","group-title");
+    var firstTagId = "";
+    $.each(obj.sections,function(){
+      var layoutTitle = createElement("div","","layout-title");
+      layoutTitle.id = "title-" + obj.id + "-" + this;
+      layoutTitle.innerHTML = obj.layoutGroup[this].title;
+      titleEle.appendChild(layoutTitle);
+      
+      // 第一个标签默认选中
+      if ("" == firstTagId) {
+        firstTagId = obj.id + "-" + this;
+        layoutTitle.className += " current-layout"; 
+      }
+    });
+    stepEle.appendChild(titleEle);
+    
+    // 标签对应的显示部分
+    $.each(obj.sections,function(){
+      var layoutId = obj.id + "-" + this;
+      var singleLayout = createElement("div",layoutId,"group-section");
+      initEditArea(obj.layoutGroup[this],singleLayout);
+      stepEle.appendChild(singleLayout);
+    });
+    
+    parentEle.appendChild(stepEle);
+    
+    // 第一个标签默认显示
+    $("#"+firstTagId).show();
+    
+    // Group Layout
+    $("div[class^='layout-title']").on('click',function(){
+      showSection(this);
+    });
+    
+  } else {
+    // 实际编辑区域
+    var baseInfoEle = createElement("div",obj.id,"editArea");
+    // 标题
+    var titleEle = createElement("span","","title");
+    titleEle.innerHTML = obj.title;
+    baseInfoEle.appendChild(titleEle);
+    
+    $.each(obj.detail.rows,function(i,rows){
+      var inputRowEle = createElement("div","","inputRow");
+      // 排列方向
+      if ("vertical" == rows.design) {
+        inputRowEle.className = "inputRow vertical";
+      }
+      //prop
+      $.each(rows.items,function(j,prop){
+        var inputCell = createElement("div","","inputCell");
+        // 属性Title
+        var lblEle = createElement("label","","");
+        lblEle.innerHTML = prop.name;
+        inputCell.appendChild(lblEle);
+        // 属性Input
+        var inputEle = createElement("input","","");
+        var inputType = prop.type;
+        
+        // 输入框
+        if ("text" == inputType) {
+          inputEle.type = "text";
+          inputEle.value = prop.value;
+        // 下拉菜单
+        } else if ("select" == prop.type){
+          inputEle = createElement("select","","");
+          createOptions(inputEle,masterInfo[prop.masterId]);
+          
+        // Autocomplete
+        } else if ("autocomplete" == inputType) {
+          inputEle.type = "text";
+          inputEle.autocomplete = "on";
+          inputEle.setAttribute("list",prop.masterId);
+          inputEle.value = prop.value;
+          
+          var datalistEle = createElement("datalist",prop.masterId,"");
+          createOptions(datalistEle,masterInfo[prop.masterId]);
+          document.getElementById("hideArea").appendChild(datalistEle);
+          
+        // 单选,复选按钮
+        } else if ("radio" == inputType || "checkbox" == inputType){
+          inputEle = null;
+          // 属性设定
+          var eleInfo = {
+            "name" : obj.id + "." + prop.property,
+            "id" : "",
+            "classNm" : "",
+            "type" : inputType,
+            "require" : prop.require
+          };
+          createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
+          
+        // 单纯表示项目
+        } else if ("label" == inputType){
+          inputEle = createElement("label","","");
+          inputEle.innerHTML = prop.value;
+          inputEle.style.width = "auto";
+        } else if ("textarea" == inputType){
+          inputEle = createElement("textarea","","");
+          inputEle.value = prop.value;
+          inputEle.rows = 7;
+          inputEle.cols = 80;
+        }
+        
+        if (isNotEmpty(inputEle)) {
+          // require
+          if (isNotEmpty(prop.require)) {
+            inputEle.setAttribute("notempty","true");
+          }
+          // 只读
+          var displayEle = createElement("span","","displayOnly");
+          inputCell.appendChild(displayEle);
+          inputEle.name = obj.id + "." + prop.property;
+          inputCell.appendChild(inputEle);
+        }
+        inputRowEle.appendChild(inputCell);
+      });
+      baseInfoEle.appendChild(inputRowEle);
+    });
+    
+    parentEle.appendChild(baseInfoEle);
+  }
 }
 
 /**
@@ -68,9 +231,20 @@ function doEvent(step){
   var parentEle = arrIconReset();
   // 对象取得
   var targetEle = document.getElementById(step);
+  // 设置当前step
   CURRENT_STEP = step
 
+  // 状态Step图标重设
   arrIconSet(targetEle);
+  
+  // 内容刷新
+  $.each($(formEle).children(),function(){
+    if ("baseInfo" != this.id) {
+      $(this).hide();
+    }
+  });
+  var classNm = wkJson.steps[step].clnm;
+  initEditArea(contract[classNm],formEle);
 }
 
 /**
