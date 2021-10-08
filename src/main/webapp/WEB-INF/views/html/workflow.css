@@ -1,9 +1,5 @@
-body {
-  background-color: #decfcf;
-}
-
 main {
-  width:790px;
+  width:1280px;
 }
 
 /* 流程图标区域 */
@@ -47,18 +43,9 @@ main {
   border-left: 10px solid red;
 }
 
-/* */
-.wk_info_area {
-  padding-top: 5px;
-  text-align:center;
-}
-
-.inputRow {
-  display:flex;
-}
-
-.inputCell {
-  padding-right:10px;
+.title {
+  font-size:x-large;
+  font-weight:bolder;
 }
 
 /* 按钮 */
@@ -70,4 +57,3 @@ main {
   float:right;
   display:inline-block
 }
-
