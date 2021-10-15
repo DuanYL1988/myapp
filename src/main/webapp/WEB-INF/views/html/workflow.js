@@ -12,11 +12,13 @@ $(function() {
   // 默认表示区域
   var displayA = wkJson.steps[CURRENT_STEP].clnm;
   initEditArea(contract[displayA],formEle);
-  
 });
 
-/** 初期化处理 */
+/** 
+ * 初期化处理
+ */
 function initlize(){
+  // 初期化
   document.getElementById("wk_icon_area").innerHTML = "";
   // 进度条
   $.each(wkJson.stepsStr,function(i,ele){
@@ -57,14 +59,21 @@ function initlize(){
   document.getElementById("eventArea").innerHTML = "";
   for(var i = wkJson.steps[CURRENT_STEP].actions.length; i > 0 ; i--) {
     var eventInfo = wkJson.steps[CURRENT_STEP].actions[i-1];
-    var btnEle = createElement("button","","btn");
+    var btnEle = createElement("button",CURRENT_STEP+"-"+eventInfo.step,"btn");
+    var clNm = wkJson.steps[CURRENT_STEP].clnm;
     btnEle.innerHTML = eventInfo.name;
     // 当前Step内状态切换
-    if (typeof eventInfo.step == "number") {
-      btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"')");
+    if (parseInt(eventInfo.step) > 0) {
+      if (parseInt(eventInfo.step) > 1) {
+        btnEle.setAttribute("disabled",true);
+      }
+      btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"'"+",'"+CURRENT_STEP+"'"+",'"+clNm+"')");
     } else {
-    // 前往下一个step
+      // 前往下一个step
       btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"')");
+      if ("Back" != eventInfo.name) {
+        btnEle.setAttribute("disabled",true);
+      }
     }
     // 添加
     document.getElementById("eventArea").appendChild(btnEle);
@@ -78,10 +87,13 @@ function initlize(){
  * @param formEle 生产DIV的父DIV对象（Element）
  */
 function initEditArea(obj,parentEle){
+  // 空判断
   if (isNotEmpty(document.getElementById(obj.id))) {
     document.getElementById(obj.id).style.display = "";
     return;
   }
+  
+  // 分组表示场合
   if ("group"==obj.layout) {
     
     var stepEle = createElement("div",obj.id,"group-layout");
@@ -112,6 +124,7 @@ function initEditArea(obj,parentEle){
     $.each(obj.sections,function(){
       var layoutId = obj.id + "-" + this;
       var singleLayout = createElement("div",layoutId,"group-section");
+      // 迭代
       initEditArea(obj.layoutGroup[this],singleLayout);
       stepEle.appendChild(singleLayout);
     });
@@ -121,7 +134,7 @@ function initEditArea(obj,parentEle){
     // 第一个标签默认显示
     $("#"+firstTagId).show();
     
-    // Group Layout
+    // 点击标题切换
     $("div[class^='layout-title']").on('click',function(){
       showSection(this);
     });
@@ -134,12 +147,12 @@ function initEditArea(obj,parentEle){
     titleEle.innerHTML = obj.title;
     baseInfoEle.appendChild(titleEle);
     
-    // table
+    // 列表表示
     if (isNotEmpty(obj.head)){
       console.log(obj.head);
       // Table
       var tableEle = createElement("table","","");
-      tableEle.cellspacing = "0";
+      tableEle.setAttribute("cellspacing",0);
       tableEle.border = "1";
       
       // Thead
@@ -169,7 +182,7 @@ function initEditArea(obj,parentEle){
       
       baseInfoEle.appendChild(tableEle);
       
-    } else {
+    }
       
       $.each(obj.detail.rows,function(i,rows){
         var inputRowEle = createElement("div","","inputRow");
@@ -185,9 +198,12 @@ function initEditArea(obj,parentEle){
           lblEle.innerHTML = prop.name;
           inputCell.appendChild(lblEle);
           // 属性Input
-          var inputEle = createElement("input","","");
+          var inputEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
           var inputType = prop.type;
           inputEle.style = isEmpty(prop.style) ? "":prop.style;
+          
+          //
+          var hideEle = null;
           
           // 输入框
           if ("text" == inputType) {
@@ -218,15 +234,20 @@ function initEditArea(obj,parentEle){
               "id" : "",
               "classNm" : "",
               "type" : inputType,
-              "require" : prop.require
+              "require" : prop.require,
+              "readonly" : isNotEmpty(prop.readonly)
             };
             createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
             
           // 单纯表示项目
           } else if ("label" == inputType){
-            inputEle = createElement("label","","");
+            inputEle = createElement("label","Lbl_" + obj.id + "_" + prop.property,"");
             inputEle.innerHTML = prop.value;
             inputEle.style.width = "auto";
+            // 隐藏项
+            hideEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
+            hideEle.type = "hidden";
+            hideEle.value = prop.value;
           } else if ("textarea" == inputType){
             inputEle = createElement("textarea","","");
             inputEle.value = prop.value;
@@ -250,17 +271,21 @@ function initEditArea(obj,parentEle){
             if (isNotEmpty(prop.require)) {
               inputEle.setAttribute("notempty","true");
             }
-            // 只读
+            inputCell.appendChild(inputEle);
+            
+            // 验证信息表示
             var displayEle = createElement("span","","displayOnly");
             inputCell.appendChild(displayEle);
-            inputEle.name = obj.id + "." + prop.property;
-            inputCell.appendChild(inputEle);
+            
+            if (isNotEmpty(hideEle)) {
+              inputCell.appendChild(hideEle);
+            }
           }
           inputRowEle.appendChild(inputCell);
         });
         baseInfoEle.appendChild(inputRowEle);
       });
-    }
+      
     parentEle.appendChild(baseInfoEle);
   }
 }
@@ -323,8 +348,29 @@ function arrIconSet(targetEle){
   initlize();
 }
 
-function doStep(step) {
-  
+/**
+ * 业务控制
+ */
+function doStep(step,csts,objNm) {
+  if (isInclude(csts,["A-1","A-2","A-3"])) {
+    var nextStep = parseInt(step)+1;
+    var baseNm = objNm;
+    nextStep = csts + "-" + nextStep;
+    if ("1" == step) {
+      baseNm += "_applicationFlag";
+      $("#"+nextStep).removeAttr("disabled");
+    } else if ("2" == step) {
+      baseNm += "_approvalFlag";
+      $("#"+nextStep).removeAttr("disabled");
+    } else if ("3" == step) {
+      baseNm += "_sendFlag";
+      
+      $("input[name$='.replyFlag']").removeAttr("disabled");
+      $("#A-1-A-2").removeAttr("disabled");
+    }
+    $("#"+baseNm).val("1");
+    $("#Lbl_"+baseNm).html("済");
+  }
 }
 
 /**

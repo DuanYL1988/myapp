@@ -1,7 +1,7 @@
 /* 取引申請workflowのStep情報 */
 var wkJson = {
   "name" : "進度管理",
-  "currentStep" : "A-9",
+  "currentStep" : "A-1",
   "stepsStr" : ["A-1","A-2","A-3","A-9"],
   "steps" : {
     "A-1" : {
@@ -9,9 +9,9 @@ var wkJson = {
       "name":"契約書捺印",
       "clnm":"contractFile",
       "actions" : [
-        {"name":"捺印申請","step":"A-1"},
-        {"name":"捺印承認","step":"A-1"},
-        {"name":"契約書発送","step":"A-1"},
+        {"name":"捺印申請","step":"1"},
+        {"name":"捺印承認","step":"2"},
+        {"name":"契約書発送","step":"3"},
         {"name":"契約書点検","step":"A-2"}
       ]
     },
@@ -21,9 +21,9 @@ var wkJson = {
       "clnm":"ordeFile",
       "actions" : [
         {"name":"Back","step":"A-1"},
-        {"name":"捺印申請","step":"A-2"},
-        {"name":"捺印承認","step":"A-2"},
-        {"name":"発送・回収","step":"A-2"},
+        {"name":"捺印申請","step":"1"},
+        {"name":"捺印承認","step":"2"},
+        {"name":"発送・回収","step":"3"},
         {"name":"受付","step":"A-3"}
       ]
     },
@@ -33,11 +33,11 @@ var wkJson = {
       "clnm":"acceptFile",
       "actions" : [
         {"name":"Back","step":"A-2"},
-        {"name":"納品書受領","step":"A-3"},
-        {"name":"借受証発送","step":"A-3"},
-        {"name":"発送・回収","step":"A-3"},
-        {"name":"検収","step":"A-3"},
-        {"name":"確認実施","step":"A-3"},
+        {"name":"納品書受領","step":"1"},
+        {"name":"借受証発送","step":"2"},
+        {"name":"発送・回収","step":"3"},
+        {"name":"検収","step":"4"},
+        {"name":"確認実施","step":"5"},
         {"name":"報告書作成","step":"A-9"}
       ]
     },
@@ -102,16 +102,16 @@ var contract = {
         {
           "design" : "",
           "items" : [
-            {"property":"CNTRNO","name":"契約番号","type":"text","masterId":"","value":"202110280010021","require":"Y","validation":""}
+            {"property":"CNTRNO","name":"契約番号","type":"text","masterId":"","value":"20120004-0-00","require":"Y","validation":"","style":""}
           ]
         },
         {
           "design" : "",
           "items" : [
-            {"property":"CNTRVARDIV","name":"契約形態","type":"select","masterId":"m_CNTRVARDIV","value":"","require":"Y","validation":""},
-            {"property":"ARTVARDIV","name":"商品種類","type":"select","masterId":"m_ARTVARDIV","value":"","require":"Y","validation":""},
-            {"property":"CHRGDPSCCD","name":"担当部課","type":"select","masterId":"m_CHRGDPSCCD","value":"","require":"Y","validation":""},
-            {"property":"CHRGCD","name":"担当者","type":"text","masterId":"","value":"担当　大郎","require":"","validation":""}
+            {"property":"CNTRVARDIV","name":"契約形態","type":"select","masterId":"m_CNTRVARDIV","value":"","require":"Y","validation":"","style":""},
+            {"property":"ARTVARDIV","name":"商品種類","type":"select","masterId":"m_ARTVARDIV","value":"","require":"Y","validation":"","style":""},
+            {"property":"CHRGDPSCCD","name":"担当部課","type":"select","masterId":"m_CHRGDPSCCD","value":"","require":"Y","validation":"","style":""},
+            {"property":"CHRGCD","name":"担当者","type":"text","masterId":"","value":"担当　大郎","require":"","validation":"","style":""}
           ]
         }
       ]
@@ -126,11 +126,20 @@ var contract = {
         {
           "design" : "",
           "items" : [
+            {"property":"applicationFlag","name":"申請済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
           ]
         },
         {
           "design" : "",
           "items" : [
+            {"property":"approvalFlag","name":"承認済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+            {"property":"sendFlag","name":"発送済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""},
+            {"property":"replyFlag","name":"返信済","type":"checkbox","masterId":"","value":"","require":"Y","validation":"","style":"","readonly":"Y"}
           ]
         }
       ]
@@ -145,11 +154,20 @@ var contract = {
         {
           "design" : "",
           "items" : [
+            {"property":"applicationFlag","name":"申請済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
           ]
         },
         {
           "design" : "",
           "items" : [
+            {"property":"approvalFlag","name":"承認済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+            {"property":"sendFlag","name":"発送済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""},
+            {"property":"replyFlag","name":"返信済","type":"checkbox","masterId":"","value":"","require":"Y","validation":"","style":"","readonly":"Y"}
           ]
         }
       ]
@@ -164,11 +182,20 @@ var contract = {
         {
           "design" : "",
           "items" : [
+            {"property":"applicationFlag","name":"申請済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
           ]
         },
         {
           "design" : "",
           "items" : [
+            {"property":"approvalFlag","name":"承認済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+            {"property":"sendFlag","name":"発送済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""},
+            {"property":"replyFlag","name":"返信済","type":"checkbox","masterId":"","value":"","require":"Y","validation":"","style":"","readonly":"Y"}
           ]
         }
       ]

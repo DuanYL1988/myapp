@@ -123,12 +123,12 @@ input[type='text'][class='error'] {
 }
 
 button {
-  height:40px;
-  width:150px;
+  height:35px;
+  width:120px;
   margin-right:10px;
   background-color:#bfbfeca8;
   border-radius:10px;
-  font-size:x-large;
+  font-size:15px;
   font-weight:bolder;
 }
 

@@ -48,6 +48,11 @@ main {
   font-weight:bolder;
 }
 
+.displayOnly {
+  padding-left : 5px;
+  color : red;
+}
+
 /* 按钮 */
 #eventArea {
   padding-top:20px;
