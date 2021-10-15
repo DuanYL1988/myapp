@@ -1,84 +1,56 @@
 /* 取引申請workflowのStep情報 */
 var wkJson = {
-  "name" : "角色登录",
-  "currentStep" : "A-6",
-  "displayArea" : "overallDecide",
-  "stepsStr" : ["A-1","A-2","A-3","A-4","A-5","A-6","A-7","A-8"],
+  "name" : "進度管理",
+  "currentStep" : "A-9",
+  "stepsStr" : ["A-1","A-2","A-3","A-9"],
   "steps" : {
     "A-1" : {
       "id":"A-1",
-      "name":"契約情報",
-      "clnm":"contractInfo",
+      "name":"契約書捺印",
+      "clnm":"contractFile",
       "actions" : [
-        {"name":"Save","step":"A-1"},
-        {"name":"Continue","step":"A-2"}
+        {"name":"捺印申請","step":"A-1"},
+        {"name":"捺印承認","step":"A-1"},
+        {"name":"契約書発送","step":"A-1"},
+        {"name":"契約書点検","step":"A-2"}
       ]
     },
     "A-2" : {
       "id":"A-2",
-      "name":"資産必須",
-      "clnm":"",
+      "name":"注文書捺印",
+      "clnm":"ordeFile",
       "actions" : [
         {"name":"Back","step":"A-1"},
-        {"name":"Save","step":"A-2"},
-        {"name":"Continue","step":"A-3"}
+        {"name":"捺印申請","step":"A-2"},
+        {"name":"捺印承認","step":"A-2"},
+        {"name":"発送・回収","step":"A-2"},
+        {"name":"受付","step":"A-3"}
       ]
     },
     "A-3" : {
       "id":"A-3",
-      "name":"回収明細",
-      "clnm":"",
+      "name":"点検・受領",
+      "clnm":"acceptFile",
       "actions" : [
         {"name":"Back","step":"A-2"},
-        {"name":"Save","step":"A-3"},
-        {"name":"Continue","step":"A-4"}
+        {"name":"納品書受領","step":"A-3"},
+        {"name":"借受証発送","step":"A-3"},
+        {"name":"発送・回収","step":"A-3"},
+        {"name":"検収","step":"A-3"},
+        {"name":"確認実施","step":"A-3"},
+        {"name":"報告書作成","step":"A-9"}
       ]
     },
-    "A-4" : {
-      "id":"A-4",
-      "name":"支払明細",
-      "clnm":"",
+    "A-9" : {
+      "id":"A-9",
+      "name":"資産進度管理",
+      "clnm":"assertList",
       "actions" : [
-        {"name":"Back","step":"A-3"},
-        {"name":"Save","step":"A-4"},
-        {"name":"Continue","step":"A-5"}
-      ]
-    },
-    "A-5" : {
-      "id":"A-5",
-      "name":"申請条件",
-      "clnm":"",
-      "actions" : [
-        {"name":"Back","step":"A-4"},
-        {"name":"Save","step":"A-5"},
-        {"name":"Continue","step":"A-6"}
-      ]
-    },
-    "A-6" : {
-      "id":"A-6",
-      "name":"総合判断票",
-      "clnm":"overallDecide",
-      "actions" : [
-        {"name":"Back","step":"A-5"},
-        {"name":"Save","step":"A-6"},
-        {"name":"Continue","step":"A-7"}
-      ]
-    },
-    "A-7" : {
-      "id":"A-7",
-      "name":"必要書類",
-      "actions" : [
-        {"name":"Back","step":"A-6"},
-        {"name":"Save","step":"A-7"},
-        {"name":"Continue","step":"A-8"}
-      ]
-    },
-    "A-8" : {
-      "id":"A-8",
-      "name":"営業意見",
-      "actions" : [
-        {"name":"Back","step":"A-7"},
-        {"name":"submit","step":""}
+        {"name":"Save","step":"A-9"},
+        {"name":"支払先別一覧","step":"A-9"},
+        {"name":"支払予定照会","step":"A-9"},
+        {"name":"書類受渡状況","step":"A-9"},
+        {"name":"Submit","step":"A-9"}
       ]
     }
   } 
@@ -106,6 +78,16 @@ var masterInfo = {
     {"code":"2","value":"事業所名２"},
     {"code":"3","value":"事業所名３"},
     {"code":"SONY","value":"SONY"}
+  ],
+  "m_fileList" : [
+    ["契約書","2E2012000400000000119ZZ0101","2017/10/15","2021/10/15","119","001"],
+    ["発注書","2E2012000400000000129ZZ0101","2018/10/15","2021/10/15","129","001"],
+    ["検収書","2E2012000400000000139ZZ0101","2019/10/15","2021/10/15","139","001"]
+  ],
+  "m_assetList" : [
+    [],
+    [],
+    []
   ]
 };
 
@@ -114,11 +96,17 @@ var contract = {
   "baseInfo" : {
     "id" : "baseInfo",
     "title" : "基本情報",
-    "layout" : "sigle",
+    "layout" : "single",
     "detail" : {
       "rows" : [
         {
-          "design" : "vertical",
+          "design" : "",
+          "items" : [
+            {"property":"CNTRNO","name":"契約番号","type":"text","masterId":"","value":"202110280010021","require":"Y","validation":""}
+          ]
+        },
+        {
+          "design" : "",
           "items" : [
             {"property":"CNTRVARDIV","name":"契約形態","type":"select","masterId":"m_CNTRVARDIV","value":"","require":"Y","validation":""},
             {"property":"ARTVARDIV","name":"商品種類","type":"select","masterId":"m_ARTVARDIV","value":"","require":"Y","validation":""},
@@ -129,169 +117,137 @@ var contract = {
       ]
     }
   },
-  "contractInfo" : {
-    "id" : "contractInfo",
-    "title" : "契約情報必須",
-    "layout" : "sigle",
+  "contractFile" : {
+    "id" : "contractFile",
+    "title" : "契約書作成",
+    "layout" : "single",
     "detail" : {
       "rows" : [
         {
           "design" : "",
           "items" : [
-            {"property":"CNTRNO","name":"契約番号","type":"text","masterId":"","value":"202110280010021","require":"Y","validation":""},
-{"property":"APRBLDIV","name":"決裁区分","type":"text","masterId":"","value":"再契約","require":"","validation":""},
-{"property":"ESTNO","name":"参照見積番号","type":"text","masterId":"","value":"1234567890123400","require":"","validation":""}
           ]
         },
         {
           "design" : "",
           "items" : [
-            {"property":"ESTMKYMD","name":"試算日","type":"text","masterId":"","value":"20211001","require":"","validation":""},
-{"property":"CHRGCD","name":"担当者","type":"text","masterId":"","value":"担当　大郎","require":"","validation":""},
-{"property":"CHRGDPSCCD","name":"部課","type":"text","masterId":"","value":"営業一部","require":"","validation":""},
-          ]
-        },
-        {
-          "design" : "",
-          "items" : [
-            {"property":"CNTRCONO","name":"取引先","type":"autocomplete","masterId":"m_CNTRCONO","value":"SONY","require":"","validation":""}
           ]
         }
       ]
     }
   },
-  "overallDecide" : {
-    "id" : "overallDecide",
-    "title" : "総合判断票",
+  "ordeFile" : {
+    "id" : "ordeFile",
+    "title" : "注文書作成",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+          ]
+        }
+      ]
+    }
+  },
+  "acceptFile" : {
+    "id" : "acceptFile",
+    "title" : "検収書類",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+          ]
+        }
+      ]
+    }
+  },
+  "payFile" : {
+    "id" : "acceptFile",
+    "title" : "支払書類",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+          ]
+        }
+      ]
+    }
+  },
+  "collectFile" : {
+    "id" : "collectFile",
+    "title" : "回収書類",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+          ]
+        }
+      ]
+    }
+  },
+  "assertList" : {
+    "id" : "assertList",
+    "title" : "進度管理",
     "layout" : "group",
-    "sections" : ["section-A","section-B","section-C"],
+    "sections" : ["singleAssert","singleFile"],
     "layoutGroup" : {
-      "section-A" : {
-        "id" : "section-A",
-        "title" : "登記簿謄本",
-        "layout" : "sigle",
+      "singleAssert" : {
+        "id" : "singleAssert",
+        "title" : "資産別",
+        "layout" : "single",
+        "head" : ["資産名","資産番号"],
+        "info" : "m_assetList",
         "detail" : {
           "rows" : [
             {
-              "design" : "vertical",
+              "design" : "",
               "items" : [
-                {"property":"REGSTRCPYETCCLNDF","name":"登記簿徴求要","type":"radio","masterId":"m_REGSTRCPYETCCLNDF","value":"","require":"Y","validation":""},
-{"property":"REGSTRCPYETCOBTNYMD","name":"登記簿入手予定日","type":"text","masterId":"","value":"20211002","require":"","validation":""}
               ]
             },
             {
               "design" : "",
               "items" : [
-                {"property":"REGSTRCPYETCCLFINF","name":"登記簿徴求済","type":"checkbox","masterId":"m_REGSTRCPYETCCLFINF","value":"","require":"","validation":""},
-                {"property":"BSNACPTYMD","name":"登記簿受領日","type":"label","masterId":"","value":"20230714","require":"","validation":""},
-                {"property":"ISSUEYMD","name":"登記簿発行日","type":"label","masterId":"","value":"20140714","require":"","validation":""},
-                {"property":"CNTRNO","name":"登記簿契約番号","type":"label","masterId":"X1235AEW","value":"","require":"","validation":""},
-                {"property":"MEMOCNTNT","name":"登記簿メモ有無","type":"label","masterId":"m_MEMOCNTNT","value":"有","require":"","validation":""}
-              ]
-            },
-          ]
-        }
-      },
-      "section-B" :{
-        "id" : "section-B",
-        "title" : "契約調印者・印鑑証明",
-        "layout" : "sigle",
-        "detail" : {
-          "rows" : [
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"SIGNDIV","name":"代表者印鑑証明","type":"radio","masterId":"m_SIGNDIV","value":"","require":"","validation":""},
-{"property":"SIGNNM","name":"調印者","type":"text","masterId":"","value":"調印　大郎","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"SELIMPCLNDF","name":"印鑑証明徴求","type":"radio","masterId":"m_SELIMPCLNDF","value":"","require":"","validation":""},
-{"property":"SELIMPOBTNPLNYMD","name":"印鑑証明入手予定日","type":"text","masterId":"","value":"20180822","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"SELIMPCLFINF","name":"印鑑証明徴求済","type":"checkbox","masterId":"m_SELIMPCLFINF","value":"","require":"","validation":""},
-{"property":"BSNACPTYMD","name":"印鑑証明受領日","type":"label","masterId":"","value":"20210929","require":"","validation":""},
-{"property":"ISSUEYMD","name":"印鑑証明発行日","type":"label","masterId":"","value":"20201121","require":"","validation":""},
-{"property":"CNTRNO","name":"印鑑証明契約番号","type":"label","masterId":"","value":"20201121002112","require":"","validation":""},
-{"property":"MEMOCNTNT","name":"印鑑証明メモ有無","type":"label","masterId":"","value":"無","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"PSCOPAPF","name":"書類顧客","type":"checkbox","masterId":"m_PSCOPAPF","value":"","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "",
-              "items" : [
-                {"property":"PSCOPAPF","name":"印鑑証明顧客","type":"checkbox","masterId":"m_PSCOPAPF","value":"","require":"","validation":""},
-                {"property":"SELIMPEXSTAPF","name":"印鑑証明既先","type":"checkbox","masterId":"m_SELIMPEXSTAPF","value":"","require":"","validation":""},
-                {"property":"SELIMPOTHAPF","name":"印鑑証明その他","type":"checkbox","masterId":"m_SELIMPOTHAPF","value":"","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "",
-              "items" : [
-                {"property":"DCCLNDF","name":"書類徴求要","type":"checkbox","masterId":"m_DCCLNDF","value":"","require":"","validation":""},
-{"property":"DCOBTNPLNYMD","name":"書類入手予定日","type":"text","masterId":"","value":"20210929","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"DCCLFINF","name":"書類徴求済","type":"checkbox","masterId":"m_DCCLFINF","value":"","require":"","validation":""},
-{"property":"BSNACPTYMD","name":"書類受領日","type":"label","masterId":"","value":"20210929","require":"","validation":""},
-{"property":"ISSUEYMD","name":"書類発行日","type":"label","masterId":"","value":"20201121","require":"","validation":""},
-{"property":"CNTRNO","name":"書類契約番号","type":"label","masterId":"","value":"20201121002112","require":"","validation":""},
-{"property":"DCMEMOEXSTF","name":"書類メモ有無","type":"label","masterId":"","value":"無","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"PSCOPAPF2","name":"書類顧客","type":"checkbox","masterId":"m_PSCOPAPF2","value":"","require":"","validation":""}
               ]
             }
           ]
         }
       },
-      "section-C" :{
-        "id" : "section-C",
-        "title" : "物件確認",
-        "layout" : "sigle",
+      "singleFile" :{
+        "id" : "singleFile",
+        "title" : "書類別",
+        "layout" : "single",
+        "head" : ["書類名","書類番号","作成日","削除日","書類番号","資産連番"],
+        "info" : "m_fileList",
         "detail" : {
           "rows" : [
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"ARTCNFNDF","name":"物件目視是","type":"radio","masterId":"m_ARTCNFNDF","value":"","require":"","validation":""},
-                {"property":"LBLATCHEXSTF","name":"貼付有無","type":"radio","masterId":"m_LBLATCHEXSTF","value":"","require":"","validation":""},
-                {"property":"LBLATCHRSNCNTNT","name":"貼付理由","type":"text","masterId":"","value":"想贴就贴","require":"","validation":""}
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"LBLATCHRSNCNTNT","name":"貼付依頼無理由","type":"text","masterId":"","value":"","require":"Y","validation":""},
-                {"property":"PSCOPLISTCOAPF","name":"物件確認顧客","type":"checkbox","masterId":"m_PSCOPLISTCOAPF","value":"","require":"","validation":""},
-                {"property":"N30MILUNDRAPF","name":"物件確認一般","type":"checkbox","masterId":"m_N30MILUNDRAPF","value":"","require":"","validation":""},
-                {"property":"N10MILUNDRAPF","name":"物件確認特殊","type":"checkbox","masterId":"m_N10MILUNDRAPF","value":"","require":"","validation":""},
-                {"property":"ARTCNFOTHAPF","name":"物件確認その他","type":"checkbox","masterId":"m_ARTCNFOTHAPF","value":"","require":"","validation":""},
-              ]
-            },
-            {
-              "design" : "vertical",
-              "items" : [
-                {"property":"ARTCNFDTLCNTNT","name":"物件確認詳細","type":"textarea","masterId":"","value":"物件確認詳細","require":"","validation":""}
-              ]
-            }
+            
           ]
         }
       }
