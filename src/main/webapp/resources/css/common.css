@@ -11,6 +11,14 @@ input[type='text'] {
   font-family:ui-rounded;
 }
 
+.dateTime {
+  height:22px;
+  width:170px;
+  border:1px solid #949494;
+  border-radius:5px;
+  font-family:ui-rounded;
+}
+
 textarea {
   border:1px solid #949494;
   border-radius:5px;
@@ -23,6 +31,16 @@ select {
   width:145px;
   border:1px solid #949494;
   border-radius:5px;
+}
+
+thead{
+  background-color:#5252bdcf;
+  color:#f9eeee;
+}
+
+td {
+  border:1px solid #949494;
+  border-collapse: collapse;
 }
 
 /* 提示输入错误样式 */

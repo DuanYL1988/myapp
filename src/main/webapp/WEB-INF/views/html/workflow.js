@@ -11,8 +11,8 @@ $(function() {
   initEditArea(contract.baseInfo,formEle);
   // 默认表示区域
   initEditArea(contract[wkJson.displayArea],formEle);
-  
-  
+  //
+  initlizeTable(masterInfo.tableInfo);
 });
 
 function showSection(divEle){
@@ -26,6 +26,7 @@ function showSection(divEle){
 
 /** 初期化处理 */
 function initlize(){
+  // 初始化
   document.getElementById("wk_icon_area").innerHTML = "";
   // 进度条
   $.each(wkJson.stepsStr,function(i,ele){
@@ -62,8 +63,9 @@ function initlize(){
     
   });
   
-  // 按钮
+  // 按钮区域初始化
   document.getElementById("eventArea").innerHTML = "";
+
   for(var i = wkJson.steps[CURRENT_STEP].actions.length; i > 0 ; i--) {
     var eventInfo = wkJson.steps[CURRENT_STEP].actions[i-1];
     var btnEle = createElement("button","","btn");
@@ -82,6 +84,10 @@ function initlize(){
  * @param formEle 生产DIV的父DIV对象（Element）
  */
 function initEditArea(obj,parentEle){
+  // 
+  if (isEmpty(obj)) {
+    return;
+  }
   if (isNotEmpty(document.getElementById(obj.id))) {
     document.getElementById(obj.id).style.display = "";
     return;
@@ -148,17 +154,22 @@ function initEditArea(obj,parentEle){
       $.each(rows.items,function(j,prop){
         var inputCell = createElement("div","","inputCell");
         // 属性Title
+        var inputType = prop.type;
         var lblEle = createElement("label","","");
-        lblEle.innerHTML = prop.name;
-        inputCell.appendChild(lblEle);
+        if ("button" != inputType) {
+          lblEle.innerHTML = prop.name;
+          inputCell.appendChild(lblEle);
+        }
         // 属性Input
         var inputEle = createElement("input","","");
-        var inputType = prop.type;
+        inputEle.name = obj.id + "." + prop.property;
+        inputEle.id = obj.id + "_" + prop.property;
         
         // 输入框
         if ("text" == inputType) {
           inputEle.type = "text";
           inputEle.value = prop.value;
+          inputEle.style = prop.style;
         // 下拉菜单
         } else if ("select" == prop.type){
           inputEle = createElement("select","","");
@@ -198,8 +209,22 @@ function initEditArea(obj,parentEle){
           inputEle.value = prop.value;
           inputEle.rows = 7;
           inputEle.cols = 80;
+        // 日期控件
+        } else if ("datetime" == inputType) {
+          inputEle.type = "datetime-local";
+          inputEle.className = "dateTime";
+          inputEle.value = prop.value;
+        // 按钮
+        } else if ("button" == inputType) {
+          inputEle = createElement("button","","");
+          inputEle.setAttribute("onclick",prop.value);
+          inputEle.innerHTML = prop.name;
+          inputEle.type = "button"
+          inputEle.className = "cell_btn";
+          inputEle.name = "";
         }
         
+        // 单选复选是对象为空
         if (isNotEmpty(inputEle)) {
           // require
           if (isNotEmpty(prop.require)) {
@@ -207,9 +232,9 @@ function initEditArea(obj,parentEle){
           }
           // 只读
           var displayEle = createElement("span","","displayOnly");
-          inputCell.appendChild(displayEle);
-          inputEle.name = obj.id + "." + prop.property;
           inputCell.appendChild(inputEle);
+          inputCell.appendChild(displayEle);
+
         }
         inputRowEle.appendChild(inputCell);
       });
@@ -217,6 +242,14 @@ function initEditArea(obj,parentEle){
     });
     
     parentEle.appendChild(baseInfoEle);
+  }
+}
+
+function initlizeTable(arr){
+  if(isNotEmpty(arr)) {
+    $.each(arr,function(){
+      addTableRecord("display_table_body",this);
+    });
   }
 }
 
@@ -290,4 +323,76 @@ function arrIconSet(targetEle){
 
   // 页面重置
   initlize();
+}
+
+function addRecord() {
+  var strTime = formateTypeDT("heathInfo_startTime");
+  var endTime = formateTypeDT("heathInfo_currentTime");
+  var info = $("#heathInfo_information").val();
+  var countermeasure = $("#heathInfo_countermeasure").val();
+  var timeDiff = getTimeDiff(strTime,endTime);
+  
+  var columns = [$("#heathInfo_currentTime").val(),timeDiff.strHM,info+"<br>"+countermeasure];
+  addTableRecord("display_table_body",columns);
+  
+  getTableInfo();
+}
+
+function getTableInfo(){
+  var trEles = $("#display_table_body").find("tr");
+  var tableInfo = [];
+  $.each(trEles,function(){
+    var row = [];
+    $.each($(this).find("td"),function(i,tdEle){
+      row.push(tdEle.innerHTML);
+    });
+    tableInfo.push(row);
+  })
+  console.log(tableInfo);
+}
+
+/**
+ * 对table添加行
+ */
+function addTableRecord(tblBodyId,columns){
+  var trEle = createElement("tr","","");
+  $.each(columns,function(){
+    var tdEle = createElement("td","","");
+    tdEle.innerHTML = this;
+    trEle.appendChild(tdEle);
+  });
+  document.getElementById(tblBodyId).appendChild(trEle);
+}
+
+/**
+ * 对<input type="datetime">的值进行转换
+ *
+ * @param eleId 输入框的ID
+ */
+function formateTypeDT(eleId){
+  var stTime = document.getElementById(eleId).value;
+  stTime = stTime.replace("T"," ");
+  stTime += ":00";
+  stTime = new Date(stTime);
+  return stTime;
+}
+
+/**
+ * 计算时间差
+ */
+function getTimeDiff(strTime,endTime){
+  var bt = (endTime-strTime)/1000/60;
+  var bth = parseInt(bt/60);
+  var btm = bt%60;
+  
+  var result = {
+    "strHM" : bth+"小时"+btm+"分",
+    "mSecond" : bt
+  };
+  return result;
+}
+
+
+function writeFile(){
+  
 }

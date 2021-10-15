@@ -1,5 +1,5 @@
 main {
-  width:1280px;
+  width:980px;
 }
 
 /* 流程图标区域 */
@@ -56,4 +56,13 @@ main {
 .btn {
   float:right;
   display:inline-block
+}
+
+.cell_btn {
+  height:30px;
+  width:100px;
+  font-size:small;
+  float:right;
+  margin-left:550px;
+  background-color:#d6ed7c;
 }
