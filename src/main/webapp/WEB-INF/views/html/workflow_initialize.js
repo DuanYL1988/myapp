@@ -4,14 +4,20 @@
 function initlize(){
   // 初期化
   document.getElementById("wk_icon_area").innerHTML = "";
+  //
+  var mainEle = document.getElementsByTagName("main")[0].offsetWidth;
+  var count = wkJson.stepsStr.length;
+  var cellWidth = mainEle/count;
   // 进度条
   $.each(wkJson.stepsStr,function(i,ele){
     // 状态图标
     var statusEle = createElement("div",this,"status");
+    statusEle.style.width = cellWidth+"px";
     
     // 图标主体和方向箭头
     var preEle = createElement("div","","wk_icon_pre");
     var stepEle = createElement("div","","wk_icon");
+    stepEle.style.width = (cellWidth-10)+"px";
     var nextEle = createElement("div","","wk_icon_next");
     
     // 文字
@@ -43,7 +49,7 @@ function initlize(){
   document.getElementById("eventArea").innerHTML = "";
   for(var i = wkJson.steps[CURRENT_STEP].actions.length; i > 0 ; i--) {
     var eventInfo = wkJson.steps[CURRENT_STEP].actions[i-1];
-    var btnEle = createElement("button",CURRENT_STEP+"-"+eventInfo.step,"btn");
+    var btnEle = createElement("button",CURRENT_STEP+"-"+eventInfo.step,"btn","");
     var clNm = wkJson.steps[CURRENT_STEP].clnm;
     btnEle.innerHTML = eventInfo.name;
     // 当前Step内状态切换
@@ -80,18 +86,18 @@ function initEditArea(obj,parentEle){
   // 分组表示场合
   if ("group"==obj.layout) {
     
-    var stepEle = createElement("div",obj.id,"group-layout");
+    var stepEle = createElement("div",obj.id,"group-layout","");
     // 标题
     /**/
-    var titleEle = createElement("span","","title");
+    var titleEle = createElement("span","","title","");
     titleEle.innerHTML = obj.title;
     stepEle.appendChild(titleEle); 
     
     // Group标签标题部
-    var titleEle = createElement("div","","group-title");
+    var titleEle = createElement("div","","group-title","");
     var firstTagId = "";
     $.each(obj.sections,function(){
-      var layoutTitle = createElement("div","","layout-title");
+      var layoutTitle = createElement("div","","layout-title","");
       layoutTitle.id = "title-" + obj.id + "-" + this;
       layoutTitle.innerHTML = obj.layoutGroup[this].title;
       titleEle.appendChild(layoutTitle);
@@ -107,7 +113,7 @@ function initEditArea(obj,parentEle){
     // 标签对应的显示部分
     $.each(obj.sections,function(){
       var layoutId = obj.id + "-" + this;
-      var singleLayout = createElement("div",layoutId,"group-section");
+      var singleLayout = createElement("div",layoutId,"group-section","");
       // 迭代
       initEditArea(obj.layoutGroup[this],singleLayout);
       stepEle.appendChild(singleLayout);
@@ -125,25 +131,24 @@ function initEditArea(obj,parentEle){
     
   } else if ("single"==obj.layout){
     // 实际编辑区域
-    var baseInfoEle = createElement("div",obj.id,"editArea");
+    var baseInfoEle = createElement("div",obj.id,"editArea","");
     // 标题
-    var titleEle = createElement("span","","title");
+    var titleEle = createElement("span","","title","");
     titleEle.innerHTML = obj.title;
     baseInfoEle.appendChild(titleEle);
     
     // 列表表示
     if (isNotEmpty(obj.head)){
-      console.log(obj.head);
       // Table
-      var tableEle = createElement("table","","");
+      var tableEle = createElement("table","","","");
       tableEle.setAttribute("cellspacing",0);
       tableEle.border = "1";
       
       // Thead
-      var thead = createElement("thead","","");
-      var tr = createElement("tr","","");
+      var thead = createElement("thead","","","");
+      var tr = createElement("tr","","","");
       $.each(obj.head,function(){
-        var td = createElement("td","","");
+        var td = createElement("td","","","");
         td.innerHTML = this;
         tr.appendChild(td);
       });
@@ -151,11 +156,11 @@ function initEditArea(obj,parentEle){
       tableEle.appendChild(thead);
       
       // Tbody
-      var tbody = createElement("tbody","","");
+      var tbody = createElement("tbody","","","");
       $.each(masterInfo[obj.info],function(){
-        tr = createElement("tr","","");
+        tr = createElement("tr","","","");
         $.each(this,function(j,cell){
-          var td = createElement("td","","");
+          var td = createElement("td","","","");
           td.innerHTML = cell;
           tr.appendChild(td);
         });
@@ -169,22 +174,23 @@ function initEditArea(obj,parentEle){
     }
       
       $.each(obj.detail.rows,function(i,rows){
-        var inputRowEle = createElement("div","","inputRow");
+        var inputRowEle = createElement("div","","inputRow","");
         // 排列方向
         if ("vertical" == rows.design) {
           inputRowEle.className = "inputRow vertical";
         }
         //prop
         $.each(rows.items,function(j,prop){
-          var inputCell = createElement("div","","inputCell");
+          var inputCell = createElement("div","","inputCell","");
           // 属性Title
-          var lblEle = createElement("label","","");
+          var lblEle = createElement("label","","","");
           lblEle.innerHTML = prop.name;
           inputCell.appendChild(lblEle);
           // 属性Input
           var inputEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
           var inputType = prop.type;
           inputEle.style = isEmpty(prop.style) ? "":prop.style;
+          inputEle.setAttribute("readonly",isNotEmpty(prop.readonly));
           
           //
           var hideEle = null;
@@ -195,7 +201,7 @@ function initEditArea(obj,parentEle){
             inputEle.value = prop.value;
           // 下拉菜单
           } else if ("select" == prop.type){
-            inputEle = createElement("select","","");
+            inputEle = createElement("select",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
             createOptions(inputEle,masterInfo[prop.masterId]);
             
           // Autocomplete
@@ -205,7 +211,7 @@ function initEditArea(obj,parentEle){
             inputEle.setAttribute("list",prop.masterId);
             inputEle.value = prop.value;
             
-            var datalistEle = createElement("datalist",prop.masterId,"");
+            var datalistEle = createElement("datalist",prop.masterId,"",obj.id + "." + prop.property);
             createOptions(datalistEle,masterInfo[prop.masterId]);
             document.getElementById("hideArea").appendChild(datalistEle);
             
@@ -225,7 +231,7 @@ function initEditArea(obj,parentEle){
             
           // 单纯表示项目
           } else if ("label" == inputType){
-            inputEle = createElement("label","Lbl_" + obj.id + "_" + prop.property,"");
+            inputEle = createElement("label","Lbl_" + obj.id + "_" + prop.property,"","");
             inputEle.innerHTML = prop.value;
             inputEle.style.width = "auto";
             // 隐藏项
@@ -233,8 +239,9 @@ function initEditArea(obj,parentEle){
             hideEle.type = "hidden";
             hideEle.value = prop.value;
           } else if ("textarea" == inputType){
-            inputEle = createElement("textarea","","");
+            inputEle = createElement("textarea",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
             inputEle.value = prop.value;
+            inputEle.style = isEmpty(prop.style) ? "":prop.style;
             inputEle.rows = 7;
             inputEle.cols = 80;
           // 日期控件
@@ -244,7 +251,7 @@ function initEditArea(obj,parentEle){
             inputEle.value = prop.value;
           // 按钮
           } else if ("button" == inputType) {
-            inputEle = createElement("button","","cell_btn","");
+            inputEle = createElement("button","","cell_btn","","");
             inputEle.type = "button"
             inputEle.setAttribute("onclick",prop.value);
             inputEle.innerHTML = prop.name;
@@ -258,7 +265,7 @@ function initEditArea(obj,parentEle){
             inputCell.appendChild(inputEle);
             
             // 验证信息表示
-            var displayEle = createElement("span","","displayOnly");
+            var displayEle = createElement("span","","displayOnly","");
             inputCell.appendChild(displayEle);
             
             if (isNotEmpty(hideEle)) {
@@ -335,8 +342,12 @@ function arrIconSet(targetEle){
  * 工作流动作
  */
 function doEvent(step){
-  if (doValidation()) {
-    return;
+  var curSt = CURRENT_STEP.split("-")[1];
+  var tgtSt = step.split("-")[1];
+  if (parseInt(tgtSt) > parseInt(curSt)) {
+    if (doValidation()){
+      return;
+    }
   }
   // 初始化
   arrIconReset();

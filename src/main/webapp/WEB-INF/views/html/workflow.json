@@ -126,6 +126,18 @@ var contract = {
         {
           "design" : "",
           "items" : [
+            {"property":"fileNo","name":"契約書番号","type":"text","masterId":"","value":"2E2012000400000000119ZZ0101","require":"","validation":"","style":"width:230px","readonly":"Y"}
+          ]
+        },
+        {
+          "design" : "vertical",
+          "items" : [
+            {"property":"fileInfo","name":"契約書内容詳細","type":"textarea","masterId":"","value":"略","require":"","validation":"","style":"width:860px;height:330px","readonly":"Y"}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
             {"property":"applicationFlag","name":"申請済","type":"label","masterId":"","value":"未","require":"","validation":"","style":""}
           ]
         },
