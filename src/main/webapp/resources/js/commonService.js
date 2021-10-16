@@ -147,6 +147,10 @@
       inputEle.id = eleInfo.id;
       inputEle.type = eleInfo.type;
       inputEle.value = this.code;
+      // readOnly
+      if (eleInfo.readonly) {
+        inputEle.setAttribute("disabled","");
+      }
       // require
       if (isNotEmpty(eleInfo.require)) {
         inputEle.setAttribute("notempty","true");
@@ -180,10 +184,11 @@
    * 创建html元素<img>
    * @param arg js对象,值
    */
-  function createElement(type,id,name) {
+  function createElement(type,id,classNm,name) {
     var ele = document.createElement(type);
     ele.id = id;
-    ele.className = name;
+    ele.className = classNm;
+    ele.name = name;
     return ele;
   }
   
@@ -261,7 +266,12 @@
       if (this.indexOf(".") > 0) {
         var objNm = this.split(".")[0];
         var attrNm = this.split(".")[1];
-        value = formObj[objNm][attrNm];
+        // Null
+        if (isEmpty(formObj[objNm]) || isEmpty(formObj[objNm][attrNm])){
+          value = "";
+        } else {
+          value = formObj[objNm][attrNm];
+        }
       } else {
         value = formObj[objNm];
       }
@@ -276,7 +286,6 @@
     //
     if(!firstFlag) {
       console.dir(formObj);
-      alert(JSON.stringify(formObj));
       return false;
     } else {
       return true;
@@ -287,6 +296,7 @@
       var jsonObj = {};
       var formParam = this.serializeArray();
       $.each(formParam,function(){
+        if ("undefined" != this.name) {
           var keyName = this.name.split('.');
           if(keyName.length>1){
               var innerObjKey = keyName[0];
@@ -303,6 +313,7 @@
                 jsonObj[this.name] = this.value;
               }
           }
+        }
       });
       return jsonObj;
   }
