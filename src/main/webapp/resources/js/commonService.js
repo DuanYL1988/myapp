@@ -9,10 +9,14 @@
       'isInclude':isInclude,
       'createElement':createElement,
       'createImg':createImg,
+      'setTbltxtWithCoordinate':setTbltxtWithCoordinate,
+      'closePopupWindow':closePopupWindow,
+      'popupMsg':popupMsg,
+      'formateDateYMDHMslash':formateDateYMDHMslash,
       'createOptions':createOptions,
       'createCheck':createCheck,
-      'doValidation':doValidation,
-      'showMsg':showMsg
+      'doValidation':doValidation
+      
   });
   
   function ajaxGet(url,jsonData,callback){
@@ -191,15 +195,48 @@
     ele.name = name;
     return ele;
   }
-  
-  function showMsg(type,message){
-    $('#warMsg').html('&nbsp');
-    $('#errMsg').html('&nbsp');
-    if ('war'==type) {
-      $('#warMsg').html(message);
-    } else if ('err'==type) {
-      $('#errMsg').html(message);
+
+  /**
+  * 通过行列设定table内容
+  *
+  * @param tblId 表ID
+  * @param rowNo 行号
+  * @param colNo 列号
+  * @param strVal 值
+  *
+  */
+  function setTbltxtWithCoordinate(tblId,rowNo,colNo,strVal) {
+    try {
+      var rowTr = $("#"+tblId).find("tr")[rowNo];
+      var colTd = $(rowTr).find("td")[colNo];
+      $(colTd).html(strVal);
+    } catch (e) {
+      console.log(e);
     }
+  }
+  
+  /**
+  * 日期转换Data→yyyy/MM/DD HH:MI
+  *
+  * @param dateVal Data型日期值
+  *
+  */
+  function formateDateYMDHMslash(dateVal) {
+    var rst = dateVal.getFullYear();
+    rst += "-" + (parseInt(dateVal.getMonth()) +1);
+    rst += "-" + dateVal.getDate();
+    rst += "T" + dateVal.getHours();
+    var sec = dateVal.getSeconds();
+    if (parseInt(sec)<10) {
+      sec = "0" + sec;
+    }
+    rst += ":" + sec;
+    return rst;
+  }
+  
+  function closePopupWindow() {
+    $("#messageArea").html("");
+    $("#popup").hide();
   }
   
   /**
@@ -208,20 +245,24 @@
   function doValidation(){
     // 清空
     $(".error").prop('class','');
-  
-    // 取得输入元素
-    var inputEleList = $("input[type='text']");
-    
+    var errorMsg = "";
     // 首个出错项目
     var firstFlag = false;
-    
+
+    // 取得输入元素
+    var inputEleList = $("input[type='text']");
     $.each(inputEleList,function(){
       // 可以输入
       if(!this.disabled) {
+        var titleEle = $(this).prev()[0];
+        var title = titleEle.innerHTML;
         // 必须输入验证
         if(isNotEmpty(this.attributes.notempty) && isEmpty(this.value)) {
           this.placeholder = 'please input value!';
           this.className = this.className + "error";
+          //
+          title += "未输入<br>";
+          errorMsg += title;
           if (!firstFlag) {
             this.focus();
             firstFlag = true;
@@ -230,6 +271,8 @@
   
         // 属性验证
         if(isNotEmpty(this.attributes.validation) && isNotEmpty(this.value)) {
+          title += "格式不正确<br>";
+          errorMsg += title;
           var valType = this.attributes.validation.value;
           // TODO
           if (!firstFlag && false) {
@@ -244,6 +287,9 @@
     var radioEles = $("input[type='radio'],[type='checkbox']");
     var namesCond = [];
     $.each(radioEles,function(){
+      if(this.disabled){
+        return;
+      }
       if (this.name.indexOf(".")>0) {
         if(!isInclude(this.name , namesCond)){
           namesCond.push(this.name);
@@ -261,6 +307,13 @@
       var parentEle = $(radioEle).parents("div[class='inputCell']")[0];
       var msgSpan = $(parentEle).find("span")[0];
       msgSpan.innerHTML = "";
+      
+      var titleEle = $(parentEle).find("label")[0];
+      console.log(radioEle);
+      var title = titleEle.innerHTML;
+      title += "未选择<br>";
+      errorMsg += title;
+      
       var value = "";
       // 判断是否为对象
       if (this.indexOf(".") > 0) {
@@ -288,8 +341,14 @@
       console.dir(formObj);
       return false;
     } else {
+      popupMsg(errorMsg);
       return true;
     }
+  }
+  
+  function popupMsg(errorMsg){
+    $("#popup").show(50);
+    $("#messageArea").html(errorMsg);
   }
 
   $.fn.serializeObject = function(){
