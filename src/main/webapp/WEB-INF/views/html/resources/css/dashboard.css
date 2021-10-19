@@ -25,8 +25,14 @@ main {
 }
 
 .dashboard {
-  width : 400px;
-  height : 300px;
+  width : 450px;
+  height : 500px;
   margin : 10px 10px 10px 10px;
+  border:1px;
   background-color : #e1e8f9;
+}
+
+canvas {
+  margin : 50px 0px 0px 25px;
+  background-color : white;
 }

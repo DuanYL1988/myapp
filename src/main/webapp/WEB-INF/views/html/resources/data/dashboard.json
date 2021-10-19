@@ -1,0 +1,18 @@
+var configPie = {
+  "type" : "pie",
+  "data": {
+    "datasets": [
+      {
+        "data": [32, 18, 36, 89, 14, 65],
+        "backgroundColor": [
+        ],
+        "label": "Storage"
+      }
+    ],
+    "labels": ["A", "B", "C", "D", "E", "F"]
+  },
+  "options": {
+    "responsive": false,
+    "maintainAspectRatio": true
+  }
+};
