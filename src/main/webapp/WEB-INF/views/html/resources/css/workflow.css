@@ -1,9 +1,13 @@
+body {
+  background-color: #dfdfdf;
+}
+
 main {
-  width:980px;
+  width:1280px;
 }
 
 /* 流程图标区域 */
-#wk_icon_area{
+#progressBar{
   display: flex;
 }
 
@@ -13,7 +17,7 @@ main {
 
 /* 流程图标 */
 .wk_icon {
-  background-color: #689559;
+  background-color: #3b3e3991;
   width: 150px;
   height: 30px;
   text-align: center;
@@ -22,25 +26,29 @@ main {
 
 .wk_icon_next {
   border-top: 15px solid transparent;
-  border-left: 10px solid #689559;
+  border-left: 10px solid #3b3e3991;
   border-bottom: 15px solid transparent;
 }
 
 .wk_icon_pre {
   border-top: 15px solid transparent;
-  border-left: 10px solid #decfcf;
+  border-left: 10px solid #dfdfdf;
   border-bottom: 15px solid transparent;
   margin-right: -10px;
   z-index:1;
 }
 
 /* 当前状态 */
-#wk_icon_area .current {
-  background-color: red
+#progressBar .current {
+  background-color: rgb(255,255,0,1);
 }
 
-#wk_icon_area .currentNext {
-  border-left: 10px solid red;
+#progressBar .currentNext {
+  border-left: 10px solid rgb(255,255,0,1);
+}
+
+.editArea {
+  overflow : auto;
 }
 
 .title {
