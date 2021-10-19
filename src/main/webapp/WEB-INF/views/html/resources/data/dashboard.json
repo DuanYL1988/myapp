@@ -3,13 +3,13 @@ var configPie = {
   "data": {
     "datasets": [
       {
-        "data": [32, 18, 36, 89, 14, 65],
+        "data": [32, 18, 36, 89, 14, 65, 25 , 18 ,51],
         "backgroundColor": [
         ],
         "label": "Storage"
       }
     ],
-    "labels": ["A", "B", "C", "D", "E", "F"]
+    "labels": ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
   },
   "options": {
     "responsive": false,
