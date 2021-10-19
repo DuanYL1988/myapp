@@ -3,22 +3,23 @@
  */
 function initlize(){
   // 初期化
-  document.getElementById("wk_icon_area").innerHTML = "";
+  document.getElementById("progressBar").innerHTML = "";
   //
   var mainEle = document.getElementsByTagName("main")[0].offsetWidth;
   var count = wkJson.stepsStr.length;
   var cellWidth = mainEle/count;
+  var currStep = 0;
   // 进度条
   $.each(wkJson.stepsStr,function(i,ele){
     // 状态图标
-    var statusEle = createElement("div",this,"status");
+    var statusEle = createElement("div",this,"status","");
     statusEle.style.width = cellWidth+"px";
     
     // 图标主体和方向箭头
-    var preEle = createElement("div","","wk_icon_pre");
-    var stepEle = createElement("div","","wk_icon");
+    var preEle = createElement("div","","wk_icon_pre","");
+    var stepEle = createElement("div","prog_step_"+i,"wk_icon","");
     stepEle.style.width = (cellWidth-10)+"px";
-    var nextEle = createElement("div","","wk_icon_next");
+    var nextEle = createElement("div","","wk_icon_next","");
     
     // 文字
     var stepInfo = wkJson.steps[this];
@@ -26,6 +27,7 @@ function initlize(){
     
     // 当前状态颜色设置
     if(CURRENT_STEP == this) {
+      currStep = i;
       stepEle.className = "wk_icon current";
       nextEle.className = "wk_icon_next currentNext";
     }
@@ -39,11 +41,22 @@ function initlize(){
       statusEle.appendChild(nextEle);
     }
     statusEle.setAttribute("onclick","doEvent('"+this+"')");
-
-    // 添加
-    document.getElementById("wk_icon_area").appendChild(statusEle);
     
+    // 添加
+    document.getElementById("progressBar").appendChild(statusEle);
   });
+  // 前面的进度颜色渐变
+  var times = 1;
+  for (var i = currStep-1;i >= 0;i--) {
+    var alpha = 1 - (times*0.2);
+    times++;
+    var stepEle2 = document.getElementById("prog_step_"+i);
+    var styleBkg = "rgb(95,84,251,"+alpha+")";
+    stepEle2.style.backgroundColor = styleBkg;
+    var iconEle = $(stepEle2).next()[0];
+    iconEle.style.borderLeft = "10px solid " + styleBkg;
+  }
+
   
   // 按钮
   document.getElementById("eventArea").innerHTML = "";
@@ -53,16 +66,25 @@ function initlize(){
     var clNm = wkJson.steps[CURRENT_STEP].clnm;
     btnEle.innerHTML = eventInfo.name;
     // 当前Step内状态切换
-    if (parseInt(eventInfo.step) > 0) {
-      if (parseInt(eventInfo.step) > 1) {
-        btnEle.setAttribute("disabled",true);
+    if ("A-9" != CURRENT_STEP) {
+      if (parseInt(eventInfo.step) > 0) {
+        btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"'"+",'"+CURRENT_STEP+"'"+",'"+clNm+"')");
+        if (parseInt(eventInfo.step) > 1) {
+          btnEle.setAttribute("disabled",true);
+        }
+      } else {
+        // 前往下一个step
+        btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"')");
+        if ("Back" != eventInfo.name) {
+          btnEle.setAttribute("disabled",true);
+        }
       }
-      btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"'"+",'"+CURRENT_STEP+"'"+",'"+clNm+"')");
     } else {
-      // 前往下一个step
-      btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"')");
-      if ("Back" != eventInfo.name) {
-        btnEle.setAttribute("disabled",true);
+      if (parseInt(eventInfo.step) > 0) {
+        btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"'"+",'"+CURRENT_STEP+"'"+",'"+clNm+"')");
+      } else {
+        // 前往下一个step
+        btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"')");
       }
     }
     // 添加
@@ -136,21 +158,143 @@ function initEditArea(obj,parentEle){
     var titleEle = createElement("span","","title","");
     titleEle.innerHTML = obj.title;
     baseInfoEle.appendChild(titleEle);
-    
+
+    $.each(obj.detail.rows,function(i,rows){
+      var inputRowEle = createElement("div","","inputRow","");
+      // 排列方向
+      if ("vertical" == rows.design) {
+        inputRowEle.className = "inputRow vertical";
+      }
+      //prop
+      $.each(rows.items,function(j,prop){
+        var inputCell = createElement("div","","inputCell","");
+        // 属性Title
+        var lblEle = createElement("label","","","");
+        lblEle.innerHTML = prop.name;
+        inputCell.appendChild(lblEle);
+        // 属性Input
+        var inputEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
+        var inputType = prop.type;
+        inputEle.style = isEmpty(prop.style) ? "":prop.style;
+        if (isNotEmpty(prop.readonly)) {
+          inputEle.setAttribute("readonly","");
+        }
+        
+        //
+        var hideEle = null;
+        
+        // 输入框
+        if ("text" == inputType) {
+          inputEle.type = "text";
+          inputEle.value = prop.value;
+        // 下拉菜单
+        } else if ("select" == prop.type){
+          inputEle = createElement("select",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
+          createOptions(inputEle,masterInfo[prop.masterId]);
+          
+        // Autocomplete
+        } else if ("autocomplete" == inputType) {
+          inputEle.type = "text";
+          inputEle.autocomplete = "on";
+          inputEle.setAttribute("list",prop.masterId);
+          inputEle.value = prop.value;
+          
+          var datalistEle = createElement("datalist",prop.masterId,"",obj.id + "." + prop.property);
+          createOptions(datalistEle,masterInfo[prop.masterId]);
+          document.getElementById("hideArea").appendChild(datalistEle);
+          
+        // 单选,复选按钮
+        } else if ("radio" == inputType || "checkbox" == inputType){
+          inputEle = null;
+          // 属性设定
+          var eleInfo = {
+            "name" : obj.id + "." + prop.property,
+            "id" : "",
+            "classNm" : "",
+            "type" : inputType,
+            "require" : prop.require,
+            "readonly" : isNotEmpty(prop.readonly)
+          };
+          createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
+          
+        // 单纯表示项目
+        } else if ("label" == inputType){
+          inputEle = createElement("label","Lbl_" + obj.id + "_" + prop.property,"","");
+          inputEle.innerHTML = prop.value;
+          inputEle.style.width = "auto";
+          // 隐藏项
+          hideEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
+          hideEle.type = "hidden";
+          hideEle.value = prop.value;
+        } else if ("textarea" == inputType){
+          inputEle = createElement("textarea",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
+          inputEle.value = prop.value;
+          inputEle.style = isEmpty(prop.style) ? "":prop.style;
+          inputEle.rows = 7;
+          inputEle.cols = 80;
+        // 日期控件
+        } else if ("datetime" == inputType) {
+          inputEle.type = "datetime-local";
+          inputEle.className = "dateTime";
+          inputEle.value = prop.value;
+          inputEle.removeAttribute("readonly");
+        // 按钮
+        } else if ("button" == inputType) {
+          inputEle = createElement("button","","cell_btn","","");
+          inputEle.type = "button"
+          inputEle.setAttribute("onclick",prop.value);
+          inputEle.innerHTML = prop.name;
+        }
+        
+        if (isNotEmpty(inputEle)) {
+          // require
+          if (isNotEmpty(prop.require)) {
+            inputEle.setAttribute("notempty","true");
+          }
+          inputCell.appendChild(inputEle);
+          
+          // 验证信息表示
+          var displayEle = createElement("span","","displayOnly","");
+          inputCell.appendChild(displayEle);
+          
+          if (isNotEmpty(hideEle)) {
+            inputCell.appendChild(hideEle);
+          }
+        }
+        inputRowEle.appendChild(inputCell);
+      });
+      baseInfoEle.appendChild(inputRowEle);
+    });
+        
     // 列表表示
     if (isNotEmpty(obj.head)){
       // Table
       var tableEle = createElement("table","","","");
       tableEle.setAttribute("cellspacing",0);
       tableEle.border = "1";
+      tableEle.style.width = obj.width;
+      tableEle.id = obj.id;
       
       // Thead
       var thead = createElement("thead","","","");
       var tr = createElement("tr","","","");
+      // selectAll
+      if (isNotEmpty(obj.selectAll)) {
+        var th = createElement("th","","","");
+        var selectAll = createElement("input","","","selectAll");
+        selectAll.type = "checkbox";
+        $(selectAll).on("click",function(){
+          var tblEle = $(this).parents("table")[0];
+          var checkCnt = $(tblEle).find("input[type='checkbox']");
+          $(checkCnt).attr("checked",this.checked);
+        });
+        th.appendChild(selectAll);
+        tr.appendChild(th);
+      }
       $.each(obj.head,function(){
-        var td = createElement("td","","","");
-        td.innerHTML = this;
-        tr.appendChild(td);
+        var th = createElement("th","","","");
+        th.innerHTML = this;
+        tr.appendChild(th);
       });
       thead.appendChild(tr);
       tableEle.appendChild(thead);
@@ -159,6 +303,15 @@ function initEditArea(obj,parentEle){
       var tbody = createElement("tbody","","","");
       $.each(masterInfo[obj.info],function(){
         tr = createElement("tr","","","");
+        // selectAll
+        if (isNotEmpty(obj.selectAll)) {
+          var selectTd = createElement("td","","","");
+          var checkedEle = createElement("input","","","");
+          checkedEle.type = "checkbox";
+          selectTd.appendChild(checkedEle);
+          tr.appendChild(selectTd);
+        }
+        // data
         $.each(this,function(j,cell){
           var td = createElement("td","","","");
           td.innerHTML = cell;
@@ -170,112 +323,7 @@ function initEditArea(obj,parentEle){
       tableEle.appendChild(tbody);
       
       baseInfoEle.appendChild(tableEle);
-      
     }
-      
-      $.each(obj.detail.rows,function(i,rows){
-        var inputRowEle = createElement("div","","inputRow","");
-        // 排列方向
-        if ("vertical" == rows.design) {
-          inputRowEle.className = "inputRow vertical";
-        }
-        //prop
-        $.each(rows.items,function(j,prop){
-          var inputCell = createElement("div","","inputCell","");
-          // 属性Title
-          var lblEle = createElement("label","","","");
-          lblEle.innerHTML = prop.name;
-          inputCell.appendChild(lblEle);
-          // 属性Input
-          var inputEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
-          var inputType = prop.type;
-          inputEle.style = isEmpty(prop.style) ? "":prop.style;
-          inputEle.setAttribute("readonly",isNotEmpty(prop.readonly));
-          
-          //
-          var hideEle = null;
-          
-          // 输入框
-          if ("text" == inputType) {
-            inputEle.type = "text";
-            inputEle.value = prop.value;
-          // 下拉菜单
-          } else if ("select" == prop.type){
-            inputEle = createElement("select",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
-            createOptions(inputEle,masterInfo[prop.masterId]);
-            
-          // Autocomplete
-          } else if ("autocomplete" == inputType) {
-            inputEle.type = "text";
-            inputEle.autocomplete = "on";
-            inputEle.setAttribute("list",prop.masterId);
-            inputEle.value = prop.value;
-            
-            var datalistEle = createElement("datalist",prop.masterId,"",obj.id + "." + prop.property);
-            createOptions(datalistEle,masterInfo[prop.masterId]);
-            document.getElementById("hideArea").appendChild(datalistEle);
-            
-          // 单选,复选按钮
-          } else if ("radio" == inputType || "checkbox" == inputType){
-            inputEle = null;
-            // 属性设定
-            var eleInfo = {
-              "name" : obj.id + "." + prop.property,
-              "id" : "",
-              "classNm" : "",
-              "type" : inputType,
-              "require" : prop.require,
-              "readonly" : isNotEmpty(prop.readonly)
-            };
-            createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
-            
-          // 单纯表示项目
-          } else if ("label" == inputType){
-            inputEle = createElement("label","Lbl_" + obj.id + "_" + prop.property,"","");
-            inputEle.innerHTML = prop.value;
-            inputEle.style.width = "auto";
-            // 隐藏项
-            hideEle = createElement("input",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
-            hideEle.type = "hidden";
-            hideEle.value = prop.value;
-          } else if ("textarea" == inputType){
-            inputEle = createElement("textarea",obj.id + "_" + prop.property,"",obj.id + "." + prop.property);
-            inputEle.value = prop.value;
-            inputEle.style = isEmpty(prop.style) ? "":prop.style;
-            inputEle.rows = 7;
-            inputEle.cols = 80;
-          // 日期控件
-          } else if ("datetime" == inputType) {
-            inputEle.type = "datetime-local";
-            inputEle.className = "dateTime";
-            inputEle.value = prop.value;
-          // 按钮
-          } else if ("button" == inputType) {
-            inputEle = createElement("button","","cell_btn","","");
-            inputEle.type = "button"
-            inputEle.setAttribute("onclick",prop.value);
-            inputEle.innerHTML = prop.name;
-          }
-          
-          if (isNotEmpty(inputEle)) {
-            // require
-            if (isNotEmpty(prop.require)) {
-              inputEle.setAttribute("notempty","true");
-            }
-            inputCell.appendChild(inputEle);
-            
-            // 验证信息表示
-            var displayEle = createElement("span","","displayOnly","");
-            inputCell.appendChild(displayEle);
-            
-            if (isNotEmpty(hideEle)) {
-              inputCell.appendChild(hideEle);
-            }
-          }
-          inputRowEle.appendChild(inputCell);
-        });
-        baseInfoEle.appendChild(inputRowEle);
-      });
       
     parentEle.appendChild(baseInfoEle);
   }
@@ -299,7 +347,6 @@ function showSection(divEle){
  */
 function arrIconReset(){
   // 消息清空
-  showMsg('',"");
   var curStEle = $("div[class='wk_icon current']")[0];
   curStEle.className = "wk_icon";
   // 箭头
@@ -339,7 +386,7 @@ function arrIconSet(targetEle){
 }
 
 /**
- * 工作流动作
+ * 进度条切换
  */
 function doEvent(step){
   var curSt = CURRENT_STEP.split("-")[1];
