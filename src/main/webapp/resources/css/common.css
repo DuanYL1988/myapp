@@ -1,6 +1,6 @@
 /* 元素样式 */
 body {
-  background-color: #decfcf;
+  background-color: #60f7f74a;
 }
 
 input[type='text'] {
@@ -12,8 +12,8 @@ input[type='text'] {
 }
 
 .dateTime {
-  height:22px;
-  width:170px;
+  height:30px;
+  width:180px;
   border:1px solid #949494;
   border-radius:5px;
   font-family:ui-rounded;
@@ -41,6 +41,7 @@ thead{
 td {
   border:1px solid #949494;
   border-collapse: collapse;
+  font-size : small;
 }
 
 /* 提示输入错误样式 */
@@ -95,9 +96,9 @@ input[type='text'][class='error'] {
 /* 标签对应显示区域Div */
 .group-section {
   display:none;
-  border:2px solid #CCCCCC;
+  border:2px inset #c3baf9c7;
   background-color:#FFFFFF;
-  width:80%;
+  width:90%;
 }
 
 /* 标签对应显示区域标题SPAN */
@@ -134,4 +135,31 @@ button {
 
 button:hover {
   background-color:#8080fda8;
+}
+
+/* pop up */
+#popup {
+  display:none;
+}
+
+#popupWindow {
+  height : 370px;
+  width : 700px;
+  position : absolute;
+  border-radius : 10px;
+  background-color : #e0edf5;
+  left : 25%;
+  top : 25%;
+  z-index : 900;
+}
+
+#grayup{
+  top : 0px;
+  height : 0px;
+  margin-left : -10px;
+  position : absolute;
+  height : 100%;
+  width : 100%;
+  background-color : rgb(128,128,128,0.8);
+  z-index : 899;
 }
