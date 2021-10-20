@@ -1,18 +1,14 @@
-var configPie = {
-  "type" : "pie",
-  "data": {
-    "datasets": [
-      {
-        "data": [32, 18, 36, 89, 14, 65, 25 , 18 ,51],
-        "backgroundColor": [
-        ],
-        "label": "Storage"
-      }
-    ],
-    "labels": ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
-  },
-  "options": {
-    "responsive": false,
-    "maintainAspectRatio": true
-  }
+var serviceType = {
+  "label" : ["採算計算・見積書作成","見積書承認","見積書確定","取引申請作成","取引申請承認","決済後処理"],
+  "count" : [125,12,10,157,42,2]
+};
+
+var charge = {
+  "label" : ["金子","薛","範","羅","枝広","末富","王","張","段","未分配"],
+  "count" : [17,23,15,8,5,5,11,15,18,231]
+};
+
+var workStatus = {
+  "label" : ["完了","未着手","作業中","BAレビュー依頼中","着手予定"],
+  "count" : [144,178,18,6,2]
 };
