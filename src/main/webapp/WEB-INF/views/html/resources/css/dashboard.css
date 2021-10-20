@@ -16,7 +16,6 @@ aside:hover {
 
 main {
   margin-left : 60px;
-  height : 3000px;
 }
 
 .leftMenu{
@@ -40,21 +39,30 @@ main {
   color : white;
 }
 
-.dashboard {
+.PieChart {
   width : 550px;
   height : 600px;
   margin : 0px 10px 10px 10px;
   border: 3px solid #50504f;
-  background-color : #ccdbff;
+  background-color : white;
   display : inline-block;
 }
 
-.dashboard span {
+.PieChart h2 {
   padding-top : 5px;
   font-size : x-large;
 }
 
-canvas {
+.BarChart {
+  width : 840px;
+  height : 400px;
+  margin : 0px 10px 10px 10px;
+  border: 3px solid #50504f;
+  background-color : white;
+  display : inline-block;
+}
+
+.PieChart canvas {
   margin : 0px 0px 0px 25px;
   background-color : white;
   margin-top : 5px;
