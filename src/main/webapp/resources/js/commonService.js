@@ -115,11 +115,15 @@
    * 生成<option>标签
    *
    * @param ele <option>的父标签,如<select><dataset>
-   * @param arrs 内容集合,格式[{"code":"A","value":"NM"},{"code":"B",,"value":"NM2"}]
+   * @param arrs 内容集合,格式[{"code":"A","value":"NM"},{"code":"B","value":"NM2"}]
    */
-  function createOptions(ele,arrs){
+  function createOptions(ele,arrs,firstBlank){
+    if (isNotEmpty(firstBlank)) {
+      let optionEle = createElement("option","","");
+      ele.appendChild(optionEle);
+    }
     $.each(arrs,function(){
-      var optionEle = createElement("option","","");
+      let optionEle = createElement("option","","");
       optionEle.value = this.code;
       optionEle.innerHTML = this.value;
       ele.appendChild(optionEle);
