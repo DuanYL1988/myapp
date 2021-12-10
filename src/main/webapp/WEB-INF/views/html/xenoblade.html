@@ -6,7 +6,7 @@
 <!-- 共通様式 -->
 <link href="../../../resources/css/common.css" rel="stylesheet" />
 <style>
-th {width:200px;}
+th {width:160px;}
 .tdImg {width:80px}
 </style>
 <!-- jquery -->
@@ -22,16 +22,13 @@ th {width:200px;}
     <div class="inputRow">
       <div id="" class="inputCell">
         <label id="" class="">属性球选择</label>
-        <select onchange="getThirdBladelist(this)">
-          <option value=""></option>
-          <option value="light">光:封印羁绊下降</option>
-          <option value="dark">暗:封印增援</option>
-          <option value="fire">火:封印自爆</option>
-          <option value="water">水:封印恶臭</option>
-          <option value="ice">冰:封印异刃封锁</option>
-          <option value="thunder">雷:封印后方攻击</option>
-          <option value="wind">风:封印吹飞</option>
-          <option value="earth">地:封印剑主封锁</option>
+        <select id="finalResultAttr" onchange="getThirdBladelist(this)">
+        </select>
+      </div>
+      
+      <div id="" class="inputCell">
+        <label id="" class="">场景技能选择</label>
+        <select id="screenSkill" onchange="">
         </select>
       </div>
     </div>
@@ -58,7 +55,8 @@ th {width:200px;}
       </div>
     </div>
     
-    <table id="resultDataTbl" style="padding-top:40px;padding-left:150px">
+    <div style="padding-top:40px;padding-left:150px">
+    <table id="resultDataTbl" cellspacing="0" border="1" >
       <thead>
         <tr>
           <th>连携1</th>
@@ -69,6 +67,7 @@ th {width:200px;}
       <tbody>
       </tbody>
     </table>
+    </div>
   </main>
 </body>
 </html>

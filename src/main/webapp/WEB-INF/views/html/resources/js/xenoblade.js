@@ -1,36 +1,18 @@
-var baseImgPath = '../../../resources/images/xenoblade/face/';
-var attrMap = {};
-var bladeMap = {};
+const baseImgPath = '../../../resources/images/xenoblade/face/';
+const attrMap = createMap("attr",bladeList);
+const bladeMap = createMap("id",bladeList);
+var screenSkillList = [];
+const screenSkillMap = transGirdToMap(bladeList,"screenSkill",",",screenSkillList);
 let team = ["", "", ""];
 let tblRecords = [];
 
 $(function() {
-  attrMap = createMap("ATTR",bladeList);
-  bladeMap = createMap("ID",bladeList);
-  //
   var tableTh = ["异刃连击1","异刃连击2","异刃连击3","",""];
+  // 最终挂球属性
+  createOptions(document.getElementById("finalResultAttr"),attrList,true);
+  // 场景技能
+  createOptions(document.getElementById("screenSkill"),screenSkillList,true);
 });
-
-/**
- * 通用方法:将list进行group处理成map
- * @param keyNm Group化项目名
- * @param dataList 元数据集合
- */
-function createMap(keyNm,dataList) {
-  var rstMap = {};
-  $.each(dataList,function(i,data){
-    // key不存在
-    var key = data[keyNm];
-    if (isEmpty(rstMap[key])){
-      var obj = [];
-      obj.push(data);
-      rstMap[key] = obj;
-    } else {
-      rstMap[key].push(data);
-    }
-  });
-  return rstMap;
-}
 
 /**
  * 取得第三异刃
@@ -60,7 +42,7 @@ function filterTable(){
   
   var newTbl = [];
   $.each(tblRecords,function(){
-    if((this.combo1.ID == firstId || ""==firstId) && (this.combo2.ID == secondId || ""==secondId)) {
+    if((this.combo1.id == firstId || ""==firstId) && (this.combo2.id == secondId || ""==secondId)) {
       newTbl.push(this);
     }
   });
@@ -75,7 +57,7 @@ function getComboListWithLast(selectEle){
   team = ["","",selectEle.value];
   // 第三异刃情报
   var thirdBlade = bladeMap[selectEle.value][0];
-  var thirdAttr = thirdBlade.ATTR;
+  var thirdAttr = thirdBlade.attr;
   // 获得连击可能性集合
   var newComboList = getNewComboList(thirdAttr);
   
@@ -98,12 +80,12 @@ function getComboListWithLast(selectEle){
       // 已确认的第三异刃
       var record = team;
       // 异刃不重复
-      if (!isInclude(firstBlade.ID,record)){
-        record[0] = firstBlade.ID;
+      if (!isInclude(firstBlade.id,record)){
+        record[0] = firstBlade.id;
         // 循环第二异刃
         $.each(secondBladeList,function(k,secondBlade){
-          if (!isInclude(secondBlade.ID,record)) {
-            record[1] = secondBlade.ID;
+          if (!isInclude(secondBlade.id,record)) {
+            record[1] = secondBlade.id;
             tblRecords.push({"combo1":firstBlade,"combo2":secondBlade,"combo3":thirdBlade});
           }
         })
@@ -119,7 +101,7 @@ function getComboListWithLast(selectEle){
   $.each(tblRecords,function(i,team1){
     for(let j=tblRecords.length-1;j>i;j--) {
       let team2 = tblRecords[j];
-      if (team1.combo1.ID == team2.combo2.ID && team1.combo2.ID == team2.combo1.ID) {
+      if (team1.combo1.id == team2.combo2.id && team1.combo2.id == team2.combo1.id) {
         tblRecords.splice(j,1);
       }
     }
@@ -161,7 +143,7 @@ function createPulldown(selectId,attrs) {
   var info = [];
   $.each(attrs,function(index,attr){
     $.each(attrMap[attr],function(){
-      info.push({"code" : this.ID,"value" : this.NAME,"master" : this.MASTER});
+      info.push({"code" : this.id,"value" : this.name,"master" : this.master});
     });
   });
   document.getElementById(selectId).innerHTML = "";
@@ -192,13 +174,13 @@ function reflushTable(dataList){
 }
 
 function createImgTd(blade,tdElement,trElement){
-  if (isNotEmpty(blade.ID)){
+  if (isNotEmpty(blade.id)){
     var imgEle = document.createElement("img");
-    imgEle.src = baseImgPath + blade.ID + ".jpg";
+    imgEle.src = baseImgPath + blade.id + ".jpg";
     imgEle.className = "tdImg";
     tdElement.appendChild(imgEle);
     var imgEle2 = document.createElement("img");
-    imgEle2.src = baseImgPath + blade.MASTER + ".jpg";
+    imgEle2.src = baseImgPath + blade.master + ".jpg";
     imgEle2.className = "tdImg";
     tdElement.appendChild(imgEle2);
   }
