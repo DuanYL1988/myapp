@@ -15,8 +15,9 @@
       'formateDateYMDHMslash':formateDateYMDHMslash,
       'createOptions':createOptions,
       'createCheck':createCheck,
+      'createMap':createMap,
+      'transGirdToMap':transGirdToMap,
       'doValidation':doValidation
-      
   });
   
   function ajaxGet(url,jsonData,callback){
@@ -115,11 +116,15 @@
    * 生成<option>标签
    *
    * @param ele <option>的父标签,如<select><dataset>
-   * @param arrs 内容集合,格式[{"code":"A","value":"NM"},{"code":"B",,"value":"NM2"}]
+   * @param arrs 内容集合,格式[{"code":"A","value":"NM"},{"code":"B","value":"NM2"}]
    */
-  function createOptions(ele,arrs){
+  function createOptions(ele,arrs,firstBlank){
+    if (isNotEmpty(firstBlank)) {
+      let optionEle = createElement("option","","");
+      ele.appendChild(optionEle);
+    }
     $.each(arrs,function(){
-      var optionEle = createElement("option","","");
+      let optionEle = createElement("option","","");
       optionEle.value = this.code;
       optionEle.innerHTML = this.value;
       ele.appendChild(optionEle);
@@ -190,10 +195,16 @@
    */
   function createElement(type,id,classNm,name) {
     var ele = document.createElement(type);
-    ele.id = id;
-    ele.className = classNm;
-    ele.name = name;
+    createAttr(ele,"id",id);
+    createAttr(ele,"className",classNm);
+    createAttr(ele,"name",name);
     return ele;
+  }
+  
+  function createAttr(elementObj,attrNm,attrValue){
+    if (isNotEmpty(attrValue)){
+      elementObj[attrNm] = attrValue;
+    }
   }
 
   /**
@@ -309,7 +320,6 @@
       msgSpan.innerHTML = "";
       
       var titleEle = $(parentEle).find("label")[0];
-      console.log(radioEle);
       var title = titleEle.innerHTML;
       title += "未选择<br>";
       errorMsg += title;
@@ -344,6 +354,59 @@
       popupMsg(errorMsg);
       return true;
     }
+  }
+  
+  /**
+  * 多对多网状结构转换为某一属性的1对多Map
+  * 
+  * @param dataList 元数据集合
+  * @param attrId Group化项目名
+  * @param strSplit 分割符
+  * @param uniqueList 属性集合List
+  */
+  function transGirdToMap(dataList,attrId,strSplit,uniqueList){
+    var resultMap = {};
+    var code = 1;
+    $.each(dataList,function(i,data){
+      var attrList;
+      if (isNotEmpty(strSplit)) {
+        attrList = data[attrId].split(strSplit);
+      } else {
+        attrList = data[attrId];
+      }
+      // 循环属性
+      $.each(attrList,function(j,attr){
+        if (isEmpty(resultMap[attr])) {
+          resultMap[attr] = [];
+          resultMap[attr].push(data.id);
+          uniqueList.push({"code":code++,"value":attr});
+        } else {
+          resultMap[attr].push(data.id);
+        }
+      });
+    });
+    return resultMap;
+  }
+  
+  /**
+  * 通用方法:将list进行group处理成map
+  * @param keyNm Group化项目名
+  * @param dataList 元数据集合
+  */
+  function createMap(keyNm,dataList) {
+    var rstMap = {};
+    $.each(dataList,function(i,data){
+      // key不存在
+      var key = data[keyNm];
+      if (isEmpty(rstMap[key])){
+        var obj = [];
+        obj.push(data);
+        rstMap[key] = obj;
+      } else {
+        rstMap[key].push(data);
+      }
+    });
+    return rstMap;
   }
   
   function popupMsg(errorMsg){

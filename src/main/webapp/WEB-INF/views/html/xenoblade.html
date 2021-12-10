@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+<link rel="icon" type="image/x-ico" href="../../../resources/images/xenoblade/face/hikari.jpg" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>异度之刃</title>
+<!-- 共通様式 -->
+<link href="../../../resources/css/common.css" rel="stylesheet" />
+<style>
+th {width:160px;}
+.tdImg {width:80px}
+</style>
+<!-- jquery -->
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<!-- 共通処理 -->
+<script src="../../../resources/js/commonService.js"></script>
+<!-- 設定データ -->
+<script src="resources/data/xenoblade.json"></script>
+<script src="resources/js/xenoblade.js"></script>
+</head>
+<body>
+  <main>
+    <div class="inputRow">
+      <div id="" class="inputCell">
+        <label id="" class="">属性球选择</label>
+        <select id="finalResultAttr" onchange="getThirdBladelist(this)">
+        </select>
+      </div>
+      
+      <div id="" class="inputCell">
+        <label id="" class="">场景技能选择</label>
+        <select id="screenSkill" onchange="">
+        </select>
+      </div>
+    </div>
+    <!-- 异刃选择 -->
+    <div class="inputRow">
+      <h2>异刃选择</h2>
+    </div>
+    <div class="inputRow">
+      <div id="" class="inputCell">
+        <label class="">连击1</label>
+        <select id="firstBlade" onchange="filterTable()">
+
+        </select>
+      </div>
+      <div id="" class="inputCell">
+        <label class="">连击2</label>
+        <select id="secondBlade" onchange="filterTable()">
+        </select>
+      </div>
+      <div id="" class="inputCell">
+        <label class="">连击3</label>
+        <select id="thirdBlade" onchange="getComboListWithLast(this)">
+        </select>
+      </div>
+    </div>
+    
+    <div style="padding-top:40px;padding-left:150px">
+    <table id="resultDataTbl" cellspacing="0" border="1" >
+      <thead>
+        <tr>
+          <th>连携1</th>
+          <th>连携2</th>
+          <th>连携3</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</body>
+</html>

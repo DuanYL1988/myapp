@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DashBoard</title>
+<!-- 共通様式 -->
+<link href="../../../resources/css/common.css" rel="stylesheet" />
+<!-- 本画面用様式 -->
+<link href="resources/css/dashboard.css" rel="stylesheet" />
+<!-- jquery -->
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<!-- 共通処理 -->
+<script src="../../../resources/js/commonService.js"></script>
+<script src="../../../resources/js/import/Chart.min.js"></script>
+<!-- 設定データ -->
+<script src="resources/data/dashboard.json"></script>
+<script src="resources/js/dashboard.js"></script>
+</head>
+<body>
+  <!-- 左侧控制区域 -->
+  <aside>
+    <div class="leftMenu">
+      <div class="icon_text"> 
+        <div class="icon">A</div>
+        <a href="">AAAA</a>
+      </div>
+      <div class="icon_text"> 
+        <div class="icon">B</div>
+        <a href="">BBBB</a>
+      </div>
+    </div>
+  </aside>
+  
+  <!-- -->
+  <main>
+    <!---->
+    <div id="" class="PieChart">
+      <h2 class="tm-block-title">業務種別</h2>
+      <canvas id="serviceType" width="500" height="500"></canvas>
+    </div>
+    
+    <div id="" class="PieChart">
+      <h2 class="tm-block-title">担当者</h2>
+      <canvas id="charge" width="500" height="500"></canvas>
+    </div>
+    
+    <div id="" class="PieChart">
+      <h2 class="tm-block-title">ステータス</h2>
+      <canvas id="workStatus" width="500" height="500"></canvas>
+    </div>
+
+    <div id="" class="BarChart">
+      <h2 class="tm-block-title">式样书</h2>
+      <canvas id="barChart1" width="750" height="300"></canvas>
+    </div>
+    
+    <div id="" class="BarChart">
+      <h2 class="tm-block-title">完本</h2>
+      <canvas id="lineChart1" width="750" height="300"></canvas>
+    </div>
+    
+  </main>
+</body>
+</html>

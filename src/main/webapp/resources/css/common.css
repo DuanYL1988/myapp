@@ -44,6 +44,11 @@ td {
   font-size : small;
 }
 
+.faceImg {
+  width : 100px;
+  height : 100px;
+}
+
 /* 提示输入错误样式 */
 input[type='text'][class='error'] {
   border:2px solid red;
