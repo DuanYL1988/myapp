@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -43,13 +44,16 @@ public class FehFileUtils {
     public static void main(String[] args) throws Exception {
         String folderPath = "";
         folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\feh\\acter";
-//        folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\fgo\\servants";
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("请选择需要执行的处理");
         System.out.println("0:FEH");
         System.out.println("1:FGO");
         String type = scanner.nextLine();
+
+        if ("1".equals(type)) {
+            folderPath = "D:\\project\\myapp\\src\\main\\webapp\\resources\\images\\fgo\\servants";
+        }
 
         System.out.println("请选择需要执行的处理");
         System.out.println("0:重命名");
@@ -120,51 +124,19 @@ public class FehFileUtils {
         if (MAPPING_NAME_MAP == null) {
             MAPPING_NAME_MAP = initNameMappingMap();
         }
-        String rename = MAPPING_NAME_MAP.get(file.getName());
-        if (null != rename && rename.length() > 0) {
-            reName(file, rename);
-        } else if (file.getName().indexOf(EXTRA_BEF) >= 0) {
-            reName(file, EXTRA_AFT);
-        } else if (file.getName().indexOf(BREAK_BEF) >= 0) {
-            reName(file, BREAK_AFT);
-        } else if (file.getName().indexOf(ATTACT_BEF) >= 0) {
-            reName(file, ATTACT_AFT);
-        } else if (file.getName().indexOf(NORMAL_BEF) >= 0) {
-            reName(file, NORMAL_AFT);
-        } else if (file.getName().indexOf("拷贝") >= 0) {
-            reName(file, FACE);
-        }
+        reName(file);
     }
 
     /**
-     * 重命名文件(FEH)
+     * 重命名文件(FGO)
      *
      * @param file
      */
     private void getFgoRenameByName(File file) {
         if (MAPPING_NAME_MAP == null) {
             MAPPING_NAME_MAP = initFgoNameMappingMap();
-            MAPPING_NAME_MAP.put("_Stage4.png", "Stage4.png");
-            MAPPING_NAME_MAP.put("Icon.png", "Icon.png");
         }
-        String rename = MAPPING_NAME_MAP.get(file.getName());
-
-        // TODO
-        if (null != rename && rename.length() > 0) {
-            reName(file, rename);
-        } else if (file.getName().indexOf("_Stage1.png") >= 0) {
-            reName(file, "Stage1.png");
-        } else if (file.getName().indexOf("_Stage2.png") >= 0) {
-            reName(file, "Stage2.png");
-        } else if (file.getName().indexOf("_Stage3.png") >= 0) {
-            reName(file, "Stage3.png");
-        } else if (file.getName().indexOf("_Stage4.png") >= 0) {
-            reName(file, "Stage4.png");
-        } else if (file.getName().indexOf("Icon.png") >= 0 && !"Icon.png".equals(file.getName())) {
-            reName(file, "Icon.png");
-        } else if (file.getName().indexOf("拷贝") >= 0) {
-            reName(file, FACE);
-        }
+        reName(file);
     }
 
     /**
@@ -173,11 +145,19 @@ public class FehFileUtils {
      * @param file
      * @param rename
      */
-    private void reName(File file, String rename) {
-        System.out.println("png file name before :" + file.getPath());
-        file.renameTo(new File(file.getParent() + FOLDER_PATH_MARK + rename));
-        System.out.println("png file name after :" + rename);
-        COUNT++;
+    private void reName(File file) {
+        Set<String> mappingName = MAPPING_NAME_MAP.keySet();
+        for (String name : mappingName) {
+            String rename = MAPPING_NAME_MAP.get(name);
+            if (file.getName().indexOf(name) >= 0) {
+                // reName(file, rename);
+                System.out.println("png file name before :" + file.getPath());
+                file.renameTo(new File(file.getParent() + FOLDER_PATH_MARK + rename));
+                System.out.println("png file name after :" + rename);
+                COUNT++;
+                break;
+            }
+        }
     }
 
     /**

@@ -47,6 +47,16 @@ td {
 .faceImg {
   width : 100px;
   height : 100px;
+  padding-left : 5px;
+  padding-top : 5px;
+}
+
+/* 图片容器 */
+.cellImage {
+  display : inline-block;
+  float : left;
+  width : 100px;
+  height : 100px;
 }
 
 /* 提示输入错误样式 */
