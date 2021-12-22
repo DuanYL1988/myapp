@@ -16,6 +16,7 @@
       'createOptions':createOptions,
       'createCheck':createCheck,
       'createMap':createMap,
+      'transListToMap':transListToMap,
       'transGirdToMap':transGirdToMap,
       'doValidation':doValidation
   });
@@ -183,8 +184,8 @@
    * 创建图片元素<img>
    * @param arg js对象,值
    */
-  function createImg(path,id,name){
-      var imgEle = createElement('img',id,name);
+  function createImg(path,id,classNm,name){
+      var imgEle = createElement('img',id,classNm,name);
       imgEle.src = path;
       return imgEle;
   }
@@ -354,6 +355,25 @@
       popupMsg(errorMsg);
       return true;
     }
+  }
+  
+  function transListToMap(dataList,mapKey,singleFlag) {
+    var resultMap = {};
+    $.each(dataList,function(i,data){
+      var keyValue = data[mapKey];
+      // map中存在check
+      if(isEmpty(resultMap[keyValue])) {
+        resultMap[keyValue] = [];
+      }
+      // 不重复flag
+      if (singleFlag) {
+        resultMap[keyValue] = data;
+        return;
+      } else if (isNotEmpty(keyValue) && '99'!=keyValue){
+        resultMap[keyValue].push(data);
+      }
+    });
+    return resultMap;
   }
   
   /**

@@ -3,28 +3,52 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>英雄一览页面</title>
-<link rel="icon" type="image/x-ico" href="../../../resources/images/feh.png" th:href="@{/resources/images/rune5/feh.png}"/>
-<link href="../../../resources/css/ihover.css" th:href="@{/resources/css/ihover.css}" rel="stylesheet" />
-<link href="../../../resources/css/feh/hero_list.css" th:href="@{/resources/css/feh/hero_list.css}" rel="stylesheet" />
-<script src="../../../resources/js/jquery-3.4.1.min.js" th:src="@{/resources/js/jquery-3.4.1.min.js}"></script>
-<script src="../../../resources/js/commonService.js" th:src="@{/resources/js/commonService.js}"></script>
+<link rel="icon" type="image/x-ico" href="../../../resources/images/feh.png"/>
+<link href="../../../resources/css/ihover.css" rel="stylesheet" />
+<link href="../../../resources/css/feh/hero_list.css" rel="stylesheet" />
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/angular.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
 <script src="resources/data/hero_list.json"></script>
-<script src="../../../resources/js/hero/search.js" th:src="@{/resources/js/hero/search.js}"></script>
+<script src="../../../resources/js/hero/search.js"></script>
 </head>
-<body style="background: #decfcf">
-  <div id="block" style="display:none"><button id="cancel">Cancel</button></div>
-  <header style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999">
+
+<body style="background: #decfcf" ng-app="firstApp" ng-controller="myCtrl">
+
+  <header style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999"> 
     <span>导航栏-固定位置</span>
+    <div id="block" style="display:none"><button id="cancel">Cancel</button></div>
   </header>
 
   <main id="main" style="padding-top:20px;width:1200px;">
-    <form class="needs-validation" th:object="${form}" th:action="@{/hero/search}" method="post">
-
-      <input type="submit" value="检索"></input>
+    <form>
+      <div class="searchParams">
+        
+        <input type="submit" value="检索"></input>
+      </div>
+      <div ng-repeat="heroList in heroMap" class="row">
+        <div class="rightArea">
+          <div class="ih-item circle effect19" ng-repeat="hero in heroList">
+            <div class="spinner"></div>
+            <div id="{{hero.id+';'+hero.imgName}}" class="img">
+              <img src="../../../resources/images/feh/acter/{{hero.imgName}}/face.png"></img>
+            </div>
+            <div class="info">
+              <div class="infoBackDiv">
+                <h3>{{hero.name}}</h3>
+                <p>{{hero.titleName}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
   </main>
-
-  <aside id="leftDetailInfo" style="display:none;">
+  
+  <!-- 
+  -->
+  <aside style="height:800px">
+    <h4>基本情报</h4>
     <table width="100%">
       <tr>
         <td rowspan="7" width="150px" ><img id="hero_img" style="width:150px" src=""></img></td>
@@ -68,20 +92,51 @@
         <td><span id="stick_total" class="status" style="width:0px"/></td>
       </tr>
     </table>
-    <div class="paraBox" style="border:solid 6px #a9ff00c4;height:600px;background-color:#5a7171ad;padding-top:5px">
-      <table>
-        <tr>
-          <td width="200px" align="right">skillA</td>
-          <td width="40px"/>
-          <td>aa</td>
-        </tr>
-      <table>
+    <!--
+    <div class="paraBox" style="border:solid 6px #a9ff00c4;background-color:#5a7171ad;padding-top:5px">
+    </div>
+    -->
+    <table style="font-size: larger;font-weight: bolder;">
+      <tr>
+        <td width="200px" align="right">武器</td>
+        <td width="" id="hero_weapon"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">A技能</td>
+        <td width="" id="hero_skillA"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">B技能</td>
+        <td width="" id="hero_skillB"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">C技能</td>
+        <td width="" id="hero_skillC"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">辅助技能</td>
+        <td width="" id="hero_skillS"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">必杀技能</td>
+        <td width="" id="hero_skillE"></td>
+      </tr>
+    </table>
+    
+    <h4>相同人物</h4>
+    <div id="samePerson">
     </div>
     
-    <div class="button-group">
-       <button id="picture" type="button">picture</button>
-       <button type="button" onclick="updateHeroInfo()">update</button>
-       <button id="hide" type="button">hide</button>
+    <h4>组队</h4>
+    <div id="teamMember">
+    </div>
+    
+    <div class="button-group" >
+      <div class="buttonArea" style="position:absolute;bottom:3px">
+        <button id="picture" type="button">picture</button>
+        <button type="button" onclick="updateHeroInfo()">update</button>
+        <button id="hide" type="button">hide</button>
+      </div>
     </div>
   </aside>
 

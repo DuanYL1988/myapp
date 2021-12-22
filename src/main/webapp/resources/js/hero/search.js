@@ -1,30 +1,39 @@
 var htmlFlag;
 var heroImagePath = '/myapp/resources/images/feh/acter/';
-var wenponCd = ['R-W', 'R-M', 'R-D', 'R-B', 'R-BOW', 'R-Dart',
-    'B-W', 'B-M', 'B-D', 'B-B', 'B-BOW', 'B-Dart',
-    'G-W', 'G-M', 'G-D', 'G-B', 'G-BOW', 'G-Dart',
-    'N-W', 'N-Dart', 'N-Staff', 'N-D', 'N-B', 'N-M'];
-
-var colorMoveCd = ['01', '02', '03', '04'];
 var selectedHero;
+// 表示方式
+var displayType = ['color','moveType','weaponType'];
+var jsonDate = transListToMap(staticJson,displayType[1]);
+// 直接取得对象
+const heroMap = transListToMap(staticJson,"id",true);
+// 按照人物分组
+const personMap = transListToMap(staticJson,"masterId");
+// 分组对象
+const teamMap = transListToMap(staticJson,"team");
+
+/** ----angularJs---- */
+var firstApp = angular.module('firstApp',[]);
+firstApp.controller('myCtrl',function($scope){
+  $scope.heroMap = jsonDate;
+});
+/** ----angularJs---- */
 
 $(function() {
     // 未定义返回ture
     htmlFlag = typeof (mode) == "undefined";
     if (htmlFlag) {
-        console.log("display from static html");
         heroImagePath = "../../../resources/images/feh/acter/";
         // 静态页面加载json数据
-        jsonDate = staticJson;
-        initHtml(staticJson);
+        // initHtml(jsonDate);
     } else {
         jsonDate = JSON.parse(jsonDate);
-        initHtml(jsonDate);
+        // initHtml(jsonDate);
     }
-
+/**/
     $('.img').on('click', function() {
-        var heroId = this.id.split(';')[0];
-        openInfoDiv(heroId);
+        let heroId = this.id.split(';')[0];
+        let imgNm = this.id.split(';')[1];
+        openInfoDiv(heroId,imgNm);
     });
 
     $('#hide').on('click', function() {
@@ -45,125 +54,83 @@ $(function() {
 });
 
 /**
- * 静态html打开时,读取json设置隐藏区域的图片
- */
-function initHtml(jsonData) {
-    var displayGroup = $("#display_group").val();
-    displayGroup = null == displayGroup ? "A" : displayGroup;
-
-    if ("A" == displayGroup) {
-        for (var i = 0; i <= wenponCd.length; i++) {
-            var data = jsonData[wenponCd[i]];
-            secondLoop(data)
-        }
-    } else {
-        for (var i = 0; i <= colorMoveCd.length; i++) {
-            var data = jsonData[colorMoveCd[i]];
-            secondLoop(data)
-        }
-    }
-}
-
-function secondLoop(data) {
-    var parentDiv = createElement('div', '', 'row');
-    var rightDiv = createElement('div', '', 'rightArea');
-
-    $.each(data, function() {
-        var cellDiv = createElement('div', '', 'ih-item circle effect19');
-
-        var spinner = createElement('div', '', 'spinner');
-        cellDiv.appendChild(spinner);
-
-        var imgDiv = createElement('div', this.id + ";" + this.weaponType, 'img');
-        var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', '');
-        imgDiv.appendChild(imgEle);
-        cellDiv.appendChild(imgDiv);
-
-        var infoDiv = createElement('div', '', 'info');
-        var infoBackDiv = createElement('div', '', 'infoBackDiv');
-        var h3Ele = createElement('h3', '', '');
-        h3Ele.innerHTML = this.name;
-        var pEle = document.createElement("p");
-        pEle.innerHTML = this.titleName;
-        infoBackDiv.appendChild(h3Ele);
-        infoBackDiv.appendChild(pEle);
-        infoDiv.appendChild(infoBackDiv);
-        cellDiv.appendChild(infoDiv);
-
-        rightDiv.appendChild(cellDiv);
-    });
-    parentDiv.appendChild(rightDiv);
-    document.getElementById("main").appendChild(parentDiv);
-
-}
-
-/**
  * 打开信息面板(服务器)
  */
-function openInfoDiv(id) {
+function openInfoDiv(id,imgName) {
+    let data = heroMap[id];
+    $("#heroId").val(id);
+    /*
     // ajax取得英雄信息
     var url = '/myapp/hero/openLeftInfo/' + id;
+    ajaxGet(url, null, setSingleHeroInfo(data));
+    */
+    setSingleHeroInfo(data);
+    displaySamePerson(personMap[data.masterId],data.id,"samePerson");
+    displaySamePerson(teamMap[data.team],"","teamMember");
+    console.log(teamMap[data.team].length);
 
-    ajaxGet(url, null, function(data) {
-        // 选择的角色
-        selectedHero = data.data;
+}
 
-        var leftAside = $("#leftDetailInfo");
-        leftAside.css("display", "");
-        leftAside.css("background", "url('/myapp/resources/images/feh/background.jpg')");
-        $("#hero_img").prop("src", heroImagePath + data.data.imgName + "/face.png");
-        $("#hero_titleName").html(data.data.titleName + "-" + data.data.name);
-        var localHp = data.listData01[0].localVal;
-        var localPow = data.listData01[1].localVal;
-        var localSpd = data.listData01[2].localVal;
-        var localDef = data.listData01[3].localVal;
-        var localMdf = data.listData01[4].localVal;
-        var localTotal = data.listData01[5].localVal;
-        $("#hero_hp").html(localHp);
-        $("#hero_pow").html(localPow);
-        $("#hero_spd").html(localSpd);
-        $("#hero_def").html(localDef);
-        $("#hero_mdf").html(localMdf);
-        $("#hero_total").html(localTotal);
-        $("#hero_weapon").html(data.data.weapon);
-        $("#hero_skillA").html(data.data.skillA);
-        $("#hero_skillB").html(data.data.skillB);
-        $("#hero_skillC").html(data.data.skillC);
-        $("#hero_skillS").html(data.data.skillS);
-        $("#hero_skillE").html(data.data.skillE);
+function setSingleHeroInfo(heroObject){
+  // 选择的角色
+  selectedHero = heroObject;
 
-        $("#round_hp").html('排位:' + data.listData01[0].roundVal + "/" + data.listData01[0].totalVal);
-        $("#round_pow").html('排位:' + data.listData01[1].roundVal + "/" + data.listData01[1].totalVal);
-        $("#round_spd").html('排位:' + data.listData01[2].roundVal + "/" + data.listData01[2].totalVal);
-        $("#round_def").html('排位:' + data.listData01[3].roundVal + "/" + data.listData01[3].totalVal);
-        $("#round_mdf").html('排位:' + data.listData01[4].roundVal + "/" + data.listData01[4].totalVal);
-        $("#round_total").html('排位:' + data.listData01[5].roundVal + "/" + data.listData01[5].totalVal);
+  $("#hero_img").prop("src", heroImagePath + selectedHero.imgName + "/face.png");
+  $("#hero_titleName").html(selectedHero.titleName + "-" + selectedHero.name);
+  $("#hero_weapon").html(selectedHero.weapon);
+  $("#hero_skillA").html(selectedHero.skillA);
+  $("#hero_skillB").html(selectedHero.skillB);
+  $("#hero_skillC").html(selectedHero.skillC);
+  $("#hero_skillS").html(selectedHero.skillS);
+  $("#hero_skillE").html(selectedHero.skillE);
+  $("#hero_hp").html(selectedHero.hp);
+  $("#hero_pow").html(selectedHero.attact);
+  $("#hero_spd").html(selectedHero.speed);
+  $("#hero_def").html(selectedHero.def);
+  $("#hero_mdf").html(selectedHero.mdf);
+  $("#hero_total").html(selectedHero.hp+selectedHero.attact+selectedHero.speed+selectedHero.def+selectedHero.mdf);
 
-        $("#stick_hp").css('width', (localHp / data.listData01[0].maxVal) * 180 + "px");
-        $("#stick_pow").css('width', (localPow / data.listData01[1].maxVal) * 180 + "px");
-        $("#stick_spd").css('width', (localSpd / data.listData01[2].maxVal) * 180 + "px");
-        $("#stick_def").css('width', (localDef / data.listData01[3].maxVal) * 180 + "px");
-        $("#stick_mdf").css('width', (localMdf / data.listData01[4].maxVal) * 180 + "px");
-        $("#stick_total").css('width', (localTotal / data.listData01[5].maxVal) * 180 + "px");
+  /*
+  $("#round_hp").html('排位:' + data.listData01[0].roundVal + "/" + data.listData01[0].totalVal);
+  $("#round_pow").html('排位:' + data.listData01[1].roundVal + "/" + data.listData01[1].totalVal);
+  $("#round_spd").html('排位:' + data.listData01[2].roundVal + "/" + data.listData01[2].totalVal);
+  $("#round_def").html('排位:' + data.listData01[3].roundVal + "/" + data.listData01[3].totalVal);
+  $("#round_mdf").html('排位:' + data.listData01[4].roundVal + "/" + data.listData01[4].totalVal);
+  $("#round_total").html('排位:' + data.listData01[5].roundVal + "/" + data.listData01[5].totalVal);
 
-        // 初期状态
-        var heroOtherSkinDiv = document.getElementById('otherSkin');
-        heroOtherSkinDiv.innerHTML = '';
-        // 组队
-        if (null != data.listData02) {
-            $.each(data.listData02, function() {
-                var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', '');
-                imgEle.style.width = '100px';
-                var dataId = this.id;
-                $(imgEle).on('click', function() {
-                    openInfoDiv(dataId);
-                });
-                heroOtherSkinDiv.appendChild(imgEle);
-            });
-        }
-    });
+  $("#stick_hp").css('width', (localHp / data.listData01[0].maxVal) * 180 + "px");
+  $("#stick_pow").css('width', (localPow / data.listData01[1].maxVal) * 180 + "px");
+  $("#stick_spd").css('width', (localSpd / data.listData01[2].maxVal) * 180 + "px");
+  $("#stick_def").css('width', (localDef / data.listData01[3].maxVal) * 180 + "px");
+  $("#stick_mdf").css('width', (localMdf / data.listData01[4].maxVal) * 180 + "px");
+  $("#stick_total").css('width', (localTotal / data.listData01[5].maxVal) * 180 + "px");
 
-    $("#heroId").val(id);
+  // 初期状态
+  var heroOtherSkinDiv = document.getElementById('otherSkin');
+  heroOtherSkinDiv.innerHTML = '';
+  // 组队
+  if (null != data.listData02) {
+      $.each(data.listData02, function() {
+          var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', '');
+          imgEle.style.width = '100px';
+          var dataId = this.id;
+          $(imgEle).on('click', function() {
+              openInfoDiv(dataId);
+          });
+          heroOtherSkinDiv.appendChild(imgEle);
+      });
+  }
+  */
+}
+
+function displaySamePerson(heroList,id,eleId) {
+  document.getElementById(eleId).innerHTML = "";
+  $.each(heroList,function(){
+    if (id!=this.id) {
+      var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', 'faceImg');
+      document.getElementById(eleId).appendChild(imgEle);
+    }
+  });
 }
 
 function updateHeroInfo() {

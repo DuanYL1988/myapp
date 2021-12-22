@@ -40,6 +40,13 @@ aside table {
   color: #110a79
 }
 
+.faceImg {
+  width : 80px;
+  height : 80px;
+  margin-left : 5px;
+  border:2px solid #000;
+}
+
 .button-group {
   display: inline-block
 }
