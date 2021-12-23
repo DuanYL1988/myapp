@@ -18,6 +18,7 @@
       'createMap':createMap,
       'transListToMap':transListToMap,
       'transGirdToMap':transGirdToMap,
+      'getUrlParam':getUrlParam,
       'doValidation':doValidation
   });
   
@@ -80,7 +81,7 @@
       } else {
           if (typeof arg == 'object') {
               return false;
-          } else if (''==arg || null == arg || 'null' == arg) {
+          } else if (''==arg || null == arg || 'null' == arg || 'NaN' == arg) {
               return true;
           }
           return false;
@@ -406,6 +407,19 @@
       });
     });
     return resultMap;
+  }
+  
+  function getUrlParam(){
+    let paramText = window.location.search;
+    paramText = paramText.replace('?','');
+    paramText = paramText.split('&');
+    let paramObj = {};
+    $.each(paramText,function(){
+      let key = this.split('=')[0];
+      let val = this.split('=')[1];
+      paramObj[key] = val;
+    });
+    return paramObj;
   }
   
   /**

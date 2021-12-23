@@ -1,6 +1,33 @@
 /* 元素样式 */
 body {
-  background-color: #60f7f74a;
+  background:url(../images/backgoundImg.jpg)no-repeat;
+  background-size:1920px 1200px;
+  background-attachment:fixed;
+}
+
+header {
+  background: #170932ab;
+  color: #0cf5f5;
+  font-size: large;
+  font-weight: bolder;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  line-height: 2em;
+  z-index: 999
+}
+
+main {
+  padding-top:50px;
+}
+
+aside {
+  position: fixed;
+  width: 600px;
+  height: auto;
+  right: 10px;
+  background-size: 100% auto
 }
 
 input[type='text'] {

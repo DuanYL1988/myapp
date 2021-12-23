@@ -1,4 +1,4 @@
-var staticJson = 
+const staticJson = 
 [
 	{
 		"selectQuary": null,
@@ -10800,4 +10800,37 @@ var staticJson =
 		"createDatetime": 1631199600000,
 		"updateDatetime": 1631199600000
 	}
-]
+];
+
+const masterInfo = {
+  "displayType" : [{"code":0,"value":""},{"code":1,"value":"color"},{"code":2,"value":"moveType"},{"code":3,"value":"weaponType"}],
+  "fifterType" : [{"code":0,"value":""},{"code":"1","value":"颜色"},{"code":"2","value":"移动方式"},{"code":"3","value":"武器类型"}],
+  "color" : [{"code":"01","value":"红"},{"code":"02","value":"蓝"},{"code":"03","value":"绿"},{"code":"04","value":"无"}],
+  "moveType" : [{"code":"01","value":"步行"},{"code":"02","value":"飞行"},{"code":"03","value":"重装"},{"code":"04","value":"骑兵"}],
+  "weaponType" : [
+{"code" : "1" , "value" : "蓝兽"},
+{"code" : "2" , "value" : "蓝弓"},
+{"code" : "3" , "value" : "蓝龙"},
+{"code" : "4" , "value" : "蓝暗器"},
+{"code" : "5" , "value" : "蓝魔"},
+{"code" : "6" , "value" : "枪"},
+{"code" : "7" , "value" : "绿兽"},
+{"code" : "8" , "value" : "绿弓"},
+{"code" : "9" , "value" : "绿龙"},
+{"code" : "10" , "value" : "绿暗器"},
+{"code" : "11" , "value" : "绿魔"},
+{"code" : "12" , "value" : "斧"},
+{"code" : "13" , "value" : "无色兽"},
+{"code" : "14" , "value" : "无色弓"},
+{"code" : "15" , "value" : "无色龙"},
+{"code" : "16" , "value" : "暗器"},
+{"code" : "17" , "value" : "无色魔法"},
+{"code" : "18" , "value" : "杖"},
+{"code" : "19" , "value" : "红兽"},
+{"code" : "20" , "value" : "红弓"},
+{"code" : "21" , "value" : "红龙"},
+{"code" : "22" , "value" : "红暗器"},
+{"code" : "23" , "value" : "红魔"},
+{"code" : "24" , "value" : "剑"}
+  ]
+};

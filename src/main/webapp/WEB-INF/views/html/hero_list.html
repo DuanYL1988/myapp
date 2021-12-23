@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>英雄一览页面</title>
 <link rel="icon" type="image/x-ico" href="../../../resources/images/feh.png"/>
+<link href="../../../resources/css/common.css" rel="stylesheet" />
 <link href="../../../resources/css/ihover.css" rel="stylesheet" />
 <link href="../../../resources/css/feh/hero_list.css" rel="stylesheet" />
 <script src="../../../resources/js/jquery-3.4.1.min.js"></script>
@@ -13,24 +14,33 @@
 <script src="../../../resources/js/hero/search.js"></script>
 </head>
 
-<body style="background: #decfcf" ng-app="firstApp" ng-controller="myCtrl">
+<body ng-app="firstApp" ng-controller="myCtrl">
 
-  <header style="background: #fff; width: 100%; position: fixed; top: 0; left: 0; line-height: 2em; z-index: 999"> 
+  <header style=""> 
+    <a href='hero_list.html?group=1&type=4'>Test</a>
     <span>导航栏-固定位置</span>
     <div id="block" style="display:none"><button id="cancel">Cancel</button></div>
   </header>
 
-  <main id="main" style="padding-top:20px;width:1200px;">
+  <main id="main" style="width:1200px;">
     <form>
       <div class="searchParams">
+        <label>分组表示:</label>
+        <select id='SEL_TYPE' onchange="doSearch()">
+          <option ng-repeat="group in searchMap.fifterType" value="{{group.code}}" >{{group.value}}</option>
+        </select>
         
-        <input type="submit" value="检索"></input>
+        <label>颜色:</label><select ng-model="selectedColor" ng-options="groupBy.value for groupBy in searchMap.color"/>
+        <input type='hidden' id="searchColor" value="{{selectedColor.code}}">
+        
+        <input type="button" value="检索" onclick="doFifter()"></input>
       </div>
-      <div ng-repeat="heroList in heroMap" class="row">
+      <div ng-repeat="(mapkey,heroList) in heroMap" class="row">
+        <h3 style="color: #e4ff00;">{{mapkey}}</h3>
         <div class="rightArea">
           <div class="ih-item circle effect19" ng-repeat="hero in heroList">
             <div class="spinner"></div>
-            <div id="{{hero.id+';'+hero.imgName}}" class="img">
+            <div id="{{hero.id+'|'+hero.imgName}}" class="img">
               <img src="../../../resources/images/feh/acter/{{hero.imgName}}/face.png"></img>
             </div>
             <div class="info">
@@ -47,7 +57,7 @@
   
   <!-- 
   -->
-  <aside style="height:800px">
+  <aside id="rightSideArea" style="height:800px;display:none;background-color:rgb(69 86 86 / 67%);">
     <h4>基本情报</h4>
     <table width="100%">
       <tr>

@@ -1,7 +1,3 @@
-.row {
-  display: flex
-}
-
 .leftArea {
   display: inline-block;
   float: left;
@@ -15,8 +11,10 @@
 
 .rightArea {
   display: inline-block;
-  float: left;
-  border-bottom:2px solid #000;
+  margin-top: -25px;
+  margin-bottom: -20px;
+  /*float: left;
+  border-bottom:2px solid #000;*/
 }
 
 .ih-item.circle {
@@ -27,13 +25,8 @@
 }
 
 aside {
-  position: fixed;
-  top: 40px;
-  width: 600px;
-  height: auto;
-  right: 10px;
-  background: url(../../../resources/images/feh/background.jpg);
-  background-size: 100% auto
+  top: 40px;/*
+  background: url(../../../resources/images/feh/background.jpg);*/
 }
 
 aside table {

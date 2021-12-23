@@ -1,9 +1,17 @@
-var htmlFlag;
+const htmlFlag = typeof (mode) == "undefined";
 var heroImagePath = '/myapp/resources/images/feh/acter/';
+var resourcePath = '/myapp/hero/regist/';
 var selectedHero;
+// 初始url参数
+const searchParam = getUrlParam();
+let indexA = searchParam['group'];
+if(isEmpty(indexA) || indexA<=0){
+  indexA = 1;
+}
+var showType = masterInfo.displayType[indexA].value;
+
 // 表示方式
-var displayType = ['color','moveType','weaponType'];
-var jsonDate = transListToMap(staticJson,displayType[1]);
+var jsonDate = transListToMap(staticJson,showType);
 // 直接取得对象
 const heroMap = transListToMap(staticJson,"id",true);
 // 按照人物分组
@@ -15,14 +23,15 @@ const teamMap = transListToMap(staticJson,"team");
 var firstApp = angular.module('firstApp',[]);
 firstApp.controller('myCtrl',function($scope){
   $scope.heroMap = jsonDate;
+  $scope.searchMap = masterInfo;
 });
 /** ----angularJs---- */
 
 $(function() {
     // 未定义返回ture
-    htmlFlag = typeof (mode) == "undefined";
     if (htmlFlag) {
         heroImagePath = "../../../resources/images/feh/acter/";
+        resourcePath = 'acterImage.html?heroId=';
         // 静态页面加载json数据
         // initHtml(jsonDate);
     } else {
@@ -31,8 +40,8 @@ $(function() {
     }
 /**/
     $('.img').on('click', function() {
-        let heroId = this.id.split(';')[0];
-        let imgNm = this.id.split(';')[1];
+        let heroId = this.id.split('|')[0];
+        let imgNm = this.id.split('|')[1];
         openInfoDiv(heroId,imgNm);
     });
 
@@ -57,8 +66,10 @@ $(function() {
  * 打开信息面板(服务器)
  */
 function openInfoDiv(id,imgName) {
+    $("#rightSideArea").show();
     let data = heroMap[id];
     $("#heroId").val(id);
+
     /*
     // ajax取得英雄信息
     var url = '/myapp/hero/openLeftInfo/' + id;
@@ -67,8 +78,6 @@ function openInfoDiv(id,imgName) {
     setSingleHeroInfo(data);
     displaySamePerson(personMap[data.masterId],data.id,"samePerson");
     displaySamePerson(teamMap[data.team],"","teamMember");
-    console.log(teamMap[data.team].length);
-
 }
 
 function setSingleHeroInfo(heroObject){
@@ -128,6 +137,7 @@ function displaySamePerson(heroList,id,eleId) {
   $.each(heroList,function(){
     if (id!=this.id) {
       var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', 'faceImg');
+      imgEle.setAttribute('onclick','openInfoDiv("'+this.id+'","'+this.imgName+'")');
       document.getElementById(eleId).appendChild(imgEle);
     }
   });
@@ -135,7 +145,33 @@ function displaySamePerson(heroList,id,eleId) {
 
 function updateHeroInfo() {
     var id = $("#heroId").val();
-    var url = '/myapp/hero/regist/' + id + "";
+    var url = resourcePath + id + "";
     var iLeft = (window.screen.availWidth - 10 - 850) / 2;
-    window.open(url, "英雄更新", "height=900 , width=850 , top=20 , left= " + iLeft, false);
+    window.open(url, "英雄更新", "height=1080 , width=900 , top=0 , left= " + iLeft, false);
+}
+
+function doSearch(){
+  
+  console.dir(document.getElementById('SEL_TYPE').value);
+  let url = 'hero_list.html';
+  url += "?group=" + $("#SEL_TYPE").val();
+  //window.open(url, "英雄更新","", false);
+  window.location.href = url;
+}
+
+function doFifter(){
+  let color = $("#searchColor").val();
+  $.each(staticJson,function(){
+    displayRecoder(this.id,this.imgName,color,this.color);
+  });
+}
+
+function displayRecoder(id,imgName,searchVal,objValue){
+  if (isNotEmpty(searchVal) && searchVal != objValue) {
+    /*
+    */
+    let imgId = document.getElementById(id+'|'+imgName);
+    let hideDiv = $(imgId).parents()[0];
+    hideDiv.style.display = "none";
+  }
 }
