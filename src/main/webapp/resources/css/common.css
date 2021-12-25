@@ -1,6 +1,33 @@
 /* 元素样式 */
 body {
-  background-color: #60f7f74a;
+  background:url(../images/backgoundImg.jpg)no-repeat;
+  background-size:1920px 1200px;
+  background-attachment:fixed;
+}
+
+header {
+  background: #170932ab;
+  color: #0cf5f5;
+  font-size: large;
+  font-weight: bolder;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  line-height: 2em;
+  z-index: 999
+}
+
+main {
+  padding-top:15px;
+}
+
+aside {
+  position: fixed;
+  width: 600px;
+  height: auto;
+  right: 10px;
+  background-size: 100% auto
 }
 
 input[type='text'] {
@@ -44,14 +71,32 @@ td {
   font-size : small;
 }
 
+/* 图片容器 */
+.imageBox {
+  display : inline-block;
+}
+/* 图片容器 */
+.cellImage {
+  display : inline-block;
+  float : left;
+  width : 100px;
+  height : 100px;
+}
+
 .faceImg {
   width : 100px;
   height : 100px;
+  padding-left : 5px;
+  padding-top : 5px;
 }
 
 /* 提示输入错误样式 */
 input[type='text'][class='error'] {
   border:2px solid red;
+}
+
+.checkItem {
+  width : 150px;
 }
 
 /* radio,checkbox Label */

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>英雄一览页面</title>
+<link rel="icon" type="image/x-ico" href="../../../resources/images/feh.png"/>
+<link href="../../../resources/css/common.css" rel="stylesheet" />
+<link href="../../../resources/css/ihover.css" rel="stylesheet" />
+<link href="../../../resources/css/feh/hero_list.css" rel="stylesheet" />
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/angular.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+<script src="resources/data/hero_list.json"></script>
+<script src="../../../resources/js/hero/search.js"></script>
+</head>
+
+<body ng-app="firstApp" ng-controller="myCtrl">
+
+  <header style=""> 
+    <a href='hero_list.html?group=1&type=4'>Test</a>
+    <span>导航栏-固定位置</span>
+    <div id="block" style="display:none"><button id="cancel">Cancel</button></div>
+  </header>
+
+  <main id="main" style="width:1200px;">
+    <form>
+      <div class="searchParams">
+        <label>分组表示:</label>
+        <select id='SEL_TYPE' onchange="doSearch()">
+          <option ng-repeat="group in searchMap.fifterType" value="{{group.code}}" >{{group.value}}</option>
+        </select>
+        
+        <label>颜色:</label><select ng-model="selectedColor" ng-options="groupBy.value for groupBy in searchMap.color"/>
+        <input type='hidden' id="searchColor" value="{{selectedColor.code}}">
+        
+        <input type="button" value="检索" onclick="doFifter()"></input>
+      </div>
+      
+      <!-- -->
+      <div ng-repeat="(mapkey,heroList) in heroMap" class="row">
+        <h3 style="color: #e4ff00;">{{mapkey}}</h3>
+        <div class="rightArea">
+          <div class="ih-item circle effect19" ng-repeat="hero in heroList">
+            <div class="spinner"></div>
+            <div id="{{hero.id+'|'+hero.imgName}}" class="img">
+              <img src="../../../resources/images/feh/acter/{{hero.imgName}}/face.png"></img>
+            </div>
+            <div class="info">
+              <div class="infoBackDiv">
+                <h3>{{hero.name}}</h3>
+                <p>{{hero.titleName}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+  
+  <!-- 
+  -->
+  <aside id="rightSideArea" style="height:800px;display:none;background-color:rgb(69 86 86 / 67%);">
+    <h4>基本情报</h4>
+    <table width="100%">
+      <tr>
+        <td rowspan="7" width="150px" ><img id="hero_img" style="width:150px" src=""></img></td>
+        <td colspan="4" id="hero_titleName">titleName-name</td>
+        <td><input type="hidden" id="heroId" ></input></td>
+      </tr>
+      <tr>
+        <td width="40px">HP</td>
+        <td width="30px" id="hero_hp"></td>
+        <td width="120px" ><span id="round_hp"></span></td>
+        <td width="200px"><span id="stick_hp" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>POW</td>
+        <td id="hero_pow"></td>
+        <td><span id="round_pow"></span></td>
+        <td><span id="stick_pow" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>SPD</td>
+        <td id="hero_spd"></td>
+        <td><span id="round_spd"></span></td>
+        <td><span id="stick_spd" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>DEF</td>
+        <td id="hero_def"></td>
+        <td><span id="round_def"></span></td>
+        <td><span id="stick_def" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>MDF</td>
+        <td id="hero_mdf"></td>
+        <td><span id="round_mdf"></span></td>
+        <td><span id="stick_mdf" class="status" style="width:0px"/></td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td id="hero_total"></td>
+        <td><span id="round_total"></span></td>
+        <td><span id="stick_total" class="status" style="width:0px"/></td>
+      </tr>
+    </table>
+    <!--
+    <div class="paraBox" style="border:solid 6px #a9ff00c4;background-color:#5a7171ad;padding-top:5px">
+    </div>
+    -->
+    <table style="font-size: larger;font-weight: bolder;">
+      <tr>
+        <td width="200px" align="right">武器</td>
+        <td width="" id="hero_weapon"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">A技能</td>
+        <td width="" id="hero_skillA"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">B技能</td>
+        <td width="" id="hero_skillB"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">C技能</td>
+        <td width="" id="hero_skillC"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">辅助技能</td>
+        <td width="" id="hero_skillS"></td>
+      </tr>
+      <tr>
+        <td width="200px" align="right">必杀技能</td>
+        <td width="" id="hero_skillE"></td>
+      </tr>
+    </table>
+    
+    <h4>相同人物</h4>
+    <div id="samePerson">
+    </div>
+    
+    <h4>组队</h4>
+    <div id="teamMember">
+    </div>
+    
+    <div class="button-group" >
+      <div class="buttonArea" style="position:absolute;bottom:3px">
+        <button id="picture" type="button">picture</button>
+        <button type="button" onclick="updateHeroInfo()">update</button>
+        <button id="hide" type="button">hide</button>
+      </div>
+    </div>
+  </aside>
+
+</body>
+</html>

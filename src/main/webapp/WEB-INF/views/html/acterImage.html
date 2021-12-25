@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>角色详细</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/feh/acterImage.css"/>
+<style>
+body {
+  background:url(../../../resources/images/backgoundImg2.jpg)no-repeat;
+  background-size:920px 1280px;
+  background-attachment:fixed;
+}
+</style>
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/angular.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+<script src="resources/data/hero_list.json"></script>
+</head>
+<body>
+    <div class="mainBox">
+        <!--<img id="bkImg" style="height:950px;width:auto" src="../../../resources/images/feh/test.jpg"/>-->
+        <img id="prePic" src="../../../resources/images/common/left.png" width="50px" height="50px"/> 
+        <img id="afterPic" src="../../../resources/images/common/right.png" width="50px" height="50px"/>
+        <div class="pictureArea">
+            <img id="backPic" src="" style="height:950px;width:auto;margin-top:-20px"></img>
+        </div>
+        <div class="infoArea">
+            <!--
+            <div class="title">
+                <span text="${acter.titlename}"></span><br> <span text="${acter.basename}"></span>
+            </div>
+            <div class="attr">
+                <img id="blessImg" width="50px" src="" />
+                <img id="moveImg" width="50px" src="" />
+            </div>
+            -->
+        </div>
+    </div>
+</body>
+<script>
+    // 直接取得对象
+    const heroMap = transListToMap(staticJson,"id",true);
+    let acterId = getUrlParam()['heroId'];
+    if(isEmpty(acterId)) {
+      acterId = 40;
+    }
+    const acter = heroMap[acterId];
+    const baseImgSrc = '../../../resources/images/feh/acter/'+acter.imgName;
+
+    var imgBox = [baseImgSrc+'/normal.png',baseImgSrc+'/attact.png',baseImgSrc+'/extra.png',baseImgSrc+'/break.png'];
+    var index = 0;
+    $(function() {
+        // 初期表示
+        var img = document.getElementById("backPic");
+        img.src = imgBox[index];
+        
+        // 下一张立绘
+        $("#afterPic").on('click',function (){
+            if (index == 3){
+                index = 0;
+            } else {
+                index = index + 1;
+            }
+            document.getElementById("backPic").src = imgBox[index];
+        });
+        
+        // 上一张立绘
+        $("#prePic").on('click',function (){
+            if (index == 0){
+                index = 3;
+            } else {
+                index = index - 1;
+            }
+            document.getElementById("backPic").src = imgBox[index];
+        });
+        
+        // 隐藏/表示 属性面板
+        $("#showInfo").on("click",function(){
+            var tarDiv = $("div.infoArea")[0];
+            if ("none" == tarDiv.style.display) {
+                tarDiv.style.display = null;
+            } else {
+                tarDiv.style.display = "none";
+            }
+        });
+    });
+    
+</script>
+</html>

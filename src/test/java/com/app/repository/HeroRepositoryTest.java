@@ -88,11 +88,18 @@ public class HeroRepositoryTest {
     public void createJsonData() {
         Hero condition = new Hero();
 
-        condition.setRace("01");
-
         List<Hero> heroList = heroRepo.selectByDto(condition);
-        System.out.println(jsonUtil.praseObjToJson(commonUtil.groupByList("weaponType", heroList)));
-        ;
+        System.out.println(jsonUtil.praseObjToJson(heroList));
+    }
+
+    @Test
+    public void createFgoJson() {
+        Servant condition = new Servant();
+
+        List<Servant> servantList = servantRepo.selectByDto(condition);
+        System.out.println("var jsonData = ");
+        System.out.println(jsonUtil.praseObjToJson(servantList));
+        System.out.println(";");
     }
 
     @Test

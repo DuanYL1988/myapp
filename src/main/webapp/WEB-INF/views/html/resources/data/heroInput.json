@@ -1,0 +1,318 @@
+/* 取引申請workflowのStep情報 */
+var wkJson = {
+  "name" : "火纹-英雄登录",
+  "currentStep" : "A-1",
+  "stepsStr" : ["A-1","A-2","A-3","A-9"],
+  "steps" : {
+    "A-1" : {
+      "id":"A-1",
+      "name":"基本情报",
+      "clnm":"baseInfo",
+      "actions" : [
+        {"name":"Next","step":"A-2"}
+      ]
+    },
+    "A-2" : {
+      "id":"A-2",
+      "name":"技能情报",
+      "clnm":"skillInfo",
+      "actions" : [
+        {"name":"Back","step":"A-1"},
+        {"name":"Next","step":"A-3"}
+      ]
+    },
+    "A-3" : {
+      "id":"A-3",
+      "name":"技能情报",
+      "clnm":"otherInfo",
+      "actions" : [
+        {"name":"Back","step":"A-2"},
+        {"name":"Next","step":"A-9"}
+      ]
+    },
+    "A-9" : {
+      "id":"A-9",
+      "name":"最终确认",
+      "clnm":"finalStatus",
+      "actions" : [
+        {"name":"Back","step":"A-3"},
+        {"name":"提交","step":""}
+      ]
+    }
+  } 
+};
+
+/* 共通情報(プルダウン、マスタ情報、選択項目[radio,checkbox]) */
+var masterInfo = {
+  "gameName" : [
+    {"code" : "01" , "value" : "暗之龙与光之剑"},
+    {"code" : "02" , "value" : "纹章之谜"},
+    {"code" : "03" , "value" : "索菲亚的复苏Echoes"},
+    {"code" : "04" , "value" : "圣战的系谱"},
+    {"code" : "05" , "value" : "多拉基亚776"},
+    {"code" : "06" , "value" : "封印之剑"},
+    {"code" : "07" , "value" : "烈火之剑"},
+    {"code" : "08" , "value" : "圣魔光石"},
+    {"code" : "09" , "value" : "苍炎轨迹"},
+    {"code" : "10" , "value" : "晓之巫女"},
+    {"code" : "11" , "value" : "觉醒"},
+    {"code" : "12" , "value" : "IF"},
+    {"code" : "13" , "value" : "英雄"},
+    {"code" : "14" , "value" : "风花雪月"}
+  ],
+  "effects" : [
+    {"code" : "01" , "value" : "全距离反击"},
+    {"code" : "02" , "value" : "飞行特效"},
+    {"code" : "03" , "value" : "骑马特效"},
+    {"code" : "04" , "value" : "重装特效"},
+    {"code" : "05" , "value" : "步行特效"},
+    {"code" : "06" , "value" : "龙特效"},
+    {"code" : "07" , "value" : "兽特效"},
+    {"code" : "08" , "value" : "魔法特效"},
+    {"code" : "09" , "value" : "飞行特效无效"},
+    {"code" : "10" , "value" : "骑马特效无效"},
+    {"code" : "11" , "value" : "重装特效无效"},
+    {"code" : "12" , "value" : "步行特效无效"},
+    {"code" : "13" , "value" : "龙特效无效"},
+    {"code" : "14" , "value" : "兽特效无效"},
+    {"code" : "15" , "value" : "追击"},
+    {"code" : "16" , "value" : "追击无效"},
+    {"code" : "17" , "value" : "后发制人"},
+    {"code" : "18" , "value" : "防御盾"},
+    {"code" : "19" , "value" : "魔防盾"},
+    {"code" : "20" , "value" : "奥义系"},
+    {"code" : "21" , "value" : "奥义辅助"},
+    {"code" : "22" , "value" : "勇者效果"},
+    {"code" : "23" , "value" : "属性提升"},
+    {"code" : "24" , "value" : "恐慌"},
+    {"code" : "25" , "value" : "恐慌逆转"},
+    {"code" : "26" , "value" : "DEBUFF"},
+    {"code" : "27" , "value" : "孤军"},
+    {"code" : "28" , "value" : "密集"},
+    {"code" : "29" , "value" : "鼓舞纹章"},
+    {"code" : "30" , "value" : "指挥"},
+    {"code" : "31" , "value" : "刃书效果"}
+  ],
+  "evaluation" : [
+    {"code" : "S+" , "value" : "IMBA"},
+    {"code" : "S" , "value" : "很强"},
+    {"code" : "S-" , "value" : "有奇效"},
+    {"code" : "A+" , "value" : "能用"},
+    {"code" : "A" , "value" : "勉强能用"},
+    {"code" : "A-" , "value" : "有爱能用"},
+    {"code" : "B+" , "value" : "用爱发电"},
+    {"code" : "B" , "value" : "仓管"},
+    {"code" : "B-" , "value" : "别想不开"}
+  ],
+  "weaponType" : [
+    {"code" : "R-W" , "value" : "剑"},
+    {"code" : "R-M" , "value" : "红魔"},
+    {"code" : "R-Dart" , "value" : "红暗器"},
+    {"code" : "R-D" , "value" : "红龙"},
+    {"code" : "R-BOW" , "value" : "红弓"},
+    {"code" : "R-B" , "value" : "红兽"},
+    {"code" : "B-B" , "value" : "蓝兽"},
+    {"code" : "B-BOW" , "value" : "蓝弓"},
+    {"code" : "B-D" , "value" : "蓝龙"},
+    {"code" : "B-Dart" , "value" : "蓝暗器"},
+    {"code" : "B-M" , "value" : "蓝魔"},
+    {"code" : "B-W" , "value" : "枪"},
+    {"code" : "G-B" , "value" : "绿兽"},
+    {"code" : "G-BOW" , "value" : "绿弓"},
+    {"code" : "G-D" , "value" : "绿龙"},
+    {"code" : "G-Dart" , "value" : "绿暗器"},
+    {"code" : "G-M" , "value" : "绿魔"},
+    {"code" : "G-W" , "value" : "斧"},
+    {"code" : "N-B" , "value" : "无色兽"},
+    {"code" : "N-BOW" , "value" : "无色弓"},
+    {"code" : "N-D" , "value" : "无色龙"},
+    {"code" : "N-Dart" , "value" : "暗器"},
+    {"code" : "N-M" , "value" : "无色魔法"},
+    {"code" : "N-Staff" , "value" : "杖"}
+  ],
+  "orbColor" : [
+    {"code" : "Red" , "value" : "红"},
+    {"code" : "Blue" , "value" : "蓝"},
+    {"code" : "Green" , "value" : "绿"},
+    {"code" : "None" , "value" : "无色"}
+  ],
+  "blessType" : [
+    {"code" : "Water" , "value" : "水"},
+    {"code" : "Fire" , "value" : "火"},
+    {"code" : "Wind" , "value" : "风"},
+    {"code" : "Earth" , "value" : "地"},
+    {"code" : "Light" , "value" : "光"},
+    {"code" : "Dark" , "value" : "暗"},
+    {"code" : "Magic" , "value" : "理"},
+    {"code" : "Sky" , "value" : "天"}
+  ],
+  "moveType" : [
+    {"code" : "Foot" , "value" : "步行"},
+    {"code" : "Knight" , "value" : "骑马"},
+    {"code" : "Fly" , "value" : "飞行"},
+    {"code" : "Armor" , "value" : "重装"}
+  ],
+  "raceType" : [
+    {"code" : "human" , "value" : "人"},
+    {"code" : "dragon" , "value" : "龙"},
+    {"code" : "beast" , "value" : "兽"}
+  ],
+  "key" : "value"
+};
+
+/* 各Stepの入力項目情報 */
+var contract = {
+  "baseInfo" : {
+    "id" : "baseInfo",
+    "step" : "A-1",
+    "objectType" : "hero",
+    "title" : "基本情報",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+{"property":"titleName","name":"称号","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"name","name":"名","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"nickName","name":"昵称","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+{"property":"origin","name":"作品","type":"select","masterId":"gameName","value":"","require":"○","validation":"","classNm":"","style":""},
+{"property":"imgName","name":"立绘名","type":"text","masterId":"","value":"","require":"○","validation":"","classNm":"","style":"width:387px"}
+          ]
+        },
+        {
+          "design" : "vertical",
+          "items" : [
+{"property":"rank","name":"评价等级","type":"select","masterId":"evaluation","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"hp","name":"生命","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"numeric","style":"width:90px"},
+{"property":"attact","name":"攻击","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"numeric","style":"width:90px"},
+{"property":"speed","name":"速度","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"numeric","style":"width:90px"},
+{"property":"def","name":"防御","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"numeric","style":"width:90px"},
+{"property":"mdf","name":"魔防","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"numeric","style":"width:90px"}
+          ]
+        }
+      ]
+    }
+  },
+  "skillInfo" : {
+    "id" : "skillInfo",
+    "step" : "A-2",
+    "objectType" : "hero",
+    "title" : "武器技能",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+{"property":"weaponType","name":"武器类型","type":"autocomplete","masterId":"weaponType","value":"","require":"○","validation":"","classNm":"","style":""},
+{"property":"weapon","name":"武器名","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+{"property":"weaponInfo","name":"武器描述","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":"width:387px"}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+{"property":"skillA","name":"A技能","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"skillB","name":"B技能","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"skillC","name":"C技能","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+{"property":"skillS","name":"支援技能","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"skillE","name":"必杀技能","type":"text","masterId":"","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        }
+      ]
+    }
+  },
+  "otherInfo" : {
+    "id" : "otherInfo",
+    "step" : "A-3",
+    "objectType" : "hero",
+    "title" : "其他属性",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "",
+          "items" : [
+{"property":"limitPlus","name":"突破极限","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"","style":""},
+{"property":"dragonFlower","name":"神龙之花","type":"text","masterId":"","value":"0","require":"","validation":"","classNm":"","style":""}
+          ]
+        },
+        {
+          "design" : "vertical",
+          "style" : "width : 800px",
+          "items" : [
+{"property":"specTag","name":"特效标签","type":"checkbox","masterId":"effects","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        },
+        {
+          "design" : "vertical",
+          "items" : [
+{"property":"color","name":"宝珠颜色","type":"radio","masterId":"orbColor","value":"","require":"○","validation":"","classNm":"","style":""},
+{"property":"moveType","name":"兵种","type":"radio","masterId":"moveType","value":"","require":"○","validation":"","classNm":"","style":""},
+{"property":"race","name":"种族","type":"radio","masterId":"raceType","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        },
+        {
+          "design" : "",
+          "items" : [
+{"property":"blessing","name":"祝福","type":"select","masterId":"blessType","value":"","require":"","validation":"","classNm":"","style":""},
+{"property":"heroType","name":"类型","type":"select","masterId":"","value":"","require":"","validation":"","classNm":"","style":""}
+          ]
+        }
+      ]
+    }
+  },
+  /* 格式样本 
+  "finalStatus" : {
+    "id" : "singleSample",
+    "objectType" : "object",
+    "title" : "普通样本",
+    "layout" : "single",
+    "detail" : {
+      "rows" : [
+        {
+          "design" : "vertical",
+          "head" : ["表单列标题","table>","thead>","td>"],
+          "width" : "5000px",
+          "info" : "m_assetList",
+          "items" : [
+          ]
+        }
+      ]
+    }
+  },
+  "groupSample" : {
+    "id" : "groupSample",
+    "title" : "标签样本",
+    "layout" : "group",
+    "sections" : ["singleAssert","singleFile"],
+    "layoutGroup" : {
+      "singleAssert" : {
+        "id" : "singleAssert",
+        "title" : "",
+        "layout" : "single",
+        "detail" : {
+          "rows" : [
+          ]
+        }
+      }
+    }
+  }
+  */
+};

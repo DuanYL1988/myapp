@@ -1,30 +1,48 @@
-var htmlFlag;
+const htmlFlag = typeof (mode) == "undefined";
 var heroImagePath = '/myapp/resources/images/feh/acter/';
-var wenponCd = ['R-W', 'R-M', 'R-D', 'R-B', 'R-BOW', 'R-Dart',
-    'B-W', 'B-M', 'B-D', 'B-B', 'B-BOW', 'B-Dart',
-    'G-W', 'G-M', 'G-D', 'G-B', 'G-BOW', 'G-Dart',
-    'N-W', 'N-Dart', 'N-Staff', 'N-D', 'N-B', 'N-M'];
-
-var colorMoveCd = ['01', '02', '03', '04'];
+var resourcePath = '/myapp/hero/regist/';
 var selectedHero;
+// 初始url参数
+const searchParam = getUrlParam();
+let indexA = searchParam['group'];
+if(isEmpty(indexA) || indexA<=0){
+  indexA = 1;
+}
+var showType = masterInfo.displayType[indexA].value;
+
+// 表示方式
+var jsonDate = transListToMap(staticJson,showType);
+// 直接取得对象
+const heroMap = transListToMap(staticJson,"id",true);
+// 按照人物分组
+const personMap = transListToMap(staticJson,"masterId");
+// 分组对象
+const teamMap = transListToMap(staticJson,"team");
+
+/** ----angularJs---- */
+var firstApp = angular.module('firstApp',[]);
+firstApp.controller('myCtrl',function($scope){
+  $scope.heroMap = jsonDate;
+  $scope.searchMap = masterInfo;
+});
+/** ----angularJs---- */
 
 $(function() {
     // 未定义返回ture
-    htmlFlag = typeof (mode) == "undefined";
     if (htmlFlag) {
-        console.log("display from static html");
         heroImagePath = "../../../resources/images/feh/acter/";
+        resourcePath = 'acterImage.html?heroId=';
         // 静态页面加载json数据
-        jsonDate = staticJson;
-        initHtml(staticJson);
+        // initHtml(jsonDate);
     } else {
         jsonDate = JSON.parse(jsonDate);
-        initHtml(jsonDate);
+        // initHtml(jsonDate);
     }
-
+/**/
     $('.img').on('click', function() {
-        var heroId = this.id.split(';')[0];
-        openInfoDiv(heroId);
+        let heroId = this.id.split('|')[0];
+        let imgNm = this.id.split('|')[1];
+        openInfoDiv(heroId,imgNm);
     });
 
     $('#hide').on('click', function() {
@@ -45,130 +63,115 @@ $(function() {
 });
 
 /**
- * 静态html打开时,读取json设置隐藏区域的图片
- */
-function initHtml(jsonData) {
-    var displayGroup = $("#display_group").val();
-    displayGroup = null == displayGroup ? "A" : displayGroup;
-
-    if ("A" == displayGroup) {
-        for (var i = 0; i <= wenponCd.length; i++) {
-            var data = jsonData[wenponCd[i]];
-            secondLoop(data)
-        }
-    } else {
-        for (var i = 0; i <= colorMoveCd.length; i++) {
-            var data = jsonData[colorMoveCd[i]];
-            secondLoop(data)
-        }
-    }
-}
-
-function secondLoop(data) {
-    var parentDiv = createElement('div', '', 'row');
-    var rightDiv = createElement('div', '', 'rightArea');
-
-    $.each(data, function() {
-        var cellDiv = createElement('div', '', 'ih-item circle effect19');
-
-        var spinner = createElement('div', '', 'spinner');
-        cellDiv.appendChild(spinner);
-
-        var imgDiv = createElement('div', this.id + ";" + this.weaponType, 'img');
-        var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', '');
-        imgDiv.appendChild(imgEle);
-        cellDiv.appendChild(imgDiv);
-
-        var infoDiv = createElement('div', '', 'info');
-        var infoBackDiv = createElement('div', '', 'infoBackDiv');
-        var h3Ele = createElement('h3', '', '');
-        h3Ele.innerHTML = this.name;
-        var pEle = document.createElement("p");
-        pEle.innerHTML = this.titleName;
-        infoBackDiv.appendChild(h3Ele);
-        infoBackDiv.appendChild(pEle);
-        infoDiv.appendChild(infoBackDiv);
-        cellDiv.appendChild(infoDiv);
-
-        rightDiv.appendChild(cellDiv);
-    });
-    parentDiv.appendChild(rightDiv);
-    document.getElementById("main").appendChild(parentDiv);
-
-}
-
-/**
  * 打开信息面板(服务器)
  */
-function openInfoDiv(id) {
+function openInfoDiv(id,imgName) {
+    $("#rightSideArea").show();
+    let data = heroMap[id];
+    $("#heroId").val(id);
+
+    /*
     // ajax取得英雄信息
     var url = '/myapp/hero/openLeftInfo/' + id;
+    ajaxGet(url, null, setSingleHeroInfo(data));
+    */
+    setSingleHeroInfo(data);
+    displaySamePerson(personMap[data.masterId],data.id,"samePerson");
+    displaySamePerson(teamMap[data.team],"","teamMember");
+}
 
-    ajaxGet(url, null, function(data) {
-        // 选择的角色
-        selectedHero = data.data;
+function setSingleHeroInfo(heroObject){
+  // 选择的角色
+  selectedHero = heroObject;
 
-        var leftAside = $("#leftDetailInfo");
-        leftAside.css("display", "");
-        leftAside.css("background", "url('/myapp/resources/images/feh/background.jpg')");
-        $("#hero_img").prop("src", heroImagePath + data.data.imgName + "/face.png");
-        $("#hero_titleName").html(data.data.titleName + "-" + data.data.name);
-        var localHp = data.listData01[0].localVal;
-        var localPow = data.listData01[1].localVal;
-        var localSpd = data.listData01[2].localVal;
-        var localDef = data.listData01[3].localVal;
-        var localMdf = data.listData01[4].localVal;
-        var localTotal = data.listData01[5].localVal;
-        $("#hero_hp").html(localHp);
-        $("#hero_pow").html(localPow);
-        $("#hero_spd").html(localSpd);
-        $("#hero_def").html(localDef);
-        $("#hero_mdf").html(localMdf);
-        $("#hero_total").html(localTotal);
-        $("#hero_weapon").html(data.data.weapon);
-        $("#hero_skillA").html(data.data.skillA);
-        $("#hero_skillB").html(data.data.skillB);
-        $("#hero_skillC").html(data.data.skillC);
-        $("#hero_skillS").html(data.data.skillS);
-        $("#hero_skillE").html(data.data.skillE);
+  $("#hero_img").prop("src", heroImagePath + selectedHero.imgName + "/face.png");
+  $("#hero_titleName").html(selectedHero.titleName + "-" + selectedHero.name);
+  $("#hero_weapon").html(selectedHero.weapon);
+  $("#hero_skillA").html(selectedHero.skillA);
+  $("#hero_skillB").html(selectedHero.skillB);
+  $("#hero_skillC").html(selectedHero.skillC);
+  $("#hero_skillS").html(selectedHero.skillS);
+  $("#hero_skillE").html(selectedHero.skillE);
+  $("#hero_hp").html(selectedHero.hp);
+  $("#hero_pow").html(selectedHero.attact);
+  $("#hero_spd").html(selectedHero.speed);
+  $("#hero_def").html(selectedHero.def);
+  $("#hero_mdf").html(selectedHero.mdf);
+  $("#hero_total").html(selectedHero.hp+selectedHero.attact+selectedHero.speed+selectedHero.def+selectedHero.mdf);
 
-        $("#round_hp").html('排位:' + data.listData01[0].roundVal + "/" + data.listData01[0].totalVal);
-        $("#round_pow").html('排位:' + data.listData01[1].roundVal + "/" + data.listData01[1].totalVal);
-        $("#round_spd").html('排位:' + data.listData01[2].roundVal + "/" + data.listData01[2].totalVal);
-        $("#round_def").html('排位:' + data.listData01[3].roundVal + "/" + data.listData01[3].totalVal);
-        $("#round_mdf").html('排位:' + data.listData01[4].roundVal + "/" + data.listData01[4].totalVal);
-        $("#round_total").html('排位:' + data.listData01[5].roundVal + "/" + data.listData01[5].totalVal);
+  /*
+  $("#round_hp").html('排位:' + data.listData01[0].roundVal + "/" + data.listData01[0].totalVal);
+  $("#round_pow").html('排位:' + data.listData01[1].roundVal + "/" + data.listData01[1].totalVal);
+  $("#round_spd").html('排位:' + data.listData01[2].roundVal + "/" + data.listData01[2].totalVal);
+  $("#round_def").html('排位:' + data.listData01[3].roundVal + "/" + data.listData01[3].totalVal);
+  $("#round_mdf").html('排位:' + data.listData01[4].roundVal + "/" + data.listData01[4].totalVal);
+  $("#round_total").html('排位:' + data.listData01[5].roundVal + "/" + data.listData01[5].totalVal);
 
-        $("#stick_hp").css('width', (localHp / data.listData01[0].maxVal) * 180 + "px");
-        $("#stick_pow").css('width', (localPow / data.listData01[1].maxVal) * 180 + "px");
-        $("#stick_spd").css('width', (localSpd / data.listData01[2].maxVal) * 180 + "px");
-        $("#stick_def").css('width', (localDef / data.listData01[3].maxVal) * 180 + "px");
-        $("#stick_mdf").css('width', (localMdf / data.listData01[4].maxVal) * 180 + "px");
-        $("#stick_total").css('width', (localTotal / data.listData01[5].maxVal) * 180 + "px");
+  $("#stick_hp").css('width', (localHp / data.listData01[0].maxVal) * 180 + "px");
+  $("#stick_pow").css('width', (localPow / data.listData01[1].maxVal) * 180 + "px");
+  $("#stick_spd").css('width', (localSpd / data.listData01[2].maxVal) * 180 + "px");
+  $("#stick_def").css('width', (localDef / data.listData01[3].maxVal) * 180 + "px");
+  $("#stick_mdf").css('width', (localMdf / data.listData01[4].maxVal) * 180 + "px");
+  $("#stick_total").css('width', (localTotal / data.listData01[5].maxVal) * 180 + "px");
 
-        // 初期状态
-        var heroOtherSkinDiv = document.getElementById('otherSkin');
-        heroOtherSkinDiv.innerHTML = '';
-        // 组队
-        if (null != data.listData02) {
-            $.each(data.listData02, function() {
-                var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', '');
-                imgEle.style.width = '100px';
-                var dataId = this.id;
-                $(imgEle).on('click', function() {
-                    openInfoDiv(dataId);
-                });
-                heroOtherSkinDiv.appendChild(imgEle);
-            });
-        }
-    });
+  // 初期状态
+  var heroOtherSkinDiv = document.getElementById('otherSkin');
+  heroOtherSkinDiv.innerHTML = '';
+  // 组队
+  if (null != data.listData02) {
+      $.each(data.listData02, function() {
+          var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', '');
+          imgEle.style.width = '100px';
+          var dataId = this.id;
+          $(imgEle).on('click', function() {
+              openInfoDiv(dataId);
+          });
+          heroOtherSkinDiv.appendChild(imgEle);
+      });
+  }
+  */
+}
 
-    $("#heroId").val(id);
+function displaySamePerson(heroList,id,eleId) {
+  document.getElementById(eleId).innerHTML = "";
+  $.each(heroList,function(){
+    if (id!=this.id) {
+      var imgEle = createImg(heroImagePath + this.imgName + "/face.png", '', 'faceImg');
+      imgEle.setAttribute('onclick','openInfoDiv("'+this.id+'","'+this.imgName+'")');
+      document.getElementById(eleId).appendChild(imgEle);
+    }
+  });
 }
 
 function updateHeroInfo() {
     var id = $("#heroId").val();
-    var url = '/myapp/hero/regist/' + id + "";
+    var url = resourcePath + id + "";
     var iLeft = (window.screen.availWidth - 10 - 850) / 2;
-    window.open(url, "英雄更新", "height=900 , width=850 , top=20 , left= " + iLeft, false);
+    window.open(url, "英雄更新", "height=1080 , width=900 , top=0 , left= " + iLeft, false);
+}
+
+function doSearch(){
+  
+  console.dir(document.getElementById('SEL_TYPE').value);
+  let url = 'hero_list.html';
+  url += "?group=" + $("#SEL_TYPE").val();
+  //window.open(url, "英雄更新","", false);
+  window.location.href = url;
+}
+
+function doFifter(){
+  let color = $("#searchColor").val();
+  $.each(staticJson,function(){
+    displayRecoder(this.id,this.imgName,color,this.color);
+  });
+}
+
+function displayRecoder(id,imgName,searchVal,objValue){
+  if (isNotEmpty(searchVal) && searchVal != objValue) {
+    /*
+    */
+    let imgId = document.getElementById(id+'|'+imgName);
+    let hideDiv = $(imgId).parents()[0];
+    hideDiv.style.display = "none";
+  }
 }
