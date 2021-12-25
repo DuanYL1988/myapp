@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>決済後処理</title>
+<!-- 共通様式 -->
+<link href="../../../resources/css/common.css" rel="stylesheet" />
+<!-- 功能共通样式 -->
+<link href="resources/css/workflow.css" rel="stylesheet" />
+<!-- 自定义 -->
+<style>
+.inputCell label {
+  width : 80px;
+  color: #a5df59;
+  font-weight: bolder;
+}
+.title {
+  color: aqua;
+}
+</style>
+<!-- jquery -->
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<!-- 共通処理 -->
+<script src="../../../resources/js/commonService.js"></script>
+<!-- 設定データ -->
+<script id="casetype" src="resources/data/heroInput.json"></script>
+<!-- 画面初期作成JS -->
+<script src="resources/js/commonWorkflow.js"></script>
+<!-- 業務処理JS -->
+<script>
+$(function() {
+  initlize(wkJson,contract,'progressBar' , 'eventArea' , 'infoForm');
+});
+</script>
+</head>
+<body>
+  <main style="width:850px">
+    <!-- 流程ICON区域 -->
+    <div id="progressBar">
+      <!-- 通过JS生成 -->
+    </div>
+
+    <!-- 输入区域 -->
+    <div class="wk_info_area">
+      <form id="infoForm">
+        <!-- 通过JS生成 -->
+      </form>
+        
+      <div id="hideArea">
+        <!-- 通过JS生成 -->
+      </div>
+    </div>
+    
+    <!-- 按钮动作区域 -->
+    <div id="eventArea">
+      <!-- 通过JS生成 -->
+    </div>
+    
+  </main>
+  <div id="popup">
+    <div id="grayup"></div>
+    <div id="popupWindow">
+      <div style="height:30px;float:right;padding-top:5px">
+        <button type="button" style="width:70px;height:30px" onclick="closePopupWindow()">✕</button>
+      </div>
+      <div id="messageArea" style="overflow-y:scroll;margin-top:45px;width:650px;height:240px;color:red"></div>
+      <div style="text-align:center">
+        <button type="button" style="width:90px;height:35px" onclick="closePopupWindow()">〇</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

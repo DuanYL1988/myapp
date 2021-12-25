@@ -149,7 +149,9 @@ public class FehFileUtils {
         Set<String> mappingName = MAPPING_NAME_MAP.keySet();
         for (String name : mappingName) {
             String rename = MAPPING_NAME_MAP.get(name);
-            if (file.getName().indexOf(name) >= 0) {
+            String fileNm = file.getName().toLowerCase();
+            String keyNm = name.toLowerCase();
+            if (fileNm.indexOf(keyNm) >= 0) {
                 // reName(file, rename);
                 System.out.println("png file name before :" + file.getPath());
                 file.renameTo(new File(file.getParent() + FOLDER_PATH_MARK + rename));

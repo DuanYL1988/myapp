@@ -1,14 +1,14 @@
 body {
-  background-color: #dfdfdf;
+  background-color: #b6efa8;
 }
 
 main {
-  width:1280px;
 }
 
 /* 流程图标区域 */
 #progressBar{
   display: flex;
+  background-color: #b6efa8;
 }
 
 .status {
@@ -32,7 +32,7 @@ main {
 
 .wk_icon_pre {
   border-top: 15px solid transparent;
-  border-left: 10px solid #dfdfdf;
+  border-left: 10px solid #b6efa8;
   border-bottom: 15px solid transparent;
   margin-right: -10px;
   z-index:1;

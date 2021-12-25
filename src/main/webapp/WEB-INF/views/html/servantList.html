@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link href="../../../resources/css/common.css" rel="stylesheet" />
+<script src="resources/data/servant.json"></script>
+<script src="../../../resources/js/jquery-3.4.1.min.js"></script>
+<script src="../../../resources/js/angular.min.js"></script>
+<script src="../../../resources/js/commonService.js"></script>
+<script>
+  const classMap = transListToMap(servantList,'extraColor')
+  var firstApp = angular.module('firstApp',[]);
+  firstApp.controller('myCtrl',function($scope){
+    $scope.servantClassMap = classMap;
+    
+    //
+    $scope.showUniqueName = function(imageNm){
+      console.log(imageNm);
+    }
+  });
+
+</script>
+</head>
+<body>
+  <!-- [ng-app]定义作用域,不写则无法使用 -->
+  <div ng-app="firstApp" ng-controller="myCtrl">
+    <!-- LOOP -->
+    <div class="imageBoxBlock" ng-repeat="(mapkey,servantList) in servantClassMap">
+      <h3>{{mapkey}}</h3>
+      <div class="imageBox" style="width:1000px">
+        <div class="cellImage" ng-repeat="servant in servantList">
+          <img class="faceImg" alt="{{servant.imgName}}" src="../../../resources/images/fgo/servants/{{servant.imgName}}/Icon.png" ng-click="showUniqueName(servant.imgName)" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
+  <div ng-app="objExercise" ng-controller="objData">
+  </div>
+  -->
+  
+</body>
+</html>

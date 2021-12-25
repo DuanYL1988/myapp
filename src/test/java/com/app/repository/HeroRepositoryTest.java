@@ -90,8 +90,16 @@ public class HeroRepositoryTest {
 
         List<Hero> heroList = heroRepo.selectByDto(condition);
         System.out.println(jsonUtil.praseObjToJson(heroList));
-//        System.out.println(jsonUtil.praseObjToJson(commonUtil.groupByList("weaponType", heroList)));
-        ;
+    }
+
+    @Test
+    public void createFgoJson() {
+        Servant condition = new Servant();
+
+        List<Servant> servantList = servantRepo.selectByDto(condition);
+        System.out.println("var jsonData = ");
+        System.out.println(jsonUtil.praseObjToJson(servantList));
+        System.out.println(";");
     }
 
     @Test

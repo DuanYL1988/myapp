@@ -255,20 +255,26 @@
   /**
     * 输入验证
     */
-  function doValidation(){
+  function doValidation(docAreaEle){
     // 清空
     $(".error").prop('class','');
-    var errorMsg = "";
+    let errorMsg = "";
     // 首个出错项目
-    var firstFlag = false;
-
+    let firstFlag = false;
+    // 验证区域
+    let partFlag = isNotEmpty(docAreaEle);
     // 取得输入元素
-    var inputEleList = $("input[type='text']");
+    let inputEleList;
+    if (partFlag) {
+      inputEleList = $(docAreaEle).find("input[type='text']");
+    } else {
+      inputEleList = $("input[type='text']");
+    }
     $.each(inputEleList,function(){
       // 可以输入
       if(!this.disabled) {
-        var titleEle = $(this).prev()[0];
-        var title = titleEle.innerHTML;
+        let titleEle = $(this).prev()[0];
+        let title = titleEle.innerHTML;
         // 必须输入验证
         if(isNotEmpty(this.attributes.notempty) && isEmpty(this.value)) {
           this.placeholder = 'please input value!';
@@ -286,7 +292,7 @@
         if(isNotEmpty(this.attributes.validation) && isNotEmpty(this.value)) {
           title += "格式不正确<br>";
           errorMsg += title;
-          var valType = this.attributes.validation.value;
+          let valType = this.attributes.validation.value;
           // TODO
           if (!firstFlag && false) {
             this.focus();
@@ -297,8 +303,13 @@
     });
 
     // 单选，复选框
-    var radioEles = $("input[type='radio'],[type='checkbox']");
-    var namesCond = [];
+    let radioEles;
+    if (partFlag) {
+      radioEles = $(docAreaEle).find("input[type='radio'],[type='checkbox']");
+    } else {
+      radioEles = $("input[type='radio'],[type='checkbox']");
+    }
+    let namesCond = [];
     $.each(radioEles,function(){
       if(this.disabled){
         return;
@@ -313,24 +324,26 @@
     });
     
     // 表单对象Json
-    var formObj = $("#infoForm").serializeObject();
+    let formObj = $("#infoForm").serializeObject();
     // 验证单选，复选框
     $.each(namesCond,function(){
-      var radioEle = $("input[name='"+this+"']")[0];
-      var parentEle = $(radioEle).parents("div[class='inputCell']")[0];
-      var msgSpan = $(parentEle).find("span")[0];
+      let radioEle = $("input[name='"+this+"']")[0];
+      let parentEle = $(radioEle).parents("div[class='inputCell']")[0];
+      let msgSpan = $(parentEle).find("span")[0];
       msgSpan.innerHTML = "";
       
-      var titleEle = $(parentEle).find("label")[0];
-      var title = titleEle.innerHTML;
+      let titleEle = $(parentEle).find("label")[0];
+      let title = titleEle.innerHTML;
       title += "未选择<br>";
       errorMsg += title;
       
-      var value = "";
+      let value = "";
       // 判断是否为对象
+      let objNm;
+      let attrNm;
       if (this.indexOf(".") > 0) {
-        var objNm = this.split(".")[0];
-        var attrNm = this.split(".")[1];
+        objNm = this.split(".")[0];
+        attrNm = this.split(".")[1];
         // Null
         if (isEmpty(formObj[objNm]) || isEmpty(formObj[objNm][attrNm])){
           value = "";
