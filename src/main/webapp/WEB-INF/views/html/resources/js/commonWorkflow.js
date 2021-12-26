@@ -2,7 +2,6 @@
  * 初期化处理
  */
 function initlize(progressData,detailData,progBarId,btnAreaId,formId){
-  // 
   let currStp = progressData.currentStep;
   // 进度条
   createProgressBarArea(progBarId,progressData,currStp);
@@ -112,22 +111,7 @@ function createButtonArea(wkJson,stepName) {
     // 状态切换事件
     // TODO 通用化
     btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"','"+stepName+"',this)");
-    /*
-    if ("A-9" != stepName) {
-      if (parseInt(eventInfo.step) > 0) {
-        btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"'"+",'"+stepName+"'"+",'"+clNm+"')");
-      } else {
-        // 前往下一个step
-      }
-    } else {
-      if (parseInt(eventInfo.step) > 0) {
-        btnEle.setAttribute("onclick","doStep('"+eventInfo.step+"'"+",'"+stepName+"'"+",'"+clNm+"')");
-      } else {
-        // 前往下一个step
-        btnEle.setAttribute("onclick","doEvent('"+eventInfo.step+"')");
-      }
-    }
-    */
+
     // 添加
     eventEle.appendChild(btnEle);
   }
@@ -213,163 +197,19 @@ function initEditArea(wkJson,obj,eventFormId,btnAreaId){
 
       //prop
       $.each(rows.items,function(j,prop){
-        var inputCell = createElement("div","","inputCell","");
-        // 属性Title
-        var lblEle = createElement("label","","","");
-        lblEle.innerHTML = prop.name;
-        inputCell.appendChild(lblEle);
-        // 属性Input
-        var inputEle = createElement("input",obj.objectType + "_" + prop.property, prop.classNm, obj.objectType + "." + prop.property);
-        var inputType = prop.type;
-        inputEle.style = isEmpty(prop.style) ? "":prop.style;
-        if (isNotEmpty(prop.readonly)) {
-          inputEle.setAttribute("readonly","");
-        }
-        
-        //
-        var hideEle = null;
-        
-        // 输入框
-        if ("text" == inputType) {
-          inputEle.type = "text";
-          inputEle.placeholder = prop.value;
-        // 下拉菜单
-        } else if ("select" == prop.type){
-          inputEle = createElement("select",obj.objectType + "_" + prop.property, prop.classNm,obj.objectType + "." + prop.property);
-          createOptions(inputEle,masterInfo[prop.masterId],true);
-          
-        // Autocomplete
-        } else if ("autocomplete" == inputType) {
-          inputEle.type = "text";
-          inputEle.autocomplete = "on";
-          inputEle.setAttribute("list",prop.masterId);
-          inputEle.placeholder = prop.value;
-          
-          var datalistEle = createElement("datalist",prop.masterId, prop.classNm,obj.objectType + "." + prop.property);
-          createOptions(datalistEle,masterInfo[prop.masterId]);
-          document.getElementById("hideArea").appendChild(datalistEle);
-          
-        // 单选,复选按钮
-        } else if ("radio" == inputType || "checkbox" == inputType){
-          inputEle = null;
-          // 属性设定
-          var eleInfo = {
-            "name" : obj.objectType + "." + prop.property,
-            "id" : "",
-            "classNm" : "",
-            "type" : inputType,
-            "require" : prop.require,
-            "readonly" : isNotEmpty(prop.readonly)
-          };
-          createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
-          
-        // 单纯表示项目
-        } else if ("label" == inputType){
-          inputEle = createElement("label","Lbl_" + obj.objectType + "_" + prop.property, prop.classNm , "");
-          inputEle.innerHTML = prop.value;
-          inputEle.style.width = "auto";
-          // 隐藏项
-          hideEle = createElement("input",obj.objectType + "_" + prop.property, prop.classNm, obj.objectType + "." + prop.property);
-          hideEle.type = "hidden";
-          hideEle.value = prop.value;
-        } else if ("textarea" == inputType){
-          inputEle = createElement("textarea",obj.objectType + "_" + prop.property, prop.classNm, obj.objectType + "." + prop.property);
-          inputEle.value = prop.value;
-          inputEle.style = isEmpty(prop.style) ? "":prop.style;
-          inputEle.rows = 7;
-          inputEle.cols = 80;
-        // 日期控件
-        } else if ("datetime" == inputType) {
-          inputEle.type = "datetime-local";
-          inputEle.className = "dateTime";
-          inputEle.value = prop.value;
-          inputEle.removeAttribute("readonly");
-        // 按钮
-        } else if ("button" == inputType) {
-          inputEle = createElement("button","","cell_btn", prop.classNm, "");
-          inputEle.type = "button"
-          inputEle.setAttribute("onclick",prop.value);
-          inputEle.innerHTML = prop.name;
-        }
-        
-        if (isNotEmpty(inputEle)) {
-          // require
-          if (isNotEmpty(prop.require)) {
-            inputEle.setAttribute("notempty","true");
-          }
-          inputCell.appendChild(inputEle);
-          
-          // 验证信息表示
-          var displayEle = createElement("span","","displayOnly","");
-          inputCell.appendChild(displayEle);
-          
-          if (isNotEmpty(hideEle)) {
-            inputCell.appendChild(hideEle);
-          }
-        }
-        inputRowEle.appendChild(inputCell);
+        // 策略模式生成HTML输入元素
+        inputRowEle.appendChild(createInputElement(obj,prop));
       });
+
       baseInfoEle.appendChild(inputRowEle);
+      // 列表表示
+      if (isNotEmpty(rows.head)){
+        console.log(rows.head);
+        tableEle = createTable(rows,masterInfo[rows.info]);
+        baseInfoEle.appendChild(tableEle);
+      }
     });
         
-    // 列表表示
-    if (isNotEmpty(obj.head)){
-      // Table
-      var tableEle = createElement("table","","","");
-      tableEle.setAttribute("cellspacing",0);
-      tableEle.border = "1";
-      tableEle.style.width = obj.width;
-      tableEle.id = obj.id;
-      
-      // Thead
-      var thead = createElement("thead","","","");
-      var tr = createElement("tr","","","");
-      // selectAll
-      if (isNotEmpty(obj.selectAll)) {
-        var th = createElement("th","","","");
-        var selectAll = createElement("input","","","selectAll");
-        selectAll.type = "checkbox";
-        $(selectAll).on("click",function(){
-          var tblEle = $(this).parents("table")[0];
-          var checkCnt = $(tblEle).find("input[type='checkbox']");
-          $(checkCnt).attr("checked",this.checked);
-        });
-        th.appendChild(selectAll);
-        tr.appendChild(th);
-      }
-      $.each(obj.head,function(){
-        var th = createElement("th","","","");
-        th.innerHTML = this;
-        tr.appendChild(th);
-      });
-      thead.appendChild(tr);
-      tableEle.appendChild(thead);
-      
-      // Tbody
-      var tbody = createElement("tbody","","","");
-      $.each(masterInfo[obj.info],function(){
-        tr = createElement("tr","","","");
-        // selectAll
-        if (isNotEmpty(obj.selectAll)) {
-          var selectTd = createElement("td","","","");
-          var checkedEle = createElement("input","","","");
-          checkedEle.type = "checkbox";
-          selectTd.appendChild(checkedEle);
-          tr.appendChild(selectTd);
-        }
-        // data
-        $.each(this,function(j,cell){
-          var td = createElement("td","","","");
-          td.innerHTML = cell;
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      
-      });
-      tableEle.appendChild(tbody);
-      
-      baseInfoEle.appendChild(tableEle);
-    }
     baseInfoEle.appendChild(createButtonArea(wkJson,obj.step));
     parentEle.appendChild(baseInfoEle);
   }
@@ -471,4 +311,125 @@ function doEvent(nextStep,currentStep,thisEle){
     });
     $('button').hide();
   }
+}
+
+/* 策略模式 */
+function createInputElement(obj,prop) {
+  /* 策略类 */
+  var strategyClass = {
+    'text' : function(obj,prop,inputEle,inputCell) {
+      inputEle.type = "text";
+      inputEle.placeholder = prop.value;
+      return inputEle;
+    },
+    'select' : function(obj,prop,inputEle,inputCell) {
+      inputEle = null;
+      inputEle = createElement("select",obj.objectType + "_" + prop.property, prop.classNm,obj.objectType + "." + prop.property);
+      createOptions(inputEle,masterInfo[prop.masterId],true);
+      return inputEle;
+    },
+    'radio' : function(obj,prop,inputEle,inputCell) {
+      inputEle = null;
+      // 属性设定
+      var eleInfo = {
+        "name" : obj.objectType + "." + prop.property,
+        "id" : obj.objectType + "_" + prop.property,
+        "classNm" : prop.classNm,
+        "type" : inputType,
+        "require" : prop.require,
+        "readonly" : isNotEmpty(prop.readonly)
+      };
+      createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
+      return inputEle;
+    },
+    'checkbox' : function(obj,prop,inputEle,inputCell){
+      inputEle = null;
+      // 属性设定
+      var eleInfo = {
+        "name" : obj.objectType + "." + prop.property,
+        "id" : obj.objectType + "_" + prop.property,
+        "classNm" : prop.classNm,
+        "type" : inputType,
+        "require" : prop.require,
+        "readonly" : isNotEmpty(prop.readonly)
+      };
+      createCheck(eleInfo,masterInfo[prop.masterId],inputCell);
+      return inputEle;
+    },
+    'autocomplete' : function(obj,prop,inputEle,inputCell) {
+      console.log("autocomplete:" + prop.name);
+      inputEle.type = "text";
+      inputEle.autocomplete = "on";
+      inputEle.setAttribute("list",prop.masterId);
+      inputEle.placeholder = prop.value;
+
+      var datalistEle = createElement("datalist",prop.masterId, prop.classNm,obj.objectType + "." + prop.property);
+      createOptions(datalistEle,masterInfo[prop.masterId]);
+      document.getElementById("hideArea").appendChild(datalistEle);
+      return inputEle;
+    },
+    'textarea' : function(obj,prop,inputEle,inputCell){
+      inputEle = createElement("textarea",obj.objectType + "_" + prop.property, prop.classNm, obj.objectType + "." + prop.property);
+      inputEle.value = prop.value;
+      inputEle.style = isEmpty(prop.style) ? "":prop.style;
+      inputEle.rows = 7;
+      inputEle.cols = 80;
+      return inputEle;
+    },
+    'label' : function(obj,prop,inputEle,inputCell){
+      inputEle = createElement("label","Lbl_" + obj.objectType + "_" + prop.property, prop.classNm , "");
+      inputEle.innerHTML = prop.value;
+      inputEle.style.width = "auto";
+      // 隐藏项
+      hideEle = createElement("input",obj.objectType + "_" + prop.property, prop.classNm, obj.objectType + "." + prop.property);
+      hideEle.type = "hidden";
+      hideEle.value = prop.value;
+      inputCell.appendChild(hideEle);
+      return inputEle;
+    },
+    'datetime' : function(obj,prop,inputEle,inputCell){
+      inputEle.type = "datetime-local";
+      inputEle.className = "dateTime";
+      inputEle.value = prop.value;
+      inputEle.removeAttribute("readonly");
+      return inputEle;
+    },
+    'button' : function(obj,prop,inputEle,inputCell){
+      inputEle = createElement("button","","cell_btn", prop.classNm, "");
+      inputEle.type = "button"
+      inputEle.setAttribute("onclick",prop.value);
+      inputEle.innerHTML = prop.name;
+      return inputEle;
+    }
+  };
+
+  /* 通用部分START */
+  // 单个属性DIV
+  var inputCell = createElement("div","","inputCell","");
+  // 属性Title
+  var lblEle = createElement("label","","","");
+  lblEle.innerHTML = prop.name;
+  inputCell.appendChild(lblEle);
+  
+  // 属性Input
+  var inputEle = createElement("input",obj.objectType + "_" + prop.property, prop.classNm, obj.objectType + "." + prop.property);
+  var inputType = prop.type;
+  inputEle.style = isEmpty(prop.style) ? "":prop.style;
+  /* 通用部分END */
+
+  // 执行策略
+  inputEle = strategyClass[prop.type](obj,prop,inputEle,inputCell);
+  
+  if (isNotEmpty(inputEle)) {
+    // require
+    if (isNotEmpty(prop.require)) {
+      inputEle.setAttribute("notempty","true");
+    }
+    inputCell.appendChild(inputEle);
+    
+    // 验证信息表示
+    var displayEle = createElement("span","","displayOnly","");
+    inputCell.appendChild(displayEle);
+  }
+  return inputCell;
 }
