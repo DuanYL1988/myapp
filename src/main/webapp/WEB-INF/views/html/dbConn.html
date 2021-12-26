@@ -5,38 +5,19 @@
 <link href="../../../resources/css/common.css" rel="stylesheet" />
 <script src="../../../resources/js/jquery-3.4.1.min.js"></script>
 <script src="../../../resources/js/commonService.js"></script>
-<script src="resources/js/dbConn.js"></script>
+<script id="casetype" src="resources/data/heroInput.json"></script>
+<script src="resources/js/commonDatabase.js"></script>
 </head>
 <body>
   <main>
-    <!-- message区域 -->
-    <div class="messageArea">
-      <span id="warMsg" style='color:blue'>&nbsp</span>
-      <span id="errMsg" style='color:red'>&nbsp</span>
-    </div>
-    <!-- 流程ICON区域 -->
-    <div id="wk_icon_area">
-      <!-- 通过JS生成 -->
-    </div>
-    
-    <!-- 输入区域 -->
-    <div class="wk_info_area">
-      <form id="infoForm">
-        <!-- 通过JS生成 -->
-      </form>
-    
-    <!-- 按钮动作区域 -->
-    <div id="eventArea">
-      <!-- 通过JS生成 -->
-    </div>
-    
-    <!-- sample 
-    <div id="sample">
-      <script>
+<input type="button" name='create' onClick="createDatabase()" value='Create Database'>
+<input type="button" name='create' onClick="createTable()" value='create table'>
+<input type="button" name='insert' onClick="insertValue()" value='Insert value'>
+<input type="button" name='select' onClick="doSelect()" value='show table'>
 
-      </script>
+    <div id="displayArea">
+      
     </div>
-    -->
   </main>
 </body>
 </html>
