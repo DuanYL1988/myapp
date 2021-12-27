@@ -170,6 +170,15 @@ var contract = {
     "layout" : "single",
     "detail" : {
       "rows" : [
+        /*{
+          "design" : "",
+          "head" : ["code","value"],
+          "info" : "weaponType",
+          "width" : "",
+          "id" : "displayTable",
+          "selectAll" : "true",
+          "items" : []
+        },*/
         {
           "design" : "",
           "items" : [
@@ -289,8 +298,8 @@ var contract = {
         {
           "design" : "vertical",
           "head" : ["表单列标题","table>","thead>","td>"],
-          "width" : "5000px",
           "info" : "m_assetList",
+          "width" : "5000px",
           "items" : [
           ]
         }

@@ -7,15 +7,15 @@
       'isEmpty':isEmpty,
       'isNotEmpty':isNotEmpty,
       'isInclude':isInclude,
-      'createElement':createElement,
       'createImg':createImg,
+      'createOptions':createOptions,
+      'createCheck':createCheck,
+      'createElement':createElement,
+      'createTable':createTable,
       'setTbltxtWithCoordinate':setTbltxtWithCoordinate,
       'closePopupWindow':closePopupWindow,
       'popupMsg':popupMsg,
       'formateDateYMDHMslash':formateDateYMDHMslash,
-      'createOptions':createOptions,
-      'createCheck':createCheck,
-      'createMap':createMap,
       'transListToMap':transListToMap,
       'transGirdToMap':transGirdToMap,
       'getUrlParam':getUrlParam,
@@ -97,8 +97,9 @@
       return rslt;
   }
   
-  /**
-   * 数组内是否包含元素
+  /** 数组内是否包含元素
+   * @param str 值
+   * @param arr 数组
    */
   function isInclude(str,arr) {
     if (typeof arr == "object" && arr.length > 0) {
@@ -114,8 +115,7 @@
     }
   }
   
-  /**
-   * 生成<option>标签
+  /** 生成<option>标签
    *
    * @param ele <option>的父标签,如<select><dataset>
    * @param arrs 内容集合,格式[{"code":"A","value":"NM"},{"code":"B","value":"NM2"}]
@@ -133,8 +133,7 @@
     });
   }
   
-  /**
-   * 生成单选,复选框
+  /** 生成单选,复选框
    *
    * @param eleInfo Radio或Checkbox的属性对象{"id":test,"name":"hero.imgSrc",...}
    * @param infoList 内容集合,格式[{"code":"A","value":"NM"},{"code":"B",,"value":"NM2"}]
@@ -181,8 +180,7 @@
     parentEle.appendChild(displayEle);
   }
   
-  /**
-   * 创建图片元素<img>
+  /** 创建图片元素<img>
    * @param arg js对象,值
    */
   function createImg(path,id,classNm,name){
@@ -191,8 +189,7 @@
       return imgEle;
   }
   
-  /**
-   * 创建html元素<img>
+  /** 创建html元素<img>
    * @param arg js对象,值
    */
   function createElement(type,id,classNm,name) {
@@ -203,20 +200,80 @@
     return ele;
   }
   
+  function createTable(paramObj,dataList){
+    console.log(dataList);
+    // Table
+    var tableEle = createElement("table","","","");
+    tableEle.setAttribute("cellspacing",0);
+    tableEle.border = "1";
+    tableEle.style.width = paramObj.width;
+    tableEle.id = paramObj.id;
+    
+    // Thead
+    var thead = createElement("thead","","","");
+    var tr = createElement("tr","","","");
+    // selectAll
+    if (isNotEmpty(paramObj.selectAll)) {
+      var th = createElement("th","","","");
+      var selectAll = createElement("input","","","selectAll");
+      selectAll.type = "checkbox";
+      $(selectAll).on("click",function(){
+        var tblEle = $(this).parents("table")[0];
+        var checkCnt = $(tblEle).find("input[type='checkbox']");
+        $(checkCnt).attr("checked",this.checked);
+      });
+      th.appendChild(selectAll);
+      tr.appendChild(th);
+    }
+    $.each(paramObj.head,function(){
+      var th = createElement("th","","","");
+      th.innerHTML = this;
+      tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    tableEle.appendChild(thead);
+    
+    // Tbody
+    var tbody = createElement("tbody","","","");
+    $.each(dataList,function(){
+      tr = createElement("tr","","","");
+      // selectAll
+      if (isNotEmpty(paramObj.selectAll)) {
+        var selectTd = createElement("td","","","");
+        var checkedEle = createElement("input","","","");
+        checkedEle.type = "checkbox";
+        selectTd.appendChild(checkedEle);
+        tr.appendChild(selectTd);
+      }
+      // data
+      $.each(this,function(j,cell){
+        var td = createElement("td","","","");
+        td.innerHTML = cell;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    
+    });
+    tableEle.appendChild(tbody);
+    return tableEle;
+  }
+  
+  /** 设置元素属性
+   * @param elementObj 对象
+   * @param attrNm 属性
+   * @param attrValue 值
+   */
   function createAttr(elementObj,attrNm,attrValue){
     if (isNotEmpty(attrValue)){
       elementObj[attrNm] = attrValue;
     }
   }
 
-  /**
-  * 通过行列设定table内容
-  *
+  /** 通过行列设定table内容
   * @param tblId 表ID
   * @param rowNo 行号
   * @param colNo 列号
   * @param strVal 值
-  *
   */
   function setTbltxtWithCoordinate(tblId,rowNo,colNo,strVal) {
     try {
@@ -228,11 +285,8 @@
     }
   }
   
-  /**
-  * 日期转换Data→yyyy/MM/DD HH:MI
-  *
+  /** 日期转换Data→yyyy/MM/DD HH:MI
   * @param dateVal Data型日期值
-  *
   */
   function formateDateYMDHMslash(dateVal) {
     var rst = dateVal.getFullYear();
@@ -247,14 +301,25 @@
     return rst;
   }
   
+  /** 显示错误提示区域块
+   *
+   */
+  function popupMsg(errorMsg){
+    $("#popup").show(50);
+    $("#messageArea").html(errorMsg);
+  }
+
+  /** 关闭错误提示区域
+   *
+   */
   function closePopupWindow() {
     $("#messageArea").html("");
     $("#popup").hide();
   }
   
-  /**
-    * 输入验证
-    */
+  /** 输入验证
+   *
+   */
   function doValidation(docAreaEle){
     // 清空
     $(".error").prop('class','');
@@ -371,6 +436,11 @@
     }
   }
   
+  /** 将list进行group处理成map
+   * @param dataList 集合数据
+   * @param mapKey 分组字段
+   * @param singleFlag 单独对象
+   */
   function transListToMap(dataList,mapKey,singleFlag) {
     var resultMap = {};
     $.each(dataList,function(i,data){
@@ -390,8 +460,7 @@
     return resultMap;
   }
   
-  /**
-  * 多对多网状结构转换为某一属性的1对多Map
+  /** 多对多网状结构转换为某一属性的1对多Map
   * 
   * @param dataList 元数据集合
   * @param attrId Group化项目名
@@ -422,6 +491,9 @@
     return resultMap;
   }
   
+  /** 取得get请求url中的参数
+   * @return 参数对象{'key' : value1 ,'key2' : value2}
+   */
   function getUrlParam(){
     let paramText = window.location.search;
     paramText = paramText.replace('?','');
@@ -433,32 +505,6 @@
       paramObj[key] = val;
     });
     return paramObj;
-  }
-  
-  /**
-  * 通用方法:将list进行group处理成map
-  * @param keyNm Group化项目名
-  * @param dataList 元数据集合
-  */
-  function createMap(keyNm,dataList) {
-    var rstMap = {};
-    $.each(dataList,function(i,data){
-      // key不存在
-      var key = data[keyNm];
-      if (isEmpty(rstMap[key])){
-        var obj = [];
-        obj.push(data);
-        rstMap[key] = obj;
-      } else {
-        rstMap[key].push(data);
-      }
-    });
-    return rstMap;
-  }
-  
-  function popupMsg(errorMsg){
-    $("#popup").show(50);
-    $("#messageArea").html(errorMsg);
   }
 
   $.fn.serializeObject = function(){
