@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>体调记录</title>
+<title>Table Management</title>
 <link href="../../../resources/css/common.css" rel="stylesheet" />
+<style>
+.orderbyCol:hover {background-color : #5351ca}
+th input {float:left}
+.fifterRow {background-color : #dbecb7}
+.rowBtn{width:50px;height:25px}
+table select {height : 22px;float:top}
+</style>
 <script src="../../../resources/js/jquery-3.4.1.min.js"></script>
 <script src="../../../resources/js/commonService.js"></script>
 <script id="casetype" src="resources/data/heroInput.json"></script>
 <script src="resources/js/commonDatabase.js"></script>
+<script>
+$(function() {
+  //searchQuary('');
+});
+</script>
 </head>
 <body>
   <main>
-<input type="button" name='create' onClick="createDatabase()" value='Create Database'>
-<input type="button" name='create' onClick="createTable()" value='create table'>
-<input type="button" name='insert' onClick="insertValue()" value='Insert value'>
-<input type="button" name='select' onClick="doSelect()" value='show table'>
+    <input type="button" name='create' onClick="createTable()" value='create table'>
+    <input type="button" name='insert' onClick="insertDataList()" value='Insert value'>
+    <input type="button" name='select' onClick="searchQuary(null)" value='show table'>
+    <input type="button" name='select' onClick="dropTable('CODE_MASTER')" value='drop table'>
+    <input type="button" name='console' onClick="console.log(selectedData)" value='show Json'>
 
-    <div id="displayArea">
-      
+    <div id="displayArea" style="width:100%;height:550px;overflow:auto">
+      <table>
+        <thead id='tbl_head'></thead>
+        <tbody id=''></tbody>
+      </table>
     </div>
   </main>
 </body>

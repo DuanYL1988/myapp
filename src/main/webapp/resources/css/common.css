@@ -1,6 +1,7 @@
 /* 元素样式 */
 body {
-  background:url(../images/backgoundImg.jpg)no-repeat;
+  /*background:url(../images/backgoundImg.jpg)no-repeat;*/
+  background: #dcd6e7;
   background-size:1920px 1200px;
   background-attachment:fixed;
 }
