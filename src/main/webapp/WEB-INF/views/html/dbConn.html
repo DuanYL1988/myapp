@@ -25,13 +25,10 @@ $(function() {
     <input type="button" name='create' onClick="createTable()" value='create table'>
     <input type="button" name='insert' onClick="insertDataList()" value='Insert value'>
     <input type="button" name='select' onClick="searchQuary(null)" value='show table'>
-    <input type="button" name='select' onClick="dropTable('CODE_MASTER')" value='drop table'>
     <input type="button" name='console' onClick="console.log(selectedData)" value='show Json'>
-
-    <div id="displayArea" style="width:100%;height:550px;overflow:auto">
-      <table>
-        <thead id='tbl_head'></thead>
-        <tbody id=''></tbody>
+    <div id="displayArea">
+      <input type="button" name='addLine' onClick="addLine()" value='addLine'>
+      <table id="mianTbl">
       </table>
     </div>
   </main>
