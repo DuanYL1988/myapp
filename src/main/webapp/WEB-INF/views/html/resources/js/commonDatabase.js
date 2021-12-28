@@ -5,17 +5,26 @@ const maxSize = 5*1024*1024;
 let db = openDatabase(shortName,version,displayName,maxSize);
 let result = db ? 'success' : 'filed';
 
+// 列List转为列对象MAP
 const columnMap = transListToMap(jsonData.columns,'name',true);
-var selectedData;
 
+// 检索设定参数
 let paramObj = {
   "head" : "",
-  "width" : "5000px",
+  "width" : "",
   "id" : "displayTable",
   "groupby" : "true",
   "fifter" : "true",
   "selectAll" : "true",
 };
+
+// 上次执行过的检索SQL
+var searchedQuary;
+
+// 上次检索后的结果对象
+var selectedData;
+
+// 默认排序
 var orderby = 'asc';
 
 /** 创建表
@@ -39,6 +48,21 @@ function insertDataList() {
   $.each(jsonData.dataList,function(i,recoderObj){
     insertData(tblNm,recoderObj);
   });
+}
+
+/*当前行数据插入
+ *
+ */
+function insertRow(btnEle){
+  let recoderObj = {};
+  let rowEle = $(btnEle).parents()[1];
+  $.each($(rowEle).find("input"),function(){
+    recoderObj[this.name] = this.value;
+  });
+  console.log(recoderObj);
+  insertData(jsonData.tableName,recoderObj);
+  
+  reflashTable(searchedQuary);
 }
 
 /** 插入数据
@@ -85,10 +109,10 @@ function getSelectQuary(columns,tableName,condition,orderby,from,to,pageSize,pag
  *
  */
 function searchQuary(callback) {
-  let sql = getSelectQuary('','','','','','','','');
-  executeQuary(sql,function(result){
+  searchedQuary = 'select * from ' + jsonData.tableName;
+  executeQuary(searchedQuary,function(result){
     selectedData = result.rows;
-    makeTableElement(result);
+    makeTableElement(result,"mianTbl");
   });
 }
 
@@ -97,18 +121,18 @@ function searchQuary(callback) {
  */
 function reSearch(columnName) {
   orderby = 'asc' == orderby ? 'desc' : 'asc';
-  let sql = getSelectQuary('','','','','','','','');
-  sql += ' order by ' + columnName + ' ' + orderby;
-  reflashTable(sql);
+  searchedQuary = 'select * from ' + jsonData.tableName;
+  searchedQuary += ' order by ' + columnName + ' ' + orderby;
+  reflashTable(searchedQuary);
 }
 
 /** 筛选数据
  * 
  */
 function fifterRows(column,inputEle) {
-  let sql = getSelectQuary('','','','','','','','');
-  sql += " and " + column + " like '%" +inputEle.value+"%'";
-  reflashTable(sql);
+  searchedQuary = 'select * from ' + jsonData.tableName;
+  searchedQuary += " where " + column + " like '%" +inputEle.value+"%'";
+  reflashTable(searchedQuary);
 }
 
 /** 刷新结果区域
@@ -117,9 +141,8 @@ function fifterRows(column,inputEle) {
 function reflashTable(sql) {
   executeQuary(sql,function(result){
     console.log(result.rows);
-    //let tbody = $('#detailRows');
     document.getElementById('detailRows').outerHTML = '';
-    document.getElementById('resultTbl').appendChild(createTbody(result));
+    document.getElementById('mianTbl').appendChild(createTbody(result));
   });
 }
 
@@ -148,12 +171,13 @@ function executeQuary(query,callback){
 /** 显示检索数据一览
  * 
  */ 
-function makeTableElement(dataList){
+function makeTableElement(dataList,tblEleId){
+  // 结果列
   let columns = Object.keys(dataList.rows[0]);
-
+  // 设定参数更新
   paramObj.head = columns;
   // Table
-  var tableEle = createElement("table","resultTbl","","");
+  var tableEle = document.getElementById(tblEleId);
   tableEle.setAttribute("cellspacing",0);
   tableEle.border = "1";
   // Thead
@@ -169,6 +193,7 @@ function makeTableElement(dataList){
     
     var selectAll = createElement("input","","","selectAll");
     selectAll.type = "checkbox";
+    // 全选事件
     $(selectAll).on("click",function(){
       var tblEle = $(this).parents("table")[0];
       var checkCnt = $(tblEle).find("input[type='checkbox']");
@@ -178,47 +203,41 @@ function makeTableElement(dataList){
     tr.appendChild(th);
   }
 
+  // 结果设定
   $.each(paramObj.head,function(){
     let classNm = isNotEmpty(paramObj.groupby) ? "orderbyCol" : "";
-    if (isNotEmpty(columnMap[this]) && isEmpty(columnMap[this].hide)) {
-      let th = createElement("th","",classNm,"");
-      th.innerHTML = columnMap[this].title;
-      // orderBy
-      if (isNotEmpty(paramObj.groupby)) {
-        th.setAttribute('onClick','reSearch("'+this+'")');
-      }
-      tr.appendChild(th);
-      
-      // fifter
-      let fifterTh = createElement("th","","","");
-      if (isNotEmpty(columnMap[this])){
-        let widthSize = columnMap[this].length;
-        let inputCol;
-        if (isEmpty(columnMap[this].inputType)){
-          inputCol = createElement("input","","","fifter_"+this);
-        } else {
-          inputCol = createElement("select","","","fifter_"+this);
-          let categoryId = columnMap[this].inputType.split('_')[1];
-          getOptionsFromCodeMaster(inputCol,categoryId);
-        }
-        // 输入框宽度
-        inputCol.style.width = columnMap[this].fifterWidth;
-        // Event
-        inputCol.setAttribute('onChange','fifterRows("'+this+'",this)')
-        fifterTh.appendChild(inputCol);
-      }
-      fifterRow.appendChild(fifterTh);
+    let th = createElement("th","",classNm,"");
+    th.innerHTML = this;
+    // orderBy
+    if (isNotEmpty(paramObj.groupby)) {
+      th.setAttribute('onClick','reSearch("'+this+'")');
     }
+    tr.appendChild(th);
+    
+    // fifter
+    let fifterTh = createElement("th","","","");
+    if (isNotEmpty(columnMap[this])){
+      let widthSize = columnMap[this].length;
+      // 设置id属性,后面追加 更新入力框设定name用
+      let inputCol = createElement("input","","","fifter_"+this);
+      // 输入框宽度
+      inputCol.style.width = columnMap[this].fifterWidth;
+      // 筛选事件
+      inputCol.setAttribute('onChange','fifterRows("'+this+'",this)')
+      fifterTh.appendChild(inputCol);
+    }
+    fifterRow.appendChild(fifterTh);
   });
-  // 事件
+  // 行事件
   let eventTh = createElement("th","","","");
   eventTh.innerHTML = 'Action';
-  eventTh.style.width = '100px';
   tr.appendChild(eventTh);
+ 
   thead.appendChild(tr);
-  fifterRow.appendChild(createElement("th","","",""));
-  // 
+  
+  // 筛选功能设定有
   if (isNotEmpty(paramObj.fifter)) {
+    fifterRow.appendChild(createElement("th","","",""));
     thead.appendChild(fifterRow);
   }
   tableEle.appendChild(thead);
@@ -229,6 +248,9 @@ function makeTableElement(dataList){
   //return tableEle;
 }
 
+/** 下拉框从codeMaster中取值设定选项
+ *
+ */
 function getOptionsFromCodeMaster(selectEle,categoryId){
   //let sql = "select * from CODE_MASTER where categoryId ='"+categoryId+"'";
   let sql = "select * from CODE_MASTER ";
@@ -243,10 +265,13 @@ function getOptionsFromCodeMaster(selectEle,categoryId){
   });
 }
 
+/** 显示检索结果
+ *
+ */
 function createTbody(dataList){
   // Tbody
   var tbody = createElement("tbody","detailRows","","");
-  $.each(dataList.rows,function(i,rowRec){
+  $.each(dataList.rows,function(i){
     tr = createElement("tr","","","");
     // selectAll
     if (isNotEmpty(paramObj.selectAll)) {
@@ -257,17 +282,14 @@ function createTbody(dataList){
       tr.appendChild(selectTd);
     }
     // data
-    $.each(paramObj.head,function(){
-      if (isNotEmpty(columnMap[this]) && isEmpty(columnMap[this].hide)){
-        let td = createElement("td","","","");
-        td.innerHTML = rowRec[this];
-        tr.appendChild(td);
-      }
+    $.each(this,function(key,cell){
+      let id = "row" + i + "_" + key;
+      let td = createElement("td",id,"","");
+      td.innerHTML = cell;
+      tr.appendChild(td);
     });
     let id = this.id;
     let eventTd = createElement("td","","","");
-    eventTd.style.display = 'inline-block';
-    eventTd.style.width = '120px';
     let updateBtn = createElement("button","","rowBtn","");
     updateBtn.style = "button";
     updateBtn.innerHTML = "更新";
@@ -285,4 +307,34 @@ function createTbody(dataList){
     tbody.appendChild(tr);
   });
   return tbody;
+}
+
+/** 新加一条数据
+ *
+ */
+function addLine(){
+  let tbody = document.getElementById('detailRows');
+  let rowEle = $(tbody).children()[0];
+  let newRow = createElement("tr","","","");
+  let maxLength = $(rowEle).children().length;
+  $.each($(rowEle).children(),function(i,tdEle){
+    let newTd = createElement("td","","","");
+    if(i>1 && i < maxLength-1) {
+      let name = tdEle.id.split("_")[1];
+      let inputEle = createElement("input","","",name);
+      inputEle.style.width = tdEle.clientWidth -10 + "px";
+      inputEle.value = tdEle.innerHTML;
+      newTd.innerHTML = "";
+      newTd.appendChild(inputEle);
+    } else if (i == maxLength-1) {
+      let addBtn = createElement("button","","rowBtn","");
+      addBtn.style = "button";
+      addBtn.innerHTML = "追加";
+      addBtn.setAttribute('onclick',"insertRow(this)");
+      newTd.appendChild(addBtn);
+    }
+    newRow.appendChild(newTd);
+  });
+  console.log(newRow);
+  tbody.appendChild(newRow);
 }
