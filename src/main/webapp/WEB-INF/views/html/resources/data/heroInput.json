@@ -40,5 +40,32 @@ var jsonData = {
   ]
   */
 };
-
+/*
+var jsonData = {
+  "tableName" : "CODE_MASTER",
+  "columns" : [
+    {"name":"categoaryId" ,"length":"4" ,"type":"varchar","fifterWidth" : "30px"},
+    {"name":"categoaryName" ,"length":"50" ,"type":"varchar","fifterWidth" : "100px"},
+    {"name":"code" ,"length":"20" ,"type":"varchar","fifterWidth" : "30px"},
+    {"name":"value" ,"length":"50" ,"type":"varchar","fifterWidth" : "100px"}
+  ],
+  "dataList" : [
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "01" , "value" : "Class"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "02" , "value" : "Flow"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "03" , "value" : "FlowAction"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "04" , "value" : "Section"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "05" , "value" : "DataPage"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "06" , "value" : "DataTransform"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "07" , "value" : "ReportDefinition"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "08" , "value" : "Property"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "09" , "value" : "Link"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "10" , "value" : "Activity"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "11" , "value" : "Validation"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "12" , "value" : "IF"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "13" , "value" : "Binary File"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "14" , "value" : "Function"},
+    {"categoaryId" : "1001" ,"categoaryName" : "资产类型" ,"code" : "14" , "value" : "When"}
+  ]
+};
+*/
 
